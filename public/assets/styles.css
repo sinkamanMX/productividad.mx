@@ -375,3 +375,9 @@ body {
     margin-top: 0;
     position: absolute;
 }
+.form-horizontal .control-label-lg {
+    float: left;
+    padding-top: 5px;
+    text-align: right;
+    width: 150px !important;
+}

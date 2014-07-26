@@ -7,14 +7,19 @@ class callcenter_NewserviceController extends My_Controller_Action
 		
     public function init()
     {
-		$sessions = new My_Controller_Auth();
-		$perfiles = new My_Model_Perfiles();
-        if(!$sessions->validateSession()){
-            $this->_redirect('/');		
-		}
-		$this->view->dataUser   = $sessions->getContentSession();
-		$this->view->modules    = $perfiles->getModules($this->view->dataUser['ID_PERFIL']);
-		$this->view->moduleInfo = $perfiles->getDataModule($this->_clase);
+    	try{	
+			/*$sessions = new My_Controller_Auth();
+			$perfiles = new My_Model_Perfiles();
+	        if(!$sessions->validateSession()){
+	            $this->_redirect('/');		
+			}
+			$this->view->dataUser   = $sessions->getContentSession();
+			$this->view->modules    = $perfiles->getModules($this->view->dataUser['ID_PERFIL']);
+			$this->view->moduleInfo = $perfiles->getDataModule($this->_clase);	*/		
+        } catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }    	
     }
 
     public function indexAction()
