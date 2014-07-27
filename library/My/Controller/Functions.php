@@ -34,6 +34,16 @@ class My_Controller_Functions
 		array("id"=>"1",'name'=>'Activo' ),
 		array("id"=>"0",'name'=>'Inactivo' )    
     );    
+    
+    public $aGenero = Array(
+		array("id"=>"F",'name'=>'Femenino' ),
+		array("id"=>"M",'name'=>'Masculino' )    
+    );
+    
+    public $aOptions = Array(
+		array("id"=>"1",'name'=>'Si' ),
+		array("id"=>"0",'name'=>'No' )    
+    );    
 
     public function dateToText($fecha_db){
     	$fecha=explode("-",$fecha_db);
@@ -103,12 +113,12 @@ class My_Controller_Functions
 	
 	public function creationClass($nameClass){
 		switch($nameClass) {
-		   case "clients":
-		       return new My_Model_Clientes();
-		   case "units":
-		       return new My_Model_Unidades();
-		   case "operators":
-		       return new My_Model_Operadores();		       
+		   case "mun":
+		       return new My_Model_Municipios();
+		   case "colonia":
+		       return new My_Model_Colonias();	
+		   case "horarios":
+		       return new My_Model_Cinstalaciones();			       	       		       	       
 		}		
 	}
 	
@@ -122,4 +132,24 @@ class My_Controller_Functions
 		}
 		return $result;
 	}
+	
+    public function cboGenero($option=''){
+		$options='';
+		for($p=0;$p<count($this->aGenero);$p++){
+			$select='';
+			if($this->aGenero[$p]['id']==@$option){$select='selected';}
+			$options .= '<option '.$select.' value="'.$this->aGenero[$p]['id'].'" >'.$this->aGenero[$p]['name'].'</option>';
+		}
+		return $options;
+    }	
+    
+    public function cboOptions($option=''){
+		$options='';
+		for($p=0;$p<count($this->aOptions);$p++){
+			$select='';
+			if($this->aOptions[$p]['id']==@$option){$select='selected';}
+			$options .= '<option '.$select.' value="'.$this->aOptions[$p]['id'].'" >'.$this->aOptions[$p]['name'].'</option>';
+		}
+		return $options;
+    }	    
 }

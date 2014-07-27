@@ -1,291 +1,171 @@
  <?php $this->headScript()->appendFile('/js/callcenter/newservice.js') ?>   
- <?php $options = Array('Ninguno','Id Viaje','Sucursal','Transportista'); ?>
- <!-- 
-Datos personales todos requeridos
-
-Vehiculo
-Placas
-serie
-año
-color
-
--->
    <div class="row panel-data">
-		<div class="span12">
-        	<div class="block">
-				<form method="POST" action="/main/map/infotravel" id="FormData" class="form-horizontal ">
-                	<input type="hidden" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
-                	<input type="hidden" name="catId" value="<?php echo $this->catId; ?>" />
-                        <div id="rootwizard">
-                            <div class="navbar">
-                              <div class="navbar-inner">
-                                <div class="container">
-                            <ul>
-                                <li><a href="#tab1" data-toggle="tab">Registro del Cliente</a></li>
-                                <li><a href="#tab2" data-toggle="tab">Ubicación de la Instalación</a></li>
-                                <li><a href="#tab3" data-toggle="tab">Datos del Vehiculo</a></li>
-                                <li><a href="#tab4" data-toggle="tab">Agendar Cita</a></li>
-                            </ul>
-                             </div>
-                              </div>
-                            </div>
-                            <div class="tab-content">
-                                <div class="tab-pane" id="tab1">
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Nombre(s)<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Apellidos<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
+		<div class="span12">			
+        	<div class="block row-min-h">
+				<div class="navbar">
+					<div class="navbar-inner">
+				        <ul class="breadcrumb">				            
+				            <li class="active">
+				                <a href="javascript:void()">Datos del Cliente</a> <span class="divider">/</span>	
+				            </li>				            
+				        </ul>
+					</div>
+				</div>
+				<form method="POST" action="/callcenter/newservice/index" id="FormData" class="form-horizontal ">
+                	<input type="hidden" name="optReg" value="new" />
+					<fieldset>
+						<div class="">
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Nombre(s)<span class="required">*</span></label>
+									<div class="controls">
+				                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
 									</div>
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Fecha de Nacimiento<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Género<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>		
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Teléfono Fijo<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Teléfono móvil<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>	
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Correo electrónico<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Estado<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>	
+								</div>				
+							</div>
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Apellidos<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
+									</div>
+								</div>							
+							</div>						
+						</div>
+						<div class="">
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Fecha de Nacimiento<span class="required">*</span></label>
+									<div class="controls">
+				                          <input id="inputNac" name="inputNac" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNac']; ?>" data-date-format="YYYY-MM-DD">
+									</div>
+								</div>				
+							</div>
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Género<span class="required">*</span></label>
+									<div class="controls">
+										<select class="span10 m-wrap" id="inputGenero" name="inputGenero">
+											<option value="">Seleccionar una opción</option>													
+											<?php echo $this->genero;?>
+										</select>
+									</div>
+								</div>							
+							</div>						
+						</div>		
+						<div class="">
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Teléfono Fijo<span class="required">*</span></label>
+									<div class="controls">
+				                          <input id="inputTel" name="inputTel" data-required="1"  type="tel" class="form-control" value="<?php echo @$this->data['inputTel']; ?>" >
+									</div>
+								</div>				
+							</div>
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Teléfono móvil<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" id="inputCel" name="inputCel" class="m-wrap" value="<?php echo (@$this->data['inputCel']); ?>"  >
+									</div>
+								</div>							
+							</div>						
+						</div>	
+						<div class="">
+							<div class="span12">
+								<div class="control-group">
+									<label class="control-label-lg">Correo electrónico<span class="required">*</span></label>
+									<div class="controls">
+				                          <input id="inputEmail" name="inputEmail" data-required="1"  type="email" class="form-control" value="<?php echo @$this->data['inputEmail']; ?>" >
+									</div>
+								</div>							
+							</div>						
+						</div>										
 
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Municipio<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">C.P<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>										
+						<div class="">
+							<div class="span12">
+								<div class="control-group">
+									<label class="control-label-lg">Calle y No.<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" id="inputStreet" name="inputStreet" class="span9 m-wrap" value="<?php echo (@$this->data['inputStreet']); ?>"  >
+									</div>
+								</div>							
+							</div>						
+						</div>	
 
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Colonia<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Calle y No.<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>																																																						
-                                </div>
-                                <div class="tab-pane" id="tab2">
-                                	<div id="Map">Aqui Va el Mapa</div>
-                                	<div id="dirInstalacion">
-                                		<h1>Centro de Instalacion</h1>
+						<div class="">
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Estado<span class="required">*</span></label>
+									<div class="controls">
+										<select class="span10 m-wrap" id="inputEstado" name="inputEstado" onChange="getoptionsCbo('Municipio','mun',this.value,false,'colonia');">
+											<option value="">Seleccionar una opción</option>
+											<?php echo $this->estados; ?>
+					                    </select>
+									</div>
+								</div>							
+							</div>											
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Municipio<span class="required">*</span></label>
+									<div class="controls">
+										<div id="divMunicipio">
+											<select class="span10 m-wrap" id="inputMunicipio" name="inputMunicipio" onChange="getoptionsCbo('colonia','colonia',this.value,false,'');">
+												<option value="">Seleccionar una opción</option>
+												<?php echo $this->municipios; ?>
+											</select>
+										</div>												
+									</div>
+								</div>				
+							</div>					
+						</div>
+					
+						<div class="">
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Colonia<span class="required">*</span></label>
+									<div class="controls">
+										<div id="divcolonia">
+											<select class="span10 m-wrap" id="inputcolonia" name="inputcolonia">
+												<option value="">Seleccionar una opción</option>
+												<?php echo $this->colonias;?>
+											</select>
+										</div>		
+									</div>
+								</div>				
+							</div>
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">C.P<span class="required">*</span></label>
+									<div class="controls">
+										<input readonly type="text" id="inputCP" name="inputCP" class="m-wrap" value="<?php echo (@$this->data['inputCP']); ?>"  >
+									</div>
+								</div>							
+							</div>						
+						</div>
+						<div class="">
+							<div class="span12">
+								<div class="control-group">
+									<label class="control-label-lg">Instalacion en Domicilio del Cliente<span class="required">*</span></label>
+									<div class="controls">
+										<select class="span2 m-wrap" id="inputDom" name="inputDom" onChange=" ">
+											<?php echo $this->mismoDomicilio; ?>
+					                    </select>													
+									</div>
+								</div>							
+							</div>						
+						</div>	
 
-                                	</div>
-                                </div>
-                                <div class="tab-pane" id="tab3">
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Colonia<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Calle y No.<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>	
-
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Colonia<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Calle y No.<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>	
-
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Colonia<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Calle y No.<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>	
-
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Colonia<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Calle y No.<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>	
-
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Colonia<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Calle y No.<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>	
-
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Colonia<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>					
-									</div>																																														
-                                </div>
-                                <div class="tab-pane" id="tab4">
-									<div class="">
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Dia de Instalación<span class="required">*</span></label>
-												<div class="controls">
-							                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
-												</div>
-											</div>				
-										</div>
-										<div class="span5">
-											<div class="control-group">
-												<label class="control-label-lg">Horario<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" id="inputApps" name="inputApps" class="m-wrap" value="<?php echo (@$this->data['inputApps']); ?>"  >
-												</div>
-											</div>							
-										</div>						
-									</div>	
-                                </div>
-                                <ul class="pager wizard">
-                                    <!--<li class="previous first" style="display:none;"><a href="javascript:void(0);">First</a></li>-->
-                                    <li class="previous"><a style="display:none;" href="javascript:void(0);">Anterior</a></li>
-                                    <!--<li class="next last" style="display:none;"><a href="javascript:void(0);">Last</a></li>-->
-                                    <li class="next"><a href="javascript:void(0);">Siguiente</a></li>
-                                    <li class="next finish" style="display:none;"><a href="javascript:void(0);">Guardar</a></li>
-                                </ul>
-                            </div>  
-                        </div>
-                    </form>
+						<div class="span11">
+					    	<div class="col-xs-4 col-md-5">
+								<div class="pull-right">
+									<button type="button" class="btn" onClick="javascript:backToMain()">Cancelar</button>			
+									<button type="submit" class="btn btn-default bg-btn-send">Continuar</button>
+								</div>    
+					    	</div>						
+						</div>						
+					</fieldset>	                	
+                </form>	
         	</div>
     	</div>
 	</div>    

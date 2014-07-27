@@ -381,3 +381,10 @@ body {
     text-align: right;
     width: 150px !important;
 }
+.required{
+    color: #b94a48;
+}
+.row-min-h300{
+  min-height: 300px;
+  margin-top: 15px;
+}
