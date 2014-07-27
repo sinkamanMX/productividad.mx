@@ -134,7 +134,14 @@ class callcenter_NewserviceController extends My_Controller_Action
 			}
 
 			if(isset($this->dataIn['optReg'])){
-				Zend_Debug::dump("aqui se debe de guardar");
+				$aClienteData = $aNamespace->service;
+				$aInstalacion = $aNamespace->direction;
+				$aCarDetail	  = $aNamespace->carDetail;
+				
+				Zend_Debug::dump($aClienteData);
+				Zend_Debug::dump($aInstalacion);
+				Zend_Debug::dump($aCarDetail);
+				Zend_Debug::dump($this->dataIn);
 			}   	
 
     	} catch (Zend_Exception $e) {
