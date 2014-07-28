@@ -86,7 +86,6 @@ class My_Model_Citas extends My_Db_Table
 				(".$data['idCita'].",'Placas','".$data['inputPlacas']."'),
 				(".$data['idCita'].",'No. de Serie','".$data['inputSerie']."'),
 				(".$data['idCita'].",'No. de Motor','".$data['inputMotor']."')";  
-        Zend_Debug::dump($sql);     
         try{
     		$query   = $this->query($sql,false);
     		if($query){
@@ -97,6 +96,23 @@ class My_Model_Citas extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;			
-	}	
+	}
+
+	public function insertaFormCita($data){
+        $result	= false;
+        $sql="INSERT INTO PROD_CITA_FORMULARIO
+				SET ID_CITA			=  ".$data['idCita'].",
+					ID_FORMULARIO 	= 1";
+        try{
+    		$query   = $this->query($sql,false);
+    		if($query){
+    			$result= true;	
+    		}
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;		
+	}
 	
 }

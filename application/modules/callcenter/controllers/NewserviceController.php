@@ -236,7 +236,19 @@ class callcenter_NewserviceController extends My_Controller_Action
 						$errors++;
 					}						
 				}				
-				
+
+				/*
+				 * 6.-Se inserta el formulario para la cita
+				 */				
+				if($errors==0){
+					$aCarDetail['idCita'] = $iCita;
+					$insertForm = $cCitas->insertaFormCita($aCarDetail);
+					if(!$insertForm){
+						Zend_Debug::dump("error al insertar el formulario.");
+						$errors++;
+					}						
+				}	
+								
 				if($errors==0){
 					$aNamespace = new Zend_Session_Namespace("sService");
 		
