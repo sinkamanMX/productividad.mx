@@ -128,20 +128,134 @@ class callcenter_NewserviceController extends My_Controller_Action
     
     public function datefinishAction(){
     	try{
+    		$errors 	= 0;
+    		$iCliente 	= 0;
+    		$iCita		= 0;
+    		$iDomicilio = 0;
+    		$iEmpresa   = $this->view->dataUser['ID_EMPRESA'];
+    		$iUsuario   = $this->view->dataUser['ID_USUARIO'];
+    		
 			$aNamespace = new Zend_Session_Namespace("sService");
 			if(!isset($aNamespace->service) && !isset($aNamespace->direction)){
 				$this->_redirect('/callcenter/newservice/index');				
 			}
 
 			if(isset($this->dataIn['optReg'])){
-				$aClienteData = $aNamespace->service;
-				$aInstalacion = $aNamespace->direction;
-				$aCarDetail	  = $aNamespace->carDetail;
+				$aClienteData 	= $aNamespace->service;
+				$aInstalacion 	= $aNamespace->direction;
+				$aCarDetail	  	= $aNamespace->carDetail;
 				
-				Zend_Debug::dump($aClienteData);
-				Zend_Debug::dump($aInstalacion);
-				Zend_Debug::dump($aCarDetail);
-				Zend_Debug::dump($this->dataIn);
+				$cEstados   	= new My_Model_Estados();
+				$cMunicipios	= new My_Model_Municipios();
+				$cColonias 		= new My_Model_Colonias();						
+				$cClientes 		= new My_Model_Clientes();			
+				$cCitas			= new My_Model_Citas();
+
+				$estado 	= $cEstados->getData($aClienteData['inputEstado']);
+				$municipio 	= $cMunicipios->getData($aClienteData['inputMunicipio'],$aClienteData['inputEstado']);
+				$colonia 	= $cColonias->getData($aClienteData['inputcolonia'],$aClienteData['inputMunicipio']);					
+				
+				$aClienteData['sEstado'] 	= $estado['NOMBRE'];
+				$aClienteData['sMunicipio'] = $municipio['NOMBRE'];
+				$aClienteData['scolonia'] 	= $colonia['NOMBRE'];
+
+				$aClienteData['sLatitud']	= 0.000000; 
+				$aClienteData['sLongitud']	= 0.000000;	
+								
+				if($aClienteData['inputDom']==1){
+					$aClienteData['sLatitud']	= $aInstalacion['inputLatitude'];
+					$aClienteData['sLongitud']	= $aInstalacion['inputLongitude'];
+				}
+				/*
+				 * 1.-Se inserta el cliente
+				 */
+
+				$insertCliente = $cClientes->insertRow($aClienteData);
+				if(!$insertCliente['status']){
+					Zend_Debug::dump("error al insertar el cliente");
+					$errors++;
+				}
+				
+				$iCliente = $insertCliente['id'];	
+				/*
+				 * 2.-Se inserta el domicilio del Cliente
+				 */
+				if($errors==0){			
+					$aClienteData['IdCLiente']  = $iCliente;
+					
+					$insertDireccion = $cClientes->insertDomCliente($aClienteData);
+					if(!$insertDireccion['status']){
+						Zend_Debug::dump("error al insertar el domicilio del cliente");
+						$errors++;
+					}	
+
+					$iDomicilio = $insertDireccion['id'];
+				}
+
+				/*
+				 * 3.-Se inserta la cita
+				 */
+				if($errors==0){
+					$this->dataIn['ID_EMPRESA']  = $iEmpresa;
+					$this->dataIn['ID_USUARIO']  = $iUsuario;
+					$this->dataIn['idDomicilio'] = $iDomicilio;
+					$insertCita = $cCitas->insertRow($this->dataIn);
+					if(!$insertCita['status']){
+						Zend_Debug::dump("error al insertar la cita");
+						$errors++;
+					}
+					$iCita = $insertCita['id'];						
+				}
+				
+				/*
+				 * 4.-Se inserta el domicilio de la cita
+				 */	
+				if($errors==0){
+					
+					if($aClienteData['inputDom']==1){
+						$aClienteData['idCita']    = $iCita;
+						$aClienteData['idCliente'] = $iCliente;
+						$insertaDomCita = $cCitas->insertDomCita($aClienteData);
+						if(!$insertaDomCita['status']){
+							Zend_Debug::dump("error al insertar el domicilio de la cita.");
+							$errors++;
+						}							
+					}else{
+						/*Aqui se busca el centro de instalacion y se inserta*/
+					}
+				}			
+
+				/*
+				 * 5.-Se inserta los valores extra de la cita
+				 */
+				if($errors==0){
+					$aCarDetail['idCita'] = $iCita;
+					$insertExtra = $cCitas->insertExtraCitas($aCarDetail);
+					if(!$insertExtra){
+						Zend_Debug::dump("error al insertar extras de la cita.");
+						$errors++;
+					}						
+				}				
+				
+				if($errors==0){
+					$aNamespace = new Zend_Session_Namespace("sService");
+		
+		    		if(isset($aNamespace->service)){
+						unset($aNamespace->service);
+					}			
+		    	    if(isset($aNamespace->direction)){
+						unset($aNamespace->direction);
+					}			
+					if(isset($aNamespace->direction)){
+						unset($aNamespace->direction);
+					}
+		    		if(isset($aNamespace->carDetail)){
+						unset($aNamespace->carDetail);
+					}					
+	            	$this->_redirect('/callcenter/newservice/finish');		
+				}else{
+					$this->view->error = true;
+				}
 			}   	
 
     	} catch (Zend_Exception $e) {
@@ -172,4 +286,8 @@ class callcenter_NewserviceController extends My_Controller_Action
         	echo "Message: " . $e->getMessage() . "\n";                
         } 	     	
     }
+    
+    public function finishAction(){
+    	
+    }    
 }

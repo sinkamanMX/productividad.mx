@@ -85,13 +85,31 @@
 						<div class="">
 							<div class="span12">
 								<div class="control-group">
-									<label class="control-label-lg">Calle y No.<span class="required">*</span></label>
+									<label class="control-label-lg">Calle.<span class="required">*</span></label>
 									<div class="controls">
 										<input type="text" id="inputStreet" name="inputStreet" class="span9 m-wrap" value="<?php echo (@$this->data['inputStreet']); ?>"  >
 									</div>
 								</div>							
 							</div>						
 						</div>	
+						<div class="">
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">No. Ext<span class="required">*</span></label>
+									<div class="controls">
+				                          <input id="inputNoExt" name="inputNoExt" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNoExt']; ?>" >
+									</div>
+								</div>				
+							</div>
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">No. Int<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" id="inputNoInt" name="inputNoInt" class="m-wrap" value="<?php echo (@$this->data['inputNoInt']); ?>"  >
+									</div>
+								</div>							
+							</div>						
+						</div>						
 
 						<div class="">
 							<div class="span5">
@@ -143,6 +161,16 @@
 								</div>							
 							</div>						
 						</div>
+						<div class="">
+							<div class="span12">
+								<div class="control-group">
+									<label class="control-label-lg">Referencias<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" id="inputRefs" name="inputRefs" class="span9 m-wrap" value="<?php echo (@$this->data['inputRefs']); ?>"  >
+									</div>
+								</div>							
+							</div>						
+						</div>							
 						<div class="">
 							<div class="span12">
 								<div class="control-group">

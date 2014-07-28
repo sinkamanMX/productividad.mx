@@ -18,14 +18,28 @@ $( document ).ready(function() {
               required: true,
               date: true
             },   
-            inputhorario    : "required"
+            inputhorario    : "required",
+            inputTelContacto    : {
+              required: true,
+              number: true,
+              minlength: 10,
+              maxlength: 10
+            },
+            inputContacto: "required",
         },
         messages: {
             inputDate    : {
                  required: "Campo Requerido",
                  date: "Ingresar una fecha válida"
             },   
-            inputhorario : "Campo Requerido",
+            inputhorario    : "Campo Requerido",
+            inputContacto   : "required",
+            inputTelContacto: {
+              required  : "Campo Requerido",
+              number    : "Este campo acepta solo números",
+              minlength : "El Teléfono debe de ser de 10 dígitos",
+              maxlength : "El Teléfono debe de ser de 10 dígitos"
+            }           
         },
         
         submitHandler: function(form) {

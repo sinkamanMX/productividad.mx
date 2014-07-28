@@ -4,12 +4,40 @@
 		"selected_items":
 		[
 			[
-				"opt",
-				"option"
+				"cent",
+				"centerInfo"
+			],
+			[
+				"cen",
+				"centerInfo"
+			],
+			[
+				"cet",
+				"centerInfo"
+			],
+			[
+				"cente",
+				"centerSelected"
+			],
+			[
+				"lo",
+				"longitude"
+			],
+			[
+				"add",
+				"addMaker"
 			],
 			[
 				"id",
-				"idItem"
+				"idCboTo"
+			],
+			[
+				"op",
+				"optionSelect"
+			],
+			[
+				"opt",
+				"option"
 			],
 			[
 				"prod",
@@ -236,10 +264,6 @@
 				"contacto"
 			],
 			[
-				"add",
-				"add_info_marker"
-			],
-			[
 				"list",
 				"listLatLon"
 			],
@@ -320,34 +344,42 @@
 	"buffers":
 	[
 		{
-			"file": "application/modules/main/views/scripts/main/index.phtml",
+			"file": "application/modules/callcenter/views/scripts/newservice/index.phtml",
 			"settings":
 			{
-				"buffer_size": 1137,
+				"buffer_size": 7118,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "application/views/layouts/layout_blank.phtml",
+			"file": "application/modules/callcenter/views/scripts/newservice/instalation.phtml",
 			"settings":
 			{
-				"buffer_size": 1699,
+				"buffer_size": 3974,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "application/views/layouts/layout.phtml",
+			"file": "application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
 			"settings":
 			{
-				"buffer_size": 2728,
+				"buffer_size": 5905,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/css/style.css",
+			"file": "application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
 			"settings":
 			{
-				"buffer_size": 58604,
+				"buffer_size": 2521,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/modules/functionGral.js",
+			"settings":
+			{
+				"buffer_size": 2318,
 				"line_ending": "Unix"
 			}
 		}
@@ -376,8 +408,30 @@
 	},
 	"file_history":
 	[
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/instalation.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/datefinish.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/cardetail.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/newservice.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/bootstrap-datetimepicker.min.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/bootstrap-datepicker.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/instalation.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/map/infotravel.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/DashboardController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/configs/app.ini",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/registerdate/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/registerdate.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/registerdateController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/main/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/bootstrap/css/bootstrap.min.css",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/css/style.css",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout_blank.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/menu.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/petlocator/public/modules/admin/admin.js",
@@ -481,29 +535,7 @@
 		"/Users/itecno2/Documents/workspace/taccsi/application/modules/admin/views/scripts/admin/getmore.phtml",
 		"/Users/itecno2/Documents/workspace/taccsi/application/modules/admin/views/scripts/services/step_one.phtml",
 		"/Users/itecno2/Documents/workspace/taccsi/application/modules/admin/views/scripts/login/index.phtml",
-		"/Users/itecno2/Documents/workspace/taccsi/public/modules/login/js/login.js",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/translations/mx/admin.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/translations/mx/errors.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/translations/mx/fields.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/translations/mx/pdf.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/modules/blockuserinfo/translations/mx.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/classes/Mail.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/translations/mx/tabs.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/modules/blockuserinfo/translations/es.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/themes/leo_tshirt/modules/blockuserinfo/translations/es.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/themes/liteblue/modules/blockuserinfo/es.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/themes/mistemas/theme818/modules/blockviewed/es.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/themes/theme006/modules/blockuserinfo/es.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/themes/theme818/modules/blockviewed/es.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/translations/mx.gzip",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/themes/techmarket/category.tpl",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/modules/bankwire/bankwire.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/modules/bankwire/views/templates/hook/payment.tpl",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/modules/blocknewsletter/blocknewsletter.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/modules/customerregistration/customerregistration.php",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/themes/techmarket/authentication.tpl",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/themes/techmarket/distribuidores.tpl",
-		"/Users/itecno2/Documents/workspace/ricom/prestashop/themes/techmarket/my-account.tpl"
+		"/Users/itecno2/Documents/workspace/taccsi/public/modules/login/js/login.js"
 	],
 	"find":
 	{
@@ -511,7 +543,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"<open folders>",
@@ -524,6 +556,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"margin",
+			"min-he",
+			"infoMarkerTable",
+			"getselect",
+			"<div class=\"span6\">",
+			"control-label",
 			"boostrap",
 			"gpsTrackerIMEI",
 			"                \n",
@@ -645,13 +683,7 @@
 			"/>\n",
 			"header",
 			"form",
-			"%;\"></",
-			"-->\n",
-			"wid",
-			"ajax",
-			"LAYOUT",
-			".skin",
-			"js/"
+			"%;\"></"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -659,6 +691,8 @@
 		"regex": true,
 		"replace_history":
 		[
+			"<div class=\"span5\">",
+			"control-label-lg",
 			"",
 			"/astyle/",
 			"\",	",
@@ -700,113 +734,136 @@
 			[
 				{
 					"buffer": 0,
-					"file": "application/modules/main/views/scripts/main/index.phtml",
+					"file": "application/modules/callcenter/views/scripts/newservice/index.phtml",
 					"settings":
 					{
-						"buffer_size": 1137,
+						"buffer_size": 7118,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1078,
-								1078
+								2193,
+								2204
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 721.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "application/views/layouts/layout_blank.phtml",
+					"file": "application/modules/callcenter/views/scripts/newservice/instalation.phtml",
 					"settings":
 					{
-						"buffer_size": 1699,
+						"buffer_size": 3974,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1567,
-								1567
+								848,
+								814
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
 							"word_wrap": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": 114.0,
+						"translation.y": 596.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "application/views/layouts/layout.phtml",
+					"file": "application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
 					"settings":
 					{
-						"buffer_size": 2728,
+						"buffer_size": 5905,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1942,
-								1942
+								5571,
+								5571
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 438.0,
+						"translation.y": 2330.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "public/css/style.css",
+					"file": "application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
 					"settings":
 					{
-						"buffer_size": 58604,
+						"buffer_size": 2521,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								53058,
-								53058
+								2188,
+								2188
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 37309.0,
+						"translation.y": 494.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "public/js/modules/functionGral.js",
+					"settings":
+					{
+						"buffer_size": 2318,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2314,
+								2314
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 1.0,
+						"translation.y": 416.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -874,6 +931,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 200.0,
+	"side_bar_width": 301.0,
 	"status_bar_visible": true
 }

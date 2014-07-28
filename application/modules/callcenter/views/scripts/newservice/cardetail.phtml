@@ -41,7 +41,7 @@ color
 							</div>
 							<div class="span5">
 								<div class="control-group">
-									<label class="control-label-lg">Licencia de Manero</label>
+									<label class="control-label-lg">Licencia de Manejo</label>
 									<div class="controls">
 										<input type="text" id="inputLicencia" name="inputLicencia" class="m-wrap" value="<?php echo (@$this->data['inputLicencia']); ?>"  >
 									</div>
@@ -71,17 +71,18 @@ color
 						<div class="">
 							<div class="span5">
 								<div class="control-group">
-									<label class="control-label-lg">Marca del vehiculo</label>
+									<label class="control-label-lg">Marca
+										<span class="required">*</span></label>
 									<div class="controls">
-				                          <input id="inputMarca" name="inputMarca"  type="text" class="form-control" value="<?php echo @$this->data['inputMarca']; ?>" >
+				                          <input id="inputMarca" name="inputMarca"  type="text" class="form-control"  data-required="1"  value="<?php echo @$this->data['inputMarca']; ?>" >
 									</div>
 								</div>				
 							</div>
 							<div class="span5">
 								<div class="control-group">
-									<label class="control-label-lg">Modelo</label>
+									<label class="control-label-lg">Modelo<span class="required">*</span></label>
 									<div class="controls">
-										<input type="text" id="inputModelo" name="inputModelo" class="m-wrap" value="<?php echo (@$this->data['inputModelo']); ?>"  >
+										<input type="text" data-required="1"  id="inputModelo" name="inputModelo" class="m-wrap" value="<?php echo (@$this->data['inputModelo']); ?>"  >
 									</div>
 								</div>							
 							</div>						
@@ -92,7 +93,7 @@ color
 								<div class="control-group">
 									<label class="control-label-lg">Año<span class="required">*</span></label>
 									<div class="controls">
-				                          <input id="inputAno" name="inputAno" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputAno']; ?>" >
+				                          <input id="inputAno" name="inputAno" data-required="1" type="text" class="form-control" value="<?php echo @$this->data['inputAno']; ?>" >
 									</div>
 								</div>				
 							</div>

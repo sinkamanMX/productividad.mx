@@ -37,19 +37,23 @@ class My_Model_Clientes extends My_Db_Table
 		return $result;	   		
 	}
 	
-	public function insertDomCliente(){
+	public function insertDomCliente($data){
         $result     = Array();
         $result['status']  = false;
         
+        
         $sql="INSERT INTO PROD_DOMICILIOS_CLIENTE
 				SET  ID_CLIENTE	= ".$data['IdCLiente'].",
-					ESTADO		= '".$data['inputEstado']."',
-					MUNICIPIO	= '".$data['inputMunicipio']."',
-					COLONIA		= '".$data['inputcolonia']."',
+					ESTADO		= '".$data['sEstado']."',
+					MUNICIPIO	= '".$data['sMunicipio']."',
+					COLONIA		= '".$data['scolonia']."',
 					CALLE		= '".$data['inputStreet']."',
 					CP			= '".$data['inputCP']."',
-					LATITUD		=  ".$data['inputLatitud'].",
-					LONGITUD	=  ".$data['inputLongitud'];
+					NUMERO_EXT	= '".$data['inputNoExt']."',
+					NUMERO_INT	= '".$data['inputNoInt']."',
+					REFERENCIAS = '".$data['inputRefs']."', 
+					LATITUD		=  ".$data['sLatitud'].",
+					LONGITUD	=  ".$data['sLongitud'];
         try{            
     		$query   = $this->query($sql,false);
     		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";
