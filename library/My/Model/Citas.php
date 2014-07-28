@@ -73,21 +73,21 @@ class My_Model_Citas extends My_Db_Table
 	}
 	
 	public function insertExtraCitas($data){
-        $result     = false;        
-		$this->query("SET NAMES utf8",false);        
+        $result     = false;            
         $sql = "INSERT INTO PROD_CITA_EXTRAS 
-				VALUES (".$data['idCita'].",'Tarjeta Circulaci—n','".$data['inputTdc']."'),
+				VALUES (".$data['idCita'].",'".utf8_encode('Tarjeta Circulaci—n')."','".$data['inputTdc']."'),
 				(".$data['idCita'].",'Licencia de Manejo','".$data['inputLicencia']."'),
 				(".$data['idCita'].",'Vigencia de la Licencia','".$data['inputVigencia']."'),
-				(".$data['idCita'].",'Lugar de emisi—n','".$data['inputEmision']."'),
+				(".$data['idCita'].",'".utf8_encode('Lugar de emisi—n')."','".$data['inputEmision']."'),
 				(".$data['idCita'].",'Marca','".$data['inputMarca']."'),
 				(".$data['idCita'].",'Modelo','".$data['inputModelo']."'),
-				(".$data['idCita'].",'A–o','".$data['inputAno']."'),
+				(".$data['idCita'].",'".utf8_encode('A–o')."','".$data['inputAno']."'),
 				(".$data['idCita'].",'Color','".$data['inputColor']."'),
 				(".$data['idCita'].",'Placas','".$data['inputPlacas']."'),
 				(".$data['idCita'].",'No. de Serie','".$data['inputSerie']."'),
-				(".$data['idCita'].",'No. de Motor','".$data['inputMotor']."')";       
-        try{            
+				(".$data['idCita'].",'No. de Motor','".$data['inputMotor']."')";  
+        Zend_Debug::dump($sql);     
+        try{
     		$query   = $this->query($sql,false);
     		if($query){
     			$result= true;	
