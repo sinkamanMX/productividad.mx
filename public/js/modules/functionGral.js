@@ -1,8 +1,9 @@
 function getoptionsCbo(idCboTo,classObject,idObject,chosen,options){	
 	$("#div"+idCboTo).html("Cargando Información");
     var classChosen = (chosen) ? 'chosen-select': '';
-    var optionSelect= (options!='') ? 'getoptionsCbo("'+options+'","'+options+'",this.value,false,"");': '';
-    var optsCP      = (idCboTo=='colonia') ? 'getCPdir(this.value,"inputCP");': '';
+    var claseFind   = (options=='coloniaO') ? 'colonia': options;
+    var optionSelect= (options!='') ? 'getoptionsCbo("'+options+'","'+claseFind+'",this.value,false,"");': '';
+    var optsCP      = (idCboTo=='colonia' || idCboTo=='coloniaO') ? 'getCPdir(this.value,"'+idCboTo+'");': '';
     $.ajax({
         url: "/main/dashboard/getselect",
         type: "GET",
@@ -25,7 +26,16 @@ function getoptionsCbo(idCboTo,classObject,idObject,chosen,options){
 }
 
 function getCPdir(idObject,nameObject){
-    var mun = $("#inputMunicipio").val();
+    var mun      = '';    
+    var toObject = '';
+    if(nameObject=='colonia'){
+        mun      = $("#inputMunicipio").val();
+        toObject = "inputCP";
+    }else if(nameObject=='coloniaO'){
+        mun = $("#inputMunicipioO").val();
+        toObject = "inputCPO";
+    }
+
     $.ajax({
         url: "/main/dashboard/getcp",
         type: "GET",
@@ -34,7 +44,7 @@ function getCPdir(idObject,nameObject){
                 munId : mun},
         success: function(data) { 
             var result = data.answer; 
-            $("#"+nameObject).val(result);
+            $("#"+toObject).val(result);
         }
     });
 }

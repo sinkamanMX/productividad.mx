@@ -9,64 +9,106 @@ $( document ).ready(function() {
             return date.valueOf() > now.valueOf() ? 'disabled' : '';
           }
     });
-
-    $("#FormData").validate({
-        rules: {
-            inputNombre : "required",
-            inputApps   : "required",
-            inputStreet : "required",
-            inputEstado : "required",
-            inputMunicipio: "required",
-            inputcolonia: "required",
-            inputCP     : "required",
-            inputDom    : "required",
-            inputNoExt  : "required",
-            inputNac    : {
-              required: true,
-              date: true
-            },   
-            inputGenero : "required",
-            inputTel    : {
-              required: true,
-              number: true,
-              minlength: 10,
-              maxlength: 10
-            },
-            inputEmail  : {
-              required: true,
-              email: true
-            }            
-        },
-        // Se especifica el texto del mensaje a mostrar
-        messages: {
-            inputNombre : "Campo Requerido",
-            inputApps   : "Campo Requerido",
-            inputStreet : "Campo Requerido",
-            inputEstado : "Campo Requerido",
-            inputMunicipio: "Campo Requerido",
-            inputcolonia: "Campo Requerido",
-            inputCP     : "Campo Requerido",
-            inputDom    : "Campo Requerido",
-            inputNoExt  : "Campo Requerido",
-            inputNac    : {
-                 required: "Campo Requerido",
-                 date: "Ingresar una fecha válida"
-            },   
-            inputGenero : "required",
-            inputTel    : {
-              required  : "Campo Requerido",
-              number    : "Este campo acepta solo números",
-              minlength : "El Teléfono debe de ser de 10 dígitos",
-              maxlength : "El Teléfono debe de ser de 10 dígitos"
-            },
-            inputEmail  : {
-              required: "Campo Requerido",
-              email: "Debe de ingresar un mail válido"
-            } 
-        },
-        
-        submitHandler: function(form) {
-            form.submit();
-        }
-    });     
+      $("#FormData").validate({
+          rules: {
+              inputNombre : "required",
+              inputApps   : "required",
+              inputStreet : "required",
+              inputEstado : "required",
+              inputMunicipio: "required",
+              inputcolonia: "required",
+              inputCP     : "required",
+              inputDom    : "required",
+              inputNoExt  : "required",
+              inputNac    : {
+                required: true,
+                date: true
+              },   
+              inputGenero : "required",
+              inputTel    : {
+                required: true,
+                number: true,
+                minlength: 10,
+                maxlength: 10
+              },
+              inputEmail  : {
+                required: true,
+                email: true
+              }            
+          },
+          // Se especifica el texto del mensaje a mostrar
+          messages: {
+              inputNombre : "Campo Requerido",
+              inputApps   : "Campo Requerido",
+              inputStreet : "Campo Requerido",
+              inputEstado : "Campo Requerido",
+              inputMunicipio: "Campo Requerido",
+              inputcolonia: "Campo Requerido",
+              inputCP     : "Campo Requerido",
+              inputDom    : "Campo Requerido",
+              inputNoExt  : "Campo Requerido",
+              inputNac    : {
+                   required: "Campo Requerido",
+                   date: "Ingresar una fecha válida"
+              },   
+              inputGenero : "required",
+              inputTel    : {
+                required  : "Campo Requerido",
+                number    : "Este campo acepta solo números",
+                minlength : "El Teléfono debe de ser de 10 dígitos",
+                maxlength : "El Teléfono debe de ser de 10 dígitos"
+              },
+              inputEmail  : {
+                required: "Campo Requerido",
+                email: "Debe de ingresar un mail válido"
+              },
+              inputStreetO : "Campo Requerido",
+              inputEstadoO : "Campo Requerido",
+              inputMunicipioO: "Campo Requerido",
+              inputcoloniaO: "Campo Requerido",
+              inputCPO     : "Campo Requerido",
+              inputNoExtO  : "Campo Requerido"   
+          },
+          
+          submitHandler: function(form) {
+              form.submit();
+          }
+      });   
 });
+
+function differentDom(value){
+  $("#FormData").validate().resetForm();
+  if(value==0){
+    $("#cboOptsDom").show('slow');
+  }else{
+    $("#cboOptsDom").hide('slow');
+  }
+}
+
+function showFormDirection(value){  
+  if(value==2){
+    $("#divDifDom").show('slow');
+    setValidateForm(1);
+  }else{
+    $("#divDifDom").hide('slow');
+    setValidateForm(0);
+  }
+}
+
+function setValidateForm(optionValue){
+  if(optionValue==0){
+    $("#inputStreetO").rules("remove", "required");
+    $("#inputEstadoO").rules("remove", "required");
+    $("#inputMunicipioO").rules("remove", "required");
+    $("#inputcoloniaO").rules("remove", "required");
+    $("#inputCPO").rules("remove", "required");
+    $("#inputNoExtO").rules("remove", "required");
+  }else if(optionValue==1){
+    $("#inputStreetO").rules("add", {required:true});
+    $("#inputEstadoO").rules("add", {required:true});
+    $("#inputMunicipioO").rules("add", {required:true});
+    $("#inputcoloniaO").rules("add", {required:true});
+    $("#inputCPO").rules("add", {required:true});
+    $("#inputNoExtO").rules("add", {required:true});
+  }   
+}

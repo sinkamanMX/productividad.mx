@@ -82,7 +82,7 @@ class My_Controller_Functions
 		$options='';
 		for($p=0;$p<count($array);$p++){
 			$select='';
-			if($array[$p][id]==@$option){$select='selected';}
+			if($array[$p]['id']==@$option){$select='selected';}
 			$options .= '<option '.$select.' value="'.$array[$p]['id'].'" >'.$array[$p]['name'].'</option>';
 		}
 		return $options;		

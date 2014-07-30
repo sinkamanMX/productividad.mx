@@ -57,7 +57,8 @@ function initMapToDraw(){
 		google.maps.event.trigger(mapGeo, 'resize');
 	}
 	var inputDir = $("#inputDom").val();
-	if(inputDir=='1'){
+	var inputDirO = $("#inputOtherDom").val();
+	if(inputDir=='1' || inputDirO=='2'){
 		var address = $("#inputDir").val();
 	    geocoder.geocode({ 'address': address }, function (results, status) {
 	        if (status == google.maps.GeocoderStatus.OK) {

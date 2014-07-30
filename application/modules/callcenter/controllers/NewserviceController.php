@@ -5,7 +5,11 @@ class callcenter_NewserviceController extends My_Controller_Action
 	protected $_clase = 'mcallcenter';
 	public $dataIn;	
 	public $aService;
-		
+    public $aOptions = Array(
+		array("id"=>"1",'name'=> 'Centro de Instalaci&oacuten' ),
+		array("id"=>"2",'name'=>'Otro domicilio' )    
+    );    	
+
     public function init()
     {
     	try{	
@@ -27,7 +31,8 @@ class callcenter_NewserviceController extends My_Controller_Action
 
     public function indexAction()
     {
-		try{	
+		try{
+				
 			$functions = new My_Controller_Functions();
 			$estados   = new My_Model_Estados();
 			$aEstados  = $estados->getCbo();
@@ -38,7 +43,8 @@ class callcenter_NewserviceController extends My_Controller_Action
 			$this->view->estados= $functions->selectDb($aEstados);
 			$this->view->genero = $functions->cboGenero();
 			$this->view->mismoDomicilio = $functions->cboOptions();
-
+			$this->view->dirDomicilio   = $functions->cbo_from_array($this->aOptions,"1");
+			
 			if(isset($this->dataIn['optReg'])){
 				if(isset($aNamespace->service)){
 					unset($aNamespace->service);
@@ -53,11 +59,14 @@ class callcenter_NewserviceController extends My_Controller_Action
 				$this->view->estados= $functions->selectDb($aEstados,$aNamespace->service['inputEstado']);
 				$this->view->genero = $functions->cboGenero($aNamespace->service['inputGenero']);
 				$this->view->mismoDomicilio = $functions->cboOptions($aNamespace->service['inputDom']);
+				
 				$dMunicipios = $aMunicipios->getCbo($aNamespace->service['inputEstado']);
 				$this->view->municipios = $functions->selectDb($dMunicipios,$aNamespace->service['inputMunicipio']);
 				$dColonia    = $aColonias->getCbo($aNamespace->service['inputMunicipio']);
-				$this->view->colonias         = $functions->selectDb($dColonia,$aNamespace->service['inputcolonia']); 
+				$this->view->colonias       = $functions->selectDb($dColonia,$aNamespace->service['inputcolonia']);
+				$this->view->dirDomicilio   = $functions->cbo_from_array($this->aOptions,$aNamespace->service['inputDirDom']);
 			}
+			
 			
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
@@ -92,8 +101,18 @@ class callcenter_NewserviceController extends My_Controller_Action
 			if(isset($aNamespace->direction)){
 				$this->view->data   = $aNamespace->direction;
 			}
-				
-			$this->view->direccion = "Mexico,".$estado['NOMBRE'].",".$municipio['NOMBRE'].",".$colonia['NOMBRE'].",".$aNamespace->service['inputCP'].",".$aNamespace->service['inputStreet'];
+			
+			if($aNamespace->service['inputDom'] == 1){
+				$this->view->direccion = "Mexico,".$estado['NOMBRE'].",".$municipio['NOMBRE'].",".$colonia['NOMBRE'].", CP:".$aNamespace->service['inputCP'].",".$aNamespace->service['inputStreet'];	
+			}else{
+				if($aNamespace->service['inputDirDom']=="2"){
+					$estado 	= $cEstados->getData($aNamespace->service['inputEstadoO']);
+					$municipio 	= $cMunicipios->getData($aNamespace->service['inputMunicipioO'],$aNamespace->service['inputEstadoO']);
+					$colonia 	= $cColonias->getData($aNamespace->service['inputcoloniaO'],$aNamespace->service['inputMunicipioO']);					
+					$this->view->direccion = "Mexico,".$estado['NOMBRE'].",".$municipio['NOMBRE'].",".$colonia['NOMBRE']." CP:,".$aNamespace->service['inputCPO'].",".$aNamespace->service['inputStreetO'];		
+				}
+			}
+			
 			$cinstalaciones = new My_Model_Cinstalaciones();
 			$this->view->cInstalaciones = $cinstalaciones->getAll($this->view->dataUser['ID_EMPRESA']);	
 		} catch (Zend_Exception $e) {
@@ -162,7 +181,7 @@ class callcenter_NewserviceController extends My_Controller_Action
 				$aClienteData['sLatitud']	= 0.000000; 
 				$aClienteData['sLongitud']	= 0.000000;	
 								
-				if($aClienteData['inputDom']==1){
+				if($aClienteData['inputDom']==1 || $aClienteData['inputDirDom']==2){
 					$aClienteData['sLatitud']	= $aInstalacion['inputLatitude'];
 					$aClienteData['sLongitud']	= $aInstalacion['inputLongitude'];
 				}
@@ -211,17 +230,34 @@ class callcenter_NewserviceController extends My_Controller_Action
 				 * 4.-Se inserta el domicilio de la cita
 				 */	
 				if($errors==0){
-					
+					$aClienteData['idCita']    = $iCita;
+					$aClienteData['idCliente'] = $iCliente;	
+									
 					if($aClienteData['inputDom']==1){
-						$aClienteData['idCita']    = $iCita;
-						$aClienteData['idCliente'] = $iCliente;
 						$insertaDomCita = $cCitas->insertDomCita($aClienteData);
 						if(!$insertaDomCita['status']){
 							Zend_Debug::dump("error al insertar el domicilio de la cita.");
 							$errors++;
 						}							
 					}else{
-						/*Aqui se busca el centro de instalacion y se inserta*/
+						if($aClienteData['inputDirDom']==2){
+							$estado 	= $cEstados->getData($aClienteData['inputEstadoO']);
+							$municipio 	= $cMunicipios->getData($aClienteData['inputMunicipioO'],$aClienteData['inputEstadoO']);
+							$colonia 	= $cColonias->getData($aClienteData['inputcoloniaO'],$aClienteData['inputMunicipioO']);					
+							
+							$aClienteData['sEstado'] 	= $estado['NOMBRE'];
+							$aClienteData['sMunicipio'] = $municipio['NOMBRE'];
+							$aClienteData['scolonia'] 	= $colonia['NOMBRE'];		
+												
+							$insertaDomCita = $cCitas->insertDomCitaOther($aClienteData);
+							if(!$insertaDomCita['status']){
+								Zend_Debug::dump("error al insertar el domicilio de la cita.");
+								$errors++;
+							}								
+						}else if($aClienteData['inputDirDom']==1){
+							/*Aqui se busca el centro de instalacion y se inserta*/
+						}						 
+						
 					}
 				}			
 

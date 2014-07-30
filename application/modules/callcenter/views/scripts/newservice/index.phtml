@@ -92,7 +92,7 @@
 								</div>							
 							</div>						
 						</div>	
-						<div class="">
+						<div class="span12">
 							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">No. Ext<span class="required">*</span></label>
@@ -170,19 +170,129 @@
 									</div>
 								</div>							
 							</div>						
-						</div>							
+						</div>	
+
 						<div class="">
-							<div class="span12">
+							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">Instalacion en Domicilio del Cliente<span class="required">*</span></label>
 									<div class="controls">
-										<select class="span2 m-wrap" id="inputDom" name="inputDom" onChange=" ">
+										<select class="span10 m-wrap" id="inputDom" name="inputDom" onChange="differentDom(this.value)">
 											<?php echo $this->mismoDomicilio; ?>
-					                    </select>													
+					                    </select>	
 									</div>
 								</div>							
-							</div>						
-						</div>	
+							</div>											
+							<div class="span5">
+								<div id="cboOptsDom" style="display:<?php echo (@$this->data['inputDom']==0 && isset($this->data['inputDom'])) ? 'display':'none';?>;">
+									<div class="control-group">
+										<label class="control-label-lg">Domicilio de la instalación<span class="required">*</span></label>
+										<div class="controls">
+											<select class="span10 m-wrap" id="inputDirDom" name="inputDirDom" onChange="showFormDirection(this.value);">
+												<option value="0">Seleccionar una opción</option>
+												<?php echo $this->dirDomicilio; ?>
+						                    </select>
+										</div>
+									</div>				
+								</div>
+							</div>					
+						</div>
+
+						<div id="divDifDom" style="display:<?php echo (@$this->data['inputDirDom']==2 && isset($this->data['inputDirDom'])) ? 'display':'none';?>;">
+
+							<div class="">
+									<div class="span12">
+										<div class="control-group">
+											<label class="control-label-lg">Calle.<span class="required">*</span></label>
+											<div class="controls">
+												<input type="text" id="inputStreetO" name="inputStreetO" class="span9 m-wrap" value="<?php echo (@$this->data['inputStreetO']); ?>"  >
+											</div>
+										</div>							
+									</div>						
+								</div>	
+								<div class="span12">
+									<div class="span5">
+										<div class="control-group">
+											<label class="control-label-lg">No. Ext<span class="required">*</span></label>
+											<div class="controls">
+						                          <input id="inputNoExtO" name="inputNoExtO" type="text" class="form-control" value="<?php echo @$this->data['inputNoExtO']; ?>" >
+											</div>
+										</div>				
+									</div>
+									<div class="span5">
+										<div class="control-group">
+											<label class="control-label-lg">No. Int<span class="required">*</span></label>
+											<div class="controls">
+												<input type="text" id="inputNoIntO" name="inputNoIntO" class="m-wrap" value="<?php echo (@$this->data['inputNoIntO']); ?>"  >
+											</div>
+										</div>							
+									</div>						
+								</div>						
+
+								<div class="">
+									<div class="span5">
+										<div class="control-group">
+											<label class="control-label-lg">Estado<span class="required">*</span></label>
+											<div class="controls">
+												<select class="span10 m-wrap" id="inputEstadoO" name="inputEstadoO" onChange="getoptionsCbo('MunicipioO','mun',this.value,false,'coloniaO');">
+													<option value="">Seleccionar una opción</option>
+													<?php echo $this->estados; ?>
+							                    </select>
+											</div>
+										</div>							
+									</div>											
+									<div class="span5">
+										<div class="control-group">
+											<label class="control-label-lg">Municipio<span class="required">*</span></label>
+											<div class="controls">
+												<div id="divMunicipioO">
+													<select class="span10 m-wrap" id="inputMunicipioO" name="inputMunicipioO" onChange="getoptionsCbo('coloniaO','colonia',this.value,false,'');">
+														<option value="">Seleccionar una opción</option>
+														<?php echo $this->municipios; ?>
+													</select>
+												</div>												
+											</div>
+										</div>				
+									</div>					
+								</div>
+							
+								<div class="">
+									<div class="span5">
+										<div class="control-group">
+											<label class="control-label-lg">Colonia<span class="required">*</span></label>
+											<div class="controls">
+												<div id="divcoloniaO">
+													<select class="span10 m-wrap" id="inputcoloniaO" name="inputcoloniaO">
+														<option value="">Seleccionar una opción</option>
+														<?php echo $this->colonias;?>
+													</select>
+												</div>		
+											</div>
+										</div>				
+									</div>
+									<div class="span5">
+										<div class="control-group">
+											<label class="control-label-lg">C.P<span class="required">*</span></label>
+											<div class="controls">
+												<input readonly type="text" id="inputCPO" name="inputCPO" class="m-wrap" value="<?php echo (@$this->data['inputCPO']); ?>"  >
+											</div>
+										</div>							
+									</div>						
+								</div>
+								<div class="">
+									<div class="span12">
+										<div class="control-group">
+											<label class="control-label-lg">Referencias<span class="required">*</span></label>
+											<div class="controls">
+												<input type="text" id="inputRefsO" name="inputRefsO" class="span9 m-wrap" value="<?php echo (@$this->data['inputRefsO']); ?>"  >
+											</div>
+										</div>							
+									</div>						
+								</div>	
+
+
+						</div>
+
 
 						<div class="span11">
 					    	<div class="col-xs-4 col-md-5">
@@ -191,7 +301,7 @@
 									<button type="submit" class="btn btn-default bg-btn-send">Continuar</button>
 								</div>    
 					    	</div>						
-						</div>						
+						</div>
 					</fieldset>	                	
                 </form>	
         	</div>

@@ -85,4 +85,20 @@ class My_Model_Usuarios extends My_Db_Table
         }
 		return $result;	      	
     }
+    
+	
+	public function getCbOperadores(){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT $this->_primary AS ID, CONCAT(NOMBRE,' ',APELLIDOS) AS NAME 
+    			FROM $this->_name 
+    			WHERE FLAG_OPERACIONES = 1 ORDER BY NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}
+		    
 }

@@ -238,6 +238,18 @@ body {
     max-width: none !important; 
 }
 
+.hmodal300 {
+  height: 300px;
+  width: 99.9%;
+}
+/*This will work for firefox*/
+@-moz-document url-prefix() {
+    .hmodal300{
+    height: 300px;
+    width: 99.9%;
+  }
+}
+
 .hmodal280 {
   height: 280px;
   width: 99.9%;
