@@ -118,7 +118,9 @@ class My_Controller_Functions
 		   case "colonia":
 		       return new My_Model_Colonias();	
 		   case "horarios":
-		       return new My_Model_Cinstalaciones();			       	       		       	       
+		       return new My_Model_Cinstalaciones();
+		   case "modeloe":
+		       return new My_Model_Modelos();	       			       	       		       	       
 		}		
 	}
 	

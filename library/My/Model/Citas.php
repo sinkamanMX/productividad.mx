@@ -19,6 +19,7 @@ class My_Model_Citas extends My_Db_Table
 				SET ID_TPO				= 1,		
 					ID_EMPRESA  		= ".$data['ID_EMPRESA'].",
 					ID_ESTATUS  		= 1,
+					ID_CLIENTE          = ".$data['ID_CLIENTE'].",
 					ID_USUARIO_CREO 	= ".$data['ID_USUARIO'].",
 					FECHA_CITA			= '".$data['inputDate']."',
 					HORA_CITA			= '".$data['inputhorario']."',
@@ -44,7 +45,7 @@ class My_Model_Citas extends My_Db_Table
         $result     = Array();
         $result['status']  = false;
         
-        $sql="INSERT INTO PROD_CITA_DOMICLIO
+        $sql="INSERT INTO PROD_CITA_DOMICILIO
 				SET ID_CITA		=  ".$data['idCita'].",
 					CALLE		= '".$data['inputStreet']."',
 					COLONIA		= '".$data['scolonia']."',
@@ -118,7 +119,7 @@ class My_Model_Citas extends My_Db_Table
         $result     = Array();
         $result['status']  = false;
         
-        $sql="INSERT INTO PROD_CITA_DOMICLIO
+        $sql="INSERT INTO PROD_CITA_DOMICILIO
 				SET ID_CITA		=  ".$data['idCita'].",
 					CALLE		= '".$data['inputStreetO']."',
 					COLONIA		= '".$data['scolonia']."',
@@ -226,7 +227,7 @@ class My_Model_Citas extends My_Db_Table
   	           INNER JOIN PROD_ESTATUS_CITA       S ON A.ID_ESTATUS = S.ID_ESTATUS	  	           
   	           LEFT JOIN PROD_CITA_USR            C ON C.ID_CITA    = A.ID_CITA
   	           LEFT JOIN USUARIOS            	  U ON C.ID_USUARIO = U.ID_USUARIO
-  	           ".$filter;    	
+  	           ".$filter;  
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query[0];			

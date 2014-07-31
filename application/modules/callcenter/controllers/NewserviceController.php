@@ -218,6 +218,7 @@ class callcenter_NewserviceController extends My_Controller_Action
 					$this->dataIn['ID_EMPRESA']  = $iEmpresa;
 					$this->dataIn['ID_USUARIO']  = $iUsuario;
 					$this->dataIn['idDomicilio'] = $iDomicilio;
+					$this->dataIn['ID_CLIENTE']  = $iCliente;					
 					$insertCita = $cCitas->insertRow($this->dataIn);
 					if(!$insertCita['status']){
 						Zend_Debug::dump("error al insertar la cita");

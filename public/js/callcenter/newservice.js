@@ -77,12 +77,13 @@ $( document ).ready(function() {
 });
 
 function differentDom(value){
-  $("#FormData").validate().resetForm();
+  $("#FormData").validate().resetForm();  
   if(value==0){
-    $("#cboOptsDom").show('slow');
+    $("#cboOptsDom").show('slow');    
   }else{
-    $("#cboOptsDom").hide('slow');
+    $("#cboOptsDom").hide('slow');    
   }
+  showFormDirection(0);
 }
 
 function showFormDirection(value){  

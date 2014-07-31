@@ -2,12 +2,13 @@
 
 class main_DashboardController extends My_Controller_Action
 {
-	protected $_clase = 'dashboard';
+	protected $_clase = 'principal';
 	public    $dataIn = Array();
 	protected $idEmpresa = -1;
 	public    $aDbTables = Array (  'mun'        => Array('nameClass'=>'Municpios'),
 									'colonia'    => Array('nameClass'=>'Colonias'),
-									'horario'    => Array('nameClass'=>'Cinstalaciones')
+									'horario'    => Array('nameClass'=>'Cinstalaciones'),
+									'modeloe'    => Array('nameClass'=>'Modelos')
 						);
 	
     public function init()
@@ -15,7 +16,7 @@ class main_DashboardController extends My_Controller_Action
 		$sessions = new My_Controller_Auth();
 		$perfiles = new My_Model_Perfiles();
         if(!$sessions->validateSession()){
-            $this->_redirect('/');		
+            $this->_redirect('/');
 		}
 		$this->view->dataUser   = $sessions->getContentSession();
 		$this->view->modules    = $perfiles->getModules($this->view->dataUser['ID_PERFIL']);

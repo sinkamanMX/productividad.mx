@@ -2,7 +2,7 @@
 
 class atn_MainController extends My_Controller_Action
 {	
-	protected $_clase = 'atn';
+	protected $_clase = 'matn';
 	public $dataIn;	
 	public $aService;
 		

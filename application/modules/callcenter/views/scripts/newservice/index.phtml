@@ -144,7 +144,7 @@
 									<label class="control-label-lg">Colonia<span class="required">*</span></label>
 									<div class="controls">
 										<div id="divcolonia">
-											<select class="span10 m-wrap" id="inputcolonia" name="inputcolonia">
+											<select class="span10 m-wrap" id="inputcolonia" name="inputcolonia" <?php echo (isset($this->data['inputcolonia'])) ? 'onChange(getCPdir(this.value,"colonia"))': '';?>>
 												<option value="">Seleccionar una opción</option>
 												<?php echo $this->colonias;?>
 											</select>
@@ -198,7 +198,7 @@
 							</div>					
 						</div>
 
-						<div id="divDifDom" style="display:<?php echo (@$this->data['inputDirDom']==2 && isset($this->data['inputDirDom'])) ? 'display':'none';?>;">
+						<div id="divDifDom" style="display:<?php echo (@$this->data['inputDirDom']==2 && isset($this->data['inputDirDom']) && $this->inputDom==1) ? 'display':'none';?>;">
 
 							<div class="">
 									<div class="span12">
@@ -262,7 +262,7 @@
 											<label class="control-label-lg">Colonia<span class="required">*</span></label>
 											<div class="controls">
 												<div id="divcoloniaO">
-													<select class="span10 m-wrap" id="inputcoloniaO" name="inputcoloniaO">
+													<select class="span10 m-wrap" id="inputcoloniaO" name="inputcoloniaO" <?php echo (isset($this->data['inputcoloniaO'])) ? 'onChange="getCPdir(this.value,\'coloniaO\')"': '';?>>
 														<option value="">Seleccionar una opción</option>
 														<?php echo $this->colonias;?>
 													</select>
