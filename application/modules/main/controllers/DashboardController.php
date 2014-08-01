@@ -8,7 +8,8 @@ class main_DashboardController extends My_Controller_Action
 	public    $aDbTables = Array (  'mun'        => Array('nameClass'=>'Municpios'),
 									'colonia'    => Array('nameClass'=>'Colonias'),
 									'horario'    => Array('nameClass'=>'Cinstalaciones'),
-									'modeloe'    => Array('nameClass'=>'Modelos')
+									'modeloe'    => Array('nameClass'=>'Modelos'),
+									'modeloa'    => Array('nameClass'=>'Modelosa')
 						);
 	
     public function init()

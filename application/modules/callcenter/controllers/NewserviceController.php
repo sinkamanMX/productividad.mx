@@ -123,11 +123,21 @@ class callcenter_NewserviceController extends My_Controller_Action
     
     public function cardetailAction(){
 		try{
+			$functions		= new My_Controller_Functions();
+			$cMarcas 		= new My_Model_Activosmarcas();
+			$cModelos 		= new My_Model_Activosmodelos();
+			$cColores		= new My_Model_Colores();
+			$sModelo		= '';
+			$sMarca			= '';
+			$sColor			= '';
+			$aMarcas		= $cMarcas->getCbo();
+			$aColores		= $cColores->getCbo();
+				
 			$aNamespace = new Zend_Session_Namespace("sService");
 			if(!isset($aNamespace->service) && !isset($aNamespace->direction)){
 				$this->_redirect('/callcenter/newservice/index');				
-			}
-
+			}				
+			
 			if(isset($this->dataIn['optReg'])){
 				if(isset($aNamespace->carDetail)){
 					unset($aNamespace->carDetail);
@@ -138,7 +148,15 @@ class callcenter_NewserviceController extends My_Controller_Action
 
 			if(isset($aNamespace->carDetail)){
 				$this->view->data   = $aNamespace->carDetail;
+				$sMarca     = $this->view->data['inputMarca'];
+				$sModelo	= $this->view->data['inputModelo'];
+				$sColor		= $this->view->data['inputColor'];
+				$aModelos	= $cModelos->getCbo($sMarca);
+				$this->view->modelos    = $functions->selectDb($aModelos,$sModelo);
 			}
+			
+			$this->view->marcas		= $functions->selectDb($aMarcas,$sMarca);			
+			$this->view->colores	= $functions->selectDb($aColores,$sColor);
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -151,6 +169,7 @@ class callcenter_NewserviceController extends My_Controller_Action
     		$iCliente 	= 0;
     		$iCita		= 0;
     		$iDomicilio = 0;
+    		$sNameCliente='';
     		$iEmpresa   = $this->view->dataUser['ID_EMPRESA'];
     		$iUsuario   = $this->view->dataUser['ID_USUARIO'];
     		
@@ -195,7 +214,8 @@ class callcenter_NewserviceController extends My_Controller_Action
 					$errors++;
 				}
 				
-				$iCliente = $insertCliente['id'];	
+				$iCliente 	  = $insertCliente['id'];
+				$sNameCliente = $aClienteData['inputNombre']." ".$aClienteData['inputApps']; 	
 				/*
 				 * 2.-Se inserta el domicilio del Cliente
 				 */
@@ -266,12 +286,32 @@ class callcenter_NewserviceController extends My_Controller_Action
 				 * 5.-Se inserta los valores extra de la cita
 				 */
 				if($errors==0){
-					$aCarDetail['idCita'] = $iCita;
+					$cModelosa	= new My_Model_Activosmodelos();
+					$cMarcasa	= new My_Model_Activosmarcas();
+					$cColores	= new My_Model_Colores();
+					
+					$dataModelo	= $cModelosa->getData($aCarDetail['inputModelo']);
+					$dataMarca	= $cMarcasa->getData($aCarDetail['inputMarca']);
+					$dataColor  = $cColores->getData($aCarDetail['inputColor']);
+					
+					$aCarDetail['idCita']	= $iCita;
+					$aCarDetail['idCliente']= $iCliente;
+					$aCarDetail['sMarca']  	= $dataMarca['DESCRIPCION'];
+					$aCarDetail['sModelo'] 	= $dataModelo['DESCRIPCION'];
+					$aCarDetail['nCliente'] = $sNameCliente;
+					$aCarDetail['sColor']   = $dataColor['DESCRIPCION'];
+					
 					$insertExtra = $cCitas->insertExtraCitas($aCarDetail);
-					if(!$insertExtra){
+					if($insertExtra){
+						$insertActPrev = $cCitas->insertActPrev($aCarDetail);
+						if(!$insertActPrev){
+							Zend_Debug::dump("error al insertar previo de la cita.");
+							$errors++;
+						}
+					}else{
 						Zend_Debug::dump("error al insertar extras de la cita.");
-						$errors++;
-					}						
+						$errors++;						
+					}					
 				}				
 
 				/*

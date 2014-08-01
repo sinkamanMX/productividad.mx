@@ -120,7 +120,9 @@ class My_Controller_Functions
 		   case "horarios":
 		       return new My_Model_Cinstalaciones();
 		   case "modeloe":
-		       return new My_Model_Modelos();	       			       	       		       	       
+		       return new My_Model_Modelos();	 
+		   case "modeloa":
+		       return new My_Model_Activosmodelos();			             			       	       		       	       
 		}		
 	}
 	

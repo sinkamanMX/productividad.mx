@@ -1,4 +1,5 @@
- <?php $this->headScript()->appendFile('/js/callcenter/cardetail.js') ?>   
+<?php $this->headScript()->appendFile('/js/modules/functionGral.js') ?>   
+<?php $this->headScript()->appendFile('/js/callcenter/cardetail.js') ?>   
  <!-- 
 Datos personales todos requeridos
 
@@ -74,7 +75,10 @@ color
 									<label class="control-label-lg">Marca
 										<span class="required">*</span></label>
 									<div class="controls">
-				                          <input id="inputMarca" name="inputMarca"  type="text" class="form-control"  data-required="1"  value="<?php echo @$this->data['inputMarca']; ?>" >
+										<select class="m-wrap" name="inputMarca" id="inputMarca" onChange="getoptionsCbo('Modelo','modeloa',this.value,'','');">
+											<option value="">Seleccionar una opción</option>
+			                                <?php echo $this->marcas;?>
+										</select>
 									</div>
 								</div>				
 							</div>
@@ -82,7 +86,12 @@ color
 								<div class="control-group">
 									<label class="control-label-lg">Modelo<span class="required">*</span></label>
 									<div class="controls">
-										<input type="text" data-required="1"  id="inputModelo" name="inputModelo" class="m-wrap" value="<?php echo (@$this->data['inputModelo']); ?>"  >
+										<div id="divModelo">
+											<select class="m-wrap" name="inputModelo" id="inputModelo"  >
+												<option value="">Seleccionar una opción</option>
+				                                <?php echo $this->modelos;?>
+											</select>
+										</div>
 									</div>
 								</div>							
 							</div>						
@@ -101,7 +110,10 @@ color
 								<div class="control-group">
 									<label class="control-label-lg">Color<span class="required">*</span></label>
 									<div class="controls">
-										<input type="text" id="inputColor" name="inputColor" class="m-wrap" value="<?php echo (@$this->data['inputColor']); ?>"  >
+										<select class="m-wrap" name="inputColor" id="inputColor">
+											<option value="">Seleccionar una opción</option>
+			                                <?php echo $this->colores;?>
+										</select>										
 									</div>
 								</div>							
 							</div>						

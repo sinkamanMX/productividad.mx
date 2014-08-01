@@ -79,10 +79,10 @@ class My_Model_Citas extends My_Db_Table
 				(".$data['idCita'].",'Licencia de Manejo','".$data['inputLicencia']."'),
 				(".$data['idCita'].",'Vigencia de la Licencia','".$data['inputVigencia']."'),
 				(".$data['idCita'].",'".utf8_encode('Lugar de emisi—n')."','".$data['inputEmision']."'),
-				(".$data['idCita'].",'Marca','".$data['inputMarca']."'),
-				(".$data['idCita'].",'Modelo','".$data['inputModelo']."'),
+				(".$data['idCita'].",'Marca','".$data['sMarca']."'),
+				(".$data['idCita'].",'Modelo','".$data['sModelo']."'),
 				(".$data['idCita'].",'".utf8_encode('A–o')."','".$data['inputAno']."'),
-				(".$data['idCita'].",'Color','".$data['inputColor']."'),
+				(".$data['idCita'].",'Color','".$data['sColor']."'),
 				(".$data['idCita'].",'Placas','".$data['inputPlacas']."'),
 				(".$data['idCita'].",'No. de Serie','".$data['inputSerie']."'),
 				(".$data['idCita'].",'No. de Motor','".$data['inputMotor']."')";  
@@ -150,8 +150,8 @@ class My_Model_Citas extends My_Db_Table
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
     	$sql ="SELECT  'false' AS allday ,
-				'#1587bd' AS borderColor,
-				'#1587bd' AS color,
+				PROD_ESTATUS_CITA.COLOR AS borderColor,
+				PROD_ESTATUS_CITA.COLOR AS color,
 				CONCAT(CALLE,' #',NO_EXT,', Col.',COLONIA,', ',MUNICIPIO,', ',ESTADO) AS description,
 				CONCAT(FECHA_CITA,' ',HORA_CITA) AS end,
 				CONCAT(FECHA_CITA,' ',HORA_CITA) AS start ,
@@ -361,5 +361,32 @@ class My_Model_Citas extends My_Db_Table
         }
 		return $result;	   		
 	}
+	
+	public function insertActPrev($data){
+        $result     = Array();
+        $result['status']  = false;
+        
+        $sql="INSERT INTO AVL_ACTIVOS_PREVIO
+				SET ID_CLIENTE		= ".$data['idCliente'].",
+					DESCRIPCION		= '".$data['nCliente']."-".$data['inputPlacas']."',
+					IDENTIFICADOR1	= '".$data['inputPlacas']."',
+					SERIE1			= '".$data['inputSerie']."',
+					MODELO			= ".$data['idCliente'].",
+					TIPO_VEHICULO	= 1,
+					COLOR			= ".$data['inputColor']; 
+        try{            
+    		$query   = $this->query($sql,false);
+    		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";
+			$query_id   = $this->query($sql_id);
+			if(count($query_id)>0){
+				$result['id']	   = $query_id[0]['ID_LAST'];
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;			
+	}		
 			
 }
