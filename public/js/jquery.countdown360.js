@@ -54,6 +54,18 @@
         this.start();
     },
 
+    stoping: function () {
+      /*var secondsElapsed = Math.round((new Date().getTime() - this.startedAt.getTime())/1000);
+      if (this.settings.startOverAfterAdding) {
+          this.settings.seconds = this._secondsLeft(secondsElapsed) + parseInt(value);
+          this.start();
+        } else {
+          this.settings.seconds += parseInt(value);
+        }
+        */
+        this.stop();
+    },    
+
     start: function () {
       this.startedAt = new Date();
       this._drawCountdownShape(Math.PI*3.5, true);

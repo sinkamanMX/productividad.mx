@@ -46,7 +46,7 @@
                                             'dataUser'    => $this->dataUser,
                                             'modules'     => $this->modules
                                           )); ?>
-                <div class="span9" id="content">
+                <div class="<?php echo (@$this->dataUser['allwindow']) ? 'span12': 'span9';?>" id="content">
                     <div class="row-fluid">
                         <?php echo $this->layout()->content; ?>
                     </div>
