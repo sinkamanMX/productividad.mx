@@ -108,7 +108,8 @@ class My_Model_Activos extends My_Db_Table
 					   C.TELEFONO_MOVIL,
 					   CONCAT(D.CALLE,' #',D.NUMERO_EXT,', Col.',D.COLONIA,', ',D.MUNICIPIO,', ',D.ESTADO) AS DIRECCION,
 					   L.DESCRIPCION AS COLOR,
-					   A.SERIE1 AS SERIE
+					   A.SERIE1 AS SERIE,
+					   R.ID_EQUIPO
 				FROM AVL_ACTIVO A
 				INNER JOIN AVL_MODELO_ACTIVO   M ON A.ID_MODELO  = M.ID_MODELO
 				INNER JOIN AVL_MARCA_ACTIVO    V ON M.ID_MARCA   = V.ID_MARCA
@@ -137,9 +138,10 @@ class My_Model_Activos extends My_Db_Table
 							P.VELOCIDAD,
 							P.BATERIA,
 							P.UBICACION,
-							'Reporte GPS' AS EVENTO,
+							B.DESCRIPCION AS EVENTO,
 							P.FECHA_GPS
 							FROM AVL_ULTIMA_POSICION P
+							INNER JOIN AVL_EVENTOS_SW B ON P.ID_EVENTO = B.ID_EVENTO
 							WHERE P.ID_ACTIVO = $idObject LIMIT 1";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -160,10 +162,11 @@ class My_Model_Activos extends My_Db_Table
 						P.VELOCIDAD,
 						P.BATERIA,
 						P.UBICACION,
-						'Reporte GPS' AS EVENTO,
+						B.DESCRIPCION AS EVENTO,
 						P.FECHA_GPS,
 						P.ID_POSICION
 						FROM AVL_HISTORICO P
+						INNER JOIN AVL_EVENTOS_SW B ON P.ID_EVENTO = B.ID_EVENTO
 						WHERE P.ID_ACTIVO = $idObject 
 						$filter";
 		$query   = $this->query($sql);

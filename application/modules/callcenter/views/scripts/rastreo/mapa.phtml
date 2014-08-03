@@ -46,10 +46,14 @@
                             </div>        
                         </div>
                         <div class="">
-                            <button type="button" class="btn btn-large btn-block btn-info">Actualizar Posición</button>
-                            <button type="button" class="btn btn-large btn-block btn-warning">Bloquear Motor</button>
+                            <?php foreach($this->commands as $key => $items): ?> 
+                                <?php if($items['DESCRIPCION']=='APAGADO DE MOTOR'):?>
+                                    <button onClick="sendCommand(<?php echo $items['ID_COMANDO'];?>);" type="button" class="btn btn-large btn-block btn-warning">Bloquear Motor</button>
+                                <?php else:?>
+                                    <button onClick="sendCommand(<?php echo $items['ID_COMANDO'];?>);" class="btn btn-large btn-block btn-info">Actualizar Posición</button>                                
+                                <?php endif;?> 
+                            <?php endforeach;?>
                         </div>
-
                     </div>
                     <div class="span9 row-min-h300">
                         <div class="">

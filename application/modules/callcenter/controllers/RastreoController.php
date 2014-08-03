@@ -42,13 +42,15 @@ class callcenter_RastreoController extends My_Controller_Action
 		
 		if(isset($this->dataIn['strInput']) && $this->dataIn['strInput']!=""){
 			$cActivos = new My_Model_Activos();
+			$cComandos= new My_Model_Comandos();
 			$IdObject = $this->dataIn['strInput'];
 			
 			$this->view->data = $cActivos->getAllData($IdObject);
 			$this->view->data['strInput'] = $IdObject;
 			
 			$this->view->recorridoToday = $cActivos->getHistoryByDay($IdObject,true);
-			$this->view->recorridoYest  = $cActivos->getHistoryByDay($IdObject,false);
+			$this->view->recorridoYest  = $cActivos->getHistoryByDay($IdObject,false); 			
+			$this->view->commands		= $cComandos->getComandos($this->view->data['ID_EQUIPO']);
 		}else{
 			$this->_redirect('/callcenter/rastreo/index');	
 		}
