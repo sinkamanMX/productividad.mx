@@ -23,8 +23,7 @@
 						<input type="hidden" value="<?php echo $this->dataService['inputDom'];?>" id="inputDom"/>
 						<input type="hidden" value="<?php echo $this->dataService['inputDirDom'];?>" id="inputOtherDom"/>
 						<input type="hidden" value="<?php echo $this->direccion; ?>" id="inputDir"/>
-
-						<?php if($this->dataService['inputDirDom']==1):?>
+						<?php if($this->dataService['inputDirDom']==1 && $this->dataService['inputDom']==0):?>
 	                    	<div id="tabInstalacion">
 	                    		<fieldset>
 										<div class="span12">
@@ -45,19 +44,22 @@
                     		<?php if($this->dataService['inputDirDom']== 2 || $this->dataService['inputDom']==1):?>
 								<div class="spam11">Ubique la dirección en el Mapa. Puede arrastrar o dar click para tener mayor precisión</div>
                     		<?php endif;?>
-                    		<div class="block-content">
-                    			<?php if($this->dataService['inputDirDom']==1):?>
+
+                    		<div class="block-content">                    			
+                    			<?php if($this->dataService['inputDirDom']==1 && $this->dataService['inputDom']==0):?>
 	                    			<div class="span3">
 	                    				<div id="dataCentro" class="row-min-h300">
 	                    					<h3>Seleccione un Centro de Instalación</h3>
 	                    				</div>
 	                    			</div>
                     			<?php endif;?>
-                    			<div class="<?php echo ($this->dataService['inputDirDom']== 1) ? 'span9': 'span12';?> ">
+								
+                    			<div class="<?php echo ($this->dataService['inputDirDom']== 2 || $this->dataService['inputDom']==1) ? 'span12': 'span9';?> ">
 		                        	<div id="myMapDraw" style="width:100%;height:350px;">
 
 		                        	</div>
                     			</div>
+                    			
                     		</div>
                     	</div>	
                     	

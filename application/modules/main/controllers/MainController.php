@@ -73,12 +73,16 @@ class main_MainController extends My_Controller_Action
         if($sessions->validateSession()){
             $profile = new My_Model_Perfiles();
             $dataUser = $sessions->getContentSession();
-            $default = $profile->getModuleDefault($dataUser['ID_PERFIL']);	
-            if(count($default)>0){
-            	$this->_redirect($default['SCRIPT']);
+            if($dataUser['ID_PERFIL']!="" && $dataUser['ID_PERFIL']!="NULL"){
+                $default = $profile->getModuleDefault($dataUser['ID_PERFIL']);	
+	            if(count($default)>0){
+	            	$this->_redirect($default['SCRIPT']);
+	            }else{
+	            	$this->_redirect('/main/dashboard/index');	
+	            }
             }else{
-            	$this->_redirect('/main/dashboard/index');	
-            }
+            	$this->_redirect('/main/main/errorprofile');
+            }           
 		}		   	
     }
     
@@ -133,5 +137,9 @@ class main_MainController extends My_Controller_Action
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
         }    	
+    }
+    
+    public function errorprofileAction(){
+    	
     }
 }

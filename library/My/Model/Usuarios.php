@@ -99,6 +99,5 @@ class My_Model_Usuarios extends My_Db_Table
 		}	
         
 		return $result;			
-	}
-		    
+	}	    
 }

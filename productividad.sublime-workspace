@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"res",
+				"resultY"
+			],
+			[
+				"s",
+				"showDetail"
+			],
+			[
+				"sho",
+				"showForm"
+			],
+			[
+				"colonia",
+				"coloniaO"
+			],
+			[
+				"opt",
+				"options"
+			],
+			[
+				"ido",
+				"idFromObject"
+			],
+			[
 				"cent",
 				"centerInfo"
 			],
@@ -34,10 +58,6 @@
 			[
 				"op",
 				"optionSelect"
-			],
-			[
-				"opt",
-				"option"
 			],
 			[
 				"prod",
@@ -232,10 +252,6 @@
 				"shop-long-description"
 			],
 			[
-				"sho",
-				"shop-carrusel"
-			],
-			[
 				"for",
 				"formMessage"
 			],
@@ -250,10 +266,6 @@
 			[
 				"fot",
 				"font-size"
-			],
-			[
-				"s",
-				"span	Tag"
 			],
 			[
 				"d",
@@ -343,46 +355,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "application/modules/callcenter/views/scripts/newservice/index.phtml",
-			"settings":
-			{
-				"buffer_size": 7118,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/modules/callcenter/views/scripts/newservice/instalation.phtml",
-			"settings":
-			{
-				"buffer_size": 3974,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
-			"settings":
-			{
-				"buffer_size": 5905,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
-			"settings":
-			{
-				"buffer_size": 2521,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "public/js/modules/functionGral.js",
-			"settings":
-			{
-				"buffer_size": 2318,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -408,22 +380,49 @@
 	},
 	"file_history":
 	[
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/instalation.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/datefinish.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/cardetail.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/newservice.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/mapa.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/mapDetail.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/menu.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/jquery.countdown360.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateEquipments.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/controllers/MainController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/main/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/vendors/fullcalendar/fullcalendar.css",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/searchactivos.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/searchActivos.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/newservice.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/instalation.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/searchcitas.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/citadetalle.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtnSearch.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainDetalle.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtn.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/datefinish.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/productividad.sublime-project",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/vendors/fullcalendar/fullcalendar.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/MainController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/instalation.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/vendors/jquery-validation/dist/jquery.validate.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/configs/app.ini",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout_blank.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/index.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/conection.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/finish.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/cardetail.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/bootstrap-datetimepicker.min.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/bootstrap-datepicker.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/instalation.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/map/infotravel.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/DashboardController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/configs/app.ini",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/registerdate/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/registerdate.js",
@@ -431,8 +430,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/bootstrap/css/bootstrap.min.css",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/css/style.css",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout_blank.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/menu.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/petlocator/public/modules/admin/admin.js",
 		"/Users/itecno2/Documents/workspace/petlocator/public/modules/untitled",
@@ -510,32 +507,7 @@
 		"/Users/itecno2/Documents/workspace/petlocator/public/modules/home/register.js",
 		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/main/contact.phtml",
 		"/Users/itecno2/Documents/workspace/petlocator/application/modules/users/views/scripts/main/petdetail.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/public/js/bootstrap-datepicker.js",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/users/views/scripts/main/getmunicipios.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/users/controllers/MainController.php",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/main/index.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/quees/trakr.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/main/ .phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/quees/petvschip.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/quees/comousarlo.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/quees/porque.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/views/layouts/footer.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/users/views/scripts/main/infouser.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/users/views/scripts/main/shopuser.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/users/index.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/views/layouts/user_footer.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/views/layouts/layout_admin.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/README.md",
-		"/Users/itecno2/Documents/workspace/taccsi/application/modules/admin/views/scripts/services/index.phtml",
-		"/Users/itecno2/Documents/workspace/taccsi/public/modules/services/js/scripts.js",
-		"/Users/itecno2/Documents/workspace/taccsi/application/modules/admin/views/scripts/services/stepone.phtml",
-		"/Users/itecno2/Documents/workspace/ricom/firma/firma.html",
-		"/Users/itecno2/Documents/workspace/taccsi/public/modules/services/js/stepone.js",
-		"/Users/itecno2/Documents/workspace/taccsi/application/views/layouts/header_admin.phtml",
-		"/Users/itecno2/Documents/workspace/taccsi/application/modules/admin/views/scripts/admin/getmore.phtml",
-		"/Users/itecno2/Documents/workspace/taccsi/application/modules/admin/views/scripts/services/step_one.phtml",
-		"/Users/itecno2/Documents/workspace/taccsi/application/modules/admin/views/scripts/login/index.phtml",
-		"/Users/itecno2/Documents/workspace/taccsi/public/modules/login/js/login.js"
+		"/Users/itecno2/Documents/workspace/petlocator/public/js/bootstrap-datepicker.js"
 	],
 	"find":
 	{
@@ -543,7 +515,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"<open folders>",
@@ -556,6 +528,17 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"timerUpdate()",
+			"margin-top",
+			"margin",
+			"padding",
+			"COLOR",
+			"refresh",
+			"h500",
+			"h300",
+			"margin-left",
+			"margin",
+			"rules",
 			"margin",
 			"min-he",
 			"infoMarkerTable",
@@ -672,18 +655,7 @@
 			"ini",
 			"oprInicioViaje",
 			"dame_push_viaje",
-			"oprInicioViaje",
-			"opr_inicio",
-			"opr_Inicio",
-			">\n",
-			"<!",
-			"fa",
-			"com",
-			"'>\n",
-			"/>\n",
-			"header",
-			"form",
-			"%;\"></"
+			"oprInicioViaje"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -729,145 +701,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "application/modules/callcenter/views/scripts/newservice/index.phtml",
-					"settings":
-					{
-						"buffer_size": 7118,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2193,
-								2204
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 721.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "application/modules/callcenter/views/scripts/newservice/instalation.phtml",
-					"settings":
-					{
-						"buffer_size": 3974,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								848,
-								814
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"word_wrap": false
-						},
-						"translation.x": 114.0,
-						"translation.y": 596.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
-					"settings":
-					{
-						"buffer_size": 5905,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5571,
-								5571
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2330.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
-					"settings":
-					{
-						"buffer_size": 2521,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2188,
-								2188
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 494.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "public/js/modules/functionGral.js",
-					"settings":
-					{
-						"buffer_size": 2318,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2314,
-								2314
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 1.0,
-						"translation.y": 416.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -931,6 +766,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 301.0,
+	"side_bar_width": 316.0,
 	"status_bar_visible": true
 }

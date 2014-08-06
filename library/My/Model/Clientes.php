@@ -21,7 +21,11 @@ class My_Model_Clientes extends My_Db_Table
 					TELEFONO_FIJO	= '".$data['inputTel']."',
 					TELEFONO_MOVIL	= '".$data['inputCel']."',
 					EMAIL			= '".$data['inputEmail']."',
-					TIPO_PERSONA	= '".$data['inputGenero']."'";
+					RFC				= '".$data['inputRFC']."',
+					RAZON_SOCIAL	= '".$data['inputRazon']."',
+					COD_CLIENTE 	= '".$data['inputClave']."',
+					TIPO_PERSONA	= '".$data['inputTipo']."',
+					GENERO			= '".$data['inputGenero']."'";
         try{            
     		$query   = $this->query($sql,false);
     		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";

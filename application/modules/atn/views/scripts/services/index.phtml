@@ -1,0 +1,81 @@
+<?php $this->headScript()->appendFile('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false') ?>
+<?php $this->headScript()->appendFile('/js/bootstrap-slider.js'); ?> 
+<?php $this->headScript()->appendFile('/js/jquery.countdown360.js'); ?> 
+<?php $this->headStyle()->appendStyle('/css/slider.css'); ?>
+<?php echo $this->headLink()->appendStylesheet('/css/slider.css'); ?>
+<?php $this->headScript()->appendFile('/js/atn/service.js'); ?>
+
+<?php $control=0?>
+<div id="divDataPersonal" class="hide"><?php foreach($this->aTecnicos as $key => $items):?><?php echo ($control==0) ? '': '?';?><?php echo $items['ID']."|".$items['NAME']."|".$items['ID_SUCURSAL'];?><?php $control++;?><?php endforeach;?>
+</div>
+<div class="bg-white panel-data row-min-h">
+    <div class="span12 m-top-1">
+    	<div class="">
+    	</div>
+		<form method="POST" action="/callcenter/rastreo/index" id="FormData" class="form-horizontal formcustom">
+            <input type="hidden" name="option" value="getReport" />
+            <fieldset>
+                <div class="span12">
+                    <div class="span6 ">
+                        <label class="span3">Sucursal</label>
+                        <select class="m-wrap" id="cboInstalacion" name="cboInstalacion" onChange="drawSelectPersonal(this.value);">
+                            <option value="">Seleccionar una opción</option>
+                            <?php echo $this->cInstalaciones;?>                            
+                        </select>                                                   
+                    </div>
+                    <div class="span6 pull-right hide">
+                        <label class="span3">Técnicos</label>
+                        <div id="divTecnico">
+                            <select class="m-wrap" id="inputTecnico" name="inputTecnico">
+                                <option value="">Seleccionar una opción</option>
+                            </select>  
+                        </div>                                                 
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a href="#mapa" data-toggle="tab">Mapa</a></li>
+            <li><a href="#detalle" data-toggle="tab">Productividad</a></li>
+        </ul>
+
+        <div id="my-tab-content" class="tab-content bg-white">
+            <div class="tab-pane active" id="mapa">           
+                <div class="span3">
+
+                    <div class="block">
+                        <div class="navbar navbar-inner block-header">
+                            <div class="muted pull-left">Tecnicos</div>
+                        </div>
+                        <div class="block-content collapse in">
+                            <div  id="divTecnicosSelect" class="">
+                                <h4>Seleccione una Sucursal</h4>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="span9 block">
+                    <div id="Map" style="width:100%;height:400px;">
+
+                    </div>  
+                    <div class="">
+                        <div class="span12">                 
+                            <!--<span id="counterUp" class="fa-2">60</span>-->
+                            <div id="countdown" ></div>
+                                <div id="divSliderC" style="display:none;" class="block-content collapse in pull-right">
+                                    <div class="muted pull-left">Intervalo de Actualización <b><span id="labelMinutes">60 </span> segs.</b></div>
+                                    <div class="span4">                 
+                                        <input id="slideTimeUp" data-slider-id='ex1Slider' type="text" data-slider-min="10" data-slider-max="120" data-slider-step="1" data-slider-value="60"/>
+                                    </div> 
+                                </div>                                
+                        </div>                        
+                    </div>                                         
+                </div>
+            </div>
+            <div class="tab-pane active" id="detalle">           
+            	
+            </div>            
+        </div>    	        
+    </div>            
+</div>

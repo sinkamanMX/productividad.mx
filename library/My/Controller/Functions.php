@@ -40,6 +40,11 @@ class My_Controller_Functions
 		array("id"=>"M",'name'=>'Masculino' )    
     );
     
+    public $aTipoCliente = Array(
+		array("id"=>"F",'name'=>'Fisica' ),
+		array("id"=>"M",'name'=>'Moral' )    
+    );    
+    
     public $aOptions = Array(
 		array("id"=>"1",'name'=>'Si' ),
 		array("id"=>"0",'name'=>'No' )    
@@ -122,7 +127,9 @@ class My_Controller_Functions
 		   case "modeloe":
 		       return new My_Model_Modelos();	 
 		   case "modeloa":
-		       return new My_Model_Activosmodelos();			             			       	       		       	       
+		       return new My_Model_Activosmodelos();
+		   case "tecnicos":
+		   		return new My_Model_Tecnicos();			             			       	       		       	       
 		}		
 	}
 	
@@ -146,6 +153,16 @@ class My_Controller_Functions
 		}
 		return $options;
     }	
+    
+    public function cboTipoCliente($option=''){
+		$options='';
+		for($p=0;$p<count($this->aTipoCliente);$p++){
+			$select='';
+			if($this->aTipoCliente[$p]['id']==@$option){$select='selected';}
+			$options .= '<option '.$select.' value="'.$this->aTipoCliente[$p]['id'].'" >'.$this->aTipoCliente[$p]['name'].'</option>';
+		}
+		return $options;
+    }	    
     
     public function cboOptions($option=''){
 		$options='';

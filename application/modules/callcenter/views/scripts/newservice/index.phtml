@@ -1,3 +1,14 @@
+ <!-- 
+SUCURSALES_COBERTURA -> COBERTURA POR SUCURSAL
+PROD_HORARIO -> HORARIOS POR SUCURSAL
+PROD_HORARIO_USUARIO -> USUARIOS ASIGNADOS AL HORARIO DE LA SUCURSAL
+
+TABLAS PARA INSERT:
+
+PROD_HORARIO_ASIGANDO -> USUARIOS ASIGNADOS A UN HORARIO
+PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
+
+-->
  <?php $this->headScript()->appendFile('/js/callcenter/newservice.js') ?>   
    <div class="row panel-data">
 		<div class="span12">			
@@ -14,12 +25,69 @@
 				<form method="POST" action="/callcenter/newservice/index" id="FormData" class="form-horizontal ">
                 	<input type="hidden" name="optReg" value="new" />
 					<fieldset>
-						<div class="">
+						<div class="row span12 row-margin-left25">
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Tipo Cliente<span class="required">*</span></label>
+									<div class="controls">
+										<select class="span10 m-wrap" id="inputTipo" name="inputTipo" onChange="changeTypePerson(this.value)" onClick="changeTypePerson(this.value)">
+											<option value="">Seleccionar una opción</option>													
+											<?php echo $this->tipoCliente;?>
+										</select>										
+									</div>
+								</div>				
+							</div>
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Tipo instalación<span class="required">*</span></label>
+									<div class="controls">
+										<select class="span10 m-wrap" id="inputTipService" name="inputTipService">
+											<option value="">Seleccionar una opción</option>													
+											<?php echo $this->tipoService;?>
+										</select>
+									</div>
+								</div>							
+							</div>						
+						</div>
+						<div id="divMoral" style="display:<?php echo (@$this->data['inputTipo']=='M' ) ? 'block': 'none';?>;">
+							<div class="row span12 row-margin-left25">
+								<div class="span5">
+									<div class="control-group">
+										<label class="control-label-lg">RFC<span class="required">*</span></label>
+										<div class="controls">
+											<input id="inputRFC" name="inputRFC" type="text" class="form-control" value="<?php echo @$this->data['inputRFC']; ?>" >
+										</div>
+									</div>				
+								</div>
+								<div class="span5">
+									<div class="control-group">
+										<label class="control-label-lg">Razón Social<span class="required">*</span></label>
+										<div class="controls">
+											<input id="inputRazon" name="inputRazon" type="text" class="form-control" value="<?php echo @$this->data['inputRazon']; ?>" >
+										</div>
+									</div>							
+								</div>						
+							</div>
+
+							<div class="row span12">
+								<div class="span12">
+									<div class="control-group">
+										<label class="control-label-lg">Clave Cliente</label>
+										<div class="controls">
+											<input type="text" id="inputClave" name="inputClave" class="m-wrap" value="<?php echo (@$this->data['inputClave']); ?>"  >
+										</div>
+									</div>
+								</div>						
+							</div>
+
+						</div>
+
+						<div class="row span12 ">
 							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">Nombre(s)<span class="required">*</span></label>
 									<div class="controls">
-				                          <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
+				                        <input id="inputNombre" name="inputNombre" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNombre']; ?>" >
 									</div>
 								</div>				
 							</div>
@@ -32,12 +100,12 @@
 								</div>							
 							</div>						
 						</div>
-						<div class="">
+						<div class="row span12">
 							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">Fecha de Nacimiento<span class="required">*</span></label>
 									<div class="controls">
-				                          <input id="inputNac" name="inputNac" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNac']; ?>" data-date-format="YYYY-MM-DD">
+				                          <input id="inputNac" readonly name="inputNac" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputNac']; ?>" data-date-format="YYYY-MM-DD">
 									</div>
 								</div>				
 							</div>
@@ -53,7 +121,7 @@
 								</div>							
 							</div>						
 						</div>		
-						<div class="">
+						<div class="row span12">
 							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">Teléfono Fijo<span class="required">*</span></label>
@@ -71,18 +139,26 @@
 								</div>							
 							</div>						
 						</div>	
-						<div class="">
-							<div class="span12">
+						<div class="row span12">
+							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">Correo electrónico<span class="required">*</span></label>
 									<div class="controls">
 				                          <input id="inputEmail" name="inputEmail" data-required="1"  type="email" class="form-control" value="<?php echo @$this->data['inputEmail']; ?>" >
 									</div>
 								</div>							
-							</div>						
+							</div>	
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">Confirmar correo<span class="required">*</span></label>
+									<div class="controls">
+				                          <input id="inputEmailConf" name="inputEmailConf" data-required="1"  type="email" class="form-control" value="<?php echo @$this->data['inputEmailConf']; ?>" >
+									</div>
+								</div>							
+							</div>													
 						</div>										
 
-						<div class="">
+						<div class="row span12">
 							<div class="span12">
 								<div class="control-group">
 									<label class="control-label-lg">Calle.<span class="required">*</span></label>
@@ -92,7 +168,7 @@
 								</div>							
 							</div>						
 						</div>	
-						<div class="span12">
+						<div class="row span12">
 							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">No. Ext<span class="required">*</span></label>
@@ -111,7 +187,7 @@
 							</div>						
 						</div>						
 
-						<div class="">
+						<div class="row span12">
 							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">Estado<span class="required">*</span></label>
@@ -138,7 +214,7 @@
 							</div>					
 						</div>
 					
-						<div class="">
+						<div class="row span12">
 							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">Colonia<span class="required">*</span></label>
@@ -161,7 +237,7 @@
 								</div>							
 							</div>						
 						</div>
-						<div class="">
+						<div class="row span12">
 							<div class="span12">
 								<div class="control-group">
 									<label class="control-label-lg">Referencias<span class="required">*</span></label>
@@ -172,7 +248,7 @@
 							</div>						
 						</div>	
 
-						<div class="">
+						<div class="row span12">
 							<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">Instalacion en Domicilio del Cliente<span class="required">*</span></label>
@@ -200,7 +276,7 @@
 
 						<div id="divDifDom" style="display:<?php echo (@$this->data['inputDirDom']==2 && isset($this->data['inputDirDom']) && $this->inputDom==1) ? 'display':'none';?>;">
 
-							<div class="">
+							<div class="row span12">
 									<div class="span12">
 										<div class="control-group">
 											<label class="control-label-lg">Calle.<span class="required">*</span></label>
@@ -229,7 +305,7 @@
 									</div>						
 								</div>						
 
-								<div class="">
+								<div class="row span12">
 									<div class="span5">
 										<div class="control-group">
 											<label class="control-label-lg">Estado<span class="required">*</span></label>
@@ -256,7 +332,7 @@
 									</div>					
 								</div>
 							
-								<div class="">
+								<div class="row span12">
 									<div class="span5">
 										<div class="control-group">
 											<label class="control-label-lg">Colonia<span class="required">*</span></label>
@@ -279,7 +355,7 @@
 										</div>							
 									</div>						
 								</div>
-								<div class="">
+								<div class="row span12">
 									<div class="span12">
 										<div class="control-group">
 											<label class="control-label-lg">Referencias<span class="required">*</span></label>

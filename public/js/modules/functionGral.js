@@ -49,28 +49,6 @@ function getCPdir(idObject,nameObject){
     });
 }
 
-function getHorariosCbo(inDate){    
-    $("#divhorario").html("Cargando Información");
-    $.ajax({
-        url: "/main/dashboard/gethorarios",
-        type: "GET",
-        data: { dateID : inDate },
-        success: function(data) { 
-            $("#divhorario").html("");
-
-            var dataCbo = '<select class=" m-wrap id="inputhorario" name="inputhorario">';
-            if(data!="no-info"){
-                dataCbo += '<option value="">Seleccionar una opción</option>'+data+'</select>';
-            }else{
-                dataCbo += '<option value="">Sin Información</option>';
-            }
-            dataCbo += '</select>';
-                                    
-            $("#divhorario").html(dataCbo);
-        }
-    });     
-}
-
 function backToMain(){
     location.href='/callcenter/newservice/cancel';
 }

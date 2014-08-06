@@ -38,12 +38,16 @@ class callcenter_NewserviceController extends My_Controller_Action
 			$aEstados  = $estados->getCbo();
 			$aMunicipios=new My_Model_Municipios();
 			$aColonias = new My_Model_Colonias();
+			$cCitas	   = new My_Model_Citas(); 			
 			 
 			$aNamespace = new Zend_Session_Namespace("sService");
 			$this->view->estados= $functions->selectDb($aEstados);
 			$this->view->genero = $functions->cboGenero();
+			$tipoServicio		= $cCitas->getCboTipoServicio();
 			$this->view->mismoDomicilio = $functions->cboOptions();
 			$this->view->dirDomicilio   = $functions->cbo_from_array($this->aOptions,"1");
+			$this->view->tipoCliente    = $functions->cboTipoCliente();
+			$this->view->tipoService	= $functions->selectDb($tipoServicio);						
 			
 			if(isset($this->dataIn['optReg'])){
 				if(isset($aNamespace->service)){
@@ -59,6 +63,8 @@ class callcenter_NewserviceController extends My_Controller_Action
 				$this->view->estados= $functions->selectDb($aEstados,$aNamespace->service['inputEstado']);
 				$this->view->genero = $functions->cboGenero($aNamespace->service['inputGenero']);
 				$this->view->mismoDomicilio = $functions->cboOptions($aNamespace->service['inputDom']);
+				$this->view->tipoCliente    = $functions->cboTipoCliente($aNamespace->service['inputTipo']);
+				$this->view->tipoService	= $functions->selectDb($tipoServicio,$aNamespace->service['inputTipService']);
 				
 				$dMunicipios = $aMunicipios->getCbo($aNamespace->service['inputEstado']);
 				$this->view->municipios = $functions->selectDb($dMunicipios,$aNamespace->service['inputMunicipio']);
@@ -103,7 +109,8 @@ class callcenter_NewserviceController extends My_Controller_Action
 			}
 			
 			if($aNamespace->service['inputDom'] == 1){
-				$this->view->direccion = "Mexico,".$estado['NOMBRE'].",".$municipio['NOMBRE'].",".$colonia['NOMBRE'].", CP:".$aNamespace->service['inputCP'].",".$aNamespace->service['inputStreet'];	
+				$this->view->direccion = $aNamespace->service['inputStreet'].", ".$colonia['NOMBRE'].", ".$municipio['NOMBRE'].", ".
+										 $estado['NOMBRE'].", "."Mexico";	
 			}else{
 				if($aNamespace->service['inputDirDom']=="2"){
 					$estado 	= $cEstados->getData($aNamespace->service['inputEstadoO']);
@@ -188,6 +195,8 @@ class callcenter_NewserviceController extends My_Controller_Action
 				$cColonias 		= new My_Model_Colonias();						
 				$cClientes 		= new My_Model_Clientes();			
 				$cCitas			= new My_Model_Citas();
+				$cHorarios		= new My_Model_Horarios();
+				$cInstalaciones = new My_Model_Cinstalaciones();				
 
 				$estado 	= $cEstados->getData($aClienteData['inputEstado']);
 				$municipio 	= $cMunicipios->getData($aClienteData['inputMunicipio'],$aClienteData['inputEstado']);
@@ -235,10 +244,13 @@ class callcenter_NewserviceController extends My_Controller_Action
 				 * 3.-Se inserta la cita
 				 */
 				if($errors==0){
+					$dataHorario			 	 = $cHorarios->getData($this->dataIn['inputhorario']); 					
 					$this->dataIn['ID_EMPRESA']  = $iEmpresa;
 					$this->dataIn['ID_USUARIO']  = $iUsuario;
 					$this->dataIn['idDomicilio'] = $iDomicilio;
-					$this->dataIn['ID_CLIENTE']  = $iCliente;					
+					$this->dataIn['ID_CLIENTE']  = $iCliente;
+					$this->dataIn['inputHora']   = $dataHorario['HORA'];
+					$this->dataIn['inputTipo']   = $aClienteData['inputTipService'];
 					$insertCita = $cCitas->insertRow($this->dataIn);
 					if(!$insertCita['status']){
 						Zend_Debug::dump("error al insertar la cita");
@@ -247,6 +259,56 @@ class callcenter_NewserviceController extends My_Controller_Action
 					$iCita = $insertCita['id'];						
 				}
 				
+				/*
+				 * 3.1 Se inserta el horario asignado a la cita
+				 */
+				if($errors==0){
+					$sucursales		= '';
+					
+					//Si la instalacion sera en el domicilio del cliente
+					if($aClienteData['inputDom']==1){
+						$dataSucursal   = $cInstalaciones->getCentroFromEdo($aClienteData['inputEstado']);
+						if($dataSucursal['SUCURSALES']!="" && $dataSucursal['SUCURSALES']!="NULL"){
+							$sucursales     = $dataSucursal['SUCURSALES'];	
+						} 
+					//Si la instalacion sera en otro domicilio dado por el cliente	
+					}elseif($aClienteData['inputDirDom']== 2){					
+						$dataSucursal   = $cInstalaciones->getCentroFromEdo($aClienteData['inputEstadoO']);					
+						if($dataSucursal['SUCURSALES']!="" && $dataSucursal['SUCURSALES']!="NULL"){
+							$sucursales     = $dataSucursal['SUCURSALES'];	
+						}					
+					//La instalacion sera en un centro de instalacion	
+					}elseif($aClienteData['inputDirDom']== 1){
+						$sucursales     = $aInstalacion['cboInstalacion'];
+					}					
+					
+					$sUassign 	= $cHorarios->getUserAssign($sucursales,$this->dataIn['inputhorario']);
+					if($sUassign!=""){
+						$this->dataIn['uAssign'] = $sUassign;
+						 
+						$insertHorario = $cHorarios->insertRow($this->dataIn);
+						if(!$insertHorario['status']){
+							Zend_Debug::dump("error al insertar la cita");
+							$errors++;
+						}						
+					}else{
+						Zend_Debug::dump("error al insertar el horario");
+						$errors++;
+					}			
+				}	
+
+				/*
+				 * 3.2 Se asigna el usuario a la cita
+				 */
+				if($errors==0){
+					$this->dataIn['idCita']    = $iCita;					
+					$insertRel	= $cCitas->assignUser($this->dataIn);		
+					if(!$insertRel['status']){
+						Zend_Debug::dump("error al insertar la cita");
+						$errors++;
+					}						
+				}					
+
 				/*
 				 * 4.-Se inserta el domicilio de la cita
 				 */	
@@ -328,7 +390,7 @@ class callcenter_NewserviceController extends My_Controller_Action
 								
 				if($errors==0){
 					$aNamespace = new Zend_Session_Namespace("sService");
-		
+					
 		    		if(isset($aNamespace->service)){
 						unset($aNamespace->service);
 					}			
@@ -374,6 +436,60 @@ class callcenter_NewserviceController extends My_Controller_Action
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
         } 	     	
+    }
+    
+    public function gethorariosAction(){
+    	try{
+    		$result	= "";
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender();    
+
+			if(isset($this->dataIn['dateID']) && $this->dataIn['dateID']!=""){
+				
+				$aNamespace = new Zend_Session_Namespace("sService");
+				if(!isset($aNamespace->service) && !isset($aNamespace->direction)){
+					$this->_redirect('/callcenter/newservice/index');				
+				}
+	
+				$aClienteData 	= $aNamespace->service;
+				$aInstalacion 	= $aNamespace->direction;
+				
+				$cInstalaciones = new My_Model_Cinstalaciones();
+				$cFunctions		= new My_Controller_Functions();
+				$sucursales		= '';
+				
+				//Si la instalacion sera en el domicilio del cliente
+				if($aClienteData['inputDom']==1){
+					$dataSucursal   = $cInstalaciones->getCentroFromEdo($aClienteData['inputEstado']);
+					if($dataSucursal['SUCURSALES']!="" && $dataSucursal['SUCURSALES']!="NULL"){
+						$sucursales     = $dataSucursal['SUCURSALES'];	
+					} 
+				//Si la instalacion sera en otro domicilio dado por el cliente	
+				}elseif($aClienteData['inputDirDom']== 2){					
+					$dataSucursal   = $cInstalaciones->getCentroFromEdo($aClienteData['inputEstadoO']);					
+					if($dataSucursal['SUCURSALES']!="" && $dataSucursal['SUCURSALES']!="NULL"){
+						$sucursales     = $dataSucursal['SUCURSALES'];	
+					}					
+				//La instalacion sera en un centro de instalacion	
+				}elseif($aClienteData['inputDirDom']== 1){
+					$sucursales     = $aInstalacion['cboInstalacion'];
+				}
+				
+				if($sucursales!=""){
+					$cHorarios 		= new My_Model_Horarios();
+					
+					$dataHorarios 	= $cHorarios->getCbo($sucursales,$this->dataIn['dateID']); 
+					$result 		= $cFunctions->selectDb($dataHorarios);
+				}else{
+					$result = '<option value="">Sin Horarios Disponibles</option>';
+				}
+
+			}
+			echo $result;
+		} catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }       	
     }
     
     public function finishAction(){

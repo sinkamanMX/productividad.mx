@@ -9,7 +9,8 @@ class main_DashboardController extends My_Controller_Action
 									'colonia'    => Array('nameClass'=>'Colonias'),
 									'horario'    => Array('nameClass'=>'Cinstalaciones'),
 									'modeloe'    => Array('nameClass'=>'Modelos'),
-									'modeloa'    => Array('nameClass'=>'Modelosa')
+									'modeloa'    => Array('nameClass'=>'Modelosa'),
+									'tecnicos'    => Array('nameClass'=>'Tecnicos')
 						);
 	
     public function init()

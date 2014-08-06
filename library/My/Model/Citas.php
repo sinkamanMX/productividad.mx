@@ -16,13 +16,13 @@ class My_Model_Citas extends My_Db_Table
         $result['status']  = false;
         
         $sql="INSERT INTO $this->_name
-				SET ID_TPO				= 1,		
+				SET ID_TPO				= ".$data['inputTipo'].",
 					ID_EMPRESA  		= ".$data['ID_EMPRESA'].",
 					ID_ESTATUS  		= 1,
 					ID_CLIENTE          = ".$data['ID_CLIENTE'].",
 					ID_USUARIO_CREO 	= ".$data['ID_USUARIO'].",
 					FECHA_CITA			= '".$data['inputDate']."',
-					HORA_CITA			= '".$data['inputhorario']."',
+					HORA_CITA			= '".$data['inputHora']."',
 					CONTACTO 			= '".$data['inputContacto']."',
 					TELEFONO_CONTACTO   = '".$data['inputTelContacto']."', 		 					 
 					FECHA_MODIFICACION 	= CURRENT_TIMESTAMP";
@@ -172,6 +172,18 @@ class My_Model_Citas extends My_Db_Table
 		return $result;			
 	}
 	
+	public function getCboTipoServicio(){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT ID_TPO AS ID, DESCRIPCION AS NAME
+				FROM PROD_TPO_CITA ORDER BY ID ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}
 	
 	public function getCboStatus(){
 		$result= Array();
@@ -387,6 +399,30 @@ class My_Model_Citas extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;			
-	}		
-			
+	}	
+
+	public function assignUser($data){
+        $result     = Array();
+        $result['status']  = false;
+        
+        $sql="INSERT INTO PROD_CITA_USR
+				SET ID_CITA		= ".$data['idCita'].",
+					ID_USUARIO	= ".$data['uAssign']; 
+        try{            
+    		$query   = $this->query($sql,false);
+    		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";
+			$query_id   = $this->query($sql_id);
+			if(count($query_id)>0){
+				$result['id']	   = $query_id[0]['ID_LAST'];
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;			
+	}
+
+	
+	
 }

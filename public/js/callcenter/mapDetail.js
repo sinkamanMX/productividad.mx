@@ -335,15 +335,11 @@ function drawRecorrido(idDay){
 
 function centerDataMap(nameInput,idDay){
 	var valuesDet ='';
-	console.log(idDay);
 	if(idDay==0){
-		console.log("#rec"+nameInput);
 		valuesDet = $("#rec"+nameInput).val();
 	}else{
 		valuesDet = $("#recYes"+nameInput).val();
 	}
-	console.log(valuesDet);
-
 	var travelInfo = valuesDet.split('|');
     var content     = '';
     var markerTable = null;
@@ -374,4 +370,26 @@ function centerDataMap(nameInput,idDay){
 		map.setZoom(20);
 	  	map.panTo(markerTable.getPosition()); 
     }			
+}
+
+function sendCommand(idCommand){
+	var idObject = $("#inputId").val();
+
+    $.ajax({
+		url: "/callcenter/rastreo/sendcommand",
+        type: "GET",
+        dataType : 'json',
+        data: { strInput  : idObject, 
+        		strCommand: idCommand },
+        success: function(data) {
+            var result = data.answer; 
+            if(result == 'insert'){
+                $("#divMessage").html("<p>Comandos enviado correctamente.</p>");
+            }else{
+            	$("#divMessage").html("<p>No fue posible enviar el comando, favor de intentar mas tarde.</p>");
+            }
+
+            $("#modalMessages").modal("show");
+        }
+    });
 }

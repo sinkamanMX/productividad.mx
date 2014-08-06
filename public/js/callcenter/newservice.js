@@ -11,6 +11,8 @@ $( document ).ready(function() {
     });
       $("#FormData").validate({
           rules: {
+              inputTipo   : "required",
+              inputTipService:"required",
               inputNombre : "required",
               inputApps   : "required",
               inputStreet : "required",
@@ -19,7 +21,7 @@ $( document ).ready(function() {
               inputcolonia: "required",
               inputCP     : "required",
               inputDom    : "required",
-              inputNoExt  : "required",
+              inputNoExt  : "required",            
               inputNac    : {
                 required: true,
                 date: true
@@ -34,10 +36,16 @@ $( document ).ready(function() {
               inputEmail  : {
                 required: true,
                 email: true
-              }            
+              },
+              inputEmailConf  : {
+                equalTo: "#inputEmail",
+                email: true
+              },                             
           },
           // Se especifica el texto del mensaje a mostrar
           messages: {
+              inputTipo   : "Campo Requerido",
+              inputTipService: "Campo Requerido",
               inputNombre : "Campo Requerido",
               inputApps   : "Campo Requerido",
               inputStreet : "Campo Requerido",
@@ -62,6 +70,13 @@ $( document ).ready(function() {
                 required: "Campo Requerido",
                 email: "Debe de ingresar un mail válido"
               },
+              inputEmailConf  : {
+                required  : "Campo Requerido",
+                equalTo   : "El email no coincide.",
+                email: "Debe de ingresar un mail válido"
+              },     
+              inputRFC     : "Campo Requerido",
+              inputRazon   : "Campo Requerido",       
               inputStreetO : "Campo Requerido",
               inputEstadoO : "Campo Requerido",
               inputMunicipioO: "Campo Requerido",
@@ -75,6 +90,19 @@ $( document ).ready(function() {
           }
       });   
 });
+
+function changeTypePerson(value){
+  $("#FormData").validate().resetForm();  
+  if(value=='M'){
+    $("#divMoral").show('slow');
+    $("#inputRFC").rules("add", {required:true});
+    $("#inputRazon").rules("add", {required:true});     
+  }else{
+    $("#divMoral").hide('slow');
+    $("#inputRFC").rules("remove", "required");
+    $("#inputRazon").rules("remove", "required");     
+  }  
+}
 
 function differentDom(value){
   $("#FormData").validate().resetForm();  

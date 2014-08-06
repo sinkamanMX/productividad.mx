@@ -28,7 +28,9 @@ class My_Model_Cinstalaciones extends My_Db_Table
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
     	$sql ="SELECT $this->_primary AS ID, DESCRIPCION AS NAME 
-    			FROM $this->_name ORDER BY NAME ASC";
+    			FROM $this->_name 
+    			WHERE  ID_EMPRESA = $idObject 
+    			ORDER BY NAME ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			
@@ -36,5 +38,18 @@ class My_Model_Cinstalaciones extends My_Db_Table
         
 		return $result;			
 	}
-		
+	
+	public function getCentroFromEdo($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT GROUP_CONCAT(ID_SUCURSAL SEPARATOR ',') AS SUCURSALES
+				FROM SUCURSALES_COBERTURA
+				WHERE ID_ESTADO = $idObject";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0];			
+		}
+        
+		return $result;		
+	}
 }

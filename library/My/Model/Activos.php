@@ -119,7 +119,7 @@ class My_Model_Activos extends My_Db_Table
 				INNER JOIN AVL_CLIENTES_ACTIVO T ON A.ID_ACTIVO  = T.ID_ACTIVO
 				INNER JOIN PROD_CLIENTES       C ON T.ID_CLIENTE = C.ID_CLIENTE
 				INNER JOIN PROD_DOMICILIOS_CLIENTE D ON C.ID_CLIENTE = D.ID_CLIENTE			
-				WHERE A.ID_ACTIVO = $idObject LIMIT 1";    	
+				WHERE A.ID_ACTIVO = $idObject LIMIT 1";   	
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query[0];			
@@ -172,6 +172,24 @@ class My_Model_Activos extends My_Db_Table
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			
+		}	
+        
+		return $result;			
+	}
+	
+	public function getActiveByPlaque($data){
+		$result= Array();
+		$this->query("SET NAMES utf8",false);
+    	$sql ="SELECT  A.ID_ACTIVO,
+					   E.ID_EQUIPO   
+				FROM AVL_ACTIVO A
+				INNER JOIN AVL_MODELO_ACTIVO   M ON A.ID_MODELO  = M.ID_MODELO
+				INNER JOIN AVL_EQUIPO_ACTIVO   R ON A.ID_ACTIVO  = R.ID_ACTIVO
+				INNER JOIN AVL_EQUIPOS         E ON R.ID_EQUIPO  = E.ID_EQUIPO 
+				WHERE A.IDENTIFICADOR1 = '$data' LIMIT 1";    
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0];			
 		}	
         
 		return $result;			
