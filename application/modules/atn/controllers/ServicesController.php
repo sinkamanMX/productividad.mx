@@ -76,4 +76,27 @@ class atn_ServicesController extends My_Controller_Action
         }     	
     }
     
+    public function getinformationAction(){
+		$this->view->layout()->setLayout('blank');
+		
+		if(isset($this->dataIn['strInput']) && $this->dataIn['strInput']){
+			$cTecnicos		= new My_Model_Tecnicos();
+			$cFunctions 	= new My_Controller_Functions();
+			$cCitas			= new My_Model_Citas();
+			$dToday			= Date("Y-m-d");
+			$dToday			= '2014-08-20';
+			
+			$aTecnicos 		= $cTecnicos->getTecnicosBySucursal($this->dataIn['strInput']);
+			$this->view->aTecnicos = $cFunctions->selectDb($aTecnicos);
+			
+			$dataResume     = $cCitas->getResumeByDay($this->dataIn['strInput'],$dToday);
+			$dataProcess	= $cFunctions->setResume($dataResume);
+			$this->view->dataResume 	 = $dataProcess;
+			$this->view->dataResumeTotal = $dataProcess['TOTAL'];
+			unset($this->view->dataResume['TOTAL']);
+		}
+    	
+    	$this->view->data = $this->dataIn;
+    }
+
 }

@@ -204,6 +204,103 @@ class My_Model_Equipos extends My_Db_Table
 		}	
         
 		return $result;	*/		
-	}    	
+	}   
 
+	public function getEventosHd($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT ID_EVENTO_HW AS ID, DESCRIPCION AS NAME
+					FROM AVL_EVENTOS_HW 
+					WHERE ID_EVENTO_HW NOT IN 
+					(
+						SELECT E.ID_EVENTO_HW 
+						FROM AVL_EVENTOS_EQUIPO E
+						INNER JOIN AVL_EVENTOS_HW W ON E.ID_EVENTO_HW  = W.ID_EVENTO_HW
+						WHERE W.ID_MODELO = $idObject
+					)
+					ORDER BY NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;		
+	}
+	
+	public function getEventosSw($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT ID_EVENTO AS ID, DESCRIPCION AS NAME
+				FROM AVL_EVENTOS_SW 
+				WHERE ID_EVENTO NOT IN 
+				(
+					SELECT E.ID_EVENTO 
+					FROM AVL_EVENTOS_EQUIPO E
+					INNER JOIN AVL_EVENTOS_SW W ON E.ID_EVENTO  = W.ID_EVENTO
+					WHERE E.ID_EQUIPO = $idObject
+				)
+				ORDER BY NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}
+	
+	public function getRelEventos($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT E.ID_EVENTO_HW, E.ID_EVENTO, W.DESCRIPCION AS EVENTO_W, S.DESCRIPCION AS EVENTO_S, E.ID_EVENTO_EQUIPO
+				FROM AVL_EVENTOS_EQUIPO E
+				INNER JOIN AVL_EVENTOS_HW W ON E.ID_EVENTO_HW = W.ID_EVENTO_HW
+				INNER JOIN AVL_EVENTOS_SW S ON E.ID_EVENTO    = S.ID_EVENTO
+				WHERE E.ID_EQUIPO = $idObject";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;					
+	}
+	
+	public function setRelEventos($data){
+        $result     = Array();
+        $result['status']  = false;
+        $sql="INSERT INTO AVL_EVENTOS_EQUIPO		 
+					SET ID_EQUIPO 	=  ".$data['catId'].",
+					ID_EVENTO		=  ".$data['inputEventSw'].",
+					ID_EVENTO_HW	=  ".$data['inputEventHd'];
+        try{            
+    		$query   = $this->query($sql,false);
+    		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";
+			$query_id   = $this->query($sql_id);
+			if(count($query_id)>0){
+				$result['id']	   = $query_id[0]['ID_LAST'];
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;			
+	}
+	
+	public function deleteRelEvent($idRel){
+        $result     = Array();
+        $result['status']  = false;
+
+        $sql="DELETE FROM  AVL_EVENTOS_EQUIPO
+					 WHERE ID_EVENTO_EQUIPO = ".$idRel."  LIMIT 1";
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;	 		
+	}
 }

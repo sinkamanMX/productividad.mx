@@ -37,7 +37,7 @@ class My_Model_Usuarios extends My_Db_Table
       	$this->query("SET NAMES utf8",false); 
         
 		$result= Array();
-    	$sql ="SELECT U.* ,P.*, S.*, E.* ,E.NOMBRE AS N_EMPRESA
+    	$sql ="SELECT U.* ,P.*, S.*, E.* ,E.NOMBRE AS N_EMPRESA,S.DESCRIPCION AS N_SUCURSAL
 				FROM USUARIOS U
 				INNER JOIN PERFILES    P  ON U.ID_PERFIL     = P.ID_PERFIL
 				INNER JOIN USR_EMPRESA UE ON U.ID_USUARIO    = UE.ID_USUARIO

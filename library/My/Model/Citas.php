@@ -423,6 +423,26 @@ class My_Model_Citas extends My_Db_Table
 		return $result;			
 	}
 
-	
+	public function getResumeByDay($idSucursal,$fecha){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR
+				FROM PROD_CITAS C
+				INNER JOIN PROD_ESTATUS_CITA S ON C.ID_ESTATUS = S.ID_ESTATUS
+				WHERE C.ID_CITA IN (
+					SELECT C.ID_CITA
+					FROM PROD_CITA_USR C 
+					INNER JOIN USR_EMPRESA E ON C.ID_USUARIO = E.ID_USUARIO 
+					WHERE E.ID_SUCURSAL IN ($idSucursal)
+					)
+				AND C.FECHA_CITA= '$fecha'
+				ORDER BY S.ID_ESTATUS";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;	
+	}
 	
 }

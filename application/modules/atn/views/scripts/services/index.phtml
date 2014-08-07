@@ -1,10 +1,9 @@
 <?php $this->headScript()->appendFile('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false') ?>
+<?php $this->headScript()->appendFile('/vendors/graphs/js/jquery.circliful.js'); ?>
 <?php $this->headScript()->appendFile('/js/bootstrap-slider.js'); ?> 
 <?php $this->headScript()->appendFile('/js/jquery.countdown360.js'); ?> 
 <?php $this->headStyle()->appendStyle('/css/slider.css'); ?>
-<?php echo $this->headLink()->appendStylesheet('/css/slider.css'); ?>
 <?php $this->headScript()->appendFile('/js/atn/service.js'); ?>
-
 <?php $control=0?>
 <div id="divDataPersonal" class="hide"><?php foreach($this->aTecnicos as $key => $items):?><?php echo ($control==0) ? '': '?';?><?php echo $items['ID']."|".$items['NAME']."|".$items['ID_SUCURSAL'];?><?php $control++;?><?php endforeach;?>
 </div>
@@ -73,8 +72,17 @@
                     </div>                                         
                 </div>
             </div>
-            <div class="tab-pane active" id="detalle">           
-            	
+            <div class="tab-pane active" id="detalle">         
+            	<div class="row span12">
+                    <!--
+                    1.- Total Ordenes del dia
+                    2.- Ordenes Pendientes del dia
+                    3.- Ordenes Terminadas
+                    -->
+                    <div id="dataSelection">
+                        <h4>Seleccione una Sucursal.</h4>
+                    </div>
+                </div>
             </div>            
         </div>    	        
     </div>            

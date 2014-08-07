@@ -82,9 +82,15 @@ class main_EquipmentController extends My_Controller_Action
 			
 			$aModelos	= $cModelos->getCbo($sMarca);
 			$this->view->modelos    = $functions->selectDb($aModelos,$sModelo);
+			
+			$aEventosHd = $classObject->getEventosHd($dataInfo['ID_MODELO']);
+			$aEventosSw = $classObject->getEventosSw($dataInfo['ID_EQUIPO']);
+			
+			$this->view->eventosHd = $functions->selectDb($aEventosHd);
+			$this->view->eventosSw = $functions->selectDb($aEventosSw);
+			$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_EQUIPO']);
 		}
-				
-		
+						
     	if($this->operation=='update'){	  		
 			if($this->idToUpdate>-1){
 				 $validateIMEI = $classObject->validateData($this->dataIn['inputImei'],$this->idToUpdate,'imei');
@@ -119,7 +125,8 @@ class main_EquipmentController extends My_Controller_Action
 			 	$validateIp = $classObject->validateData($this->dataIn['inputIp'],-1,'ip');				 	
 			 	if($validateIp){
 				 	$insert = $classObject->insertRow($this->dataIn);
-			 		if($insert['status']){						 	
+			 		if($insert['status']){	
+			 			$this->idToUpdate = $insert['id'];					 	
 					 	if($this->dataIn['inputIdAssign']!=""){
 						 	$insertRel = $classObject->setActivo($insert['id'],$this->dataIn['inputIdAssign']);
 						 	if($insertRel){
@@ -168,6 +175,39 @@ class main_EquipmentController extends My_Controller_Action
 	        die();   			
 		}
 		
+		if($this->operation=='addEvento'){
+			if(isset($this->dataIn['inputEventHd']) && $this->dataIn['inputEventHd'] && 
+			   isset($this->dataIn['inputEventSw']) && $this->dataIn['inputEventSw']){
+				$insert = $classObject->setRelEventos($this->dataIn);
+				if($insert['status']){
+					$dataInfo	= $classObject->getData($this->idToUpdate);
+					$aEventosHd = $classObject->getEventosHd($dataInfo['ID_MODELO']);
+					$aEventosSw = $classObject->getEventosSw($dataInfo['ID_EQUIPO']);
+					
+					$this->view->eventosHd = $functions->selectDb($aEventosHd);
+					$this->view->eventosSw = $functions->selectDb($aEventosSw);
+					$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_EQUIPO']);
+			 		$this->view->eventAction = true;
+			 	}				
+			}
+			
+		}else if($this->operation=='deleteEvent'){
+			if(isset($this->dataIn['idRelation']) && $this->dataIn['idRelation']){
+				$delete = $classObject->deleteRelEvent($this->dataIn['idRelation']);
+				if($delete['status']){
+					$dataInfo	= $classObject->getData($this->idToUpdate);
+					$aEventosHd = $classObject->getEventosHd($dataInfo['ID_MODELO']);
+					$aEventosSw = $classObject->getEventosSw($dataInfo['ID_EQUIPO']);
+					
+					$this->view->eventosHd = $functions->selectDb($aEventosHd);
+					$this->view->eventosSw = $functions->selectDb($aEventosSw);
+					$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_EQUIPO']);
+			 		$this->view->eventAction = true;
+				}										
+			}
+			
+		}
+		
 		if(count($this->errors)>0 && $this->operation!=""){
 			$dataInfo['DESCRIPCION'] 	= $this->dataIn['inputDesc'];
 			$dataInfo['IMEI'] 			= $this->dataIn['inputImei'];
@@ -191,7 +231,7 @@ class main_EquipmentController extends My_Controller_Action
 		}
 		
 		$this->view->marcas		= $functions->selectDb($aMarcas,$sMarca);		
-		$this->view->servidores = $functions->selectDb($aServidores,$sServidor);		
+		$this->view->servidores = $functions->selectDb($aServidores,$sServidor);				
 		
 		$this->view->data 		= $dataInfo; 
 		$this->view->errors 	= $this->errors;	

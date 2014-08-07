@@ -172,5 +172,34 @@ class My_Controller_Functions
 			$options .= '<option '.$select.' value="'.$this->aOptions[$p]['id'].'" >'.$this->aOptions[$p]['name'].'</option>';
 		}
 		return $options;
-    }	    
+    }	
+
+    public function cboHorarios($dataTable,$option=""){
+		$options='';
+		foreach($dataTable as $key => $items){
+			if($items['ASINGADOS'] < $items['DISPONIBLES']){
+				$select='';
+				if($items['ID_HORARIO']==@$option){$select='selected';}
+				$options .= '<option '.$select.' value="'.$items['ID_HORARIO'].'" >'.$items['HORARIOS'].'</option>';				
+			}
+		}
+		return $options;   	
+    }
+    
+    public function setResume($dataTable){
+		$result = Array();
+		$count = 0;
+		foreach($dataTable as $key => $items){
+			$result[$items['IDE']]['DESC']  = $items['DESCRIPCION'];
+			$result[$items['IDE']]['COLOR'] = $items['COLOR'];
+			if(isset($result[$items['IDE']]['TOTAL'])){
+				$result[$items['IDE']]['TOTAL']++;
+			}else{
+				$result[$items['IDE']]['TOTAL'] = 1;
+			}
+			$count++;
+		}
+		$result['TOTAL'] = $count;
+		return $result;    	
+    }
 }

@@ -408,3 +408,20 @@ body {
 .row-margin-left25 {
     margin-left: 25px !important;
 }
+.chzn-container{
+    display: inline-block;
+    font-size: 13px;
+    position: relative;
+    vertical-align: middle;
+    width: 100% !important;  
+}
+
+.block-content-min {
+    margin: 0.5em;
+    min-height: 0.25em;
+}
+.button-excel-15 {
+  margin-left: 5px;
+  margin-top: -15px;
+  position: fixed;
+}

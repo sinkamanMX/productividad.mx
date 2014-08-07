@@ -21,11 +21,7 @@ $( document ).ready(function() {
               inputcolonia: "required",
               inputCP     : "required",
               inputDom    : "required",
-              inputNoExt  : "required",            
-              inputNac    : {
-                required: true,
-                date: true
-              },   
+              inputNoExt  : "required", 
               inputGenero : "required",
               inputTel    : {
                 required: true,
@@ -54,11 +50,7 @@ $( document ).ready(function() {
               inputcolonia: "Campo Requerido",
               inputCP     : "Campo Requerido",
               inputDom    : "Campo Requerido",
-              inputNoExt  : "Campo Requerido",
-              inputNac    : {
-                   required: "Campo Requerido",
-                   date: "Ingresar una fecha válida"
-              },   
+              inputNoExt  : "Campo Requerido", 
               inputGenero : "required",
               inputTel    : {
                 required  : "Campo Requerido",

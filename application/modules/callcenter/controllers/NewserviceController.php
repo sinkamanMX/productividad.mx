@@ -48,7 +48,7 @@ class callcenter_NewserviceController extends My_Controller_Action
 			$this->view->dirDomicilio   = $functions->cbo_from_array($this->aOptions,"1");
 			$this->view->tipoCliente    = $functions->cboTipoCliente();
 			$this->view->tipoService	= $functions->selectDb($tipoServicio);						
-			
+
 			if(isset($this->dataIn['optReg'])){
 				if(isset($aNamespace->service)){
 					unset($aNamespace->service);
@@ -57,7 +57,6 @@ class callcenter_NewserviceController extends My_Controller_Action
 				$aNamespace->service = $this->dataIn;
 	            $this->_redirect('/callcenter/newservice/instalation');	
 			}
-			
 			if(isset($aNamespace->service)){
 				$this->view->data   = $aNamespace->service;
 				$this->view->estados= $functions->selectDb($aEstados,$aNamespace->service['inputEstado']);
@@ -282,7 +281,7 @@ class callcenter_NewserviceController extends My_Controller_Action
 						$sucursales     = $aInstalacion['cboInstalacion'];
 					}					
 					
-					$sUassign 	= $cHorarios->getUserAssign($sucursales,$this->dataIn['inputhorario']);
+					$sUassign 	= $cHorarios->getUserAssign($this->dataIn['inputDate'],$this->dataIn['inputhorario']);
 					if($sUassign!=""){
 						$this->dataIn['uAssign'] = $sUassign;
 						 
@@ -475,11 +474,17 @@ class callcenter_NewserviceController extends My_Controller_Action
 					$sucursales     = $aInstalacion['cboInstalacion'];
 				}
 				
-				if($sucursales!=""){
+				if($sucursales!=""){					
 					$cHorarios 		= new My_Model_Horarios();
-					
-					$dataHorarios 	= $cHorarios->getCbo($sucursales,$this->dataIn['dateID']); 
-					$result 		= $cFunctions->selectDb($dataHorarios);
+					$dataHorarios	= $cHorarios->getHorarios($sucursales,$this->dataIn['dateID']);
+					if(count($dataHorarios)>0){
+						$result = $cFunctions->cboHorarios($dataHorarios);	
+						if($result==""){
+							$result = '<option value="">Sin Horarios Disponibles</option>';
+						}
+					}else{
+						$result = '<option value="">Sin Horarios Disponibles</option>';	
+					}
 				}else{
 					$result = '<option value="">Sin Horarios Disponibles</option>';
 				}

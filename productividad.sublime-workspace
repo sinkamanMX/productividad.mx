@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"id",
+				"idValue"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"le",
+				"length"
+			],
+			[
+				"data",
+				"datainfo"
+			],
+			[
 				"res",
 				"resultY"
 			],
@@ -52,10 +68,6 @@
 				"addMaker"
 			],
 			[
-				"id",
-				"idCboTo"
-			],
-			[
 				"op",
 				"optionSelect"
 			],
@@ -66,14 +78,6 @@
 			[
 				"da",
 				"dashboard"
-			],
-			[
-				"data",
-				"datapromo"
-			],
-			[
-				"mar",
-				"margin-right"
 			],
 			[
 				"html",
@@ -380,33 +384,44 @@
 	},
 	"file_history":
 	[
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/mapa.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/mapDetail.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/menu.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/jquery.countdown360.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/infoEquipments.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateEquipments.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/controllers/MainController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/getinformation.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/ .phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/vendors/graphs/js/jquery.circliful.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/newservice.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/datefinish.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/instalation.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/mapDetail.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/map.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/map/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/mapa.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/main/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/css/slider.css",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/login.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/menu.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/jquery.countdown360.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/vendors/fullcalendar/fullcalendar.css",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/searchactivos.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/searchActivos.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/newservice.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/instalation.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/searchcitas.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/citadetalle.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtnSearch.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainDetalle.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtn.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/datefinish.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/productividad.sublime-project",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/vendors/fullcalendar/fullcalendar.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/MainController.php",
@@ -417,7 +432,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/index.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/conection.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/finish.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/cardetail.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/bootstrap-datetimepicker.min.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/bootstrap-datepicker.js",
@@ -497,17 +511,7 @@
 		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/shop/shops.phtml",
 		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/shop/category.phtlm",
 		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/shop/INSERT INTO pet_distribuidores (nombre,calle,no_in",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/shop/ .phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/main/getmunicipios.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/users/views/scripts/main/userdetail.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/views/layouts/user_header.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/views/layouts/user_menu.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/recovery/index.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/public/modules/profile/profile.js",
-		"/Users/itecno2/Documents/workspace/petlocator/public/modules/home/register.js",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/main/contact.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/users/views/scripts/main/petdetail.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/public/js/bootstrap-datepicker.js"
+		"/Users/itecno2/Documents/workspace/petlocator/application/modules/main/views/scripts/shop/ .phtml"
 	],
 	"find":
 	{
@@ -515,7 +519,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"<open folders>",
@@ -528,6 +532,16 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"margin",
+			"chosen",
+			"ORDER BY NAME ASC",
+			"inputTipo",
+			"margin-left",
+			"CONSOLE.LO",
+			"timerUpdate",
+			"startingOp",
+			"setDataTable",
+			"console.log",
 			"timerUpdate()",
 			"margin-top",
 			"margin",
@@ -645,17 +659,7 @@
 			"consignación:",
 			"Mail::Send",
 			"Mail::Send(",
-			"error",
-			"create_account_error",
-			"company",
-			"contact_name2",
-			"}\"",
-			"Theme by WebHost.al",
-			"marca_inicio",
-			"ini",
-			"oprInicioViaje",
-			"dame_push_viaje",
-			"oprInicioViaje"
+			"error"
 		],
 		"highlight": true,
 		"in_selection": false,

@@ -8,10 +8,11 @@ var arrayTravels="";
 var mon_timer=60;
 var startingOp=false;
 var aSelected=Array();
+var sSucursal=-1;
 
 $( document ).ready(function() {
-	$('#tabs').tab();
 	initMapToDraw();
+	$(".chzn-select").chosen();
 	$('#slideTimeUp').slider({
 		formater: function(value) {
 			mon_timer = value;
@@ -28,8 +29,40 @@ $( document ).ready(function() {
 
 
 	$('#divSliderC').hide('fast'); 
-	$("#countdown").hide('fast'); 	
+	$("#countdown").hide('fast'); 
+	drawTable();	 	
 });
+
+function drawTable(){
+    $('#dataTable').dataTable( {
+        "sDom": "<'row'<' 'l><' 'f>r>t<'row'<' 'i><' 'p>>",
+        "sPaginationType": "bootstrap",
+        "bDestroy": true,
+        "bLengthChange": false,
+        "bPaginate": true,
+        "bFilter": false,
+        "bSort": true,
+        "bJQueryUI": true,
+        "iDisplayLength": 10,      
+        "bProcessing": true,
+        "bAutoWidth": true,
+        "bSortClasses": false,
+          "oLanguage": {
+              "sInfo": "",
+              "sEmptyTable": "",
+              "sInfoEmpty" : "",
+              "sInfoFiltered": "",
+              "sLoadingRecords": "Leyendo información",
+              "sProcessing": "Procesando",
+              "sSearch": "Buscar:",
+              "sZeroRecords": "Sin registros",
+              "oPaginate": {
+                "sPrevious": "Anterior",
+                "sNext": "Siguiente"
+              }          
+          }
+    } );  	
+}
 
 function timerUpdate(){
 	$("#countdown").show('slow');
@@ -82,18 +115,21 @@ function mapClearMap(){
 }
 
 function drawSelectPersonal(idValue){
+	sSucursal = idValue;
 	stopTimer();
-	$('#inputTecnico').find('option').remove().end().append('<option value="-1">Todos</option>');
-	$("#divTecnicosSelect").html("");	
 	var datapersonal = $("#divDataPersonal").html().split("?");
+	$("#dataTable > tbody").html("");
 	for(var i=0;i<datapersonal.length;i++){
 		var datainfo = datapersonal[i].split("|");
 		
 		if(datainfo[2] == idValue){
-			$('#inputTecnico').find('option').end().append('<option value="'+datainfo[0]+'">'+datainfo[1]+'</option>');
-			$('#divTecnicosSelect').append('<div class=""><input type="checkbox" class="chkMap" name="inputChk'+datainfo[0]+'" id="inputChk'+datainfo[0]+'" value="'+datainfo[0]+'" onChange="searchSelected(this.value)"/>'+datainfo[1]+'</div>');
+			$("#dataTable tbody").append('<tr><td><input type="checkbox" class="chkMap" name="inputChk'+datainfo[0]+'" id="inputChk'+datainfo[0]+'" value="'+datainfo[0]+'" onChange="searchSelected(this.value)"/></td><td>'+datainfo[1]+'</td>'+
+					'<td> <div class="btn-group"><button class="btn btn-primary" onClick="getReport('+datainfo[0]+')"><i class="icon-globe icon-white"></i></button>'+
+						 '<button id="btnCenter'+datainfo[0]+'" class="btn btn-success btnCenter" onClick="centerTel('+datainfo[0]+')" style="display:none;"><i class="icon-map-marker icon-white"></i></button>'+
+					'</div></td></tr>');
 		}
 	}
+	drawTable();
 }
 
 function stopTimer(){
@@ -107,27 +143,43 @@ function searchSelected(strSearch){
 	if(aSelected.length>0){
 		var existe = jQuery.inArray(strSearch, aSelected);
 		if(existe<0){
-			aSelected.push(strSearch);
+			$('#btnCenter'+strSearch).show('slow');
+			aSelected.push(strSearch);			
 		}else{
+			$('#btnCenter'+strSearch).hide('slow');
 			aSelected.splice(existe,1);	
 		}
 	}else{
+		$('#btnCenter'+strSearch).show('slow');
 		aSelected.push(strSearch);
 	}
-	
-
 	mapLoadData();
 }
 
-/*
-function optionAll(){
-
+function optionAll(inputCheck){
+	if(sSucursal>-1){
+		aSelected = [];
+		if(inputCheck){
+			aSelected = [];
+			var datapersonal = $("#divDataPersonal").html().split("?");
+			for(var i=0;i<datapersonal.length;i++){
+				var datainfo = datapersonal[i].split("|");
+				
+				if(datainfo[2] == sSucursal){
+					$('#btnCenter'+datainfo[0]).show('slow');
+					aSelected.push(datainfo[0]);
+				}
+			}
+			$('.chkMap').prop('checked', true);			
+		}else{
+			$('.chkMap').prop('checked', false);
+			$('.btnCenter').hide('slow');
+		}		
+		mapLoadData();
+	}else{
+		$('#inputAllCheck').prop('checked', false);
+	}
 }
-
-function unselectedAll(){
-	aSelected = [];
-	$( '.chkMap' ).attr( 'checked', $( this ).is( ':checked' ) ? 'checked' : '' );
-}*/
 
 function mapLoadData(){
 	mapClearMap();
@@ -162,7 +214,7 @@ function printTravelsMap(){
 	    			'<tr><td align="right"><b>Fecha</b></td><td align="left">'+travelInfo[1]+' </td><tr>'+	    			
 	    			'<tr><td align="right"><b>Velocidad</b></td><td align="left">'+travelInfo[5]+' kms/h.</td><tr>'+
 	    			'<tr><td align="right"><b>Bateria</b></td><td align="left">'+travelInfo[6]+' %</td><tr>'+
-	    			'<tr><td align="right"><b>Tipo GPS</b></td><td align="left">'+travelInfo[7]+' kms/h.</td><tr>'+
+	    			'<tr><td align="right"><b>Tipo GPS</b></td><td align="left">'+travelInfo[7]+' </td><tr>'+
 	    			'<tr><td align="right"><b>Ubicación</b></td><td align="left">'+travelInfo[9]+'</td><tr>'+
 	    			'</table>';	    	
 			markerTable = new google.maps.Marker({
@@ -205,4 +257,45 @@ function infoMarkerTable(marker,content){
 	  map.setCenter(latLng); 
 	  map.panTo(latLng);     
 	});
+}
+
+function centerTel(idValue){
+	for(var i=0;i<arrayTravels.length;i++){
+		var travelInfo = arrayTravels[i].split('|');
+
+		if(idValue == travelInfo[0]){
+			var content     = '';
+		    var markerTable = null;
+		    if(travelInfo[3]!="null" && travelInfo[4]!="null"){
+		    	var latitude  = travelInfo[3]; 
+		    	var longitude = travelInfo[4]; 
+
+		    	content='<table width="350" class="table-striped" ><tr><td align="right"><b>Evento</b></td><td width="200" align="left">'+travelInfo[2]+'</td><tr>'+
+		    			'<tr><td align="right"><b>Fecha</b></td><td align="left">'+travelInfo[1]+' </td><tr>'+	    			
+		    			'<tr><td align="right"><b>Velocidad</b></td><td align="left">'+travelInfo[5]+' kms/h.</td><tr>'+
+		    			'<tr><td align="right"><b>Bateria</b></td><td align="left">'+travelInfo[6]+' %</td><tr>'+
+		    			'<tr><td align="right"><b>Tipo GPS</b></td><td align="left">'+travelInfo[7]+' </td><tr>'+
+		    			'<tr><td align="right"><b>Ubicación</b></td><td align="left">'+travelInfo[9]+'</td><tr>'+
+		    			'</table>';	    	
+				markerTable = new google.maps.Marker({
+					position: new google.maps.LatLng(latitude,longitude)
+				});
+
+		      	if(infoWindow){infoWindow.close();infoWindow.setMap(null);}
+					var marker = markerTable;
+					var latLng = marker.getPosition();
+					infoWindow.setContent(content);
+					infoWindow.open(map, marker);
+					map.setZoom(13);
+					map.setCenter(latLng); 
+					map.panTo(latLng);     
+		    	}			
+			break;
+		}
+	}
+}
+
+function getReport(idValue){
+    $('#iFrameModalMapa').attr('src','/atn/rastreo/reporte?strInput='+idValue);
+    $("#myModalMapa").modal("show");
 }

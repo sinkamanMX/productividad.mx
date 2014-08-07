@@ -77,4 +77,22 @@ class My_Model_Tecnicos extends My_Db_Table
         
 		return $result;				
 	}
+	
+	public function getTecnicosBySucursal($values){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT T.ID_TELEFONO AS ID, CONCAT(U.NOMBRE,' ',U.APELLIDOS) AS NAME, E.ID_SUCURSAL
+				FROM USR_EMPRESA E
+				INNER JOIN USUARIOS   U ON E.ID_USUARIO  = U.ID_USUARIO AND U.ID_PERFIL = 4 AND U.FLAG_OPERACIONES = 1 
+				INNER JOIN SUCURSALES S ON E.ID_SUCURSAL  = S.ID_SUCURSAL
+				INNER JOIN PROD_USR_TELEFONO T ON U.ID_USUARIO = T.ID_USUARIO
+				WHERE E.ID_SUCURSAL IN ($values)
+				ORDER BY E.ID_SUCURSAL ASC, NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}
+        
+		return $result;				
+	}
 }

@@ -4,6 +4,8 @@ $.validator.addMethod('IP4Checker', function(value) {
 }, 'IP inválida');
 
 $().ready(function() {
+    $("#tabs").tab();
+    /*$(".chosen-select").chosen();*/
     $("#btnSearch").click(function() { openSearch(); return false; });
     $("#btnDelRel").click(function() { deleteRowRel(); return false; });
 	$("#FormData").validate({
