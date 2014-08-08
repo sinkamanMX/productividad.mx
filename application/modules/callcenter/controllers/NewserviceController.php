@@ -478,7 +478,7 @@ class callcenter_NewserviceController extends My_Controller_Action
 					$cHorarios 		= new My_Model_Horarios();
 					$dataHorarios	= $cHorarios->getHorarios($sucursales,$this->dataIn['dateID']);
 					if(count($dataHorarios)>0){
-						$result = $cFunctions->cboHorarios($dataHorarios);	
+						$result = $cFunctions->cboHorarios($dataHorarios,$this->dataIn['dateID']);	
 						if($result==""){
 							$result = '<option value="">Sin Horarios Disponibles</option>';
 						}

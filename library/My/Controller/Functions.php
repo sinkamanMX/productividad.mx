@@ -174,13 +174,25 @@ class My_Controller_Functions
 		return $options;
     }	
 
-    public function cboHorarios($dataTable,$option=""){
+    public function cboHorarios($dataTable,$fecha,$option=""){
 		$options='';
+		$dia	= Date("Y-m-d");
 		foreach($dataTable as $key => $items){
-			if($items['ASINGADOS'] < $items['DISPONIBLES']){
-				$select='';
-				if($items['ID_HORARIO']==@$option){$select='selected';}
-				$options .= '<option '.$select.' value="'.$items['ID_HORARIO'].'" >'.$items['HORARIOS'].'</option>';				
+			if($dia!=$fecha){
+				if($items['ASINGADOS'] < $items['DISPONIBLES']){
+					$select='';
+					if($items['ID_HORARIO']==@$option){$select='selected';}
+					$options .= '<option '.$select.' value="'.$items['ID_HORARIO'].'" >'.$items['HORARIOS'].'</option>';				
+				}
+			}else{
+				$hora = Date("H:i"); 
+				if($items['HORA_FIN'] > $hora){
+					if($items['ASINGADOS'] < $items['DISPONIBLES']){
+						$select='';
+						if($items['ID_HORARIO']==@$option){$select='selected';}
+						$options .= '<option '.$select.' value="'.$items['ID_HORARIO'].'" >'.$items['HORARIOS'].'</option>';				
+					}					
+				}
 			}
 		}
 		return $options;   	

@@ -18,10 +18,11 @@ class My_Model_Tecnicos extends My_Db_Table
 	protected $_name 	= 'USUARIOS';
 	protected $_primary = 'ID_USUARIO';
 	
-	public function getAll($idObject){
+	public function getAll($idObject,$selectId=0){
 		$result= Array();
-		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT T.ID_TELEFONO AS ID, CONCAT(U.NOMBRE,' ',U.APELLIDOS) AS NAME, E.ID_SUCURSAL
+		$this->query("SET NAMES utf8",false);
+		$sIdSearch = ($selectId==0) ? 'T.ID_TELEFONO': 'U.ID_USUARIO'; 		
+    	$sql ="SELECT $sIdSearch AS ID, CONCAT(U.NOMBRE,' ',U.APELLIDOS) AS NAME, E.ID_SUCURSAL
 				FROM USR_EMPRESA E
 				INNER JOIN USUARIOS   U ON E.ID_USUARIO  = U.ID_USUARIO AND U.ID_PERFIL = 4 AND U.FLAG_OPERACIONES = 1 
 				INNER JOIN SUCURSALES S ON E.ID_SUCURSAL  = S.ID_SUCURSAL
@@ -81,7 +82,7 @@ class My_Model_Tecnicos extends My_Db_Table
 	public function getTecnicosBySucursal($values){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT T.ID_TELEFONO AS ID, CONCAT(U.NOMBRE,' ',U.APELLIDOS) AS NAME, E.ID_SUCURSAL
+    	$sql ="SELECT U.ID_USUARIO AS ID, CONCAT(U.NOMBRE,' ',U.APELLIDOS) AS NAME, E.ID_SUCURSAL
 				FROM USR_EMPRESA E
 				INNER JOIN USUARIOS   U ON E.ID_USUARIO  = U.ID_USUARIO AND U.ID_PERFIL = 4 AND U.FLAG_OPERACIONES = 1 
 				INNER JOIN SUCURSALES S ON E.ID_SUCURSAL  = S.ID_SUCURSAL

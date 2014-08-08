@@ -27,17 +27,47 @@ class atn_ServicesController extends My_Controller_Action
 
     public function indexAction()
     {
-		try{
-			$this->view->dataUser['allwindow'] = true;   
-			
+    	try{
+    		$this->view->dataUser['allwindow'] = true;   
 			$cInstalaciones = new My_Model_Cinstalaciones();
 			$cFunciones		= new My_Controller_Functions();
-			$cTecnicos		= new My_Model_Tecnicos();
+			$cTecnicos		= new My_Model_Tecnicos();			
+			$cCitas			= new My_Model_Citas();
 			
-			$dataCenter		= $cInstalaciones->getCbo($this->view->dataUser['ID_EMPRESA']);
-			$this->view->cInstalaciones = $cFunciones->selectDb($dataCenter);
+			$idSucursal		= -1;
+			$idTecnico		= '';			
+			$dFechaIn		= '';
+			$dFechaFin		= '';
+			$bShowUsers		= false;		
+			
+			$dataCenter		= $cInstalaciones->getCbo($this->view->dataUser['ID_EMPRESA']);			
+			$aTecnicos      = $cTecnicos->getAll($this->view->dataUser['ID_EMPRESA'],1);
 
-			$this->view->aTecnicos = $cTecnicos->getAll($this->view->dataUser['ID_EMPRESA']);			
+			if(isset($this->dataIn['optReg']) && $this->dataIn['optReg']){
+				$dFechaIn	= $this->dataIn['inputFechaIn'];
+				$dFechaFin	= $this->dataIn['inputFechaFin'];
+				$idSucursal	= $this->dataIn['cboInstalacion'];
+				$idTecnico	= $this->dataIn['inputTecnicos'];
+				$bShowUsers=true;
+			}else{
+				$dFechaIn	= Date('Y-m-d');
+				$dFechaFin	= Date('Y-m-d');
+				$idSucursal	= $this->view->dataUser['ID_SUCURSAL'];
+				$bShowUsers=true;
+			}
+			
+			$aTecnicos 		= $cTecnicos->getTecnicosBySucursal($idSucursal);
+			$dataResume     = $cCitas->getResumeByDay($idSucursal,$dFechaIn,$dFechaFin,$idTecnico);
+			$dataProcess	= $cFunciones->setResume($dataResume);
+			
+			$this->view->cInstalaciones 	= $cFunciones->selectDb($dataCenter,$idSucursal);
+			$this->view->aTecnicos 			= $cFunciones->selectDb($aTecnicos,$idTecnico);	
+			$this->view->data 				= $this->dataIn;
+			$this->view->dataResume 	 	= $dataProcess;
+			$this->view->dataResumeTotal 	= $dataProcess['TOTAL'];
+			$this->view->showUsers			= $bShowUsers;
+			$this->view->aResume 			= $dataResume;
+			unset($this->view->dataResume['TOTAL']);	
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                

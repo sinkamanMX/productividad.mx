@@ -14,7 +14,7 @@ class My_Model_Horarios extends My_Db_Table
 	public function getHorarios($aSucursales,$fecha){
  		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT ID_HORARIO,CONCAT(HORA,'-',HORA_FIN )  AS HORARIOS
+    	$sql ="SELECT ID_HORARIO,CONCAT(HORA,'-',HORA_FIN ) AS HORARIOS, HORA, HORA_FIN
 			 	FROM PROD_HORARIO 
 			 	WHERE ID_SUCURSAL IN ($aSucursales)";
 		$query   = $this->query($sql);
@@ -58,7 +58,7 @@ class My_Model_Horarios extends My_Db_Table
     	$sql ="SELECT COUNT(ID_ASIGNACION) AS ASIGNADOS
 				FROM PROD_HORARIO_ASIGNADO
 				WHERE ID_HORARIO = $idHorario 
-				  AND DIA = '$fecha' LIMIT 1";	
+				  AND DIA = '$fecha' LIMIT 1";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query[0];			

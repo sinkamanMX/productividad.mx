@@ -18,7 +18,7 @@ class My_Model_Citas extends My_Db_Table
         $sql="INSERT INTO $this->_name
 				SET ID_TPO				= ".$data['inputTipo'].",
 					ID_EMPRESA  		= ".$data['ID_EMPRESA'].",
-					ID_ESTATUS  		= 1,
+					ID_ESTATUS  		= 2,
 					ID_CLIENTE          = ".$data['ID_CLIENTE'].",
 					ID_USUARIO_CREO 	= ".$data['ID_USUARIO'].",
 					FECHA_CITA			= '".$data['inputDate']."',
@@ -423,19 +423,30 @@ class My_Model_Citas extends My_Db_Table
 		return $result;			
 	}
 
-	public function getResumeByDay($idSucursal,$fecha){
+	public function getResumeByDay($idSucursal,$dFechaIn,$dFechaFin,$idTecnico){
 		$result= Array();
-		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR
+		$this->query("SET NAMES utf8",false);
+		$sFilter = ($idTecnico!="") ? ' C.ID_USUARIO = '.$idTecnico: ' E.ID_SUCURSAL IN ('.$idSucursal.')'; 		
+    	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR,				
+				CONCAT(P.NOMBRE,' ',P.APELLIDOS) AS NOMBRE_CLIENTE,
+				C.FECHA_CITA AS F_PROGRAMADA,
+				C.HORA_CITA  AS H_PROGRAMADA,
+				IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
+				IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
+				IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO
 				FROM PROD_CITAS C
-				INNER JOIN PROD_ESTATUS_CITA S ON C.ID_ESTATUS = S.ID_ESTATUS
+				INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
+				INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
+				INNER JOIN PROD_CLIENTES       P ON C.ID_CLIENTE = P.ID_CLIENTE
+				 LEFT JOIN PROD_CITA_USR       A ON C.ID_CITA	 = A.ID_CITA
+				 LEFT JOIN USUARIOS			   U ON A.ID_USUARIO = U.ID_USUARIO 
 				WHERE C.ID_CITA IN (
 					SELECT C.ID_CITA
 					FROM PROD_CITA_USR C 
 					INNER JOIN USR_EMPRESA E ON C.ID_USUARIO = E.ID_USUARIO 
-					WHERE E.ID_SUCURSAL IN ($idSucursal)
+					WHERE $sFilter
 					)
-				AND C.FECHA_CITA= '$fecha'
+				AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'
 				ORDER BY S.ID_ESTATUS";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -444,5 +455,4 @@ class My_Model_Citas extends My_Db_Table
         
 		return $result;	
 	}
-	
 }
