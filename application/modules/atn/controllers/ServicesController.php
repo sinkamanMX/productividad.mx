@@ -5,6 +5,7 @@ class atn_ServicesController extends My_Controller_Action
 	protected $_clase = 'mservices';
 	public $dataIn;	
 	public $aService;
+	public $realPath='/var/www/vhosts/sima/htdocs/public';
 		
     public function init()
     {
@@ -128,5 +129,242 @@ class atn_ServicesController extends My_Controller_Action
     	
     	$this->view->data = $this->dataIn;
     }
+    
+
+	public function exportsearchAction(){
+		try{   			
+			$aDataForms;
+			$dataCita;
+			$validate=0;
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender();
+			$cCitas = new My_Model_Citas();
+			
+			if(isset($this->dataIn['strInput'])  	 && $this->dataIn['strInput']!=""){
+				$dataCita = $cCitas->getDataRep($this->dataIn['strInput']);
+				
+				if(count($dataCita)>0){
+					/** PHPExcel */ 
+					include 'PHPExcel.php';
+					
+					/** PHPExcel_Writer_Excel2007*/ 
+					/*include 'PHPExcel/Autoloader.php';
+					include 'PHPExcel/Writer/Excel2007.php';
+					include 'PHPExcel/Writer/PDF.php';		*/			
+					$objPHPExcel = new PHPExcel();
+					$objPHPExcel->getProperties()->setCreator("UDA")
+											 ->setLastModifiedBy("UDA")
+											 ->setTitle("Office 2007 XLSX")
+											 ->setSubject("Office 2007 XLSX")
+											 ->setDescription("Reporte del Viaje")
+											 ->setKeywords("office 2007 openxml php")
+											 ->setCategory("Reporte del Viaje");
+					
+											 
+					$styleHeader = new PHPExcel_Style();
+					$styleAutor	 = new PHPExcel_Style();
+					$styleTittle = new PHPExcel_Style();
+					$styleHeadermin = new PHPExcel_Style();
+		
+					$styleHeader->applyFromArray(array(
+						'fill' => array(
+				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+				            'color' => array('rgb' => '000000')
+				        ),
+				        'font'  => array(
+					        'bold'  => true,
+					        'color' => array('rgb' => 'FFFFFF'),
+					        'size'  => 15,
+					        'name'  => 'Calibri'
+					    )
+					));
+					$styleHeadermin->applyFromArray(array(
+						'fill' => array(
+				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+				            'color' => array('rgb' => '000000')
+				        ),
+				        'font'  => array(
+					        'bold'  => true,
+					        'color' => array('rgb' => 'FFFFFF'),
+					        'size'  => 15,
+					        'name'  => 'Calibri'
+					    )
+					));					
+					$styleAutor->applyFromArray(array(
+						'fill' => array(
+				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+				            'color' => array('rgb' => '6E6E6E')
+				        ),
+				        'font'  => array(
+					        'bold'  => true,
+					        'color' => array('rgb' => 'FFFFFF'),
+					        'name'  => 'Calibri'
+					    )
+					));
+					
+					$styleTittle->applyFromArray(array(
+						'fill' => array(
+				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+				            'color' => array('rgb' => 'BDBDBD')
+				        ),
+				        'font'  => array(
+					        'bold'  => true,
+					        'color' => array('rgb' => 'FFFFFF'),
+					        'name'  => 'Calibri'
+					    )
+					));					
+				
+					/**
+					 * Header del Reporte
+					 **/
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', 'ORDEN DE INSTALACION');
+					$objPHPExcel->getActiveSheet()->mergeCells('B2:F2');
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($styleHeader, 'B2:F2');
+					$objPHPExcel->getActiveSheet()->getStyle('B2:F2')
+									->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);	
+					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', utf8_decode('Tracking Systems de Mexico, S.A de C.V.'));
+					$objPHPExcel->getActiveSheet()->mergeCells('B3:F3');
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($styleAutor, 'B3:F3');
+					$objPHPExcel->getActiveSheet()->getStyle('B3:F3')
+									->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', 'Orden de servicio:');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', $dataCita['ID']);
+
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B6', 'Fecha:');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C6', $dataCita['FECHA_CITA']);					
+					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B7', 'Horario de la cita:');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C7', $dataCita['HORA_CITA']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C7:F7');					
+									
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B8', 'Registrada por:');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C8', $dataCita['USR_REGISTRADO']);	
+					$objPHPExcel->getActiveSheet()->mergeCells('C8:F8');										
+
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', 'Cliente:');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C9', $dataCita['NOMBRE_CLIENTE']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C9:F9');						
+					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B10', 'Domicilio del cliente');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C10', $dataCita['DIRECCION_CLIENTE1']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C10:F10');
+					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C11', $dataCita['DIRECCION_CLIENTE2']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C11:F11');											
+					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B12', 'Domicilio de instalacion:');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C12', $dataCita['DIRECCION_CITA1']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C12:F12');
+
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C13', $dataCita['DIRECCION_CITA2']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C13:F13');					
+					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B14', utf8_encode('Personal asignado:'));
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C14', $dataCita['NOMBRE_TECNICO']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C14:F14');						
+
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B15', 'Inicio de instalacion:');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C15', $dataCita['FECHA_INICIO']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C15:F15');						
+					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B16', 'Fin de instalacion:');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C16', $dataCita['FECHA_TERMINO']);	
+					$objPHPExcel->getActiveSheet()->mergeCells('C16:F16');	
+
+					$rowControl		= 18;
+					$zebraControl  	= 0;							
+					
+					$aForms = $cCitas->getFormsCita($this->dataIn['strInput']);					
+					foreach($aForms as $key => $itemsForm){
+						$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $itemsForm['TITULO']);
+						$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':F'.$rowControl);
+						$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($styleHeadermin, 'B'.$rowControl.':F'.$rowControl);						
+						$objPHPExcel->getActiveSheet()->getStyle('B'.$rowControl.':F'.$rowControl)
+									->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);													
+																
+						$rowControl++;	
+						$aDataForms = $cCitas->getDataSendbyForms($this->dataIn['strInput'],$itemsForm['ID_FORMULARIO']);
+						
+						foreach($aDataForms as $items){							
+							if($items['TIPO']=='ENCABEZADO'){
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $items['DESCRIPCION']);
+								$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':F'.$rowControl);
+								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($styleTittle, 'B'.$rowControl.':F'.$rowControl);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$rowControl.':F'.$rowControl)
+												->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);													
+								//Falta aplicar el estilo								
+							
+							}else{		
+								/*------ La respuesta es una foto ------*/						
+								if($items['T_ELEMENTO']=='9' || $items['T_ELEMENTO']=='10'){									
+									$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $items['DESCRIPCION']);
+									$objPHPExcel->getActiveSheet()->getStyle('B'.$rowControl.':F'.$rowControl)
+										->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);									
+									$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':F'.$rowControl);	
+									$rowControl++;					
+									
+									$objDrawing = new PHPExcel_Worksheet_Drawing();
+									
+									$objDrawing->setName('Picture1');
+									$objDrawing->setDescription('Picture1');
+									
+									$objDrawing->setPath($this->realPath.$items['CONTESTACION']);
+									$objDrawing->setHeight(120);
+									$objDrawing->setWidth(120);
+									$objDrawing->setOffsetX(120);
+									$objDrawing->setResizeProportional(true);
+									$objDrawing->setCoordinates('B'.$rowControl);
+									
+									$objPHPExcel->getActiveSheet()->getRowDimension('B'.$rowControl)->setRowHeight(150);
+									$objPHPExcel->getActiveSheet()->getStyle('B'.$rowControl.':F'.$rowControl)
+										->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);									
+									$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':F'.$rowControl);
+									if($items['T_ELEMENTO']=='10'){
+										$objPHPExcel->getActiveSheet()->getRowDimension($rowControl)->setRowHeight(60);	
+									}else{
+										$objPHPExcel->getActiveSheet()->getRowDimension($rowControl)->setRowHeight(200);
+									}
+									
+									$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
+									
+								/*------ La respuesta es texto    ------*/	
+								}else{
+									$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $items['DESCRIPCION']);
+									$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':C'.$rowControl);
+									$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3,  ($rowControl), $items['CONTESTACION']);								
+									$objPHPExcel->getActiveSheet()->mergeCells('D'.$rowControl.':F'.$rowControl);
+																		
+								}
+								$rowControl++;
+							}					
+						}						
+					}
+					
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('C')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('E')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('F')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('G')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('H')->setAutoSize(true);					
+					
+					$filename  = "Reporte_Cita_".date("YmdHi").".xlsx";			
+					
+					header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+					header('Content-Disposition: attachment;filename="'.$filename.'"');
+					header('Cache-Control: max-age=0');			
+					
+					$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+					$objWriter->save('php://output');
+				}
+			}
+		} catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }   
+	}		   
 
 }

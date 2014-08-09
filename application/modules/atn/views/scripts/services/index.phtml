@@ -97,7 +97,10 @@
                         <div class="button-excel-rel">
                             <?php if(count($this->aResume)>0): ?>
                                 <div class="btn-group">
+                                 <a href="javascript:alert('Exportará información');"><button class="btn btn-success"> Exportar <i class="icon-file icon-white"></i></button></a>                                    
+                            <!--
                                  <a target="_blank" href="/atn/rastreo/exportsearch?strInput=<?php echo $this->data['strInput']; ?>&inputFechaIn=<?php echo @$this->data['inputFechaIn'];?>&inputFechaFin=<?php echo @$this->data['inputFechaFin'];?>"><button class="btn btn-success"> Exportar <i class="icon-file icon-white"></i></button></a>
+                             -->
                                 </div>
                             <?php endif;?>
                         </div>                        
@@ -128,10 +131,12 @@
                                     <td><?php echo $items['FECHA_TERMINO'];?></td>
                                     <td><?php echo $items['NOMBRE_TECNICO'];?></td>
                                     <td class="text-center">
-                                        <a href="/callcenter/rastreo/mapa?strInput=<?php echo $items['ID_ACTIVO']; ?>">
+                                        <?php if($items['IDE']==4):?>
+                                        <a href="/atn/services/exportsearch?strInput=<?php echo $items['ID']; ?>">
                                             <button class="btn btn-success"> <i class="icon-file icon-white"></i>
                                             </button>
                                         </a>
+                                        <?php endif;?>
                                     </td>
                                 </tr>
                             <?php  endforeach;?>

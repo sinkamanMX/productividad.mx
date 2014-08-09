@@ -33,7 +33,7 @@ $( document ).ready(function() {
 	drawTable();	 	
 });
 
-function drawTable(){
+function drawTable(){	
     $('#dataTable').dataTable( {
         "sDom": "<'row'<' 'l><' 'f>r>t<'row'<' 'i><' 'p>>",
         "sPaginationType": "bootstrap",
@@ -61,7 +61,7 @@ function drawTable(){
                 "sNext": "Siguiente"
               }          
           }
-    } );  	
+    } );    	
 }
 
 function timerUpdate(){
@@ -118,7 +118,10 @@ function drawSelectPersonal(idValue){
 	sSucursal = idValue;
 	stopTimer();
 	var datapersonal = $("#divDataPersonal").html().split("?");
-	$("#dataTable > tbody").html("");
+	$('#dataTable').dataTable().fnClearTable();	
+	if(datapersonal.length>0){		
+		//$('#dataTable').dataTable().fnDestroy();
+	}	
 	for(var i=0;i<datapersonal.length;i++){
 		var datainfo = datapersonal[i].split("|");
 		
