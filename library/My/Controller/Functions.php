@@ -35,6 +35,11 @@ class My_Controller_Functions
 		array("id"=>"0",'name'=>'Inactivo' )    
     );    
     
+    public $optionStatusString = Array(
+		array("id"=>"S",'name'=>'Activo' ),
+		array("id"=>"N",'name'=>'Inactivo' )    
+    );       
+    
     public $aGenero = Array(
 		array("id"=>"F",'name'=>'Femenino' ),
 		array("id"=>"M",'name'=>'Masculino' )    
@@ -83,6 +88,16 @@ class My_Controller_Functions
 		return $options;
     }
     
+    public function cboStatusString($option=''){
+		$options='';
+		for($p=0;$p<count($this->optionStatusString);$p++){
+			$select='';
+			if($this->optionStatusString[$p]['id']==@$option){$select='selected';}
+			$options .= '<option '.$select.' value="'.$this->optionStatusString[$p]['id'].'" >'.$this->optionStatusString[$p]['name'].'</option>';
+		}
+		return $options;
+    }    
+    
 	public function cbo_from_array($array,$option=''){
 		$options='';
 		for($p=0;$p<count($array);$p++){
@@ -129,7 +144,9 @@ class My_Controller_Functions
 		   case "modeloa":
 		       return new My_Model_Activosmodelos();
 		   case "tecnicos":
-		   		return new My_Model_Tecnicos();			             			       	       		       	       
+		   		return new My_Model_Tecnicos();	
+		   case "modelot":
+		   		return new My_Model_Modelostel();		             			       	       		       	       
 		}		
 	}
 	

@@ -8,7 +8,7 @@ $( document ).ready(function() {
 		"bFilter": true,
 		"bSort": true,
 		"bJQueryUI": true,
-		"iDisplayLength": 10,      
+		"iDisplayLength": 5,      
 		"bProcessing": true,
 		"bAutoWidth": true,
 		"bSortClasses": false,

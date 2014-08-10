@@ -126,4 +126,26 @@ class My_Model_Horarios extends My_Db_Table
         }
 		return $result;	
     }
+    
+	public function getHorariosByUsers($idUser,$fecha){
+ 		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT R.ID_HORARIO AS ID,CONCAT(HORA,'-',HORA_FIN ) AS NAME
+				FROM PROD_HORARIO_USUARIO R
+				INNER JOIN PROD_HORARIO H ON R.ID_HORARIO = H.ID_HORARIO
+				WHERE R.ID_HORARIO NOT IN
+				(
+					SELECT ID_HORARIO
+					FROM PROD_HORARIO_ASIGNADO
+					WHERE ID_USUARIO = $idUser
+					 AND DIA = '$fecha'
+				)
+				AND R.ID_USUARIO = $idUser
+				GROUP BY R.ID_HORARIO ";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result = $query;		
+		}	
+		return $result;	
+	}    
 }

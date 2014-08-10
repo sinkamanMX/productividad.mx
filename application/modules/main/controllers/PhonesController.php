@@ -1,8 +1,8 @@
 <?php
 
-class main_EquipmentController extends My_Controller_Action
+class main_PhonesController extends My_Controller_Action
 {
-	protected $_clase = 'mequipos';
+	protected $_clase = 'mphones';
 	public $validateNumbers;
 	public $validateAlpha;
 	public $dataIn;
@@ -52,8 +52,8 @@ class main_EquipmentController extends My_Controller_Action
     public function indexAction(){
     	try{
 	    	$this->view->mOption = 'equipos';
-			$classObject = new My_Model_Equipos(); 
-			$this->view->datatTable = $classObject->getDataTables();
+			$classObject = new My_Model_Telefonos();
+			$this->view->datatTable = $classObject->getDataTables($this->view->dataUser['ID_EMPRESA']);
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -62,87 +62,91 @@ class main_EquipmentController extends My_Controller_Action
     
     public function getinfoAction(){
 		$dataInfo = Array();
-		$classObject 	= new My_Model_Equipos();
+		$classObject 	= new My_Model_Telefonos();
 		$functions 		= new My_Controller_Functions();
-		$cMarcas 		= new My_Model_Marcas();
-		$cModelos 		= new My_Model_Modelos();
-		$cServidores	= new My_Model_Servidores();
+		$cMarcas 		= new My_Model_Marcastel();
+		$cModelos 		= new My_Model_Modelostel();
 		
 		$sModelo		= '';
-		$sServidor		= '';
 		$sMarca			= '';
+		$sEstatus		= '';
 		
-		$aServidores	= $cServidores->getCbo();		
-		$aMarcas		= $cMarcas->getCbo();		
-    	if($this->idToUpdate >-1){
-			$dataInfo	= $classObject->getData($this->idToUpdate);
-			$sServidor	= $dataInfo['ID_SERVIDOR'];
+		$aMarcas		= $cMarcas->getCbo();
+        if($this->idToUpdate >-1){
+			$dataInfo	= $classObject->getDataRow($this->idToUpdate);
+			
 			$sModelo    = $dataInfo['ID_MODELO'];
 			$sMarca		= $dataInfo['ID_MARCA'];
-			
+			$sEstatus	= $dataInfo['ACTIVO'];
 			$aModelos	= $cModelos->getCbo($sMarca);
 			$this->view->modelos    = $functions->selectDb($aModelos,$sModelo);
 			
-			$aEventosHd = $classObject->getEventosHd($dataInfo['ID_MODELO']);
-			$aEventosSw = $classObject->getEventosSw($dataInfo['ID_EQUIPO']);
-			
-			$this->view->eventosHd = $functions->selectDb($aEventosHd);
-			$this->view->eventosSw = $functions->selectDb($aEventosSw);
-			$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_EQUIPO']);
+			$aEventos	= $classObject->getEventos($dataInfo['ID_TELEFONO']);
+
+			$this->view->eventos 	 = $functions->selectDb($aEventos);
+			$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_TELEFONO']);
 		}
-						
-    	if($this->operation=='update'){	  		
+	 	$this->dataIn['inputEmpresa'] = $this->view->dataUser['ID_EMPRESA'];
+	 	$this->dataIn['inputUser'] 	  = $this->view->dataUser['ID_USUARIO'];		
+		
+        if($this->operation=='update'){	  		
 			if($this->idToUpdate>-1){
 				 $validateIMEI = $classObject->validateData($this->dataIn['inputImei'],$this->idToUpdate,'imei');
 				 if($validateIMEI){
-				 	$validateIp = $classObject->validateData($this->dataIn['inputIp'],$this->idToUpdate,'ip');			 	
-				 	if($validateIp){
-						 $updated = $classObject->updateRow($this->dataIn);
-						 if($updated['status']){					 	
-						 	if($this->dataIn['inputIdAssign']!=""){
-							 	$insertRel = $classObject->setActivo($this->idToUpdate,$this->dataIn['inputIdAssign']);
-							 	if($insertRel){
-							 		$dataInfo    = $classObject->getData($this->idToUpdate);
-							 		$this->resultop = 'okRegister';
-							 	}
-						 	}else{
-							 	$dataInfo    = $classObject->getData($this->idToUpdate);
-							 	$this->resultop = 'okRegister';							 		
+					 $updated = $classObject->updateRow($this->dataIn);
+					 if($updated['status']){	
+					 	if($this->dataIn['inputIdAssign']!=""){
+						 	$insertRel = $classObject->setUser($this->idToUpdate,$this->dataIn['inputIdAssign']);
+						 	if($insertRel){
+						 		$dataInfo    = $classObject->getDataRow($this->idToUpdate);
+								$aEventos	= $classObject->getEventos($dataInfo['ID_TELEFONO']);
+					
+								$this->view->eventos 	 = $functions->selectDb($aEventos);
+								$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_TELEFONO']);						 		
+						 		$this->resultop = 'okRegister';
 						 	}
-						 }		
-				 	}else{
-				 		$this->errors['eIP'] = '1';				 		
-				 	}
+					 	}else{
+						 	$dataInfo    = $classObject->getDataRow($this->idToUpdate);
+							$aEventos	= $classObject->getEventos($dataInfo['ID_TELEFONO']);
+				
+							$this->view->eventos 	 = $functions->selectDb($aEventos);
+							$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_TELEFONO']);						 	
+						 	$this->resultop = 'okRegister';							 		
+					 	}
+					 }					 	
 				 }else{
 				 	$this->errors['eIMEI'] = '1';
-				 }	
+				 }
 			}else{
 				$this->errors['status'] = 'no-info';
 			}	
 		}else if($this->operation=='new'){					
 			$validateIMEI = $classObject->validateData($this->dataIn['inputImei'],-1,'imei');
 			 if($validateIMEI){
-			 	$validateIp = $classObject->validateData($this->dataIn['inputIp'],-1,'ip');				 	
-			 	if($validateIp){
-				 	$insert = $classObject->insertRow($this->dataIn);
-			 		if($insert['status']){	
-			 			$this->idToUpdate = $insert['id'];					 	
-					 	if($this->dataIn['inputIdAssign']!=""){
-						 	$insertRel = $classObject->setActivo($insert['id'],$this->dataIn['inputIdAssign']);
-						 	if($insertRel){
-						 		$dataInfo    = $classObject->getData($this->idToUpdate);
-						 		$this->resultop = 'okRegister';
-						 	}
-					 	}else{
-						 	$dataInfo    = $classObject->getData($this->idToUpdate);
-						 	$this->resultop = 'okRegister';							 		
+		 		$insert = $classObject->insertRow($this->dataIn);
+		 		if($insert['status']){	
+		 			$this->idToUpdate = $insert['id'];					 	
+				 	if($this->dataIn['inputIdAssign']!=""){
+					 	$insertRel = $classObject->setUser($insert['id'],$this->dataIn['inputIdAssign']);
+					 	if($insertRel){
+					 		$dataInfo    = $classObject->getDataRow($this->idToUpdate);
+							$aEventos	= $classObject->getEventos($dataInfo['ID_TELEFONO']);
+				
+							$this->view->eventos 	 = $functions->selectDb($aEventos);
+							$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_TELEFONO']);					 		
+					 		$this->resultop = 'okRegister';
 					 	}
-					}else{
-						$this->errors['status'] = 'no-insert';
-					}
-			 	}else{
-			 		$this->errors['eIP'] = '1';
-			 	}
+				 	}else{
+					 	$dataInfo    = $classObject->getDataRow($this->idToUpdate);
+						$aEventos	= $classObject->getEventos($dataInfo['ID_TELEFONO']);
+			
+						$this->view->eventos 	 = $functions->selectDb($aEventos);
+						$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_TELEFONO']);					 	
+					 	$this->resultop = 'okRegister';							 		
+				 	}
+				}else{
+					$this->errors['status'] = 'no-insert';
+				}
 			 }else{
 			 	$this->errors['eIMEI'] = '1';
 			 }			
@@ -175,18 +179,17 @@ class main_EquipmentController extends My_Controller_Action
 	        die();   			
 		}
 		
-		if($this->operation=='addEvento'){
-			if(isset($this->dataIn['inputEventHd']) && $this->dataIn['inputEventHd'] && 
-			   isset($this->dataIn['inputEventSw']) && $this->dataIn['inputEventSw']){
+		
+    	if($this->operation=='addEvento'){
+			if(isset($this->dataIn['inputEvento']) && $this->dataIn['inputEvento']){
 				$insert = $classObject->setRelEventos($this->dataIn);
 				if($insert['status']){
-					$dataInfo	= $classObject->getData($this->idToUpdate);
-					$aEventosHd = $classObject->getEventosHd($dataInfo['ID_MODELO']);
-					$aEventosSw = $classObject->getEventosSw($dataInfo['ID_EQUIPO']);
 					
-					$this->view->eventosHd = $functions->selectDb($aEventosHd);
-					$this->view->eventosSw = $functions->selectDb($aEventosSw);
-					$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_EQUIPO']);
+					$dataInfo	= $classObject->getDataRow($this->idToUpdate);
+					$aEventos	= $classObject->getEventos($dataInfo['ID_TELEFONO']);
+					
+					$this->view->eventos 	 = $functions->selectDb($aEventos);
+					$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_TELEFONO']);
 			 		$this->view->eventAction = true;
 			 	}				
 			}
@@ -195,44 +198,38 @@ class main_EquipmentController extends My_Controller_Action
 			if(isset($this->dataIn['idRelation']) && $this->dataIn['idRelation']){
 				$delete = $classObject->deleteRelEvent($this->dataIn['idRelation']);
 				if($delete['status']){
-					$dataInfo	= $classObject->getData($this->idToUpdate);
-					$aEventosHd = $classObject->getEventosHd($dataInfo['ID_MODELO']);
-					$aEventosSw = $classObject->getEventosSw($dataInfo['ID_EQUIPO']);
+					$dataInfo	= $classObject->getDataRow($this->idToUpdate);
+					$aEventos	= $classObject->getEventos($dataInfo['ID_TELEFONO']);
 					
-					$this->view->eventosHd = $functions->selectDb($aEventosHd);
-					$this->view->eventosSw = $functions->selectDb($aEventosSw);
-					$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_EQUIPO']);
+					$this->view->eventos 	 = $functions->selectDb($aEventos);
+					$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_TELEFONO']);
 			 		$this->view->eventAction = true;
 				}										
 			}
 			
-		}
+		}		
+		$estatusIn	=	'';	
 		
-		if(count($this->errors)>0 && $this->operation!=""){
+    	if(count($this->errors)>0 && $this->operation!=""){
 			$dataInfo['DESCRIPCION'] 	= $this->dataIn['inputDesc'];
 			$dataInfo['IMEI'] 			= $this->dataIn['inputImei'];
-			$dataInfo['IP'] 			= $this->dataIn['inputIp'];
+			$dataInfo['TELEFONO'] 		= $this->dataIn['inputTel'];
 			$dataInfo['ID_MODELO'] 		= $this->dataIn['inputModelo'];
-			$dataInfo['ID_MARCA'] 		= $this->dataIn['inputMarca'];
-			$dataInfo['PUERTO'] 		= $this->dataIn['inputPuerto'];
-			$dataInfo['ASIGNADO'] 		= $this->dataIn['inputSearch'];
-			$dataInfo['ID_ACTIVO'] 		= $this->dataIn['inputIdAssign'];
-			$dataInfo['ID_SERVIDOR']	= $this->dataIn['inputServidor'];
+			$dataInfo['ID_MARCA'] 		= $this->dataIn['inputMarca'];						
+			$estatusIn 					= $this->dataIn['inputEstatus'];
 
 			$dataInfo['MARCA'] 			= $this->dataIn['inputMarca'];
 			$dataInfo['MODELO'] 		= $this->dataIn['inputModelo'];
 			
-			$sServidor	= $dataInfo['ID_SERVIDOR'];
 			$sModelo    = $dataInfo['ID_MODELO'];
 			$sMarca		= $dataInfo['ID_MARCA'];
 			
 			$aModelos	= $cModelos->getCbo($sMarca);
 			$this->view->modelos    = $functions->selectDb($aModelos,$sModelo);			
-		}
+		}		
 		
-		$this->view->marcas		= $functions->selectDb($aMarcas,$sMarca);		
-		$this->view->servidores = $functions->selectDb($aServidores,$sServidor);				
-		
+		$this->view->status		= $functions->cboStatusString($sEstatus,$estatusIn);
+		$this->view->marcas		= $functions->selectDb($aMarcas,$sMarca);			
 		$this->view->data 		= $dataInfo; 
 		$this->view->errors 	= $this->errors;	
 		$this->view->resultOp   = $this->resultop;
@@ -244,10 +241,10 @@ class main_EquipmentController extends My_Controller_Action
     public function searchactivosAction(){
     		try{
 			$this->view->layout()->setLayout('layout_blank');
-			 			
-			$cActivos   = new My_Model_Activos();
-			$aActivos	= $cActivos->getDataNoAssign();			
-			$this->view->dataTable= $aActivos;
+
+			$cClassObject = new My_Model_Telefonos();
+			$aUsuarios    = $cClassObject->getDataNoAssign($this->view->dataUser['ID_EMPRESA']);
+			$this->view->dataTable= $aUsuarios;
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                

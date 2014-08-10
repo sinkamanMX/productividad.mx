@@ -115,13 +115,12 @@ function mapClearMap(){
 }
 
 function drawSelectPersonal(idValue){
+	mapClearMap();
 	sSucursal = idValue;
 	stopTimer();
+	$('#inputAllCheck').prop('checked', false);
 	var datapersonal = $("#divDataPersonal").html().split("?");
 	$('#dataTable').dataTable().fnClearTable();	
-	if(datapersonal.length>0){		
-		//$('#dataTable').dataTable().fnDestroy();
-	}	
 	for(var i=0;i<datapersonal.length;i++){
 		var datainfo = datapersonal[i].split("|");
 		
