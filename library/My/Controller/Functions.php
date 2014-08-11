@@ -196,7 +196,7 @@ class My_Controller_Functions
 		$dia	= Date("Y-m-d");
 		foreach($dataTable as $key => $items){
 			if($dia!=$fecha){
-				if($items['ASINGADOS'] < $items['DISPONIBLES']){
+				if($items['DISPONIBLES']>0){
 					$select='';
 					if($items['ID_HORARIO']==@$option){$select='selected';}
 					$options .= '<option '.$select.' value="'.$items['ID_HORARIO'].'" >'.$items['HORARIOS'].'</option>';				
@@ -204,7 +204,7 @@ class My_Controller_Functions
 			}else{
 				$hora = Date("H:i"); 
 				if($items['HORA_FIN'] > $hora){
-					if($items['ASINGADOS'] < $items['DISPONIBLES']){
+					if($items['DISPONIBLES']>0){
 						$select='';
 						if($items['ID_HORARIO']==@$option){$select='selected';}
 						$options .= '<option '.$select.' value="'.$items['ID_HORARIO'].'" >'.$items['HORARIOS'].'</option>';				

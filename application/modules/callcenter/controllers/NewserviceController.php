@@ -263,7 +263,7 @@ class callcenter_NewserviceController extends My_Controller_Action
 				 */
 				if($errors==0){
 					$sucursales		= '';
-					
+					/*
 					//Si la instalacion sera en el domicilio del cliente
 					if($aClienteData['inputDom']==1){
 						$dataSucursal   = $cInstalaciones->getCentroFromEdo($aClienteData['inputEstado']);
@@ -279,10 +279,10 @@ class callcenter_NewserviceController extends My_Controller_Action
 					//La instalacion sera en un centro de instalacion	
 					}elseif($aClienteData['inputDirDom']== 1){
 						$sucursales     = $aInstalacion['cboInstalacion'];
-					}					
+					}		*/			
 					
 					$sUassign 	= $cHorarios->getUserAssign($this->dataIn['inputDate'],$this->dataIn['inputhorario']);
-					if($sUassign!=""){
+					if($sUassign!="" && $sUassign>-1){
 						$this->dataIn['uAssign'] = $sUassign;
 						 
 						$insertHorario = $cHorarios->insertRow($this->dataIn);
@@ -402,7 +402,8 @@ class callcenter_NewserviceController extends My_Controller_Action
 		    		if(isset($aNamespace->carDetail)){
 						unset($aNamespace->carDetail);
 					}					
-	            	$this->_redirect('/callcenter/newservice/finish');		
+	            	$this->_redirect('/callcenter/newservice/finish');	
+	            		
 				}else{
 					$this->view->error = true;
 				}
@@ -441,7 +442,7 @@ class callcenter_NewserviceController extends My_Controller_Action
     	try{
     		$result	= "";
 			$this->_helper->layout->disableLayout();
-			$this->_helper->viewRenderer->setNoRender();    
+			$this->_helper->viewRenderer->setNoRender();
 
 			if(isset($this->dataIn['dateID']) && $this->dataIn['dateID']!=""){
 				

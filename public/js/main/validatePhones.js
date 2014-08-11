@@ -1,5 +1,4 @@
-$().ready(function() {
-    $("#tabs").tab();    
+$().ready(function() { 
     $("#btnSearch").click(function() { openSearch(); return false; });
     $("#btnDelRel").click(function() { deleteRowRel(); return false; });
 

@@ -41,6 +41,7 @@ class main_MainController extends My_Controller_Action
 				     $sessions = new My_Controller_Auth();
 	                 $sessions->setContentSession($dataUser);
 	                 $sessions->startSession();
+	                 $usuarios->setLastAccess($dataUser);
 				     $answer = Array('answer' => 'logged');
 				}else{ 
 				    $answer = Array('answer' => 'no-perm'); 

@@ -20,6 +20,7 @@ class My_Model_Horarios extends My_Db_Table
 		$query   = $this->query($sql);
 		if(count($query)>0){
 			foreach($query AS $key => $items){
+				
 				$assign 	= $this->getAsignados($items['ID_HORARIO'], $fecha);
 				$disponibles= $this->getDisponibles($items['ID_HORARIO'], $fecha);
 				
@@ -34,16 +35,17 @@ class My_Model_Horarios extends My_Db_Table
 	public function getDisponibles($idHorario,$fecha){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 
-    	$sql ="SELECT COUNT(ID_USUARIO) AS DISPONIBLES
-				FROM PROD_HORARIO_USUARIO
-				WHERE ID_USUARIO NOT IN
+    	$sql ="SELECT COUNT(U.ID_USUARIO) AS DISPONIBLES
+				FROM PROD_HORARIO_USUARIO U
+				INNER JOIN PROD_USR_TELEFONO T ON U.ID_USUARIO = T.ID_USUARIO
+				WHERE U.ID_USUARIO NOT IN
 				(
 					SELECT ID_USUARIO
 					FROM PROD_HORARIO_ASIGNADO
 					WHERE ID_HORARIO = $idHorario 
-					  AND DIA  = '$fecha'
+					  AND DIA  		 = '$fecha'
 				)
-				AND ID_HORARIO = $idHorario  LIMIT 1";	
+				AND U.ID_HORARIO = $idHorario  LIMIT 1";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query[0];			
@@ -82,6 +84,7 @@ class My_Model_Horarios extends My_Db_Table
 					  AND H.ID_HORARIO =  $idHorario
 				 )
 				 ORDER BY U.ID_USUARIO ASC LIMIT 1";	
+    	Zend_Debug::dump($sql);
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query[0]['ID_USUARIO'];			
