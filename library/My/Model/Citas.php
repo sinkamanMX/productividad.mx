@@ -75,7 +75,8 @@ class My_Model_Citas extends My_Db_Table
 	public function insertExtraCitas($data){
         $result     = false;            
         $sql = "INSERT INTO PROD_CITA_EXTRAS 
-				VALUES (".$data['idCita'].",'".utf8_encode('Tarjeta Circulaci—n')."','".$data['inputTdc']."'),
+				VALUES 
+				(".$data['idCita'].",'".utf8_encode('Tarjeta Circulaci—n')."','".$data['inputTdc']."'),
 				(".$data['idCita'].",'Licencia de Manejo','".$data['inputLicencia']."'),
 				(".$data['idCita'].",'Vigencia de la Licencia','".$data['inputVigencia']."'),
 				(".$data['idCita'].",'".utf8_encode('Lugar de emisi—n')."','".$data['inputEmision']."'),
