@@ -9,7 +9,6 @@ $().ready(function() {
             inputDesc   : "required",
             inputImei   : {
                 required: true,
-                number: true,
                 minlength: 12,
                 maxlength: 20
             },
@@ -26,7 +25,6 @@ $().ready(function() {
             inputDesc	: "Debe de seleccionar una opción",
             inputImei    : {
                 required  : "Campo Requerido",
-                number    : "Este campo acepta solo números",
                 minlength : "El IMEI debe mímimo de 12 dígitos",
                 maxlength : "El IMEI debe máximo de 20 dígitos"
               }, 

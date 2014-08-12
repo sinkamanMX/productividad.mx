@@ -66,11 +66,13 @@ class main_UsersController extends My_Controller_Action
     		$classObject= new My_Model_Usuarios();
     		$cPerfiles 	= new My_Model_Perfiles();
     		$cSucursales= new My_Model_Cinstalaciones();
+    		$cHorarios 	= new My_Model_Horarios();
     		
     		$sPerfil	= '';
     		$sEstatus	= '';
     		$sOperaciones= '';
-    		$sSucursales= '';
+    		$sSucursales= '';  
+    		$aHorarios  = Array();  		
     		
     		$aPerfiles	= $cPerfiles->getCbo();
     		$aSucursales= $cSucursales->getCbo($this->view->dataUser['ID_EMPRESA']);
@@ -80,6 +82,8 @@ class main_UsersController extends My_Controller_Action
     	    	$sEstatus	= $dataInfo['ACTIVO'];
 				$sOperaciones= $dataInfo['FLAG_OPERACIONES'];
 				$sSucursales=$dataInfo['ID_SUCURSAL'];
+				
+				$aHorarios  = $cHorarios->getAllDataByUser($dataInfo['ID_SUCURSAL'],$this->idToUpdate);
 			}
 			
 			if($this->operation=='update'){	  		
@@ -88,11 +92,12 @@ class main_UsersController extends My_Controller_Action
 					 if($validateUser){
 						$updated = $classObject->updateRow($this->dataIn);
 						 if($updated['status']){	
-					 		$dataInfo    = $classObject->getData($this->idToUpdate);
-			    	    	$sPerfil	= $dataInfo['ID_PERFIL'];
-			    	    	$sEstatus	= $dataInfo['ACTIVO'];
-							$sOperaciones= $dataInfo['FLAG_OPERACIONES'];
-							$sSucursales=$dataInfo['ID_SUCURSAL'];					 		
+					 		$dataInfo    	= $classObject->getData($this->idToUpdate);
+			    	    	$sPerfil		= $dataInfo['ID_PERFIL'];
+			    	    	$sEstatus		= $dataInfo['ACTIVO'];
+							$sOperaciones	= $dataInfo['FLAG_OPERACIONES'];
+							$sSucursales	= $dataInfo['ID_SUCURSAL'];	
+							$aHorarios  	= $cHorarios->getAllDataByUser($dataInfo['ID_SUCURSAL'],$this->idToUpdate);				 		
 					 		$this->resultop = 'okRegister';
 						 }
 					 }else{
@@ -107,11 +112,12 @@ class main_UsersController extends My_Controller_Action
 				 	$insert = $classObject->insertRow($this->dataIn);
 			 		if($insert['status']){
 			 			$this->idToUpdate = $insert['id'];
-				 		$dataInfo    = $classObject->getData($this->idToUpdate);
-		    	    	$sPerfil	= $dataInfo['ID_PERFIL'];
-		    	    	$sEstatus	= $dataInfo['ACTIVO'];
-						$sOperaciones= $dataInfo['FLAG_OPERACIONES'];
-						$sSucursales=$dataInfo['ID_SUCURSAL'];				 		
+				 		$dataInfo    	= $classObject->getData($this->idToUpdate);
+		    	    	$sPerfil		= $dataInfo['ID_PERFIL'];
+		    	    	$sEstatus		= $dataInfo['ACTIVO'];
+						$sOperaciones	= $dataInfo['FLAG_OPERACIONES'];
+						$sSucursales	= $dataInfo['ID_SUCURSAL'];	
+						$aHorarios  	= $cHorarios->getAllDataByUser($dataInfo['ID_SUCURSAL'],$this->idToUpdate);			 		
 				 		$this->resultop = 'okRegister';
 					}else{
 						$this->errors['status'] = 'no-insert';
@@ -133,6 +139,15 @@ class main_UsersController extends My_Controller_Action
 		        echo Zend_Json::encode($answer);
 		        die();   			
 			}
+			
+    	    if($this->operation=='addEvento'){
+    	    	$insert = $cHorarios->insertByUser($this->dataIn, $aHorarios);
+    	    	if($insert['status']){
+    	    		$aHorarios  	= $cHorarios->getAllDataByUser($dataInfo['ID_SUCURSAL'],$this->idToUpdate);
+					$this->view->eventAction = true;
+				}
+			}			
+			
 
 			if(count($this->errors)>0 && $this->operation!=""){
 				$dataInfo['ID_PERFIL'] 		= $this->dataIn['inputPerfil'];
@@ -149,10 +164,11 @@ class main_UsersController extends My_Controller_Action
     	    	$sPerfil	 = $dataInfo['ID_PERFIL'];
     	    	$sEstatus	 = $dataInfo['ACTIVO'];
 				$sOperaciones= $dataInfo['FLAG_OPERACIONES'];
-				$sSucursales =$dataInfo['ID_SUCURSAL'];		
-						
-			}			
-    		
+				$sSucursales =$dataInfo['ID_SUCURSAL'];	
+			}		
+
+			
+    		$this->view->aHorarios	 = $aHorarios;
 			$this->view->aPerfiles   = $cFunctions->selectDb($aPerfiles,$sPerfil);
 			$this->view->aSucursales = $cFunctions->selectDb($aSucursales,$sSucursales);
 			$this->view->aStatus  	 = $cFunctions->cboStatus($sEstatus);	

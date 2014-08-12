@@ -104,3 +104,12 @@ function backToMain(){
   var mainPage = $("#hRefLinkMain").val();
   location.href= mainPage;
 }
+
+
+function optionAll(inputCheck){
+    if(inputCheck){
+        $('.chkOn').prop('checked', true);         
+    }else{
+        $('.chkOn').prop('checked', false);
+    }
+}

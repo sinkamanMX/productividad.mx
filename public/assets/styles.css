@@ -349,6 +349,9 @@ body {
   min-height: 550px;
   margin-top: 15px;
 }
+.row-min-h300{
+  min-height: 300px;
+}
 #ex1Slider .slider-selection {
   background: #BABABA;
 }

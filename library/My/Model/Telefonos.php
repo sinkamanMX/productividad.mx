@@ -310,6 +310,32 @@ class My_Model_Telefonos extends My_Db_Table
 		return $result;			
 	}
 	
+	public function setAllEventos($data){
+        $result     = Array();
+        $result['status']  = false;        
+		$sql = "INSERT INTO PROD_EVENTO_TELEFONO (ID_EVENTO,ID_TELEFONO)
+				(
+					SELECT ID_EVENTO, ".$data['catId']." 
+					FROM PROD_EVENTOS
+					WHERE ID_EVENTO NOT IN 
+					(
+						SELECT ID_EVENTO
+						FROM PROD_EVENTO_TELEFONO
+						WHERE ID_TELEFONO = ".$data['catId']."
+					)
+				)";      
+        try{    
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;			
+	}	
+	
 	public function deleteRelEvent($idRel){
         $result     = Array();
         $result['status']  = false;

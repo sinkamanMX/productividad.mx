@@ -182,16 +182,20 @@ class main_PhonesController extends My_Controller_Action
 		
     	if($this->operation=='addEvento'){
 			if(isset($this->dataIn['inputEvento']) && $this->dataIn['inputEvento']){
-				$insert = $classObject->setRelEventos($this->dataIn);
-				if($insert['status']){
+				if($this->dataIn['inputEvento']== -99 || $this->dataIn['inputEvento']== "-99"){
+					$insert = $classObject->setAllEventos($this->dataIn);
+				}else{
+					$insert = $classObject->setRelEventos($this->dataIn);
+				}
 					
+				if($insert['status']){
 					$dataInfo	= $classObject->getDataRow($this->idToUpdate);
 					$aEventos	= $classObject->getEventos($dataInfo['ID_TELEFONO']);
 					
 					$this->view->eventos 	 = $functions->selectDb($aEventos);
 					$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_TELEFONO']);
 			 		$this->view->eventAction = true;
-			 	}				
+			 	}
 			}
 			
 		}else if($this->operation=='deleteEvent'){

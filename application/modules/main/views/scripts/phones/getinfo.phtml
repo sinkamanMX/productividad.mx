@@ -154,6 +154,9 @@
 												<div class="controls">
 													<select class="chzn-select" id="inputEvento" name="inputEvento" >								
 														<option value="">Seleccionar una opción</option>
+														<?php if($this->eventos!=""): ?>
+															<option value="-99">Todos</option>
+														<?php endif;?>
 														<?php echo $this->eventos;?>
 													</select>										
 												</div>

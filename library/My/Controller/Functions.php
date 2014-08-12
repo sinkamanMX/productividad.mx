@@ -126,7 +126,7 @@ class My_Controller_Functions
 				$result .= '<option '.$select.' value="'.$items['ID'].'" >'.$items['NAME'].'</option>';			
 			}
 		}else{
-			$result='no-info';
+			$result='';
 		}
 		return $result;			
 	}

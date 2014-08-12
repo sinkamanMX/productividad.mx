@@ -150,5 +150,104 @@ class My_Model_Horarios extends My_Db_Table
 			$result = $query;		
 		}	
 		return $result;	
-	}    
+	} 
+
+	public function getAllDataByUser($aSucursales,$idUser){
+ 		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT ID_HORARIO,CONCAT(HORA,'-',HORA_FIN ) AS HORARIOS, HORA, HORA_FIN
+			 	FROM PROD_HORARIO 
+			 	WHERE ID_SUCURSAL IN ($aSucursales)";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			foreach($query AS $key => $items){
+				$asssign    = $this->HorarioByUser($items['ID_HORARIO'], $idUser);				
+				$items['ASSIGN'] = $asssign;
+				$result[]	= $items;		
+			}			
+		}	
+		return $result;	
+	}	
+	
+	public function HorarioByUser($idHorario,$idObject){
+		$result=false;
+		$this->query("SET NAMES utf8",false); 
+    	$sql ="SELECT  COUNT(ID_USUARIO) AS TOTAL
+                FROM PROD_HORARIO_USUARIO
+                WHERE ID_USUARIO = $idObject
+                  AND ID_HORARIO = $idHorario LIMIT 1";	
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			if($query[0]['TOTAL']==1){
+				$result = true;	
+			}
+		}	
+		return $result;	 		
+	}
+	
+	
+	public function insertByUser($data,$aHorarios){
+        $result     = Array();
+        $result['status']  = false;
+        $countErrors= 0;
+        try{
+	        $delete = $this->deleteByUser($data);
+	        if($delete){
+	        	foreach ($aHorarios as $key => $items){
+	        		if(isset($data['inputsCheck'.$items['ID_HORARIO']])  && $data['inputsCheck'.$items['ID_HORARIO']]=='on'){
+	        			$dataInsert['catId'] 		= $data['catId'];
+	        			$dataInsert['inputhorario'] = $items['ID_HORARIO'];
+	        			$insert = $this->insertHorarioUser($dataInsert);
+	        			
+	        			if(!$insert){
+	        				$countErrors++;
+	        			}
+	        		}
+	        	}
+	        	
+	        	if($countErrors==0){
+	        		$result['status']  = true;
+	        	}
+	        }
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;			
+	}	
+	
+	
+	public function insertHorarioUser($data){
+        $result = false;
+        $sql=" INSERT INTO PROD_HORARIO_USUARIO
+				 SET ID_USUARIO	= ".$data['catId'].",
+				 ID_HORARIO		= ".$data['inputhorario'];
+        try{
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;			
+	}
+	
+	public function deleteByUser($data){
+    	try{    	
+       		$result     = Array();
+        	$result['status']  = false;
+        
+			$sql  	= "DELETE FROM PROD_HORARIO_USUARIO WHERE ID_USUARIO = ".$data['catId'];
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;			
+	}
 }
