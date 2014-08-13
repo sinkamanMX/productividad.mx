@@ -6,12 +6,12 @@ function backToMain(){
 function deleteRow(){ 
   var idItem = $("#inputDelete").val();
     $.ajax({
-        url: "/main/users/getinfo",
+        url: "/main/profiles/getinfo",
         type: "GET",
         dataType : 'json',
         data: { catId : idItem, 
             optReg: 'delete'},
-        success: function(data){
+        success: function(data) {
             var result = data.answer; 
 
             if(result == 'deleted'){
