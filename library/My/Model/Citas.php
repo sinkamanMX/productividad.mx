@@ -100,8 +100,8 @@ class My_Model_Citas extends My_Db_Table
 	}
 
 	public function insertaFormCita($data){
-        $result	= false;
-        $sql="INSERT INTO PROD_CITA_FORMULARIO
+        $result	= trues;
+        /*$sql="INSERT INTO PROD_CITA_FORMULARIO
 				SET ID_CITA			=  ".$data['idCita'].",
 					ID_FORMULARIO 	= 1";
         try{
@@ -113,7 +113,7 @@ class My_Model_Citas extends My_Db_Table
             echo $e->getMessage();
             echo $e->getErrorMessage();
         }
-		return $result;		
+		return $result;	*/	
 	}
 	
 	public function insertDomCitaOther($data){
