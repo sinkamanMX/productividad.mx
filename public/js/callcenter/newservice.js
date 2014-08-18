@@ -23,12 +23,12 @@ $( document ).ready(function() {
               inputDom    : "required",
               inputNoExt  : "required", 
               inputGenero : "required",
-              inputTel    : {
+              /*inputTel    : {
                 required: true,
                 number: true,
                 minlength: 10,
                 maxlength: 10
-              },
+              },*/
               inputEmail  : {
                 required: true,
                 email: true
@@ -52,12 +52,12 @@ $( document ).ready(function() {
               inputDom    : "Campo Requerido",
               inputNoExt  : "Campo Requerido", 
               inputGenero : "required",
-              inputTel    : {
+              /*inputTel    : {
                 required  : "Campo Requerido",
                 number    : "Este campo acepta solo números",
                 minlength : "El Teléfono debe de ser de 10 dígitos",
                 maxlength : "El Teléfono debe de ser de 10 dígitos"
-              },
+              },*/
               inputEmail  : {
                 required: "Campo Requerido",
                 email: "Debe de ingresar un mail válido"
@@ -81,6 +81,11 @@ $( document ).ready(function() {
               form.submit();
           }
       });   
+
+    $('.upper').keyup(function()
+    {
+        $(this).val($(this).val().toUpperCase());
+    });    
 });
 
 function changeTypePerson(value){

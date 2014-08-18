@@ -20,5 +20,11 @@ $( document ).ready(function() {
         submitHandler: function(form) {
             form.submit();
         }
-    });     
+    }); 
+
+        
+    $('.upper').keyup(function()
+    {
+        $(this).val($(this).val().toUpperCase());
+    });    
 });

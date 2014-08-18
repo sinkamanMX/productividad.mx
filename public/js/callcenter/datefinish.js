@@ -19,12 +19,12 @@ $( document ).ready(function() {
               date: true
             },   
             inputhorario    : "required",
-            inputTelContacto    : {
+            /*inputTelContacto    : {
               required: true,
               number: true,
               minlength: 10,
               maxlength: 10
-            },
+            },*/
             inputContacto: "required",
         },
         messages: {
@@ -34,18 +34,24 @@ $( document ).ready(function() {
             },   
             inputhorario    : "Campo Requerido",
             inputContacto   : "required",
-            inputTelContacto: {
+            /*inputTelContacto: {
               required  : "Campo Requerido",
               number    : "Este campo acepta solo números",
               minlength : "El Teléfono debe de ser de 10 dígitos",
               maxlength : "El Teléfono debe de ser de 10 dígitos"
-            }           
+            }    */       
         },
         
         submitHandler: function(form) {
             form.submit();
         }
-    });     	
+    });  
+
+
+    $('.upper').keyup(function()
+    {
+        $(this).val($(this).val().toUpperCase());
+    });           	
 }); 
 
 
