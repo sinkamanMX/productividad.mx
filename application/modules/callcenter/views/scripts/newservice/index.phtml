@@ -23,7 +23,9 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
 					</div>
 				</div>
 				<form method="POST" action="/callcenter/newservice/index" id="FormData" class="form-horizontal ">
-                	<input type="hidden" name="optReg" value="new" />
+                	<input type="hidden" id="inputOpr"    name="optReg" value="new" />
+					<input type="hidden" id="typeSearch"  name="typeSearch"  value="" />
+					<input type="hidden" id="inputSearch" name="inputSearch" value="" />
 					<fieldset>
 						<div class="row span12 row-margin-left25">
 							<div class="span5">
@@ -187,6 +189,24 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
 							</div>						
 						</div>						
 
+
+						<div class="row span12">
+							<div class="span5">
+								<div class="control-group">
+									<label class="control-label-lg">C.P<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" id="inputCP" name="inputCP" class="m-wrap upper" value="<?php echo (@$this->data['inputCP']); ?>"  >
+									</div>
+								</div>							
+							</div>						
+							<div class="span5">
+								<div class="control-group">
+									<button type="button" class="btn btn-default bg-btn-send" onClick="searchCp(0)">Buscar por CP</button>
+								</div>				
+							</div>							
+						</div>
+
+
 						<div class="row span12">
 							<div class="span5">
 								<div class="control-group">
@@ -228,14 +248,14 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
 									</div>
 								</div>				
 							</div>
-							<div class="span5">
+							<!--<div class="span5">
 								<div class="control-group">
 									<label class="control-label-lg">C.P<span class="required">*</span></label>
 									<div class="controls">
 										<input type="text" id="inputCP" name="inputCP" class="m-wrap upper" value="<?php echo (@$this->data['inputCP']); ?>"  >
 									</div>
 								</div>							
-							</div>						
+							</div>	-->					
 						</div>
 						<div class="row span12">
 							<div class="span12">
@@ -274,7 +294,7 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
 							</div>					
 						</div>
 
-						<div id="divDifDom" style="display:<?php echo (@$this->data['inputDirDom']==2 && isset($this->data['inputDirDom']) && $this->inputDom==1) ? 'display':'none';?>;">
+						<div id="divDifDom" style="display:<?php echo (@$this->data['inputDirDom']==2 && isset($this->data['inputDirDom']) && $this->inputDom==0) ? 'display':'none';?>;">
 
 							<div class="row span12">
 									<div class="span12">
@@ -303,7 +323,24 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
 											</div>
 										</div>							
 									</div>						
-								</div>						
+								</div>	
+
+
+								<div class="row span12">
+									<div class="span5">
+										<div class="control-group">
+											<label class="control-label-lg">C.P<span class="required">*</span></label>
+											<div class="controls">
+												<input type="text" id="inputCPO" name="inputCPO" class="m-wrap upper" value="<?php echo (@$this->data['inputCPO']); ?>"  >
+											</div>
+										</div>							
+									</div>						
+									<div class="span5">
+										<div class="control-group">
+											<button type="button" class="btn btn-default bg-btn-send" onClick="searchCp(1)">Buscar por CP</button>
+										</div>				
+									</div>							
+								</div>													
 
 								<div class="row span12">
 									<div class="span5">
@@ -312,7 +349,7 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
 											<div class="controls">
 												<select class="span10 m-wrap upper" id="inputEstadoO" name="inputEstadoO" onChange="getoptionsCbo('MunicipioO','mun',this.value,false,'coloniaO');">
 													<option value="">Seleccionar una opción</option>
-													<?php echo $this->estados; ?>
+													<?php echo $this->estadosO; ?>
 							                    </select>
 											</div>
 										</div>							
@@ -324,7 +361,7 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
 												<div id="divMunicipioO">
 													<select class="span10 m-wrap upper" id="inputMunicipioO" name="inputMunicipioO" onChange="getoptionsCbo('coloniaO','colonia',this.value,false,'');">
 														<option value="">Seleccionar una opción</option>
-														<?php echo $this->municipios; ?>
+														<?php echo $this->municipiosO; ?>
 													</select>
 												</div>												
 											</div>
@@ -340,19 +377,20 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
 												<div id="divcoloniaO">
 													<select class="span10 m-wrap upper" id="inputcoloniaO" name="inputcoloniaO" <?php echo (isset($this->data['inputcoloniaO'])) ? 'onChange="getCPdir(this.value,\'coloniaO\')"': '';?>>
 														<option value="">Seleccionar una opción</option>
-														<?php echo $this->colonias;?>
+														<?php echo $this->coloniasO;?>
 													</select>
 												</div>		
 											</div>
 										</div>				
 									</div>
 									<div class="span5">
+										<!--
 										<div class="control-group">
 											<label class="control-label-lg">C.P<span class="required">*</span></label>
 											<div class="controls">
 												<input type="text" id="inputCPO" name="inputCPO" class="m-wrap upper" value="<?php echo (@$this->data['inputCPO']); ?>"  >
 											</div>
-										</div>							
+										</div>	-->						
 									</div>						
 								</div>
 								<div class="row span12">
@@ -365,11 +403,7 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
 										</div>							
 									</div>						
 								</div>	
-
-
 						</div>
-
-
 						<div class="span11">
 					    	<div class="col-xs-4 col-md-5">
 								<div class="pull-right">
@@ -382,4 +416,4 @@ PROD_CITA_USR -> USUARIO ASIGANDO A LA CITA
                 </form>	
         	</div>
     	</div>
-	</div>    
+	</div>   	 

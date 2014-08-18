@@ -53,5 +53,33 @@ class My_Model_Colonias extends My_Db_Table
 		}	
         
 		return $result;	    	
-    }		
+    }	
+    
+    public function validateCP($cpSearch){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 
+    	$sql ="SELECT *
+                FROM $this->_name
+                WHERE CODIGO = '$cpSearch' LIMIT 1";	
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0];
+		}	
+        
+		return $result;	     	
+    }
+    
+    public function getDataByCp($cpSearch){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT $this->_primary AS ID, NOMBRE AS NAME 
+    			FROM $this->_name 
+    			WHERE CODIGO = '$cpSearch' ORDER BY NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;
+    }    
 }

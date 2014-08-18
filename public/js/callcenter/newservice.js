@@ -138,3 +138,39 @@ function setValidateForm(optionValue){
     $("#inputNoExtO").rules("add", {required:true});
   }   
 }
+
+function searchCp(typeSearch){
+  var cp = 0;
+
+  if(typeSearch==0){
+    cp = $("#inputCP").val();
+  }else{
+    cp = $("#inputCPO").val();
+  }
+
+  $("#inputTipo").rules("remove", "required");
+  $("#inputTipService").rules("remove", "required");
+  $("#inputNombre").rules("remove", "required");
+  $("#inputApps").rules("remove", "required");
+  $("#inputStreet").rules("remove", "required");
+  $("#inputEstado").rules("remove", "required");
+  $("#inputMunicipio").rules("remove", "required");
+  $("#inputcolonia").rules("remove", "required");
+  $("#inputCP").rules("remove", "required");
+  $("#inputDom").rules("remove", "required");
+  $("#inputNoExt").rules("remove", "required");
+  $("#inputGenero").rules("remove", "required");
+  $("#inputEmail").rules("remove", "required");
+  $("#inputEmailConf").rules("remove", "required"); 
+  $("#inputStreetO").rules("remove", "required");
+  $("#inputEstadoO").rules("remove", "required");
+  $("#inputMunicipioO").rules("remove", "required");
+  $("#inputcoloniaO").rules("remove", "required");
+  $("#inputCPO").rules("remove", "required");
+  $("#inputNoExtO").rules("remove", "required");  
+
+  $("#inputOpr").val("searchCP");
+  $("#inputSearch").val(cp);
+  $("#typeSearch").val(typeSearch);
+  $("#FormData").submit();
+}
