@@ -91,10 +91,11 @@ class main_PhonesController extends My_Controller_Action
 		
         if($this->operation=='update'){	  		
 			if($this->idToUpdate>-1){
+				
 				 $validateIMEI = $classObject->validateData($this->dataIn['inputImei'],$this->idToUpdate,'imei');
 				 if($validateIMEI){
 					 $updated = $classObject->updateRow($this->dataIn);
-					 if($updated['status']){	
+					 if($updated['status']){
 					 	if($this->dataIn['inputIdAssign']!=""){
 						 	$insertRel = $classObject->setUser($this->idToUpdate,$this->dataIn['inputIdAssign']);
 						 	if($insertRel){
@@ -106,6 +107,7 @@ class main_PhonesController extends My_Controller_Action
 						 		$this->resultop = 'okRegister';
 						 	}
 					 	}else{
+									
 						 	$dataInfo    = $classObject->getDataRow($this->idToUpdate);
 							$aEventos	= $classObject->getEventos($dataInfo['ID_TELEFONO']);
 				
@@ -113,7 +115,7 @@ class main_PhonesController extends My_Controller_Action
 							$this->view->aRelEventos = $classObject->getRelEventos($dataInfo['ID_TELEFONO']);						 	
 						 	$this->resultop = 'okRegister';							 		
 					 	}
-					 }					 	
+					 }			 	
 				 }else{
 				 	$this->errors['eIMEI'] = '1';
 				 }
@@ -122,7 +124,7 @@ class main_PhonesController extends My_Controller_Action
 			}	
 		}else if($this->operation=='new'){					
 			$validateIMEI = $classObject->validateData($this->dataIn['inputImei'],-1,'imei');
-			 if($validateIMEI){
+			 if($validateIMEI){			 	
 		 		$insert = $classObject->insertRow($this->dataIn);
 		 		if($insert['status']){	
 		 			$this->idToUpdate = $insert['id'];					 	

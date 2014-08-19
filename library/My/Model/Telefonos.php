@@ -214,7 +214,8 @@ class My_Model_Telefonos extends My_Db_Table
 					TELEFONO		=  '".$data['inputTel']."',	
 					IDENTIFICADOR	=  '".$data['inputImei']."',
 					ACTIVO			=  '".$data['inputEstatus']."',
-					ID_USUARIO_ACTUAL=  ".$data['inputUser']." LIMIT 1";
+					ID_USUARIO_ACTUAL=  ".$data['inputUser']." 
+			WHERE $this->_primary   = ".$data['catId']." LIMIT 1";
         try{            
     		$query   = $this->query($sql,false);
 			if($query){

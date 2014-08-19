@@ -52,7 +52,7 @@ $().ready(function() {
         "bFilter": true,
         "bSort": true,
         "bJQueryUI": true,
-        "iDisplayLength": 5,      
+        "iDisplayLength": 10,      
         "bProcessing": true,
         "bAutoWidth": true,
         "bSortClasses": false,

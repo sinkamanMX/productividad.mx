@@ -47,16 +47,18 @@ class callcenter_CallserviceController extends My_Controller_Action
 			$this->view->mismoDomicilio = $functions->cboOptions();
 			$this->view->dirDomicilio   = $functions->cbo_from_array($this->aOptions,"1");
 			$this->view->tipoCliente    = $functions->cboTipoCliente();
-			$this->view->tipoService	= $functions->selectDb($tipoServicio);						
+			$this->view->tipoService	= $functions->selectDb($tipoServicio);			
 
-			if(isset($this->dataIn['optReg'])){
+			
+			if(isset($this->dataIn['optReg']) && $this->dataIn['optReg']=="new"){
 				if(isset($aNamespace->service)){
 					unset($aNamespace->service);
 				}
 				
 				$aNamespace->service = $this->dataIn;
-	            $this->_redirect('/callcenter/callservice/instalation');	
+	            $this->_redirect('/callcenter/newservice/instalation');	
 			}
+
 			if(isset($aNamespace->service)){
 				$this->view->data   = $aNamespace->service;
 				$this->view->estados= $functions->selectDb($aEstados,$aNamespace->service['inputEstado']);
@@ -70,6 +72,70 @@ class callcenter_CallserviceController extends My_Controller_Action
 				$dColonia    = $aColonias->getCbo($aNamespace->service['inputMunicipio']);
 				$this->view->colonias       = $functions->selectDb($dColonia,$aNamespace->service['inputcolonia']);
 				$this->view->dirDomicilio   = $functions->cbo_from_array($this->aOptions,$aNamespace->service['inputDirDom']);
+								
+				$dMunicipios = $aMunicipios->getCbo($aNamespace->service['inputEstadoO']);
+				$dColonia    = $aColonias->getCbo($aNamespace->service['inputMunicipioO']);
+				$this->view->estadosO 		= $functions->selectDb($aEstados,$aNamespace->service['inputEstadoO']);
+				$this->view->municipiosO 	= $functions->selectDb($dMunicipios,$aNamespace->service['inputMunicipioO']);
+				$this->view->coloniasO      = $functions->selectDb($dColonia,$aNamespace->service['inputcoloniaO']);				
+			}
+						
+			if(isset($this->dataIn['optReg']) && $this->dataIn['optReg']=="searchCP"){
+				if($this->dataIn['inputSearch']!=""){
+					$cColonias = new My_Model_Colonias();
+					
+					$validateCp = $cColonias->validateCP($this->dataIn['inputSearch']);
+					if(isset($validateCp['ID_COLONIA'])){						
+						if($this->dataIn['typeSearch']=="0"){
+							$this->view->estados 	= $functions->selectDb($aEstados,$validateCp['ID_ESTADO']);
+							$dMunicipios = $aMunicipios->getCbo($validateCp['ID_ESTADO']);
+							$this->view->municipios = $functions->selectDb($dMunicipios,$validateCp['ID_MUNICIPIO']);
+													
+							$dColonia    = $aColonias->getCbo($validateCp['ID_MUNICIPIO']);
+							$this->view->colonias       = $functions->selectDb($dColonia,$validateCp['ID_COLONIA']);							
+						}else{
+							
+							$this->view->estadosO 	= $functions->selectDb($aEstados,$validateCp['ID_ESTADO']);
+							$dMunicipios = $aMunicipios->getCbo($validateCp['ID_ESTADO']);
+							$this->view->municipiosO = $functions->selectDb($dMunicipios,$validateCp['ID_MUNICIPIO']);
+													
+							$dColonia    = $aColonias->getCbo($validateCp['ID_MUNICIPIO']);
+							$this->view->coloniasO       = $functions->selectDb($dColonia,$validateCp['ID_COLONIA']);						
+						}
+					}
+				}
+				$dataRev = Array();
+
+			  	$dataRev["inputRFC"]		= $this->dataIn['inputRFC'];
+			  	$dataRev["inputRazon"] 		= $this->dataIn['inputRazon'];
+			  	$dataRev["inputClave"]		= $this->dataIn['inputClave'];
+			  	$dataRev["inputNombre"] 	= $this->dataIn['inputNombre'];
+			  	$dataRev["inputApps"] 		= $this->dataIn['inputApps'];
+			  	$dataRev["inputNac"] 		= $this->dataIn['inputNac'];
+			  	$dataRev["inputGenero"] 	= $this->dataIn['inputGenero'];
+			  	$dataRev["inputTel"] 		= $this->dataIn['inputTel'];
+			  	$dataRev["inputCel"] 		= $this->dataIn['inputCel'];
+			  	$dataRev["inputEmail"] 		= $this->dataIn['inputEmail'];
+			  	$dataRev["inputEmailConf"] 	= $this->dataIn['inputEmailConf'];
+			  	$dataRev["inputStreet"] 	= $this->dataIn['inputStreet'];
+			  	$dataRev["inputNoExt"] 		= $this->dataIn['inputNoExt'];
+			  	$dataRev["inputNoInt"] 		= $this->dataIn['inputNoInt'];
+			  	$dataRev["inputCP"] 		= $this->dataIn['inputCP'];
+			  	$dataRev["inputRefs"] 		= $this->dataIn['inputRefs'];			  
+			  	$dataRev["inputStreetO"] 	= $this->dataIn['inputStreetO'];
+			  	$dataRev["inputNoExtO"] 	= $this->dataIn['inputNoExtO'];
+			  	$dataRev["inputNoIntO"] 	= $this->dataIn['inputNoIntO'];
+			  	$dataRev["inputCPO"]   		= $this->dataIn['inputCPO'];
+			  	$dataRev["inputRefsO"] 		= $this->dataIn['inputRefsO'];
+			  	$dataRev["inputDom"] 		= $this->dataIn['inputDom'];
+			  	$dataRev["inputDirDom"] 	= $this->dataIn['inputDirDom'];
+
+				$this->view->data			= $dataRev;
+				$this->view->genero 		= $functions->cboGenero($this->dataIn['inputGenero']);
+				$this->view->mismoDomicilio = $functions->cboOptions($this->dataIn['inputDom']);
+				$this->view->tipoCliente    = $functions->cboTipoCliente($this->dataIn['inputTipo']);
+				$this->view->tipoService	= $functions->selectDb($tipoServicio,$this->dataIn['inputTipService']);				
+				$this->view->dirDomicilio   = $functions->cbo_from_array($this->aOptions,$this->dataIn['inputDirDom']);
 			}
 			
 			
