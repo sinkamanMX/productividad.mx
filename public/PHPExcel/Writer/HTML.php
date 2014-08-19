@@ -750,7 +750,7 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 		}
 
 		// .gridlines td { }
-		$css['.gridlines td']['border'] = '1px dotted black';
+		$css['.gridlines td']['border'] = '';
 
 		// .b {}
 		$css['.b']['text-align'] = 'center'; // BOOL
