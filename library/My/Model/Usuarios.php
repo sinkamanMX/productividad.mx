@@ -182,12 +182,22 @@ class My_Model_Usuarios extends My_Db_Table
 
     public function insertRow($data){
         $result     = Array();
-        $result['status']  = false;
+        $result['status']  = false;        
+        
+        $sFilter = '';
+        if($data['inputIdSap']!=""){
+        	$sFilter = " ID_SAP	= ".$data['inputIdSap'].",";
+        }  
+
+        if($data['inputIdAlm']!=""){
+        	$sFilter .= " CVE_SAP_ALMACEN	= '".$data['inputIdAlm']."',";
+        }          
         
         $sql="INSERT INTO $this->_name	
         			SET ID_PERFIL	=   ".$data['inputPerfil'].",
 						USUARIO		=  '".$data['inputUsuario']."',
 						PASSWORD	=  SHA1('".$data['inputPassword']."'),
+						$sFilter
 						NOMBRE		=  '".$data['inputNombre']."',
 						APELLIDOS	=  '".$data['inputApps']."',
 						EMAIL		=  '".$data['inputEmail']."',
@@ -222,11 +232,21 @@ class My_Model_Usuarios extends My_Db_Table
         if($data['inputPassword']!=""){
         	$sPassword = " PASSWORD	=  SHA1('".$data['inputPassword']."'),";
         }
+        
+        $sFilter = '';
+        if($data['inputIdSap']!=""){
+        	$sFilter = " ID_SAP	= ".$data['inputIdSap'].",";
+        }  
+
+        if($data['inputIdAlm']!=""){
+        	$sFilter .= " CVE_SAP_ALMACEN	= '".$data['inputIdAlm']."',";
+        }        
 
         $sql="UPDATE $this->_name	
         			SET ID_PERFIL	=   ".$data['inputPerfil'].",
 						USUARIO		=  '".$data['inputUsuario']."',
 						$sPassword			
+						$sFilter
 						NOMBRE		=  '".$data['inputNombre']."',
 						APELLIDOS	=  '".$data['inputApps']."',
 						EMAIL		=  '".$data['inputEmail']."',
@@ -290,4 +310,90 @@ class My_Model_Usuarios extends My_Db_Table
         }
 		return $result;    	
     }
+    
+    public function setIdSap($data){
+        $result  = false;
+
+        $sql="UPDATE $this->_name	
+        			SET ID_SAP	=   ".$data['idSAP']."
+			WHERE $this->_primary =".$data['catId']." LIMIT 1";
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result  = true;										
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;
+    }    
+
+    public function setIdAlmacen($data){
+        $result  = false;
+
+        $sql="UPDATE $this->_name	
+        			SET CVE_SAP_ALMACEN	=   '".$data['idAlmacen']."'
+			WHERE $this->_primary =".$data['catId']." LIMIT 1";
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result  = true;										
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;
+    }   
+
+	public function getNoAsIdSap($idEmpresa){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT *
+					FROM SAP_UDA_USUARIOS 
+					WHERE ID_SAP NOT IN
+					(
+						SELECT U.ID_SAP
+						 FROM PROD_USR_TELEFONO T
+						 INNER JOIN USUARIOS    U ON T.ID_USUARIO  = U.ID_USUARIO
+						 INNER JOIN USR_EMPRESA E ON U.ID_USUARIO  = E.ID_USUARIO
+						 INNER JOIN SUCURSALES  L ON E.ID_SUCURSAL = L.ID_SUCURSAL
+						 INNER JOIN EMPRESAS    S ON L.ID_EMPRESA  = S.ID_EMPRESA
+						WHERE S.ID_EMPRESA = $idEmpresa
+						 AND U.ID_SAP IS NOT NULL
+					)
+					 ORDER BY NOMBRE ASC";    	
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;		
+	}    
+	
+	public function getNoAsAlm($idEmpresa){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT *
+					FROM SAP_UDA_ALMACEN_CLAVES 
+					WHERE CVE_ALMACEN NOT IN
+					(
+						SELECT U.CVE_SAP_ALMACEN
+						 FROM PROD_USR_TELEFONO T
+						 INNER JOIN USUARIOS    U ON T.ID_USUARIO  = U.ID_USUARIO
+						 INNER JOIN USR_EMPRESA E ON U.ID_USUARIO  = E.ID_USUARIO
+						 INNER JOIN SUCURSALES  L ON E.ID_SUCURSAL = L.ID_SUCURSAL
+						 INNER JOIN EMPRESAS    S ON L.ID_EMPRESA  = S.ID_EMPRESA
+						WHERE S.ID_EMPRESA = $idEmpresa
+						 AND U.CVE_SAP_ALMACEN IS NOT NULL
+					)	
+					 ORDER BY CVE_ALMACEN ASC";    	
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;		
+	}  	
 }

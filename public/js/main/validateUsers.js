@@ -1,4 +1,10 @@
 $().ready(function() {
+    $("#btnSearchIdSap").click(function() { openSearch(1); return false; });
+    $("#btnDelRelIdSap").click(function() { deleteRowRelIdSap(); return false; });
+
+    $("#btnSearchAlm").click(function() { openSearch(2); return false; });
+    $("#btnDelRelAlm").click(function() { deleteRowRelIdAlmacen(); return false; });    
+
 	$("#FormData").validate({
         rules: {
             inputSucursal:      "required",
@@ -67,14 +73,24 @@ function addValidatePass(valueInput){
     }
 }
 
-function deleteRowRel(){   
+function openSearch(option){
+    if(option==1){
+        $('#iFrameSearch').attr('src','/main/users/searchsap');
+    }else{
+        $('#iFrameSearch').attr('src','/main/users/searchalm');
+    }
+
+    $("#MyModalSearch").modal("show");
+}
+
+function deleteRowRelIdSap(){   
     var idItem = $("#catId").val();
     $.ajax({
         url: "/main/users/getinfo",
         type: "GET",
         dataType : 'json',
         data: { catId : idItem, 
-                optReg: 'deleteRel'},
+                optReg: 'deleteRelIdSap'},
         success: function(data) {
             var result = data.answer; 
 
@@ -89,14 +105,39 @@ function deleteRowRel(){
     });    
 }
 
-function openSearch(){
-    $('#iFrameSearch').attr('src','/main/users/searchactivos');
-    $("#MyModalSearch").modal("show");
+
+function deleteRowRelIdAlmacen(){   
+    var idItem = $("#catId").val();
+    $.ajax({
+        url: "/main/users/getinfo",
+        type: "GET",
+        dataType : 'json',
+        data: { catId : idItem, 
+                optReg: 'deleteRelIdAlmacen'},
+        success: function(data) {
+            var result = data.answer; 
+
+            if(result == 'deleted'){
+                location.href = '/main/users/getinfo?catId='+idItem;
+            }else if(result == 'problem'){
+                alert("hubo problema");          
+            }else{
+                alert("no hay data");          
+            }
+        }
+    });    
 }
 
-function assignValue(nameValue,IdValue){
-    $("#inputIdAssign").val(IdValue);
-    $("#inputSearch").val(nameValue);
+
+
+function assignValue(nameValue,IdValue,option){
+    if(option==1){
+        $("#inputIdSap").val(IdValue);
+        $("#inputSearchIdSap").val(nameValue);
+    }else{
+        $("#inputIdAlm").val(IdValue);
+        $("#inputSearchIdAlm").val(nameValue);
+    }
     $("#MyModalSearch").modal("hide");
 }
 
@@ -105,11 +146,18 @@ function backToMain(){
   location.href= mainPage;
 }
 
-
 function optionAll(inputCheck){
     if(inputCheck){
         $('.chkOn').prop('checked', true);         
     }else{
         $('.chkOn').prop('checked', false);
+    }
+}
+
+function showDivClaves(option){
+    if(option=="1"){
+        $("#divClaves").show('slow');
+    }else{
+        $("#divClaves").hide('slow');
     }
 }

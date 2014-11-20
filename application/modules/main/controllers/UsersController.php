@@ -130,7 +130,7 @@ class main_UsersController extends My_Controller_Action
 				$this->_helper->viewRenderer->setNoRender();
 				$answer = Array('answer' => 'no-data');
 				    
-				$this->dataIn['idEmpresa'] = 1; //Aqui va la variable que venga de la session
+				$this->dataIn['idEmpresa'] = $this->view->dataUser['ID_EMPRESA']; //Aqui va la variable que venga de la session
 				$delete = $classObject->deleteRow($this->dataIn);
 				if($delete){
 					$answer = Array('answer' => 'deleted'); 
@@ -138,6 +138,32 @@ class main_UsersController extends My_Controller_Action
 	
 		        echo Zend_Json::encode($answer);
 		        die();   			
+		    }else if($this->operation=='deleteRelIdSap'){
+				$this->_helper->layout->disableLayout();
+				$this->_helper->viewRenderer->setNoRender();
+				$answer = Array('answer' => 'no-data');
+				    
+				$this->dataIn['idSAP'] 	   = 'NULL';
+				$delete = $classObject->setIdSap($this->dataIn);
+				if($delete){
+					$answer = Array('answer' => 'deleted'); 
+				}	
+	
+		        echo Zend_Json::encode($answer);
+		        die(); 				
+			}else if($this->operation=='deleteRelIdAlmacen'){
+				$this->_helper->layout->disableLayout();
+				$this->_helper->viewRenderer->setNoRender();
+				$answer = Array('answer' => 'no-data');
+				    
+				$this->dataIn['idAlmacen'] 	   = 'NULL';
+				$delete = $classObject->setIdAlmacen($this->dataIn);
+				if($delete){
+					$answer = Array('answer' => 'deleted'); 
+				}	
+	
+		        echo Zend_Json::encode($answer);
+		        die(); 				
 			}
 			
     	    if($this->operation=='addEvento'){
@@ -184,5 +210,31 @@ class main_UsersController extends My_Controller_Action
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
         } 
-    }     
+    } 
+
+    public function searchsapAction(){
+    	try{
+			$this->view->layout()->setLayout('layout_blank');
+
+			$cClassObject = new My_Model_Usuarios();
+			$aUsuarios    = $cClassObject->getNoAsIdSap($this->view->dataUser['ID_EMPRESA']);
+			$this->view->dataTable= $aUsuarios;
+        } catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }    	
+    }
+
+    public function searchalmAction(){
+    	try{
+			$this->view->layout()->setLayout('layout_blank');
+
+			$cClassObject = new My_Model_Usuarios();
+			$aUsuarios    = $cClassObject->getNoAsAlm($this->view->dataUser['ID_EMPRESA']);
+			$this->view->dataTable= $aUsuarios;
+        } catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }    	
+    }    
 }

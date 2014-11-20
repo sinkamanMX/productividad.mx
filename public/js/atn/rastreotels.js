@@ -203,6 +203,7 @@ function mapLoadData(){
 		stopTimer()
 	}
 }
+
 function printTravelsMap(){	
 	for(var i=0;i<arrayTravels.length;i++){
 		var travelInfo = arrayTravels[i].split('|');

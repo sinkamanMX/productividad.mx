@@ -145,12 +145,43 @@
 									<div class="control-group">
 										<label class="control-label">Operaciones<span class="required">*</span></label>
 										<div class="controls">
-											<select class="m-wrap" name="inputOperaciones" id="inputOperaciones" <?php echo $disabled;?> >
+											<select class="m-wrap" name="inputOperaciones" id="inputOperaciones" <?php echo $disabled;?>  onChange="showDivClaves(this.value);">
 												<option value="">Seleccionar una opción</option>
 				                                <?php echo $this->aOperaciones;?>
 											</select>
 										</div>
 									</div>	
+
+									<div id="divClaves" style="display: <?php echo (@$this->data['FLAG_OPERACIONES']) ? 'block': 'none';?>" >
+										<div class="control-group">
+											<label class="control-label">Id SAP<span class="required">*</span></label>
+											<div class="controls">
+												<input type="hidden" id="inputIdSap" name="inputIdSap" value="<?php echo @$this->data['ID_SAP'];?>"/>
+
+												<?php if(@$this->data['ID_SAP']==NULL || @$this->idToUpdate==-1):?>
+													<input name="inputSearchIdSap" id="inputSearchIdSap" type="text" class="span4 m-wrap" value="<?php echo (@$this->data['ID_SAP']==NULL) ? 'Sin Asignar': @$this->data['ID_SAP'];?>" readonly >
+													<button id="btnSearchIdSap" class="btn" ><i class="icon-search"></i></button>
+												<?php else:?>
+													<input name="inputAsignIdSap" type="text" class="span4 m-wrap" value="<?php echo @$this->data['ID_SAP']; ?>" readonly >
+													<button id="btnDelRelIdSap" class="btn btn-danger" ><i class="icon-remove-sign icon-white"></i></button>
+												<?php endif;?>										
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label">Clave Almacen<span class="required">*</span></label>
+											<div class="controls">
+												<input type="hidden" id="inputIdAlm" name="inputIdAlm" value="<?php echo @$this->data['CVE_SAP_ALMACEN'];?>"/>
+
+												<?php if(@$this->data['CVE_SAP_ALMACEN']=='NULL' || @$this->idToUpdate==-1):?>
+													<input name="inputSearchIdAlm" id="inputSearchIdAlm" type="text" class="span4 m-wrap" value="<?php echo (@$this->data['CVE_SAP_ALMACEN']=='NULL') ? 'Sin Asignar': @$this->data['CVE_SAP_ALMACEN'];?>" readonly >
+													<button id="btnSearchAlm" class="btn" ><i class="icon-search"></i></button>
+												<?php else:?>
+													<input name="inputDelRelAlm" type="text" class="span4 m-wrap" value="<?php echo @$this->data['CVE_SAP_ALMACEN']; ?>" readonly >
+													<button id="btnDelRelAlm" class="btn btn-danger" ><i class="icon-remove-sign icon-white"></i></button>
+												<?php endif;?>										
+											</div>
+										</div>												
+									</div>																			
 
 									<div class="control-group">
 										<label class="control-label">Último Acceso</label>
@@ -218,8 +249,6 @@
 											<?php endif;?>						
 										</div>													
 									</div>
-												
-
 								<?php if($disabled!='disabled'):?>
 								</form>
 								<?php endif;?>
@@ -237,7 +266,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" >Buscar Activos Sin Asignar</h4>
+        <h4 class="modal-title" ></h4>
       </div>
       <div class="modal-form i-body">             
 		<iframe class="hmodal550" id="iFrameSearch" src="" style="zoom:0" frameborder="0"></iframe>

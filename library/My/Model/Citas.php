@@ -76,17 +76,17 @@ class My_Model_Citas extends My_Db_Table
         $result     = false;            
         $sql = "INSERT INTO PROD_CITA_EXTRAS 
 				VALUES 
-				(".$data['idCita'].",'".utf8_encode('Tarjeta Circulaci—n')."','".$data['inputTdc']."'),
-				(".$data['idCita'].",'Licencia de Manejo','".$data['inputLicencia']."'),
-				(".$data['idCita'].",'Vigencia de la Licencia','".$data['inputVigencia']."'),
-				(".$data['idCita'].",'".utf8_encode('Lugar de emisi—n')."','".$data['inputEmision']."'),
-				(".$data['idCita'].",'Marca','".$data['sMarca']."'),
-				(".$data['idCita'].",'Modelo','".$data['sModelo']."'),
-				(".$data['idCita'].",'".utf8_encode('A–o')."','".$data['inputAno']."'),
-				(".$data['idCita'].",'Color','".$data['sColor']."'),
-				(".$data['idCita'].",'Placas','".$data['inputPlacas']."'),
-				(".$data['idCita'].",'No. de Serie','".$data['inputSerie']."'),
-				(".$data['idCita'].",'No. de Motor','".$data['inputMotor']."')";  
+				(".$data['idCita'].",'".utf8_encode('Tarjeta Circulaci—n')."','".$data['inputTdc']."','V'),
+				(".$data['idCita'].",'Licencia de Manejo','".$data['inputLicencia']."','V'),
+				(".$data['idCita'].",'Vigencia de la Licencia','".$data['inputVigencia']."','V'),
+				(".$data['idCita'].",'".utf8_encode('Lugar de emisi—n')."','".$data['inputEmision']."','V'),
+				(".$data['idCita'].",'Marca','".$data['sMarca']."','V'),
+				(".$data['idCita'].",'Modelo','".$data['sModelo']."','V'),
+				(".$data['idCita'].",'".utf8_encode('A–o')."','".$data['inputAno']."','V'),
+				(".$data['idCita'].",'Color','".$data['sColor']."','V'),
+				(".$data['idCita'].",'Placas','".$data['inputPlacas']."','V'),
+				(".$data['idCita'].",'No. de Serie','".$data['inputSerie']."','V'),
+				(".$data['idCita'].",'No. de Motor','".$data['inputMotor']."','V')";  
         try{
     		$query   = $this->query($sql,false);
     		if($query){
@@ -100,7 +100,7 @@ class My_Model_Citas extends My_Db_Table
 	}
 
 	public function insertaFormCita($data){
-        $result	= trues;
+        $result	= true;
         /*$sql="INSERT INTO PROD_CITA_FORMULARIO
 				SET ID_CITA			=  ".$data['idCita'].",
 					ID_FORMULARIO 	= 1";
@@ -113,7 +113,8 @@ class My_Model_Citas extends My_Db_Table
             echo $e->getMessage();
             echo $e->getErrorMessage();
         }
-		return $result;	*/	
+		return $result;	*/
+        return $result;	
 	}
 	
 	public function insertDomCitaOther($data){
@@ -250,7 +251,10 @@ class My_Model_Citas extends My_Db_Table
                    S.DESCRIPCION AS ESTATUS ,
                    A.ID_ESTATUS,
                    IF(U.NOMBRE IS NULL ,'No asignado' ,CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS OPERADOR,
-                   U.ID_USUARIO AS ID_OPERADOR
+                   U.ID_USUARIO AS ID_OPERADOR,
+                   A.OPERADOR_AUTORIZO,
+                   A.FOLIO_AUTORIZACION,
+                   D.RAZON_SOCIAL
   	        FROM PROD_CITAS A
   	           INNER JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
   	           INNER JOIN PROD_CLIENTES           D ON D.ID_CLIENTE = A.ID_CLIENTE
@@ -555,4 +559,75 @@ class My_Model_Citas extends My_Db_Table
         
 		return $result;			
 	}
+	
+	public function getPendientesbyEmpresa($idEmpresa){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT A.ID_CITA,
+					S.DESCRIPCION AS ESTATUS ,
+					S.ID_ESTATUS,
+ 					CONCAT(D.NOMBRE,' ',D.APELLIDOS) AS NOMBRE_CLIENTE,                   
+  	               	A.FECHA_CITA,
+  	               	A.HORA_CITA,                   
+                   	A.ID_ESTATUS,
+                   	IF(U.NOMBRE IS NULL ,'No asignado' ,CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS OPERADOR,
+                   	U.ID_USUARIO AS ID_OPERADOR,
+                   	A.FOLIO_AUTORIZACION,
+                   	A.OPERADOR_AUTORIZO,
+                   	A.FOLIO                  
+	  	        FROM PROD_CITAS A
+	  	           INNER JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
+	  	           INNER JOIN PROD_CLIENTES           D ON D.ID_CLIENTE = A.ID_CLIENTE
+	  	           INNER JOIN PROD_DOMICILIOS_CLIENTE E ON E.ID_CLIENTE = D.ID_CLIENTE
+	  	           INNER JOIN PROD_ESTATUS_CITA       S ON A.ID_ESTATUS = S.ID_ESTATUS	  	           
+	  	           LEFT JOIN PROD_CITA_USR            C ON C.ID_CITA    = A.ID_CITA
+	  	           LEFT JOIN USUARIOS            	  U ON C.ID_USUARIO = U.ID_USUARIO
+	  	       WHERE A.ID_ESTATUS NOT IN (1,4,6)
+	  	         AND FOLIO_AUTORIZACION IS NULL
+	  	         AND A.ID_EMPRESA = ".$idEmpresa."
+	  	         ORDER BY A.FECHA_CITA DESC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}
+	
+	public function getValidFolioAut($codeValidation,$idEmpresa){
+		$result= false;
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT FOLIO_AUTORIZACION            
+	  	        FROM PROD_CITAS  
+	  	       WHERE FOLIO_AUTORIZACION = '$codeValidation'
+	  	         AND ID_EMPRESA = ".$idEmpresa;
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			if($query[0]['FOLIO_AUTORIZACION']!=""){
+				$result = true;
+			}		  		
+		}	
+        
+		return $result;			
+	}	
+	
+	public function validateDate($data){
+        $result = false;
+        $idInput		= $data['strInput'];        
+	
+		$sql="UPDATE PROD_CITAS
+				SET  FOLIO_AUTORIZACION =  '".$data['codeValidate']."',
+				     OPERADOR_AUTORIZO 	=   ".$data['ID_USUARIO']."
+					 WHERE ID_CITA = $idInput LIMIT 1";        
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;	   		
+	}	
 }

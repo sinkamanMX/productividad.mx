@@ -1,0 +1,62 @@
+<?php $this->headScript()->appendFile('/js/modules/gralTables.js') ?>   
+<?php $this->headScript()->appendFile('/js/atn/Autorizaciones.js') ?>  
+<div class="row panel-data">
+	<div class="span12">
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Citas Pendiente pos Autorizar</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+ 					<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered"  id="dataTable">
+                        <thead>             
+                            <tr>
+                                <th>Id Cita</th>
+                                <th>Estatus</th>
+                                <th>Cliente</th>
+                                <th>Fecha/Hora Programada</th>
+                                <th>Folio</th>
+                                <th>Técnico Asignado</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $result = '';?>
+                            <?php foreach($this->aResume as $key => $items): ?>
+                                <tr>                   
+                                    <td><?php echo $items['ID_CITA'];?></td>
+                                    <td><?php echo $items['ESTATUS'];?></td>
+                                    <td><?php echo $items['NOMBRE_CLIENTE'];?></td>
+                                    <td><?php echo $items['FECHA_CITA'];?> <?php echo $items['HORA_CITA'];?></td>
+                                    <td><?php echo $items['FOLIO'];?></td>
+                                    <td><?php echo $items['OPERADOR'];?></td>
+                                    <td class="text-center">
+                                            <a href="javascript:showDetail('<?php echo $items['ID_CITA']; ?>')">
+                                            <button class="btn btn-primary"> <i class=" icon-ok icon-white"></i>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php  endforeach;?>
+                        </tbody>
+                </div>
+            </div>
+        </div>
+        <!-- /block -->
+    </div>
+</div>   
+
+<div class="modal fade hide modal-lg" id="myModalinfoVis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" ></h4>
+        </div>
+      <div class="modal-form i-body">  
+        <img id="loader1" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>           
+        <iframe class="hmodal500" id="iFrameSearch" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>  

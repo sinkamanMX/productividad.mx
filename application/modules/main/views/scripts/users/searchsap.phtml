@@ -1,0 +1,27 @@
+<?php $this->headScript()->appendFile('/js/main/searchActivos.js') ?>  	
+    <!-- block -->
+    <div class="block">
+        <div class="block-content collapse in">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                    <thead>
+                        <tr>
+                        	<th>Id Clave</th>
+                            <th>Nombre</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>                                
+                        <?php foreach($this->dataTable as $key => $items): ?>  
+                        <tr class="odd gradeX">
+                            <td><?php echo $items['ID_SAP']; ?></td>
+                            <td><?php echo $items['NOMBRE']; ?></td>
+                            <td class="text-center">                                
+                                <a href="javascript:parent.assignValue('<?php echo $items['ID_SAP']."-".$items['NOMBRE']; ?>',<?php echo $items['ID_SAP'];?>,1)"><button class="btn btn-primary"> <i class="icon-circle-arrow-down icon-white"></i></button></a>
+                            </td>
+                        </tr>    
+                        <?php endforeach;?>                                             
+                    </tbody>
+                </table>
+        </div>
+    </div>
+    <!-- /block -->

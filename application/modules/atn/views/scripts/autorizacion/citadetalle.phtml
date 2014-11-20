@@ -1,0 +1,100 @@
+<?php $this->headScript()->appendFile('/js/atn/mainDetalle.js') ?>     
+    <div class="container">		    
+        <div class="row">
+        	<?php if($this->statusOpr):?>
+        		<script>
+        			/*parent.closeDetail();*/
+        		</script>
+        	<?php endif;?>
+            <div class="">  
+				<form method="POST" action="/atn/autorizacion/citadetalle?strInput=<?php echo $this->data['ID_CITA']?>" id="FormData" class="form-horizontal ">
+				<input type="hidden" id="opSearch" name="opSearch"  value="opSearch"/>     
+				<input type="hidden" id="strInput" name="strInput"  value="<?php echo $this->data['ID_CITA']?>"/>       	
+            	<input type="hidden" id="txtLatitud"  value="<?php echo $this->data['LAT_CITA']; ?>"/>
+            	<input type="hidden" id="txtLongitud" value="<?php echo $this->data['LON_CITA']; ?>"/>
+            	<input type="hidden" name="inputChangeDate" id="inputChangeDate" value="0"/>
+
+                <div class="span6">
+                    <h4>Detalle de la Cita <!-- <a href="javascript:setEditDate()"><i class=" icon-edit"></i></a> --></h4>
+                </div>
+                <div class="span6">
+                    <h4>Folio Autorización: <?php echo (isset($this->data['FOLIO_AUTORIZACION'])) ? $this->data['FOLIO_AUTORIZACION']: 'Sin Autorización';?></h4>
+                </div>            
+            	<table  class="table-striped table-bordered span12" >     
+            		<tr>
+            			<td width="150px"><b>Estatus</b></td>
+            			<td width="250px">
+            				<div class="divLabel"><?php echo $this->data['ESTATUS'];?></div>	      				
+            			</td>
+                        <td width="100px"><b>Folio:</b></td>
+                        <td>
+                            <div class="divLabel"><?php echo $this->data['FOLIO'];?></div>   
+                        </td>
+            		</tr>              	       		
+            		<tr>
+            			<td><b>Fecha /Hora de la Cita</b></td>
+            			<td colspan="1">
+							<div class="divLabel"><?php echo $this->data['FECHA_CITA'];?> <?php echo $this->data['HORA_CITA'];?></div>	
+							<div class="divInput" style="display:none;">
+								<input id="inputFecha" name="inputFecha" readonly type="text" class="form-control" value="<?php echo $this->data['FECHA_CITA'];?> <?php echo $this->data['HORA_CITA'];?>" >						
+							</div>								
+            			</td>
+                        <td><b>Personal Asignado</b></td>
+                        <td>
+                            <div class="divLabel"><?php echo $this->data['OPERADOR'];?></div>   
+                        </td>                        
+            		</tr>
+            		<tr>
+            			<td><b>Contacto</b></td>
+            			<td><?php echo $this->data['CONTACTO'];?></td>
+            			<td><b>Tel. Contacto</b></td>
+            			<td><?php echo $this->data['TELEFONO_CONTACTO'];?></td>		
+            		</tr>   
+            		<tr>
+            			<td><b>Dirección de la cita</b></td>
+            			<td><?php echo $this->data['DIRECCION_CITA'];?></td>
+            			<td><b>Referencias</b></td>
+            			<td><?php echo $this->data['REF_CITA'];?></td>		
+            		</tr>             		
+            	</table>
+            	<h4>Datos del Cliente</h4>
+            	<table  class="table-striped table-bordered span12" >
+                    <tr>
+                        <td width="150px"><b>Nombre</b></td>
+                        <td width="250px"><?php echo $this->data['NOMBRE_CLIENTE'];?></td>
+                        <td width="100px"><b>Razón Social</b></td>
+                        <td><?php echo $this->data['RAZON_SOCIAL'];?></td>     
+                    </tr>                                       
+            		<tr>
+            			<td><b>Tel.</b></td>
+            			<td><?php echo $this->data['TELEFONO_FIJO'];?></td>
+            			<td><b>Tel. Movil</b></td>
+                        <td><?php echo $this->data['TELEFONO_MOVIL'];?></td>
+            		</tr>
+            		<tr>            		
+            			<td><b>Correo electrónico</b></td>
+            			<td colspan="3"><?php echo $this->data['EMAIL'];?></td>		
+            		</tr> 
+            		<tr>
+            			<td><b>Dirección de la cita</b></td>
+            			<td><?php echo $this->data['DIRECCION_CLIENTE'];?></td>
+            			<td><b>Referencias</b></td>
+            			<td><?php echo $this->data['REFERENCIAS'];?></td>		
+            		</tr>              		                          		
+            	</table>
+					<div class="span12">
+				    	<div class="offset4">
+							<div class="">
+								<?php if(!isset($this->data['FOLIO_AUTORIZACION'])):?>
+                                    <button type="submit" class="btn btn-primary btn-large">Autorizar</button>
+                                <?php else:?>
+                                    <button type="button" onClick="parent.closeDetail();" class="btn btn-default btn-large">Cerrar</button>
+                                <?php endif;?>
+							</div>    
+				    	</div>						
+					</div>            	
+	            </form>
+	        </div>
+        </div>
+    </div>   
+</div>

@@ -86,7 +86,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		Zend_Db_Table::setDefaultAdapter($db);
 	
 		//save Db in registry for later use
-		Zend_Registry::set("db", $db);
+		Zend_Registry::set("db", $db);		
 	}
 	
     function _initLayout(){
@@ -102,6 +102,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     protected function _initRequest()
     {
+    	/*
     	try{
 	        $config = $this->getOptions();
 	    	// Ensure front controller instance is present, and fetch it
@@ -122,5 +123,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		   $request = $controller->getRequest();
 		   echo "Exception: ".$request->getControllerName()."Controller class not found. ".$request->getActionName()."Action() not found. "; 
 		}
+		*/
     } 
 }

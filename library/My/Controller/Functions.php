@@ -231,4 +231,14 @@ class My_Controller_Functions
 		$result['TOTAL'] = $count;
 		return $result;    	
     }
+    
+	function getRandomCode(){
+	    $an = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	    $su = strlen($an) - 1;
+	    return substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1);
+	}    
 }

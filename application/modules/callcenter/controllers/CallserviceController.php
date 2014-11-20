@@ -56,7 +56,7 @@ class callcenter_CallserviceController extends My_Controller_Action
 				}
 				
 				$aNamespace->service = $this->dataIn;
-	            $this->_redirect('/callcenter/newservice/instalation');	
+	            $this->_redirect('/callcenter/callservice/instalation');	
 			}
 
 			if(isset($aNamespace->service)){
