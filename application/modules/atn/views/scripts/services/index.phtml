@@ -12,7 +12,7 @@
                 <div class="span12">
                     <div class="row customform bg-white">
                         <form method="POST" action="/atn/services/index" id="FormData" class="form-horizontal formcustom">
-                            <input type="hidden" name="optReg" value="search" />
+                            <input type="hidden" id="optReg" name="optReg" value="<?php echo ($this->dataOp=='search') ? 'searchOpt': 'search'; ?>" />
                             <fieldset>                             
                                 <div class="row row-margin-left25">    
                                     <div class="span5">
@@ -97,7 +97,7 @@
                         <div class="button-excel-rel">
                             <?php if(count($this->aResume)>0): ?>
                                 <div class="btn-group">
-                                 <a href="javascript:alert('Exportará información');"><button class="btn btn-success"> Exportar <i class="icon-file icon-white"></i></button></a>                                    
+                                 <a href="javascript:getReportAll()"><button class="btn btn-success"> Exportar <i class="icon-file icon-white"></i></button></a>                                    
                             <!--
                                  <a target="_blank" href="/atn/rastreo/exportsearch?strInput=<?php echo $this->data['strInput']; ?>&inputFechaIn=<?php echo @$this->data['inputFechaIn'];?>&inputFechaFin=<?php echo @$this->data['inputFechaFin'];?>"><button class="btn btn-success"> Exportar <i class="icon-file icon-white"></i></button></a>
                              -->
@@ -107,7 +107,7 @@
                         <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered"  id="dataTable">
                         <thead>             
                             <tr>
-                                <th>Id Cita</th>
+                                <th>Folio Cita</th>
                                 <th>Estatus</th>
                                 <th>Cliente</th>
                                 <th>Fecha Programada</th>
@@ -122,7 +122,7 @@
                             <?php $result = '';?>
                             <?php foreach($this->aResume as $key => $items): ?>
                                 <tr>                   
-                                    <td><?php echo $items['ID'];?></td>
+                                    <td><?php echo $items['FOLIO'];?></td>
                                     <td><?php echo $items['DESCRIPCION'];?></td>
                                     <td><?php echo $items['NOMBRE_CLIENTE'];?></td>
                                     <td><?php echo $items['F_PROGRAMADA'];?></td>

@@ -80,3 +80,14 @@ $( document ).ready(function() {
 function getReport(){
 	$( "#FormData" ).submit();
 }
+
+function getReportAll(){
+  var inputFecIn  = $("#inputFechaIn").val();
+  var inputFecFin = $("#inputFechaFin").val(); 
+  var idSucursal  = $("#cboInstalacion").val(); 
+  var idTecnico   = $("#inputTecnicos").val();
+  var strOpt      = $("#optReg").val();
+
+  var url = "/atn/services/exportall?optReg="+strOpt+"cboInstalacion="+idSucursal+"&inputTecnicos="+idTecnico+"&inputFechaIn="+inputFecIn+"&inputFechaFin="+inputFecFin;
+  window.open(url, '_blank');
+}
