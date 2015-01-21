@@ -74,7 +74,9 @@ $( document ).ready(function() {
                 "sNext": "Siguiente"
               }          
           }
-    } );      
+    } );
+
+     $('[data-toggle="tooltip"]').tooltip();      
 });
 
 function getReport(){

@@ -128,25 +128,22 @@
                                     <td><?php echo $items['FECHA_TERMINO'];?></td>
                                     <td><?php echo $items['NOMBRE_TECNICO'];?></td>
 
-                                    <td class="text-center" style="width:120px;">
+                                    <td class="text-center" style="width:120px;">                             
                                         <?php if($items['IDE']==4):?>
                                             <div class="span4">
                                                 <a href="/atn/reportes/exportsearch?strInput=<?php echo $items['ID']; ?>">
-                                                    <button class="btn btn-warning"> <i class=" icon-align-center icon-white"></i>
-                                                    </button>
+                                                    <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Formato General"><i class=" icon-align-center icon-white"></i></button>
                                                 </a>
                                             </div>
                                             <?php if($items['NEW_FORM']=='N'):?>
                                                 <div class="span4">
                                                     <a href="/atn/reportes/exportoservicio?strInput=<?php echo $items['ID']; ?>">
-                                                        <button class="btn btn-success"> <i class="icon-file icon-white"></i>
-                                                        </button>
+                                                        <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Orden de Servicio"><i class="icon-file icon-white"></i></button>
                                                     </a>
                                                 </div>
                                                 <div class="span4">
                                                     <a href="/atn/reportes/exportchecklist?strInput=<?php echo $items['ID']; ?>">
-                                                        <button class="btn btn-info"> <i class="icon-list-alt icon-white"></i>
-                                                        </button>
+                                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Checklist de Servicio"><i class="icon-list-alt icon-white"></i></button>
                                                     </a>  
                                                 </div>
                                             <?php endif;?>
