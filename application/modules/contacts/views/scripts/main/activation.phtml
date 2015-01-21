@@ -1,0 +1,137 @@
+<?php $this->headScript()->appendFile('/js/contacts/validateContacts.js') ?>  
+<?php $disabled = ($this->onlyShow) ? 'disabled':'';?>
+		<!-- block -->
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">
+				<a href="/contacts/main/index?inputCodeClient=<?php echo $this->codeClient['COD_CLIENTE'];?>&optReg=search">
+					<i class="icon-circle-arrow-left fa-1"></i></a> Cliente <?php echo $this->codeClient['COD_CLIENTE'];?></div>
+        </div>
+        <div class="block-content collapse in">
+            <div class="span12">
+			<form method="POST" action="/contacts/main/activation" id="FormData" class="form-horizontal ">
+                <input type="hidden" name="optReg" value="new" />
+                <input type="hidden" id="catId" name="catId" value="<?php echo $this->catId; ?>" />
+                <input type="hidden" id="activationCode"  name="activationCode" value="<?php echo $this->dataIn['activationCode']; ?>" />
+                <input type="hidden" id="inputCodeClient" name="inputCodeClient" value="<?php echo $this->dataIn['inputCodeClient']; ?>" />
+                
+                <?php if($this->resultOp=='okRegister'): ?>
+                    <div class="alert alert-success">
+                        <button class="close" data-dismiss="alert"></button>
+                        Datos se almacenaron correctamente.
+                    </div>  		              
+                <?php endif; ?>
+	                <fieldset>
+	                	<div class="row">
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">Nombre<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputNombre" id="inputNombre" data-required="1" class="span6 m-wrap upper" value="<?php echo @$this->aDataInfo['NOMBRE']; ?>" <?php echo $disabled;?> >
+									</div>
+								</div>
+		                	</div>
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">Apellidos<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputAps" id="inputAps" data-required="1" class="span6 m-wrap upper" value="<?php echo @$this->aDataInfo['APELLIDOS']; ?>"  <?php echo $disabled;?> >
+									</div>
+								</div>	
+		                	</div>
+	                	</div>
+
+	                	<div class="row">
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">Genero<span class="required">*</span></label>
+									<div class="controls">
+										<select class="span5 m-wrap" id="inputGenero" name="inputGenero" <?php echo $disabled;?>>
+											<option value="">Seleccionar una opción</option>
+											<?php echo $this->sGenero;?>;	
+					                    </select>
+									</div>
+								</div>		                		
+		                	</div>
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">Sucursal<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputSucursal" id="inputSucursal" data-required="1" class="span6 m-wrap upper" value="<?php echo @$this->aDataInfo['SUCURSAL']; ?>" <?php echo $disabled;?> >
+									</div>
+								</div>	
+		                	</div>		                		
+	                	</div>
+
+	                	<div class="row">
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">Puesto<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputPuesto" id="inputPuesto" data-required="1" class="span6 m-wrap upper" value="<?php echo @$this->aDataInfo['PUESTO']; ?>" <?php echo $disabled;?> >
+									</div>
+								</div>	
+		                	</div>
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">Tel. Móvil<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputTel" id="inputTel" data-required="1" class="span6 m-wrap" value="<?php echo @$this->aDataInfo['TEL_MOVIL']; ?>" <?php echo $disabled;?> >
+									</div>
+								</div>	
+		                	</div>
+		                </div>	
+
+	                	<div class="row">
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">Tel. Ofna<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputTelOfna" id="inputTelOfna" data-required="1" class="span6 m-wrap" value="<?php echo @$this->aDataInfo['TEL_OFICINA']; ?>" <?php echo $disabled;?> >
+									</div>
+								</div>					                		
+		                	</div>
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">Extension<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputExt" id="inputExt" data-required="1" class="span6 m-wrap" value="<?php echo @$this->aDataInfo['EXTENSION']; ?>" <?php echo $disabled;?> >
+									</div>
+								</div>	
+		                	</div>
+		                </div>	
+
+	                	<div class="row">
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">RFC<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputRFC" id="inputRFC" data-required="1" class="span6 m-wrap upper" value="<?php echo @$this->aDataInfo['RFC']; ?>" <?php echo $disabled;?> >
+									</div>
+								</div>					                		
+		                	</div>
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">E-mail<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputEmail" id="inputEmail" data-required="1" class="span6 m-wrap" value="<?php echo @$this->aDataInfo['EMAIL']; ?>" <?php echo $disabled;?> >
+									</div>
+								</div>
+		                	</div>
+		                </div>				                																											
+						<?php if(!$disabled):?>
+							<div class="form-actions">
+								<button type="submit" class="btn btn-primary">Guardar</button>
+								<a href="/contacts/main/index?inputCodeClient=<?php echo $this->codeClient['COD_CLIENTE'];?>">
+									<button type="button" class="btn" >Cancelar</button>
+								</a>
+							</div>							
+						<?php endif;?>						
+				</fieldset>
+			</form>
+			<!-- END FORM-->																
+		</div>
+				    
+		</div>			
+	</div>
+</div>

@@ -107,7 +107,7 @@ class atn_AutorizacionController extends My_Controller_Action
 	 * 3.- Que las fotos existan.
 	 * 4.- Copiar a carpeta 
 	 * 
-	 * agregar en tabla de citas campo que diga envio_sap
+	 * agregar en tabla de citas campo que diga enviado_sap
 	 * 
 	 * */
 	

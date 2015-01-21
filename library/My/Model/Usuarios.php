@@ -129,7 +129,7 @@ class My_Model_Usuarios extends My_Db_Table
 						U.ID_PERFIL,
 						P.DESCRIPCION AS PERFIL,
 						U.USUARIO,
-						CONCAT(U.NOMBRE, U.APELLIDOS) AS NOMBRE,
+						CONCAT(U.NOMBRE,' ',U.APELLIDOS) AS NOMBRE,
 						U.EMAIL,
 						U.ULTIMO_ACCESO,
 						U.FLAG_OPERACIONES,

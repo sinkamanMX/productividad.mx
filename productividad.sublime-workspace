@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"TH",
+				"this"
+			],
+			[
 				"var",
 				"var_dump"
 			],
@@ -376,36 +380,43 @@
 	"buffers":
 	[
 		{
-			"file": "application/modules/atn/views/scripts/services/index.phtml",
+			"file": "application/modules/marketing/views/scripts/sapclientes/getinfo.phtml",
 			"settings":
 			{
-				"buffer_size": 10141,
+				"buffer_size": 5617,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "Searching 3971 files for \"getIsSupervisor\" (regex)\n\n/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Worksheet.php:\n 1526      {\n 1527          // make sure we have a real style and not supervisor\n 1528:         $style = $pCellStyle->getIsSupervisor() ? $pCellStyle->getSharedComponent() : $pCellStyle;\n 1529  \n 1530          // Add the style to the workbook if necessary\n\n/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Style/Border.php:\n  265  	public function setColor(PHPExcel_Style_Color $pValue = null) {\n  266  		// make sure parameter is a real color and not a supervisor\n  267: 		$color = $pValue->getIsSupervisor() ? $pValue->getSharedComponent() : $pValue;\n  268  \n  269  		if ($this->_isSupervisor) {\n\n/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Style/Fill.php:\n  261  	public function setStartColor(PHPExcel_Style_Color $pValue = null) {\n  262  		// make sure parameter is a real color and not a supervisor\n  263: 		$color = $pValue->getIsSupervisor() ? $pValue->getSharedComponent() : $pValue;\n  264  \n  265  		if ($this->_isSupervisor) {\n  ...\n  290  	public function setEndColor(PHPExcel_Style_Color $pValue = null) {\n  291  		// make sure parameter is a real color and not a supervisor\n  292: 		$color = $pValue->getIsSupervisor() ? $pValue->getSharedComponent() : $pValue;\n  293  \n  294  		if ($this->_isSupervisor) {\n\n/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Style/Font.php:\n  496  	public function setColor(PHPExcel_Style_Color $pValue = null) {\n  497  		// make sure parameter is a real color and not a supervisor\n  498: 		$color = $pValue->getIsSupervisor() ? $pValue->getSharedComponent() : $pValue;\n  499  \n  500  		if ($this->_isSupervisor) {\n\n/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Style/Supervisor.php:\n   80  	 * @return boolean\n   81  	 */\n   82: 	public function getIsSupervisor()\n   83  	{\n   84  		return $this->_isSupervisor;\n\n6 matches across 5 files\n",
+			"contents": "Femenino\nfemenino",
 			"settings":
 			{
-				"buffer_size": 2004,
+				"buffer_size": 17,
 				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
+				"name": "Femenino"
 			}
 		},
 		{
-			"file": "public/PHPExcel/Style/Supervisor.php",
+			"file": "application/modules/contacts/views/scripts/main/activation.phtml",
 			"settings":
 			{
-				"buffer_size": 3190,
+				"buffer_size": 6808,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/js/atn/service.js",
+			"file": "public/js/callcenter/newservice.js",
 			"settings":
 			{
-				"buffer_size": 3130,
+				"buffer_size": 6047,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/contacts/validateContacts.js",
+			"settings":
+			{
+				"buffer_size": 1942,
 				"line_ending": "Unix"
 			}
 		}
@@ -434,8 +445,29 @@
 	},
 	"file_history":
 	[
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/dashboard/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/activation.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/contacts/validateContacts.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/contacts/searchContacts.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/instalation.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/index/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/public.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/marketing/validateCodes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateEquipments.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/libs/qr/phpqrcode.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Classes/dompdf/include/image_cache.cls.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/sapclientes/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/getinformation.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/autorizacion/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/Autorizaciones.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Style/Supervisor.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/.settings/org.eclipse.php.core.prefs",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/dashboard/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/dashboard/productivity.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/autorizacion/citadetalle.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/index.phtml",
@@ -445,8 +477,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/searchalm.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/phones/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validatePhones.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/autorizacion/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/Autorizaciones.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout_blank.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/index.phtml",
@@ -456,7 +486,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/reporte.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/infoEquipments.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/searchactivos.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/searchActivos.js",
@@ -474,7 +503,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/callservice/cardetail.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/callservice/datefinish.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/callservice/instalation.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Classes/dompdf/include/image_cache.cls.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Classes/dompdf/include/image_frame_decorator.cls.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Classes/dompdf/include/functions.inc.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/index.phtml",
@@ -503,7 +531,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/footer.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/profiles/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateProfile.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateEquipments.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/phones/searchactivos.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/infoPhones.js",
@@ -512,16 +539,13 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/callservice/finish.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/instalation.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainDetalle.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/reporteRastreo.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/mapa.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/DT_bootstrap.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/RastreoController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/getinformation.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/ .phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/vendors/graphs/js/jquery.circliful.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/instalation.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/mapDetail.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/map.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/map/index.phtml",
@@ -548,20 +572,7 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/registerdateController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/bootstrap/css/bootstrap.min.css",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/css/style.css",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/MainController.php",
-		"/Users/itecno2/Documents/workspace/petlocator/public/modules/admin/admin.js",
-		"/Users/itecno2/Documents/workspace/petlocator/public/modules/untitled",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/catalogos/productos.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/catalogos/registerproducto.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/catalogos/registermarca.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/catalogos/registercategoria.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/catalogos/registerpromos.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/views/layouts/admin_menu.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/usuarios/mascotas.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/usuarios/pedidos.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/usuarios/usuarios.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/modules/admin/views/scripts/usuarios/index.phtml",
-		"/Users/itecno2/Documents/workspace/petlocator/application/views/layouts/admin_header.phtml"
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/MainController.php"
 	],
 	"find":
 	{
@@ -569,7 +580,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"<open folders>",
@@ -582,6 +593,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"/sima/",
+			"ImagePng",
+			"equipment",
 			"getIsSupervisor",
 			"span",
 			"divSliderC",
@@ -706,10 +720,7 @@
 			"bg",
 			">'+",
 			">'+ ",
-			"col-xs-2",
-			"form",
-			"caption",
-			"modal"
+			"col-xs-2"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -717,6 +728,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"sapclintes",
 			"/callservice/",
 			"activos/",
 			"/activos/",
@@ -768,29 +780,27 @@
 			[
 				{
 					"buffer": 0,
-					"file": "application/modules/atn/views/scripts/services/index.phtml",
+					"file": "application/modules/marketing/views/scripts/sapclientes/getinfo.phtml",
 					"settings":
 					{
-						"buffer_size": 10141,
+						"buffer_size": 5617,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9310,
-								8733
+								2965,
+								2965
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
 							"word_wrap": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1469.0,
+						"translation.y": 524.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -799,106 +809,70 @@
 					"buffer": 1,
 					"settings":
 					{
-						"buffer_size": 2004,
+						"buffer_size": 17,
 						"regions":
 						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										253,
-										268
-									],
-									[
-										646,
-										661
-									],
-									[
-										1010,
-										1025
-									],
-									[
-										1293,
-										1308
-									],
-									[
-										1652,
-										1667
-									],
-									[
-										1912,
-										1927
-									]
-								],
-								"scope": ""
-							}
 						},
 						"selection":
 						[
 							[
-								1917,
-								1917
+								17,
+								17
 							]
 						],
 						"settings":
 						{
-							"detect_indentation": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+							"auto_name": "Femenino",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 68.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "public/PHPExcel/Style/Supervisor.php",
+					"file": "application/modules/contacts/views/scripts/main/activation.phtml",
 					"settings":
 					{
-						"buffer_size": 3190,
+						"buffer_size": 6808,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								585,
-								585
+								1845,
+								1845
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"word_wrap": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 7.0,
+						"translation.x": 160.0,
+						"translation.y": 72.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "public/js/atn/service.js",
+					"file": "public/js/callcenter/newservice.js",
 					"settings":
 					{
-						"buffer_size": 3130,
+						"buffer_size": 6047,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2983,
-								2974
+								3269,
+								3171
 							]
 						],
 						"settings":
@@ -908,7 +882,35 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 685.0,
+						"translation.y": 1135.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "public/js/contacts/validateContacts.js",
+					"settings":
+					{
+						"buffer_size": 1942,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								31,
+								36
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -959,7 +961,7 @@
 		[
 			[
 				"",
-				"application/modules/main/views/scripts/shop/shops.phtml"
+				".settings/org.eclipse.php.core.prefs"
 			]
 		],
 		"width": 0.0

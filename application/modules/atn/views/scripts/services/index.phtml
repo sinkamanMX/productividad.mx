@@ -12,7 +12,7 @@
                 <div class="span12">
                     <div class="row customform bg-white">
                         <form method="POST" action="/atn/services/index" id="FormData" class="form-horizontal formcustom">
-                            <input type="hidden" id="optReg" name="optReg" value="<?php echo ($this->dataOp=='search') ? 'searchOpt': 'search'; ?>" />
+                            <input type="hidden" name="optReg" value="search" />
                             <fieldset>                             
                                 <div class="row row-margin-left25">    
                                     <div class="span5">
@@ -98,9 +98,6 @@
                             <?php if(count($this->aResume)>0): ?>
                                 <div class="btn-group">
                                  <a href="javascript:getReportAll()"><button class="btn btn-success"> Exportar <i class="icon-file icon-white"></i></button></a>                                    
-                            <!--
-                                 <a target="_blank" href="/atn/rastreo/exportsearch?strInput=<?php echo $this->data['strInput']; ?>&inputFechaIn=<?php echo @$this->data['inputFechaIn'];?>&inputFechaFin=<?php echo @$this->data['inputFechaFin'];?>"><button class="btn btn-success"> Exportar <i class="icon-file icon-white"></i></button></a>
-                             -->
                                 </div>
                             <?php endif;?>
                         </div>                        
@@ -130,12 +127,24 @@
                                     <td><?php echo $items['FECHA_INICIO'];?></td>
                                     <td><?php echo $items['FECHA_TERMINO'];?></td>
                                     <td><?php echo $items['NOMBRE_TECNICO'];?></td>
-                                    <td class="text-center">
+                                    <td class="text-center" style="width:100px;">
                                         <?php if($items['IDE']==4):?>
-                                        <a href="/atn/services/exportsearch?strInput=<?php echo $items['ID']; ?>">
+                                        <!--<<a href="/atn/services/exportsearch?strInput=<?php echo $items['ID']; ?>">
                                             <button class="btn btn-success"> <i class="icon-file icon-white"></i>
                                             </button>
-                                        </a>
+                                        </a>--> 
+                                        <div class="span6">
+                                            <a href="/atn/services/exportoservicio?strInput=<?php echo $items['ID']; ?>">
+                                                <button class="btn btn-success"> <i class="icon-file icon-white"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="span6">
+                                            <a href="/atn/services/exportchecklist?strInput=<?php echo $items['ID']; ?>">
+                                                <button class="btn btn-info"> <i class="icon-list icon-white"></i>
+                                                </button>
+                                            </a>  
+                                        </div>                                        
                                         <?php endif;?>
                                     </td>
                                 </tr>

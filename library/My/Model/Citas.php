@@ -257,8 +257,8 @@ class My_Model_Citas extends My_Db_Table
                    D.RAZON_SOCIAL
   	        FROM PROD_CITAS A
   	           INNER JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
-  	           INNER JOIN PROD_CLIENTES           D ON D.ID_CLIENTE = A.ID_CLIENTE
-  	           INNER JOIN PROD_DOMICILIOS_CLIENTE E ON E.ID_CLIENTE = D.ID_CLIENTE
+  	           LEFT JOIN PROD_CLIENTES           D ON D.ID_CLIENTE = A.ID_CLIENTE
+  	           LEFT JOIN PROD_DOMICILIOS_CLIENTE E ON E.ID_CLIENTE = D.ID_CLIENTE
   	           INNER JOIN PROD_ESTATUS_CITA       S ON A.ID_ESTATUS = S.ID_ESTATUS	  	           
   	           LEFT JOIN PROD_CITA_USR            C ON C.ID_CITA    = A.ID_CITA
   	           LEFT JOIN USUARIOS            	  U ON C.ID_USUARIO = U.ID_USUARIO
@@ -488,12 +488,14 @@ class My_Model_Citas extends My_Db_Table
 						C.FECHA_CITA,
 						C.HORA_CITA,
 						C.FOLIO,
+						C.CONTACTO,
+						C.TELEFONO_CONTACTO,
 						CONCAT(R.NOMBRE,' ',R.APELLIDOS) AS USR_REGISTRADO,
 						P.RAZON_SOCIAL AS NOMBRE_CLIENTE,		
 						CONCAT(M.CALLE,' ',M.NUMERO_EXT,' ',M.NUMERO_INT,' ',M.COLONIA) AS DIRECCION_CLIENTE1,
 						CONCAT(M.MUNICIPIO,' ',M.ESTADO,' ',M.CP) AS DIRECCION_CLIENTE2,
 						CONCAT(D.CALLE,' ',D.NO_EXT,' ',D.NO_INT,' ',D.COLONIA) AS DIRECCION_CITA1,
-						CONCAT(D.MUNICIPIO,' ',D.ESTADO,' ',D.CP) AS DIRECCION_CITA2,	
+						CONCAT(' ',D.MUNICIPIO,' ',D.ESTADO,' ',D.CP) AS DIRECCION_CITA2,	
 						IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
 						IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
 						IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO
@@ -538,7 +540,8 @@ class My_Model_Citas extends My_Db_Table
 	public function getDataSendbyForms($idOject,$idForm){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT E.ID_TIPO,			
+    	$sql ="SELECT E.ID_ELEMENTO,
+    					E.ID_TIPO,		
 				       IF (E.ID_TIPO = 8, 'ENCABEZADO','RESPUESTA') AS TIPO,			
 				       E.DESCIPCION AS DESCRIPCION,			
 				       B.CONTESTACION,			
