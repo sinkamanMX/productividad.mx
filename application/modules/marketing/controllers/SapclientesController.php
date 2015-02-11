@@ -139,84 +139,87 @@ class marketing_SapclientesController extends My_Controller_Action
     public function exportcardAction(){
     	try{
 			$dataInfo = Array();    		
-			$this->_helper->layout->disableLayout();
-			$this->_helper->viewRenderer->setNoRender();
 			$classObject 	= new My_Model_Sapclientes();
 			
 			if($this->idToUpdate >-1){
 				$dataInfo	= $classObject->getDataQr($this->idToUpdate);
-				require_once 'PHPExcel.php';		
-										
-				if (!PHPExcel_Settings::setPdfRenderer(
-						PHPExcel_Settings::PDF_RENDERER_DOMPDF,
-						$this->realPath.'/PHPExcel/Classes/dompdf'
-				)) {
-					die(
-						'NOTICE: Please set the $rendererName and asdads$rendererLibraryPath values' .
-						'<br />' .
-						'at the top of this script as appropriate for your directory structure'
-					);
-				}
-			
-				/** PHPExcel_Writer_Excel2007*/ 								
-				$objPHPExcel = new PHPExcel();
- 					
-				$objPHPExcel->getProperties()->setCreator("UDA")
-										 ->setLastModifiedBy("UDA")
-										 ->setTitle("Office 2007 XLSX")
-										 ->setSubject("Office 2007 XLSX")
-										 ->setDescription("Orden de Servicio")
-										 ->setKeywords("office 2007 openxml php")
-										 ->setCategory("Orden de Servicio");					 
-				$objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')->setSize(9);	
-										
-				$objDrawing = new PHPExcel_Worksheet_Drawing();
-				
-				$objDrawing->setName('TargetFront');
-				$objDrawing->setDescription('TargetFront');				
-				$objDrawing->setPath($this->realPath.'/movi/targetFront.jpg');
-				$objDrawing->setCoordinates('C1');
-				$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
-													
-				$objDrawBack = new PHPExcel_Worksheet_Drawing();				
-				$objDrawBack->setName('targetBack');
-				$objDrawBack->setDescription('targetBack');				
-				$objDrawBack->setPath($this->realPath.'/movi/targetBack.jpg');
-				$objDrawBack->setCoordinates('C20');
-				$objDrawBack->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
-				
-				$objDrawTxtQr = new PHPExcel_Worksheet_Drawing();				
-				$objDrawTxtQr->setName('targetBack');
-				$objDrawTxtQr->setDescription('targetBack');				
-				$objDrawTxtQr->setPath($this->realPath.'/movi/txt_'.$dataInfo['CADENA_QR'].'.png');
-				$objDrawTxtQr->setCoordinates('C26');
-				$objDrawTxtQr->setOffsetX(40);
-				$objDrawTxtQr->setOffsetY(-10);
-				$objDrawTxtQr->setWorksheet($objPHPExcel->setActiveSheetIndex(0));	
-
-				$objDrawQr = new PHPExcel_Worksheet_Drawing();				
-				$objDrawQr->setName('targetBack');
-				$objDrawQr->setDescription('targetBack');				
-				$objDrawQr->setPath($this->realPath.'/movi/'.$dataInfo['CADENA_QR'].'.png');
-				$objDrawQr->setCoordinates('C23');
-				$objDrawQr->setOffsetX(175);
-				$objDrawQr->setOffsetY(-20);
-				$objDrawQr->setWidth(180);
-				$objDrawQr->setHeight(180);
-				$objDrawQr->setWorksheet($objPHPExcel->setActiveSheetIndex(0));						
+				$bFileCodeQr= file_exists($this->realPath.'/movi/txt_'.$dataInfo['CADENA_QR'].'.png');
+				$bFileTxtCode = file_exists($this->realPath.'/movi/'.$dataInfo['CADENA_QR'].'.png');
 								
-				$objPHPExcel->setActiveSheetIndex(0)->setShowGridLines(false);
-				$objPHPExcel->setActiveSheetIndex(0)->setPrintGridLines(false);					
-
-				$filename  = "Tarjeta_".$dataInfo['CADENA_QR'].".pdf";
-				header('Content-Type: application/pdf');
-				header('Content-Disposition: attachment;filename="'.$filename.'"');
-				header('Cache-Control: max-age=0');									
+				if($bFileCodeQr && $bFileTxtCode){
+					$this->_helper->layout->disableLayout();
+					$this->_helper->viewRenderer->setNoRender();
+					require_once 'PHPExcel.php';		
+											
+					if (!PHPExcel_Settings::setPdfRenderer(
+							PHPExcel_Settings::PDF_RENDERER_DOMPDF,
+							$this->realPath.'/PHPExcel/Classes/dompdf'
+					)) {
+						die(
+							'NOTICE: Please set the $rendererName and asdads$rendererLibraryPath values' .
+							'<br />' .
+							'at the top of this script as appropriate for your directory structure'
+						);
+					}
 				
-				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
-				$objWriter->save('php://output');	
-			}else{
-				echo "no hay informacion";
+					/** PHPExcel_Writer_Excel2007*/ 								
+					$objPHPExcel = new PHPExcel();
+	 					
+					$objPHPExcel->getProperties()->setCreator("UDA")
+											 ->setLastModifiedBy("UDA")
+											 ->setTitle("Office 2007 XLSX")
+											 ->setSubject("Office 2007 XLSX")
+											 ->setDescription("Orden de Servicio")
+											 ->setKeywords("office 2007 openxml php")
+											 ->setCategory("Orden de Servicio");					 
+					$objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')->setSize(9);	
+											
+					$objDrawing = new PHPExcel_Worksheet_Drawing();
+	
+					$objDrawing->setName('TargetFront');
+					$objDrawing->setDescription('TargetFront');				
+					$objDrawing->setPath($this->realPath.'/movi/targetFront.jpg');
+					$objDrawing->setCoordinates('C1');
+					$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
+														
+					$objDrawBack = new PHPExcel_Worksheet_Drawing();				
+					$objDrawBack->setName('targetBack');
+					$objDrawBack->setDescription('targetBack');				
+					$objDrawBack->setPath($this->realPath.'/movi/targetBack.jpg');
+					$objDrawBack->setCoordinates('C20');
+					$objDrawBack->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
+									
+					$objDrawTxtQr = new PHPExcel_Worksheet_Drawing();				
+					$objDrawTxtQr->setName('targetBack');
+					$objDrawTxtQr->setDescription('targetBack');				
+					$objDrawTxtQr->setPath($this->realPath.'/movi/txt_'.$dataInfo['CADENA_QR'].'.png');
+					$objDrawTxtQr->setCoordinates('C26');
+					$objDrawTxtQr->setOffsetX(40);
+					$objDrawTxtQr->setOffsetY(10);
+					$objDrawTxtQr->setWorksheet($objPHPExcel->setActiveSheetIndex(0));	
+	
+					$objDrawQr = new PHPExcel_Worksheet_Drawing();				
+					$objDrawQr->setName('targetBack');
+					$objDrawQr->setDescription('targetBack');				
+					$objDrawQr->setPath($this->realPath.'/movi/'.$dataInfo['CADENA_QR'].'.png');
+					$objDrawQr->setCoordinates('C23');
+					$objDrawQr->setOffsetX(190);
+					$objDrawQr->setOffsetY(5);
+					$objDrawQr->setWidth(160);
+					$objDrawQr->setHeight(160);
+					$objDrawQr->setWorksheet($objPHPExcel->setActiveSheetIndex(0));						
+									
+					$objPHPExcel->setActiveSheetIndex(0)->setShowGridLines(false);
+					$objPHPExcel->setActiveSheetIndex(0)->setPrintGridLines(false);					
+	
+					$filename  = "Tarjeta_".$dataInfo['CADENA_QR'].".pdf";
+					header('Content-Type: application/pdf');
+					header('Content-Disposition: attachment;filename="'.$filename.'"');
+					header('Cache-Control: max-age=0');									
+					
+					$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
+					$objWriter->save('php://output');											
+				}
 			}			
 		}catch(Zend_Exception $e) {
         	echo "Caught exception: " . get_class($e) . "\n";
@@ -289,7 +292,7 @@ class marketing_SapclientesController extends My_Controller_Action
 					$objDrawTxtQr->setPath($this->realPath.'/movi/txt_'.$dataInfo['CADENA_QR'].'.png');
 					$objDrawTxtQr->setCoordinates('C26');
 					$objDrawTxtQr->setOffsetX(40);
-					$objDrawTxtQr->setOffsetY(-10);
+					$objDrawTxtQr->setOffsetY(10);
 					$objDrawTxtQr->setWorksheet($objPHPExcel->setActiveSheetIndex($countTab));	
 	
 					$objDrawQr = new PHPExcel_Worksheet_Drawing();				
@@ -297,10 +300,10 @@ class marketing_SapclientesController extends My_Controller_Action
 					$objDrawQr->setDescription('targetBack');				
 					$objDrawQr->setPath($this->realPath.'/movi/'.$dataInfo['CADENA_QR'].'.png');
 					$objDrawQr->setCoordinates('C23');
-					$objDrawQr->setOffsetX(175);
-					$objDrawQr->setOffsetY(-20);
-					$objDrawQr->setWidth(180);
-					$objDrawQr->setHeight(180);
+					$objDrawQr->setOffsetX(190);
+					$objDrawQr->setOffsetY(5);
+					$objDrawQr->setWidth(160);
+					$objDrawQr->setHeight(160);
 					$objDrawQr->setWorksheet($objPHPExcel->setActiveSheetIndex($countTab));						
 									
 					$objPHPExcel->setActiveSheetIndex($countTab)->setShowGridLines(false);

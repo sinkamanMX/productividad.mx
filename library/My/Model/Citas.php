@@ -499,7 +499,8 @@ class My_Model_Citas extends My_Db_Table
 						CONCAT(' ',D.MUNICIPIO,' ',D.ESTADO,' ',D.CP) AS DIRECCION_CITA2,	
 						IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
 						IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
-						IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO
+						IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
+						L.DESCRIPCION AS SUCURSAL
 				FROM PROD_CITAS C
 					INNER JOIN USUARIOS			   R ON C.ID_USUARIO_CREO = R.ID_USUARIO
 					INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
@@ -508,6 +509,8 @@ class My_Model_Citas extends My_Db_Table
 					LEFT JOIN PROD_DOMICILIOS_CLIENTE M ON P.ID_CLIENTE = M.ID_CLIENTE
 					INNER JOIN PROD_CITA_USR       A ON C.ID_CITA	 = A.ID_CITA
 					INNER JOIN USUARIOS			   U ON A.ID_USUARIO = U.ID_USUARIO 
+					INNER JOIN USR_EMPRESA         E ON E.ID_USUARIO  = U.ID_USUARIO
+					INNER JOIN SUCURSALES          L ON L.ID_SUCURSAL = E.ID_SUCURSAL
 				WHERE C.ID_CITA =".$idOject;  
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -528,8 +531,7 @@ class My_Model_Citas extends My_Db_Table
 			       B.LOCALIZACION
 				FROM PROD_CITA_FORMULARIO    A
 				  INNER JOIN PROD_FORMULARIO B ON A.ID_FORMULARIO = B.ID_FORMULARIO
-				WHERE A.ID_CITA = ".$idOject." AND
-				      B.ACTIVO = 'S'";
+				WHERE A.ID_CITA = ".$idOject;
 		$query   = $this->query($sql);
 		if(count($query)>0){
 			$result = $query;

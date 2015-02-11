@@ -1402,7 +1402,7 @@ class atn_ServicesController extends My_Controller_Action
 							@$aDataCUDA['EJUDA'] = $items['CONTESTACION'];
 						}else if($items['ID_ELEMENTO']==254){
 							@$aDataCUDA['FOLCLI'] = $items['CONTESTACION'];
-						}else if($items['ID_ELEMENTO']==55){
+						}else if($items['ID_ELEMENTO']==255){
 							@$aDataCUDA['MCLI'] = $items['CONTESTACION'];
 						}											
 					}
@@ -1458,7 +1458,7 @@ class atn_ServicesController extends My_Controller_Action
 					
 					$iValColumn = 0;
 					foreach($aDataPruebas as $items){	
-						if($items['ID_ELEMENTO']>254){
+						if($items['ID_ELEMENTO']>255){
 							$sRespuesta = ($items['CONTESTACION']=='SI') ?  'X': '';
 							if($iValColumn==0){
 								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$rowControl, ($items['DESCRIPCION']));	
@@ -1486,8 +1486,8 @@ class atn_ServicesController extends My_Controller_Action
 								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'J'.$rowControl);
 								$objPHPExcel->getActiveSheet()->getStyle('J'.$rowControl)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 								
-								$iValColumn++;
-								$iValColumn=0;								
+								$rowControl++;
+								$iValColumn=0;
 							}
 						}						 
 					}			

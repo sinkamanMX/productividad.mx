@@ -6,6 +6,7 @@ class atn_ReportesController extends My_Controller_Action
 	public $dataIn;	
 	public $aService;
 	public $realPath='/var/www/vhosts/sima/htdocs/public';
+	//public $realPath='/Users/itecno2/Documents/workspace/productividad.mx/public';
 		
     public function init()
     {
@@ -266,20 +267,18 @@ class atn_ReportesController extends My_Controller_Action
 					
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B7', utf8_decode('ORDEN DE SERVICIO'));
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sHeaderBlack, 'B7:J7');
-					$objPHPExcel->getActiveSheet()->mergeCells('B7:G7');					
+					$objPHPExcel->getActiveSheet()->mergeCells('B7:G7');	
 					
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', utf8_decode('REVISION'));
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTextBlack, 'B9:B9');					
-					
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'D9:D9');					
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E9', utf8_decode('Corporativo (Mexico)'));
-					$objPHPExcel->getActiveSheet()->mergeCells('E9:F9');	
-					
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'G9:G9');					
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H9', utf8_decode('Sucursal'));
-					$objPHPExcel->getActiveSheet()->mergeCells('H9:H9');
-										
-															
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', 'Sucursal');								
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C9', @$dataCita['SUCURSAL']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C9:D9');
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'C9:D9');
+							
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E9', 'Tecnico');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F9', @$dataCita['NOMBRE_TECNICO']);
+					$objPHPExcel->getActiveSheet()->mergeCells('F9:H9');
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'F9:H9');									
+																									
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I9', utf8_decode('Folio:'));
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'J9:J9');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J9', utf8_encode($dataCita['FOLIO']));
@@ -400,7 +399,7 @@ class atn_ReportesController extends My_Controller_Action
 							@$dataEquipment['IMEI'] = $items['CONTESTACION'];
 						}else if($items['ID_ELEMENTO']==221){
 							@$dataEquipment['MODELO'] = $items['CONTESTACION'];
-						}  
+						}
 					}
 					
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B21', ($dataEquipment['MARCA']));	
@@ -476,38 +475,53 @@ class atn_ReportesController extends My_Controller_Action
 					$rowControl++;
 					$rowControl++;
 					
-					$iValColumn = 0;					
-					/* ----- -----*/
+					$iValColumn = 0;							
+					
+					/* ----- -----*/					
 					foreach($aDataEqForm as $items){
 						if($items['ID_ELEMENTO']>244){
 							$sRespuesta = ($items['CONTESTACION']=='SI') ?  'X': '';
-							if($iValColumn==0){
+							
+							if($items['ID_ELEMENTO']==245){
 								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$rowControl, ($items['DESCRIPCION']));	
 								$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':C'.$rowControl);
 								
 								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$rowControl, ($sRespuesta));
 								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'D'.$rowControl);	
-								$iValColumn++;
-							}else if($iValColumn==1){
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$rowControl, ($items['DESCRIPCION']));	
-								$objPHPExcel->getActiveSheet()->mergeCells('E'.$rowControl.':F'.$rowControl);
-								
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$rowControl, ($sRespuesta));
-								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'G'.$rowControl);
-								
-								$iValColumn++;								
-							}else if($iValColumn==2){
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$rowControl, ($items['DESCRIPCION']));	
-								$objPHPExcel->getActiveSheet()->mergeCells('H'.$rowControl.':I'.$rowControl);
-								
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$rowControl, ($sRespuesta));
-								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'J'.$rowControl);
-								
 								$rowControl++;								
-								$iValColumn=0;								
-							}
+							}else{
+								if($iValColumn==0){
+									$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$rowControl, ($items['DESCRIPCION']));	
+									//$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':C'.$rowControl);
+									
+									$objPHPExcel->getActiveSheet()->setCellValue('C'.$rowControl, ($items['CONTESTACION']));
+									$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':D'.$rowControl);
+									$objPHPExcel->getActiveSheet()->setSharedStyle($sBordersBottom, 'C'.$rowControl.':D'.$rowControl);	
+									$iValColumn++;
+								}else if($iValColumn==1){
+									$objPHPExcel->getActiveSheet()->setCellValue('E'.$rowControl, ($items['DESCRIPCION']));	
+									//$objPHPExcel->getActiveSheet()->mergeCells('E'.$rowControl.':F'.$rowControl);
+									
+									$objPHPExcel->getActiveSheet()->setCellValue('F'.$rowControl, ($items['CONTESTACION']));
+									$objPHPExcel->getActiveSheet()->mergeCells('F'.$rowControl.':G'.$rowControl);
+									$objPHPExcel->getActiveSheet()->setSharedStyle($sBordersBottom, 'F'.$rowControl.':G'.$rowControl);
+									
+									$iValColumn++;								
+								}else if($iValColumn==2){
+									$objPHPExcel->getActiveSheet()->setCellValue('H'.$rowControl, ($items['DESCRIPCION']));	
+									//$objPHPExcel->getActiveSheet()->mergeCells('H'.$rowControl.':I'.$rowControl);
+									
+									$objPHPExcel->getActiveSheet()->setCellValue('I'.$rowControl, ($items['CONTESTACION']));
+									$objPHPExcel->getActiveSheet()->mergeCells('I'.$rowControl.':J'.$rowControl);
+									$objPHPExcel->getActiveSheet()->setSharedStyle($sBordersBottom, 'I'.$rowControl.':J'.$rowControl);
+									
+									$rowControl++;								
+									$iValColumn=0;								
+								}								
+							}							
 						}						 
 					}	
+					
 					
 					$rowControl = $rowControl+10;
 					
@@ -570,7 +584,7 @@ class atn_ReportesController extends My_Controller_Action
 							->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);											
 
 										
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$rowControl, ($aDataCUDA['MCLI']));	
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$rowControl, (@$aDataCUDA['MCLI']));	
 					$objPHPExcel->getActiveSheet()->mergeCells('G'.$rowControl.':J'.$rowControl);
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'G'.$rowControl.':J'.$rowControl);		
 					$objPHPExcel->getActiveSheet()->getStyle('G'.$rowControl.':J'.$rowControl)
@@ -581,7 +595,7 @@ class atn_ReportesController extends My_Controller_Action
 					
 					$iValColumn = 0;
 					foreach($aDataPruebas as $items){	
-						if($items['ID_ELEMENTO']>254){
+						if($items['ID_ELEMENTO']>255){
 							$sRespuesta = ($items['CONTESTACION']=='SI') ?  'X': '';
 							if($iValColumn==0){
 								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$rowControl, ($items['DESCRIPCION']));	
@@ -609,13 +623,13 @@ class atn_ReportesController extends My_Controller_Action
 								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'J'.$rowControl);
 								$objPHPExcel->getActiveSheet()->getStyle('J'.$rowControl)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 								
-								$iValColumn++;
-								$iValColumn=0;								
+								$rowControl++;								
+								$iValColumn=0;
 							}
 						}						 
 					}			
 					
-					$rowControl = $rowControl+5; 
+					$rowControl = $rowControl+2; 
 					
 					/**
 					 * Firmas
@@ -634,39 +648,73 @@ class atn_ReportesController extends My_Controller_Action
 							@$dataFirma['NCLIENTE'] = $items['CONTESTACION'];
 						}else if($items['ID_ELEMENTO']==276){
 							@$dataFirma['FCLIENTE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==283){
+							@$dataFirma['FQRCODE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==282){
+							@$dataFirma['TCONTESTA'] = $items['CONTESTACION'];		
 						}
-						/*else if($items['ID_ELEMENTO']==157){
-							@$dataFirma['FINSTALADOR'] = $items['CONTESTACION'];
-						}*/  
 					}
+
+					if(@$dataFirma['TCONTESTA'] == 'FIRMA'){
+						$exist_file = file_exists($this->realPath.$dataFirma['FCLIENTE']);	
+
+						if($exist_file== true && $dataFirma['FCLIENTE']!="") {						
+							$objDrawing = new PHPExcel_Worksheet_Drawing();
+							
+							$objDrawing->setName('Picture1');
+							$objDrawing->setDescription('Picture1');
+							
+							$objDrawing->setPath($this->realPath.$dataFirma['FCLIENTE']);
+							$objDrawing->setWidth(60);
+							//$objDrawing->setOffsetX(150);
+							$objDrawing->setHeight(75);
+							//$objDrawing->setOffsetY(-160);
 	
-					$exist_file = file_exists($this->realPath.$dataFirma['FCLIENTE']); 
-
-					if ($exist_file== true && $dataFirma['FCLIENTE']!="") {
-						$objDrawing = new PHPExcel_Worksheet_Drawing();
-						
-						$objDrawing->setName('Picture1');
-						$objDrawing->setDescription('Picture1');
-						
-						$objDrawing->setPath($this->realPath.$dataFirma['FCLIENTE']);
-						$objDrawing->setWidth(60);
-						//$objDrawing->setOffsetX(150);
-						$objDrawing->setHeight(75);
-						//$objDrawing->setOffsetY(-160);
-
-						$objDrawing->setCoordinates('C'.$rowControl);
-						
-						$objPHPExcel->getActiveSheet()->getRowDimension('C'.$rowControl)->setRowHeight(150);
-						$objPHPExcel->getActiveSheet()->getStyle('C'.$rowControl.':F'.$rowControl)
-							->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);									
-						$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);
-
-						//$objPHPExcel->getActiveSheet()->getRowDimension($rowControl)->setRowHeight(140);										
-						$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));									    
-					}else{
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$rowControl, utf8_decode('Imagen no disponible.'));								
-						$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);										
+							$objDrawing->setCoordinates('C'.$rowControl);
+							
+							$objPHPExcel->getActiveSheet()->getRowDimension('C'.$rowControl)->setRowHeight(150);
+							$objPHPExcel->getActiveSheet()->getStyle('C'.$rowControl.':F'.$rowControl)
+								->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);									
+							$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);
+	
+							//$objPHPExcel->getActiveSheet()->getRowDimension($rowControl)->setRowHeight(140);										
+							$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));									    
+						}else{
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$rowControl, 'imagen no disponible');								
+							$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);
+						}
+					}else if(@$dataFirma['TCONTESTA'] == 'QR'){
+						$qrExist    = file_exists($this->realPath."/movi/".$dataFirma['FQRCODE'].".png");	
+						if($qrExist== true && $dataFirma['FQRCODE']!="") {
+							$objDrawing = new PHPExcel_Worksheet_Drawing();
+							
+							$objDrawing->setName('Picture1');
+							$objDrawing->setDescription('Picture1');
+							
+							$objDrawing->setPath($this->realPath."/movi/".$dataFirma['FQRCODE'].".png");
+							$objDrawing->setWidth(60);
+							//$objDrawing->setOffsetX(150);
+							$objDrawing->setHeight(75);
+							//$objDrawing->setOffsetY(-160);
+	
+							$objDrawing->setCoordinates('C'.$rowControl);
+							
+							$objPHPExcel->getActiveSheet()->getRowDimension('C'.$rowControl)->setRowHeight(150);
+							$objPHPExcel->getActiveSheet()->getStyle('C'.$rowControl.':F'.$rowControl)
+								->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);									
+							$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);
+	
+							//$objPHPExcel->getActiveSheet()->getRowDimension($rowControl)->setRowHeight(140);										
+							$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
+							
+						}else{
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$rowControl, $dataFirma['FQRCODE']);								
+							$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);										
+						}
 					}
+					
+
+					
 					
 					/*
 					$exist_file = file_exists($this->realPath.$dataFirma['FINSTALADOR']); 
@@ -717,17 +765,16 @@ class atn_ReportesController extends My_Controller_Action
     
 					$objPHPExcel->setActiveSheetIndex(0)->setShowGridLines(false);
 					$objPHPExcel->setActiveSheetIndex(0)->setPrintGridLines(false);	
-
 					/*
 					$filename  = "Orden_Servicio_".$this->dataIn['strInput'].".xlsx";		
 					// Redirect output to a clientÕs web browser (PDF)
-					header('Content-Type: application/pdf');
+					header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 					header('Content-Disposition: attachment;filename="'.$filename.'"');
 					header('Cache-Control: max-age=0');									
 					
 					$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 					$objWriter->save('php://output');
-					*/	
+					*/
 					
 					$filename  = "Orden_Servicio_".$dataCita['FOLIO'].".pdf";
 					header('Content-Type: application/pdf');
@@ -735,8 +782,8 @@ class atn_ReportesController extends My_Controller_Action
 					header('Cache-Control: max-age=0');									
 					
 					$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
-					$objWriter->save('php://output');
-									
+					$objWriter->save('php://output');	
+							
 				}else{
 					echo "no hay informacion";
 				}
@@ -992,6 +1039,16 @@ class atn_ReportesController extends My_Controller_Action
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sHeaderBlack, 'B7:J7');
 					$objPHPExcel->getActiveSheet()->mergeCells('B7:G7');					
 					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', 'Sucursal');								
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C9', @$dataCita['SUCURSAL']);
+					$objPHPExcel->getActiveSheet()->mergeCells('C9:D9');
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'C9:D9');
+							
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E9', 'Tecnico');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F9', @$dataCita['NOMBRE_TECNICO']);
+					$objPHPExcel->getActiveSheet()->mergeCells('F9:H9');
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'F9:H9');					
+					/*
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', utf8_decode('REVISION'));
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTextBlack, 'B9:B9');					
 					
@@ -1001,7 +1058,7 @@ class atn_ReportesController extends My_Controller_Action
 					
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'G9:G9');					
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H9', utf8_decode('Sucursal'));
-					$objPHPExcel->getActiveSheet()->mergeCells('H9:H9');
+					$objPHPExcel->getActiveSheet()->mergeCells('H9:H9');*/
 																									
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I9', utf8_decode('Fecha:'));
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'J9:J9');
@@ -1443,12 +1500,103 @@ class atn_ReportesController extends My_Controller_Action
 							@$dataFirma['NCLIENTE'] = $items['CONTESTACION'];
 						}else if($items['ID_ELEMENTO']==218){
 							@$dataFirma['FCLIENTE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==283){
+							@$dataFirma['FQRCODE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==282){
+							@$dataFirma['TCONTESTA'] = $items['CONTESTACION'];		
 						}
+					}
+
+					if(@$dataFirma['TCONTESTA'] == 'FIRMA'){
+						$exist_file = file_exists($this->realPath.$dataFirma['FCLIENTE']);	
+
+						if($exist_file== true && $dataFirma['FCLIENTE']!="") {						
+							$objDrawing = new PHPExcel_Worksheet_Drawing();
+							
+							$objDrawing->setName('Picture1');
+							$objDrawing->setDescription('Picture1');
+							
+							$objDrawing->setPath($this->realPath.$dataFirma['FCLIENTE']);
+							$objDrawing->setWidth(60);
+							//$objDrawing->setOffsetX(150);
+							$objDrawing->setHeight(75);
+							//$objDrawing->setOffsetY(-160);
+	
+							$objDrawing->setCoordinates('C'.$rowControl);
+							
+							$objPHPExcel->getActiveSheet()->getRowDimension('C'.$rowControl)->setRowHeight(150);
+							$objPHPExcel->getActiveSheet()->getStyle('C'.$rowControl.':F'.$rowControl)
+								->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);									
+							$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);
+	
+							//$objPHPExcel->getActiveSheet()->getRowDimension($rowControl)->setRowHeight(140);										
+							$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));									    
+						}else{
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$rowControl, 'imagen no disponible');								
+							$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);
+						}
+					}else if(@$dataFirma['TCONTESTA'] == 'QR'){
+						$qrExist    = file_exists($this->realPath."/movi/".$dataFirma['FQRCODE'].".png");	
+						if($qrExist== true && $dataFirma['FQRCODE']!="") {
+							$objDrawing = new PHPExcel_Worksheet_Drawing();
+							
+							$objDrawing->setName('Picture1');
+							$objDrawing->setDescription('Picture1');
+							
+							$objDrawing->setPath($this->realPath."/movi/".$dataFirma['FQRCODE'].".png");
+							$objDrawing->setWidth(60);
+							//$objDrawing->setOffsetX(150);
+							$objDrawing->setHeight(75);
+							//$objDrawing->setOffsetY(-160);
+	
+							$objDrawing->setCoordinates('C'.$rowControl);
+							
+							$objPHPExcel->getActiveSheet()->getRowDimension('C'.$rowControl)->setRowHeight(150);
+							$objPHPExcel->getActiveSheet()->getStyle('C'.$rowControl.':F'.$rowControl)
+								->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);									
+							$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);
+	
+							//$objPHPExcel->getActiveSheet()->getRowDimension($rowControl)->setRowHeight(140);										
+							$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
+							
+						}else{
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$rowControl, $dataFirma['FQRCODE']);								
+							$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);										
+						}
+					}					
+/*					
+					foreach($aDataFirma as $items){
+						if($items['ID_ELEMENTO']==216){
+							@$dataFirma['NCLIENTE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==218){
+							@$dataFirma['FCLIENTE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==283){
+							@$dataFirma['FQRCODE'] = $items['CONTESTACION'];
+						} 
 					}
 	
 					$exist_file = file_exists($this->realPath.$dataFirma['FCLIENTE']); 
+					$qrExist    = file_exists($this->realPath."/movi/".$dataFirma['FQRCODE'].".png");
+					
+					if($qrExist== true && $dataFirma['FQRCODE']!="") {
+						$objDrawing = new PHPExcel_Worksheet_Drawing();
+						
+						$objDrawing->setName('Picture1');
+						$objDrawing->setDescription('Picture1');
+						
+						$objDrawing->setPath($this->realPath."/movi/".$dataFirma['FQRCODE'].".png");
+						$objDrawing->setWidth(60);
+						//$objDrawing->setOffsetX(150);
+						$objDrawing->setHeight(75);
+						//$objDrawing->setOffsetY(-160);
 
-					if ($exist_file== true && $dataFirma['FCLIENTE']!="") {
+						$objDrawing->setCoordinates('C'.$rowControl);
+						
+						$objPHPExcel->getActiveSheet()->getRowDimension('C'.$rowControl)->setRowHeight(150);
+						$objPHPExcel->getActiveSheet()->getStyle('C'.$rowControl.':F'.$rowControl)
+							->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);									
+						$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);						
+					}else if ($exist_file== true && $dataFirma['FCLIENTE']!="") {
 						$objDrawing = new PHPExcel_Worksheet_Drawing();
 						
 						$objDrawing->setName('Picture1');
@@ -1472,7 +1620,10 @@ class atn_ReportesController extends My_Controller_Action
 					}else{
 						$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$rowControl, utf8_decode('Imagen no disponible.'));								
 						$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);										
-					}					
+					}
+
+					
+					*/
 								
 					$rowControl = $rowControl+1;					
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.($rowControl+4), $dataFirma['NCLIENTE']);

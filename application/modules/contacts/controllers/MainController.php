@@ -20,6 +20,7 @@ class contacts_MainController extends My_Controller_Action
     public function indexAction()
     {
 		try{
+			$statusHeader = true;
 			$cSapClientes = new My_Model_Sapclientes();			
 			$codClient = -1;
 			$aDataCodes = Array();
@@ -28,7 +29,7 @@ class contacts_MainController extends My_Controller_Action
 			if(isset($this->dataIn['optReg']) && $this->dataIn['optReg']=='search' && 
 			   isset($this->dataIn['inputCodeClient']) && $this->dataIn['inputCodeClient']!=""){
 				$codClient = $this->dataIn['inputCodeClient'];
-
+				
 				$aDataCliente = $cSapClientes->getData($codClient);
 				if(count($aDataCliente)>0 && isset($aDataCliente['ID_CLIENTE'])){
 					$aDataCodes = $cSapClientes->getDataTablesQr($codClient);
@@ -36,16 +37,19 @@ class contacts_MainController extends My_Controller_Action
 						$this->aErrors = 2;
 					}else{
 						$bStatusSearch=1;
+						$statusHeader = false;
 					}
 				}else{
 					$this->aErrors 	= 1;
 				}
 			}			
+			
+	
 			$this->view->codeClient    = $codClient;
 			$this->view->aErrors 	   = $this->aErrors;
 			$this->view->datatTable    = $aDataCodes;
 			$this->view->bStatusSearch = $bStatusSearch;
-			
+			$this->view->showHeader    = $statusHeader;			
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -97,6 +101,7 @@ class contacts_MainController extends My_Controller_Action
 			$this->view->sGenero	 = $cFunctions->cboGenero($sGenero);
 			$this->view->onlyShow	 = $flagOnlyShow;
 			$this->view->dataIn 	 = $this->dataIn;
+			$this->view->showHeader  = false;		
 		}catch(Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
