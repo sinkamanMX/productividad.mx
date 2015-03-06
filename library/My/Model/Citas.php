@@ -500,8 +500,10 @@ class My_Model_Citas extends My_Db_Table
 						IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
 						IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
 						IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
-						L.DESCRIPCION AS SUCURSAL
+						L.DESCRIPCION AS SUCURSAL,
+						T.DESCRIPCION AS TIPO_CITA
 				FROM PROD_CITAS C
+					INNER JOIN PROD_TPO_CITA       T ON C.ID_TPO = T.ID_TPO
 					INNER JOIN USUARIOS			   R ON C.ID_USUARIO_CREO = R.ID_USUARIO
 					INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
 					INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
@@ -636,5 +638,33 @@ class My_Model_Citas extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;	   		
+	}	
+		
+	public function getResumeContact($idCliente,$dFechaIn,$dFechaFin){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR,				
+				P.RAZON_SOCIAL AS NOMBRE_CLIENTE,C.FOLIO,
+				C.FECHA_CITA AS F_PROGRAMADA,
+				C.HORA_CITA  AS H_PROGRAMADA,
+				IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
+				IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
+				IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
+				IF(C.FECHA_CITA<'2015-01-19 00:00:00','A','N') AS NEW_FORM
+				FROM PROD_CITAS C
+				INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
+				INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
+				INNER JOIN PROD_CLIENTES       P ON C.ID_CLIENTE = P.ID_CLIENTE
+				 LEFT JOIN PROD_CITA_USR       A ON C.ID_CITA	 = A.ID_CITA
+				 LEFT JOIN USUARIOS			   U ON A.ID_USUARIO = U.ID_USUARIO 
+				WHERE C.ID_CLIENTE = $idCliente
+				AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'
+				ORDER BY S.ID_ESTATUS";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;	
 	}	
 }

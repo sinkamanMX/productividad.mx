@@ -1,0 +1,150 @@
+<?php $this->headScript()->appendFile('/js/public/validateSolicitudes.js') ?>  
+<?php $disabled = (@$this->data['ID_ESTATUS']>1) ? 'disabled':'';?>
+<div class="row panel-data">
+    <input id="hRefLinkMain" type="hidden" value="/external/request/index" />
+    <div class="span12">
+        <!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">
+                    <a href="javascript:backToMain()">
+                        <i class="icon-circle-arrow-left fa-1"></i></a>Información de la Solicitud</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+                    <?php if(@$this->errors['eIMEI']):?>
+                        <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <h4>Error</h4>
+                          <div>El IMEI no se encuentra disponible</div>
+                        </div>  
+                    <?php endif;?> 
+                   <!-- BEGIN FORM-->
+                    <?php if($disabled!='disabled'):?>
+                    <form method="POST" action="/external/request/getinfo" id="FormData" class="form-horizontal ">
+                    <?php else:?>
+                    <form id="FormData" class="form-horizontal ">
+                    <?php endif;?>  
+                        <input type="hidden" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
+                        <input type="hidden" id="catId" name="catId" value="<?php echo $this->catId; ?>" />
+                        
+                        <?php if($this->resultOp=='okRegister'): ?>
+                            <div class="alert alert-success">
+                                <button class="close" data-dismiss="alert"></button>
+                                Datos se almacenaron correctamente.
+                            </div>                        
+                        <?php endif; ?>                 
+                            <fieldset>
+                                <div class="row row-margin-left25">    
+                                    <div class="span6">
+                                        <div class="control-group">
+                                            <label class="control-label">Fecha<span class="required">*</span></label>
+                                            <div class="controls">
+                                                <input readonly id="inputFechaIn" name="inputFechaIn" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['FECHA_CITA']; ?>">
+                                            </div>
+                                        </div>              
+                                    </div>
+                                    <div class="span6">
+                                        <div class="control-group">                                            
+                                            <label class="control-label">Tipo Cita<span class="required">*</span></label>
+                                            <div class="controls">
+                                                <select class="m-wrap" name="inputTipo" id="inputTipo" <?php echo $disabled;?> >
+                                                    <option value="">Seleccionar una opción</option>
+                                                    <?php echo $this->aTipos;?>
+                                                </select>
+                                            </div>
+                                        </div>                          
+                                    </div>                                    
+                                </div>  
+                                <div class="row row-margin-left25">    
+                                    <div class="span6">
+                                        <div class="control-group">
+                                            <label class="control-label">Unidad<span class="required">*</span></label>
+                                            <div class="controls">
+                                                <input name="inputUnidad" type="text" class="m-wrap" value="<?php echo @$this->data['UNIDAD']; ?>" <?php echo $disabled;?> >
+                                            </div>
+                                        </div>                                                
+                                    </div>
+                                    <div class="span6">
+                                        <div class="control-group">
+                                            <label class="control-label">Comentarios<span class="required">*</span></label>
+                                            <div class="controls">
+                                                <textarea name="inputComment" id="inputComment" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['COMENTARIO']; ?></textarea>
+                                            </div>
+                                        </div>                                                
+                                    </div>                                    
+                                </div> 
+
+                                <?php if(isset($this->data['ID_ESTATUS']) && @$this->data['ID_ESTATUS']>1) :?>
+                                    <div class="row row-margin-left25"> 
+                                        <div class="control-group">
+                                            <span><b>Información de la revisión</b></span>  
+                                        </div>
+                                    </div>
+                                    <div class="row row-margin-left25">    
+                                        <div class="span6">
+                                            <div class="control-group">
+                                                <label class="control-label">Estatus</label>
+                                                <div class="controls">
+                                                    <input type="text" class="m-wrap" value="<?php echo @$this->data['N_ESTATUS']; ?>" disabled >
+                                                </div>
+                                            </div>                                                
+                                        </div>
+                                        <div class="span6">
+                                            <div class="control-group">
+                                                <label class="control-label">Comentario Revision</label>
+                                                <div class="controls">
+                                                    <textarea disabled rows="5">
+                                                         <?php echo @$this->data['REVISION']; ?>   
+                                                    </textarea>
+                                                </div>
+                                            </div>                                                
+                                        </div>                                    
+                                    </div>
+                                    
+                                    <div class="row row-margin-left25">    
+                                        <div class="span6">
+                                            <div class="control-group">
+                                                <label class="control-label">Fecha de Cita</label>
+                                                <div class="controls">
+                                                    <?php echo @$this->data['FECHA_CONFIRMADA']." Entre las ".@$this->data['HORA_INICIO']." y ".@$this->data['HORA_FIN']; ?>
+                                                </div>
+                                            </div>                                                
+                                        </div>                                    
+                                    </div> 
+                                <?php endif;?>
+
+
+                     
+                                <?php if($disabled!='disabled'):?>
+                                <div class="form-actions">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        <button type="button" class="btn" onClick="javascript:backToMain()">Cancel</button>
+                                    </div>                                    
+                                </div>
+                                <?php endif;?>
+                        </fieldset>
+                    <?php if($disabled!='disabled'):?>
+                    </form>
+                    <?php endif;?>
+                    <!-- END FORM-->                                                                
+                </div>                    
+                </div>          
+            </div>
+        </div>
+</div> 
+
+<div class="modal fade hide modal-lg" id="MyModalSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Buscar Activos Sin Asignar</h4>
+      </div>
+      <div class="modal-form i-body">             
+        <iframe class="hmodal550" id="iFrameSearch" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>   

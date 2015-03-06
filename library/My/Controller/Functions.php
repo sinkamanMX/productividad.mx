@@ -53,7 +53,14 @@ class My_Controller_Functions
     public $aOptions = Array(
 		array("id"=>"1",'name'=>'Si' ),
 		array("id"=>"0",'name'=>'No' )    
-    );    
+    );
+
+	public $configMail = array(
+			'ssl'      => 'ssl',
+            'port'     => '465','auth' => 'login',
+			'urlSmtp'  => 'smtp.gmail.com',
+			'username' => 'tienda.ricom@gmail.com',			
+		    'password' => '7ienD4r1c0M.mX');       
 
     public function dateToText($fecha_db){
     	$fecha=explode("-",$fecha_db);
@@ -240,5 +247,37 @@ class My_Controller_Functions
 	            substr($an, rand(0, $su), 1) .
 	            substr($an, rand(0, $su), 1) .
 	            substr($an, rand(0, $su), 1);
-	}    
+	}  
+
+	function sendMailSmtp($aMailer){
+		//$sTransport = new Zend_Mail_Transport_Sendmail($this->configMail['urlSmtp'], $this->configMail);
+		$sTransport = new Zend_Mail_Transport_Smtp($this->configMail['urlSmtp'], $this->configMail);
+		$mail = new Zend_Mail('UTF-8');
+		$mail->addHeader('Content-Type', 'text/plain; charset=utf-8');
+
+		$mail->setFrom('contacto@grupouda.com.mx', 'Siames - Grupo UDA');
+		$mail->addTo($aMailer['emailTo'], $aMailer['nameTo']);	
+		$mail->setSubject(html_entity_decode($aMailer['subjectTo']));
+		$mail->setBodyHtml(html_entity_decode($aMailer['bodyTo']));
+		$enviado = $mail->send($sTransport);		
+	}	
+	
+	function sendMailAdmins($sSubject,$sBody){
+		$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+		$aDataAdmin = $config->getOption('admin');	
+			
+		$sTransport = new Zend_Mail_Transport_Smtp($this->configMail['urlSmtp'], $this->configMail);
+		$mail = new Zend_Mail('UTF-8');
+		$mail->addHeader('Content-Type', 'text/plain; charset=utf-8');
+		$mail->setFrom('contacto@grupouda.com.mx', 'Siames - Grupo UDA');
+		
+		$aDestinos = explode(",",$aDataAdmin['mails']);
+		for($i=0;$i<count($aDestinos);$i++){
+			$mail->addTo($aDestinos[$i], $aDataAdmin['name']);	
+		}
+		
+		$mail->setSubject(html_entity_decode($sSubject));
+		$mail->setBodyHtml(html_entity_decode($sBody));
+		$enviado = $mail->send($sTransport);
+	}	
 }

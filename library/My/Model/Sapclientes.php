@@ -133,6 +133,9 @@ class My_Model_Sapclientes extends My_Db_Table
 					EXTENSION		=  '".$data['inputExt']."',
 					EMAIL			=  '".$data['inputEmail']."',
 					RFC				=  '".$data['inputRFC']."',
+					ID_USUARIO_SISTEMA= ".$data['inputAccessUser'].",
+					PASSWORD		=  SHA1('".$data['inputPassword']."'), 
+					PASSWORD_TEXT	=  '".$data['inputPassword']."',
 					ACTIVO			= 1";
         try{            
     		$query   = $this->query($sql,false);

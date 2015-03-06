@@ -1,35 +1,51 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container-fluid">
+                <div class="container-fluid no-padding-top">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span>
                      <span class="icon-bar"></span>
                      <span class="icon-bar"></span>
                     </a>
                     <a class="brand" href="/main/dashboard/index">
-                        SIMA-<?php echo $this->dataUser['N_EMPRESA']; ?>
-                        <!--<img class="img" src="/images/clients/deacero.png">-->
+                        <?php if(!isset($this->bUserContact)):?>
+                            SIMA-<?php echo $this->dataUser['N_EMPRESA']; ?>
+                        <?php else:?>
+                            <?php echo $this->dataUser['RAZON_SOCIAL']; ?>
+                        <?php endif;?>
                     </a>
                     <div class="nav-collapse collapse">
-                        <ul class="nav pull-right">
-                            <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> 
-                                    <i class="icon-user"></i> <?php echo @$this->dataUser['USUARIO'];?><i class="caret"></i>
-                                    <!--<br>
-                                    Perfil: <b>super_admin</b>
-                                    <br>
-                                    Empresa: <b>De Acero</b>-->
-                                </a>
-                                <ul class="dropdown-menu">                                    
-                                    <li>
-                                        <a tabindex="-1" href="javascript:recoverypass()">Cambiar Contraseña</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a tabindex="-1" href="/admin/main/logout">Salir</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <?php if(!isset($this->bUserContact)):?>
+                            <ul class="nav pull-right">
+                                <li class="dropdown">
+                                    <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="icon-user"></i> <?php echo @$this->dataUser['USUARIO'];?><i class="caret"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">                                    
+                                        <li>
+                                            <a tabindex="-1" href="javascript:recoverypass()">Cambiar Contraseña</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a tabindex="-1" href="/admin/main/logout">Salir</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        <?php else:?>
+                            <ul class="nav pull-right">
+                                <li class="dropdown">
+                                    <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="icon-user"></i> <?php echo $this->dataUser['S_MAIL']; ?><i class="caret"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a tabindex="-1" href="/external/login/logout">Salir</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>                           
+                        <?php endif;?>
+                        <!--
+-->
 
                         <ul class="nav">
                             <?php $controlMenu = -1; ?>

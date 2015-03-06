@@ -379,6 +379,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "application/modules/external/views/scripts/services/index.phtml",
+			"settings":
+			{
+				"buffer_size": 11544,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/public/validateServices.js",
+			"settings":
+			{
+				"buffer_size": 3085,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -404,19 +420,30 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/contacto_layout.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/LoginContact.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/contacto_login.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/login/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/public/views/login/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/public/controllers/LoginController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/activation.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/contacts/validateContacts.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/dashboard/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/reporte.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/reports/repTravelDetail.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/autorizacion/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/Autorizaciones.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/exportcard.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/public.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/public_header.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/activation.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/newservice.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/contacts/validateContacts.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/contacts/searchContacts.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/instalation.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/index/index.phtml",
@@ -430,7 +457,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/getinformation.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Style/Supervisor.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/.settings/org.eclipse.php.core.prefs",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/dashboard/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/dashboard/productivity.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/autorizacion/citadetalle.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/index.phtml",
@@ -446,8 +472,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtn.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/autorizacion/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/AutorizacionController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/reporte.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/infoEquipments.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/searchactivos.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/searchActivos.js",
@@ -455,7 +479,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/activos/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/tableActivos.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/menu.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateActivos.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtnSearch.js",
@@ -524,14 +547,7 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/index.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/conection.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/finish.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/bootstrap-datetimepicker.min.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/bootstrap-datepicker.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/map/infotravel.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/DashboardController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/registerdate/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/registerdate.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/registerdateController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/bootstrap/css/bootstrap.min.css"
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/bootstrap-datetimepicker.min.js"
 	],
 	"find":
 	{
@@ -552,6 +568,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"/atn/",
+			"padding-top",
 			"loading.gif",
 			"src=\"images/",
 			"href=\"images/",
@@ -677,9 +695,7 @@
 			"autocontrol",
 			"h",
 			"error",
-			"mailte",
-			"mail",
-			"white"
+			"mailte"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -687,6 +703,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"/external/",
 			"src=\"/branding/images/",
 			"href=\"/branding/images/",
 			"href=\"/branding/css/",
@@ -737,8 +754,66 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "application/modules/external/views/scripts/services/index.phtml",
+					"settings":
+					{
+						"buffer_size": 11544,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11537,
+								11537
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2161.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/js/public/validateServices.js",
+					"settings":
+					{
+						"buffer_size": 3085,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1984,
+								1984
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 886.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

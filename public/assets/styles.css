@@ -441,3 +441,7 @@ body {
     padding-right: 20px;
     padding-top: 15px !important;
 }
+
+.no-padding-top {
+  padding-top: 0px !important;
+}

@@ -57,4 +57,5 @@ $().ready(function() {
             form.submit();
         }
     });	    
+    $('[data-toggle="tooltip"]').tooltip();    
 });

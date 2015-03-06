@@ -118,7 +118,30 @@
 									</div>
 								</div>
 		                	</div>
-		                </div>				                																											
+		                </div>		
+
+	                	<div class="row">
+		                	<div class="span6">
+								<div class="control-group">
+									<label class="control-label">Acceso a Reportes<span class="required">*</span></label>
+									<div class="controls">										
+										<select class="span3 m-wrap" id="inputAccessUser" name="inputAccessUser" <?php echo $disabled;?>>
+											<?php echo $this->aUsersReports;?>;	
+					                    </select>
+					                    <span class="btn btn-warning btn-mini" data-toggle="tooltip" data-placement="right" title="El usuario podra: Solicitar citas,Generar Reportes por medio del portal SIAMES"><i class="icon-question-sign icon-white"></i></span>
+									</div>
+								</div>					                		
+		                	</div>
+		                	<div class="span6">
+		                		<!--
+								<div class="control-group">
+									<label class="control-label">E-mail<span class="required">*</span></label>
+									<div class="controls">
+										<input type="text" name="inputEmail" id="inputEmail" data-required="1" class="span6 m-wrap" value="<?php echo @$this->aDataInfo['EMAIL']; ?>" <?php echo $disabled;?> >
+									</div>
+								</div>-->
+		                	</div>
+		                </div>			                		                																											
 						<?php if(!$disabled):?>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">Guardar</button>

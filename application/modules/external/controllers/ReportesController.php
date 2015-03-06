@@ -1,12 +1,12 @@
 <?php
 
-class external_ReportesController extends My_Controller_Action
+class atn_ReportesController extends My_Controller_Action
 {	
 	protected $_clase = 'mservices';
 	public $dataIn;	
 	public $aService;
-	//public $realPath='/var/www/vhosts/sima/htdocs/public';
-	public $realPath='/Users/itecno2/Documents/workspace/productividad.mx/public';
+	public $realPath='/var/www/vhosts/sima/htdocs/public';
+	//public $realPath='/Users/itecno2/Documents/workspace/productividad.mx/public';
 		
     public function init()
     {
@@ -14,7 +14,7 @@ class external_ReportesController extends My_Controller_Action
 			$sessions = new My_Controller_Auth();
 			$perfiles = new My_Model_Perfiles();
 	        if(!$sessions->validateSession()){
-	            $this->_redirect('/external/login/index');
+	            $this->_redirect('/');
 			}
 			
 			$this->dataIn 			= $this->_request->getParams();
