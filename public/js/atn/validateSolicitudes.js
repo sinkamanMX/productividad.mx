@@ -40,16 +40,6 @@ $().ready(function() {
         if($('#inputTimeBegin').val() > $('#inputTimeEnd').val()){
             $('#inputTimeEnd').val($('#inputTimeBegin').val());
         }
-        /*
-      console.log(ev);
-      if(ev.date.valueOf() > $('#inputTimeEnd').datetimepicker('getDate').valueOf()){
-        $('#inputTimeEnd').datetimepicker('setDate', ev.date);   
-      }
-      console.log($('#inputTimeEnd').datetimepicker('getDate'));
-
-      $('#inputTimeEnd').datetimepicker('setStartDate', ev.date);      
-      $('#inputTimeEnd').prop('disabled', false);
-      $('#inputTimeEnd')[0].focus(); */
     });
 
     var hourEnd = $('#inputTimeEnd').datetimepicker({
@@ -64,11 +54,6 @@ $().ready(function() {
         if($('#inputTimeEnd').val() < $('#inputTimeBegin').val()){
             $('#inputTimeBegin').val($('#inputTimeEnd').val());
         }        
-        /*
-      if(ev.date.valueOf() < $('#inputTimeBegin').datetimepicker('getDate').valueOf()){
-        $('#inputTimeBegin').datetimepicker('setDate', ev.date);   
-      }
-      $('#inputTimeBegin').datetimepicker('setEndDate', ev.date);*/
     });
 
     $("#FormData").validate({
