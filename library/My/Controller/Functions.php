@@ -56,11 +56,11 @@ class My_Controller_Functions
     );
 
 	public $configMail = array(
-			'ssl'      => 'ssl',
-            'port'     => '465','auth' => 'login',
-			'urlSmtp'  => 'smtp.gmail.com',
-			'username' => 'tienda.ricom@gmail.com',			
-		    'password' => '7ienD4r1c0M.mX');       
+            'port'     => '587',
+            'auth' 	   => 'login',
+			'urlSmtp'  => 'smtp.tecnologiza.me',
+			'username' => 'no-reply@tecnologiza.me',			
+		    'password' => 'nOr3plym41l3r_');   
 
     public function dateToText($fecha_db){
     	$fecha=explode("-",$fecha_db);
@@ -260,7 +260,7 @@ class My_Controller_Functions
 		$mail->setSubject(html_entity_decode($aMailer['subjectTo']));
 		$mail->setBodyHtml(html_entity_decode($aMailer['bodyTo']));
 		$enviado = $mail->send($sTransport);		
-	}	
+	}
 	
 	function sendMailAdmins($sSubject,$sBody){
 		$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');

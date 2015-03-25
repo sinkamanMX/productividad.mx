@@ -10,10 +10,9 @@
             </div>
             <div class="block-content collapse in">
                 <div class="span12">
-
                     <ul id="tabs" class="nav nav-tabs bg-white" data-tabs="tabs">
-                        <li class="active"><a href="#tab" data-toggle="tab">Solicitudes Nuevas</a></li>     
-                        <li><a href="#tab2" data-toggle="tab">Solicitudes Atendidas</a></li>                        
+                        <li class="active"><a href="#tab" data-toggle="tab">Solicitudes Pendientes</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Solicitudes Confirmadas</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content bg-white">
                         <div class="tab-pane active" id="tab">
@@ -23,6 +22,7 @@
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Fecha Requerida</th>
+                                        <th>Horario</th>
                                         <th>Unidad</th>
                                         <th>Estatus</th>
                                         <th></th>
@@ -34,7 +34,8 @@
                                         <td><?php echo $items['N_CLIENTE']; ?></td>
                                         <td><?php echo $items['N_TIPO']; ?></td>
                                         <td><?php echo $items['FECHA_CITA']; ?></td>
-                                        <td><?php echo $items['UNIDAD']; ?></td>
+                                        <td><?php echo $items['N_HORARIO']; ?></td>
+                                        <td><?php echo $items['N_UNIDAD']; ?></td>
                                         <td><?php echo $items['N_ESTATUS']; ?></td>
                                         <td class="text-center">
                                             <a href="/atn/request/getinfo?catId=<?php echo $items['ID_SOLICITUD']; ?>"><button class="btn btn-primary"> <i class="icon-eye-open icon-white"></i></button></a>   
@@ -51,6 +52,7 @@
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Fecha Requerida</th>
+                                        <th>Horario</th>
                                         <th>Unidad</th>
                                         <th>Estatus</th>
                                         <th></th>
@@ -62,7 +64,8 @@
                                         <td><?php echo $items['N_CLIENTE']; ?></td>
                                         <td><?php echo $items['N_TIPO']; ?></td>
                                         <td><?php echo $items['FECHA_CITA']; ?></td>
-                                        <td><?php echo $items['UNIDAD']; ?></td>
+                                        <td><?php echo $items['N_HORARIO']; ?></td>
+                                        <td><?php echo $items['N_UNIDAD']; ?></td>
                                         <td><?php echo $items['N_ESTATUS']; ?></td>
                                         <td class="text-center">
                                             <a href="/atn/request/getinfo?catId=<?php echo $items['ID_SOLICITUD']; ?>"><button class="btn btn-primary"> <i class="icon-eye-open icon-white"></i></button></a>   
@@ -71,7 +74,7 @@
                                     <?php endforeach;?>
                                 </tbody>
                             </table>
-                        </div>                        
+                        </div>                                                 
                     </div>                    
                 </div>
             </div>

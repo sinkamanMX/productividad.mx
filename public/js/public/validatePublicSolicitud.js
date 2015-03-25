@@ -20,14 +20,16 @@ $().ready(function() {
 
   $("#FormData").validate({
         rules: {
+            inputUserQr     :      "required",    
             inputFechaIn    :      "required",    
             inputTipo       :      "required",    
             inputUnidad     :      "required",    
             inputComment    :      "required",
             inputHorario    :      "required",
-            infoUnit       :       "required"
+            infoUnit        :      "required"
         },
         messages: {                          
+            inputUserQr     :      "Campo Requerido",     
             inputFechaIn    :      "Campo Requerido",        
             inputTipo       :      "Campo Requerido",        
             inputUnidad     :      "Campo Requerido",        
@@ -82,7 +84,7 @@ function getInfoUnit(inputIdValue){
     if(inputIdValue>0){
         $("#infoUnit").html('<img src="/images/assets/loading.gif" alt="loading gif"/>'); 
         $.ajax({
-            url: "/external/request/getinfodata",
+            url: "/sac/main/getinfodata",
             type: "GET",
             dataType : 'json',
             data: { catId: inputIdValue },
@@ -99,6 +101,9 @@ function getInfoUnit(inputIdValue){
                     $("#infoUnit").html(sTableInfo);
                     $("#inputInfo").html(sTableInfo);
                 }else{
+                    var sTableInfo = 'Sin información';
+                    $("#infoUnit").html(sTableInfo);
+                    $("#inputInfo").html(sTableInfo);                    
                   alert("La unidad no tiene pocisión válida");
                 }
             }
@@ -106,24 +111,8 @@ function getInfoUnit(inputIdValue){
     }
 }
 
-function modifyFields(){
-    $("#btnSaveOk").hide('slow');
-    $("#btnModify").hide('slow');
-    $("#btnSave").show('slow');
-    $("#btnSaveCancel").show('slow');
-    $("#inputFechaIn").prop( "disabled", false );
-    $("#inputHorario").prop( "disabled", false );
-    $("#inputHorario2").prop( "disabled", false );
-    $("#inputComment").prop( "disabled", false );
-    $("#inputComment").html("");
-    $("#bOperation").val('modify');
-}
-
-function cancelModify(){
-    location.reload();   
-}
-
 function updateUnits(){
+    $("#inputUserQr").rules("remove", "required");   
     $("#inputFechaIn").rules("remove", "required");   
     $("#inputTipo").rules("remove", "required");   
     $("#inputUnidad").rules("remove", "required");   
@@ -133,13 +122,5 @@ function updateUnits(){
     $("#divContent").hide('slow');
     $("#divLoading").show('slow');
     $("#optReg").val("updateUnits");
-    $("#bOperation").val("");     
-    /*
-    
-    
-     
-   
-    $("#infoUnit").rules("remove", "required");   */
-
     $("#FormData").submit();    
 }

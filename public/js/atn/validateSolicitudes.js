@@ -59,25 +59,74 @@ $().ready(function() {
     $("#FormData").validate({
         rules: {
             inputFechaIn    :      "required",    
-            inputTimeBegin  :      "required",    
-            inputTimeEnd    :      "required",    
-            inputEstatus    :      "required",    
+            inputTipo       :      "required",     
+            inputComment    :      "required",
+            inputHorario    :      "required",
+            infoUnit        :      "required",
             inputRevision   :      "required"
         },
-        messages: {      
-            inputFechaIn    :      "Campo Requerido",
-            inputTimeBegin  :      "Campo Requerido",   
-            inputTimeEnd    :      "Campo Requerido",
-            inputEstatus    :      "Campo Requerido",
-            inputRevision   :      "Campo Requerido" 
+        messages: {                          
+            inputFechaIn    :      "Campo Requerido",        
+            inputTipo       :      "Campo Requerido",            
+            inputComment    :      "Campo Requerido",
+            inputHorario    :      "Campo Requerido",
+            infoUnit        :      "Selecciona una unidad",
+            inputRevision   :      "Campo Requerido"
         },
         submitHandler: function(form) {
             form.submit();
         }
     }); 
+
+    $('.dataTable').dataTable( {
+        "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+        "sPaginationType": "bootstrap",
+        "bDestroy": true,
+        "bLengthChange": false,
+        "bPaginate": true,
+        "bFilter": true,
+        "bSort": true,
+        "bJQueryUI": true,
+        "iDisplayLength": 10,      
+        "bProcessing": true,
+        "bAutoWidth": true,
+        "bSortClasses": false,
+          "oLanguage": {
+              "sInfo": "Mostrando _TOTAL_ registros (_START_ a _END_)",
+              "sEmptyTable": "Sin registros.",
+              "sInfoEmpty" : "Sin registros.",
+              "sInfoFiltered": " - Filtrado de un total de  _MAX_ registros",
+              "sLoadingRecords": "Leyendo información",
+              "sProcessing": "Procesando",
+              "sSearch": "Buscar:",
+              "sZeroRecords": "Sin registros",
+              "oPaginate": {
+                "sPrevious": "Anterior",
+                "sNext": "Siguiente"
+              }          
+          }
+    } );      
 });
 
 function backToMain(){
   var mainPage = $("#hRefLinkMain").val();
   location.href= mainPage;
+}
+
+function modifyFields(){
+    $("#btnSaveOk").hide('slow');
+    $("#btnModify").hide('slow');
+    $("#btnSave").show('slow');
+    $("#btnSaveCancel").show('slow');
+    $("#inputFechaIn").prop( "disabled", false );
+    $("#inputHorario").prop( "disabled", false );
+    $("#inputTipo").prop( "disabled", false );
+    $("#inputHorario2").prop( "disabled", false );
+    $("#bOperation").val('modify');
+    $("#inputRevision").prop( "disabled", false );
+    $("#inputRevision").html("");
+}
+
+function cancelModify(){
+    location.reload();   
 }

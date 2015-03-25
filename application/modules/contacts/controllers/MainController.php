@@ -86,7 +86,7 @@ class contacts_MainController extends My_Controller_Action
 					$insertContact = $cSapClientes->insertRowContact($this->dataIn);
 					if($insertContact){						
 						$aContactInfo   = $cSapClientes->getContactInfo($codeQrActivate,$codeClient);								
-						if($this->dataIn['inputAccessUser']==1){
+						if($this->dataIn['inputAccessUser']==1){							
 							$bodymail   = '<h3>Estimado '.$aContactInfo['NOMBRE'].' '.$aContactInfo['APELLIDOS'].':</h3><br/>'.
 										  'Se ha registrado como usuario del sistema Siames de Grupo UDA <br/>'.
 										  'Datos de Acceso <br/>'.	
@@ -94,14 +94,27 @@ class contacts_MainController extends My_Controller_Action
 										  '<tr><td>Contrase&ntilde;a: </td><td>'.$aDataQr['CADENA_QR'].'</td></tr>'.
 										  '<tr><td>Acceso al Sistema: </td><td>http://siames.grupouda.com.mx</td></tr>'.
 										  '</table>';									
-							$aMailer    = Array(
+							/*$aMailer    = Array(
 								'emailTo' 	=> $aContactInfo['EMAIL'],
 								'nameTo' 	=> $aContactInfo['NOMBRE'].' '.$aContactInfo['APELLIDOS'],
 								'subjectTo' => ('GTP - Grupo UDA'),
 								'bodyTo' 	=> $bodymail,
-							);					
+							);
 							
 						 	$enviar = $cFunctions->sendMailSmtp($aMailer);
+						 	*/
+							$cMailing = new My_Model_Mailing();
+							$aMailer    = Array(
+								'inputDestinatarios' => $aContactInfo['NOMBRE'].' '.$aContactInfo['APELLIDOS'],
+								'inputEmails' 		 => $aContactInfo['EMAIL'],
+								'inputTittle' 		 => 'GTP - Grupo UDA',
+								'inputBody' 		 => $bodymail,
+								'inputFromName' 	 => 'contacto@grupouda.com.mx',
+								'inputFromEmail' 	 => 'Siames - Grupo UDA'						
+							);	
+	
+							$cMailing->insertRow($aMailer);							
+							
 						}										
 						
 						$cSapClientes->updateActivation($codeQrActivate);

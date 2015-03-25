@@ -55,7 +55,21 @@ class My_Model_Sapclientes extends My_Db_Table
 		}	
         
 		return $result;	    	
-    }	
+    }
+    
+    public function getDataById($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 
+    	$sql ="SELECT * 
+    			FROM $this->_name
+                WHERE $this->_primary = $idObject LIMIT 1";	
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0];			
+		}	
+        
+		return $result;	    	
+    }	    
     
     public function getDataQr($idObject){
 		$result= Array();

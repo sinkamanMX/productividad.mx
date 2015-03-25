@@ -1,0 +1,44 @@
+<?php $this->headScript()->appendFile('/js/contacts/searchContacts.js') ?>  
+<div class="span12">
+	<?php if(@$this->aErrors==1):?>
+        <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <h4>Error</h4>
+          <div>El Cliente no esta registrado, verifica el número del Cliente.</div>
+        </div>  
+	<?php endif;?>
+
+	<?php if($this->bStatusSearch==0):?>
+	    <div class="block">
+	        <div class="navbar navbar-inner block-header">
+	            <div class="muted pull-left">
+	            	Buscar Cliente
+				</div>
+	        </div>
+	        <div class="block-content collapse in">
+				<div class="row span12">
+					<form method="POST" action="/sac/main/index" id="FormData" class="form-horizontal ">
+						<input type="hidden" name="optReg" value="search" />		
+						<fieldset>											
+							<div class="row row-margin-left25">
+								<div class="span3">Ingrese No. Cliente SAP <i>ej: CLI00001</i></div>
+								<div class="span2">
+									<div class="control-group">
+										<div class="">
+											<input type="text" class="span12" id="inputCodeClient" name="inputCodeClient" value="<?php echo ($this->bStatusSearch==0 && @$this->aErrors==2) ? $this->codeClient: '';?>" autocomplete="off"/>
+										</div>
+									</div>				
+								</div>
+								<div class="span2">									
+									<div class="">
+										<button type="submit" class="btn btn-primary">Buscar</button>
+									</div>									
+								</div>													
+							</div>
+						</fieldset>
+					</form>					
+				</div>
+			</div>
+		</div>
+	<?php endif;?>
+</div>

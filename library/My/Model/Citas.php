@@ -192,11 +192,12 @@ class My_Model_Citas extends My_Db_Table
 		return $result;			
 	}
 	
-	public function getCboTipoServicio(){
-		$result= Array();
+	public function getCboTipoServicio($showUser=false){
+		$result	= Array();
+		$sFilter= ($showUser) ? ' WHERE MOSTRAR_CLIENTE = 1' : ''; 
 		$this->query("SET NAMES utf8",false); 		
     	$sql ="SELECT ID_TPO AS ID, DESCRIPCION AS NAME
-				FROM PROD_TPO_CITA ORDER BY ID ASC";
+				FROM PROD_TPO_CITA $sFilter ORDER BY ORDEN ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			
@@ -457,13 +458,15 @@ class My_Model_Citas extends My_Db_Table
 				IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
 				IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
 				IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
-				IF(C.FECHA_CITA<'2015-01-19 00:00:00','A','N') AS NEW_FORM
+				IF(C.FECHA_CITA<'2015-01-19 00:00:00','A','N') AS NEW_FORM,
+				T.DESCRIPCION AS N_TIPO
 				FROM PROD_CITAS C
 				INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
 				INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
 				INNER JOIN PROD_CLIENTES       P ON C.ID_CLIENTE = P.ID_CLIENTE
 				 LEFT JOIN PROD_CITA_USR       A ON C.ID_CITA	 = A.ID_CITA
 				 LEFT JOIN USUARIOS			   U ON A.ID_USUARIO = U.ID_USUARIO 
+				INNER JOIN PROD_TPO_CITA       T ON C.ID_TPO     = T.ID_TPO
 				WHERE C.ID_CITA IN (
 					SELECT C.ID_CITA
 					FROM PROD_CITA_USR C 

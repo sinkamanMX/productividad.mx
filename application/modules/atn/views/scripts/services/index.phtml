@@ -105,6 +105,7 @@
                         <thead>             
                             <tr>
                                 <th>Folio Cita</th>
+                                <th>Tipo Servicio</th>
                                 <th>Estatus</th>
                                 <th>Cliente</th>
                                 <th>Fecha Programada</th>
@@ -120,6 +121,7 @@
                             <?php foreach($this->aResume as $key => $items): ?>
                                 <tr>                   
                                     <td><?php echo $items['FOLIO'];?></td>
+                                    <td><?php echo $items['N_TIPO'];?></td>
                                     <td><?php echo $items['DESCRIPCION'];?></td>
                                     <td><?php echo $items['NOMBRE_CLIENTE'];?></td>
                                     <td><?php echo $items['F_PROGRAMADA'];?></td>

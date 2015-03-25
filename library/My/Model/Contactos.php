@@ -68,5 +68,20 @@ class My_Model_Contactos extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;	      	
-    }	    
+    }	
+
+    public function getCbo($idObject){
+      	$this->query("SET NAMES utf8",false); 
+        
+		$result= Array();
+    	$sql ="SELECT ID_CONTACTO_QR AS ID, CONCAT(NOMBRE,' ',APELLIDOS) AS NAME
+				FROM PROD_QR_CONTACTOS 
+				WHERE COD_CLIENTE = '$idObject'";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result	 = $query;			
+		}	
+        
+		return $result;	        
+    }     
 }
