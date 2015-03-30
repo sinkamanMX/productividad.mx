@@ -408,11 +408,17 @@
 	},
 	"file_history":
 	[
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/validateSolicitudes.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validateSolicitudes.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/views/scripts/main/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/views/scripts/main/getinfo.phtml",
+		"/Users/itecno2/Dropbox/Tecnologizame/Clientes/UDA/Proyectos/Siames/Documentos/Accesos y URLS",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/controllers/MainController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validatePublicSolicitud.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/request/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validateSolicitudes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/validateSolicitudes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/index.phtml",
@@ -421,7 +427,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/sendMails.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Functions.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/controllers/RequestController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/RequestController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/public.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/gralTables.js",
@@ -530,12 +535,7 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/mapa.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/DT_bootstrap.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/RastreoController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/ .phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/vendors/graphs/js/jquery.circliful.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/mapDetail.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/map.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/map/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/main/index.phtml"
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/ .phtml"
 	],
 	"find":
 	{
@@ -543,7 +543,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"<open folders>",
@@ -556,6 +556,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"offset",
 			"prop",
 			"sendMailAdmins",
 			"sendMailSmtp",
@@ -682,8 +683,7 @@
 			"	&,	",
 			",&",
 			"	&,&	",
-			"	&	",
-			"	\""
+			"	&	"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -809,6 +809,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 249.0,
+	"side_bar_width": 254.0,
 	"status_bar_visible": true
 }

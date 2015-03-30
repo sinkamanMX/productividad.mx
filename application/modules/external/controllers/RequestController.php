@@ -101,7 +101,9 @@ class external_RequestController extends My_Controller_Action
 			$sModificaciones = '';
 
 			if($this->operation=='updateUnits'){
-				$soap_client  = new SoapClient("http://201.131.96.40/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+				//192.168.6.41
+				//201.131.96.40
+				$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
 				$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',
 				                  	  'sPassword'  => 't3stud4',
 									  'strCustomerPass' => $this->view->dataUser['COD_CLIENTE']);		
@@ -393,7 +395,9 @@ class external_RequestController extends My_Controller_Action
 				$idUnidad 	= $this->dataIn['catId'];
 				$dataInfo   = $cUnidades->getData($idUnidad);
 				
-				$soap_client  = new SoapClient("http://201.131.96.40/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+				//192.168.6.41
+				//201.131.96.40
+				$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
 				$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',
 				                  	  'sPassword'  => 't3stud4',
 									  'strCustomerPass' => $dataInfo['COD_CLIENTE']);
@@ -463,7 +467,9 @@ class external_RequestController extends My_Controller_Action
     
     public function getinfounitAction(){
 		try{
-			$soap_client  = new SoapClient("http://201.131.96.40/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+			//192.168.6.41
+			//201.131.96.40
+			$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
 			$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',
 			                  	  'sPassword'  => 't3stud4',
 								  'strCustomerPass' => 'CL00000851');		

@@ -105,7 +105,9 @@ class sac_MainController extends My_Controller_Action
 				$sBody    = '';				
 				
     			if($this->operation=='updateUnits'){
-					$soap_client  = new SoapClient("http://201.131.96.40/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+					//192.168.6.41
+					//201.131.96.40
+					$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
 					$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',
 					                  	  'sPassword'  => 't3stud4',
 										  'strCustomerPass' => $aDataCliente['COD_CLIENTE']);	
@@ -268,8 +270,9 @@ class sac_MainController extends My_Controller_Action
 			if($validateNumbers->isValid($this->dataIn['catId']) ){
 				$idUnidad 	= $this->dataIn['catId'];
 				$dataInfo   = $cUnidades->getData($idUnidad);
-				
-				$soap_client  = new SoapClient("http://201.131.96.40/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+				//192.168.6.41
+				//201.131.96.40
+				$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
 				$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',
 				                  	  'sPassword'  => 't3stud4',
 									  'strCustomerPass' => $dataInfo['COD_CLIENTE']);

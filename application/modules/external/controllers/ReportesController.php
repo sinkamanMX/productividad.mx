@@ -1,6 +1,6 @@
 <?php
 
-class atn_ReportesController extends My_Controller_Action
+class external_ReportesController extends My_Controller_Action
 {	
 	protected $_clase = 'mservices';
 	public $dataIn;	
@@ -11,10 +11,10 @@ class atn_ReportesController extends My_Controller_Action
     public function init()
     {
     	try{	
-			$sessions = new My_Controller_Auth();
+    		$sessions = new My_Controller_AuthContact();
 			$perfiles = new My_Model_Perfiles();
 	        if(!$sessions->validateSession()){
-	            $this->_redirect('/');
+	            $this->_redirect('/external/login/index');		
 			}
 			
 			$this->dataIn 			= $this->_request->getParams();

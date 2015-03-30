@@ -1,13 +1,5 @@
 <?php $this->headScript()->appendFile('/js/contacts/searchContacts.js') ?>  
 <div class="span12">
-	<?php if(@$this->aErrors==1):?>
-        <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <h4>Error</h4>
-          <div>El Cliente no esta registrado, verifica el número del Cliente.</div>
-        </div>  
-	<?php endif;?>
-
 	<?php if($this->bStatusSearch==0):?>
 	    <div class="block">
 	        <div class="navbar navbar-inner block-header">
@@ -17,6 +9,13 @@
 	        </div>
 	        <div class="block-content collapse in">
 				<div class="row span12">
+					<?php if(@$this->aErrors==1):?>
+				        <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+				          <button type="button" class="close" data-dismiss="alert">×</button>
+				          <h4>Error</h4>
+				          <div>El Cliente no esta registrado<br/>Notificar al ejecutivo de Cuenta.</div>
+				        </div>
+					<?php endif;?>
 					<form method="POST" action="/sac/main/index" id="FormData" class="form-horizontal ">
 						<input type="hidden" name="optReg" value="search" />		
 						<fieldset>											
