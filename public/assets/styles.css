@@ -315,11 +315,15 @@ body {
 }
 
 .no-margin-t{
-  margin-top: 0px;
+  margin-top: 0px !important;
+}
+
+.no-margin-l{
+  margin-left:  0px !important;
 }
 
 .no-margin-b{
-  margin-bottom: 0px;
+  margin-bottom:  0px !important;
 }
 
 .fa-1 {
@@ -411,6 +415,15 @@ body {
 .row-margin-left25 {
     margin-left: 25px !important;
 }
+.row-margin-left5 {
+    margin-left: 5% !important;
+}
+.row-margin-r5{
+  margin-right: 5% !important;
+}
+.row-margin-left5px {
+    margin-left: 5px !important;
+}
 .chzn-container{
     display: inline-block;
     font-size: 13px;
@@ -429,8 +442,22 @@ body {
   position: fixed;
 }
 .button-excel-rel {
-  margin-left: 5px;
-  position: relative;
+    margin-left: 5px;
+    position: relative;
+    top: 5% !important;
+}
+body {
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+}
+body {
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+}
 }
 .text-center {
     text-align: center !important;
@@ -447,4 +474,24 @@ body {
 }
 .no-clear{
   clear: none !important;
+}
+.status-selected{
+  border: 9px solid #f3f3f3;
+  border-radius: 50px; 
+}
+
+.table-date-date {
+  background-color: #ffffff;
+  bottom: 10%;
+  left: 2%;
+  position: fixed;
+  opacity: 0.8;
+}
+
+.table-data-pos{
+  background-color: #ffffff;
+  bottom: 10%;
+  right: 2%;
+  position: fixed;
+  opacity: 0.8;
 }

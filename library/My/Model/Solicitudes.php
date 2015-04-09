@@ -101,19 +101,18 @@ class My_Model_Solicitudes extends My_Db_Table
         }else if(isset($data['bOperation']) && $data['bOperation']=='modify'){
         	$data['inputEstatus'] = 4;	
         	$sFilter .= "ID_ESTATUS		=  ".$data['inputEstatus']." ,
-        				ID_HORARIO		=  ".$data['inputHorario']." ,
+        				 ID_HORARIO		=  ".$data['inputHorario']." ,
         				 FECHA_CITA		= '".$data['inputFechaIn']."',";
         }else{
         	$sFilter .= "ID_UNIDAD		=  ".$data['inputUnidad']." ,
 						 ID_HORARIO		=  ".$data['inputHorario']." ,
 						 INFORMACION_UNIDAD= '".$data['inputInfo']."',								
-						 COMENTARIO		= '".$data['inputComment']."',		
-						 FECHA_CITA		= '".$data['inputFechaIn']."',";
+						 COMENTARIO		= '".$data['inputComment']."',
+						 FECHA_CITA		= '".$data['inputFechaIn']."'";
         }
         
         $sql="UPDATE $this->_name SET
         		$sFilter
-        		COMENTARIO		= '".$data['inputComment']."'
         		WHERE $this->_primary =".$data['catId']." LIMIT 1";
         try{            
     		$query   = $this->query($sql,false);

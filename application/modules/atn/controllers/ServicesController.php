@@ -6,6 +6,7 @@ class atn_ServicesController extends My_Controller_Action
 	public $dataIn;	
 	public $aService;
 	public $realPath='/var/www/vhosts/sima/htdocs/public';
+	//public $realPath='/Users/itecno2/Documents/workspace/productividad.mx/public';
 		
     public function init()
     {
@@ -35,40 +36,58 @@ class atn_ServicesController extends My_Controller_Action
 			$cTecnicos		= new My_Model_Tecnicos();			
 			$cCitas			= new My_Model_Citas();
 			
+			$aSucursales 	= "";
 			$idSucursal		= -1;
 			$idTecnico		= '';			
 			$dFechaIn		= '';
 			$dFechaFin		= '';
-			$bShowUsers		= false;		
+			$bShowUsers		= false;
+			$aTypeSearch	= Array(		
+								array("id"=>"1",'name'=>'Fecha inicio programada' ),
+								array("id"=>"2",'name'=>'Fecha inicio real ' )    );
+			$bType 			= 1;
+			$bStatus		= -1;
 			
 			$dataCenter		= $cInstalaciones->getCbo($this->view->dataUser['ID_EMPRESA']);			
 			$aTecnicos      = $cTecnicos->getAll($this->view->dataUser['ID_EMPRESA'],1);
-
+			$aSucursales	= $cInstalaciones->getList($this->view->dataUser['ID_EMPRESA']);			
+			
 			if(isset($this->dataIn['optReg']) && $this->dataIn['optReg']){
 				$dFechaIn	= $this->dataIn['inputFechaIn'];
 				$dFechaFin	= $this->dataIn['inputFechaFin'];
-				$idSucursal	= $this->dataIn['cboInstalacion'];
+				
+				if(isset($this->dataIn['cboInstalacion']) && $this->dataIn['cboInstalacion']>0){
+					$aSucursales	= $this->dataIn['cboInstalacion'];
+					$idSucursal		= $this->dataIn['cboInstalacion'];	
+				}
+				
 				$idTecnico	= $this->dataIn['inputTecnicos'];
+				$bType		= $this->dataIn['cboTypeSearch'];
+				$bStatus	= $this->dataIn['inputStatus'];				
 				$bShowUsers=true;
 			}else{
 				$dFechaIn	= Date('Y-m-d');
 				$dFechaFin	= Date('Y-m-d');
-				$idSucursal	= $this->view->dataUser['ID_SUCURSAL'];
 				$bShowUsers=true;
-			}
+				$idSucursal		= "";	
+			}			
 			
-			$aTecnicos 		= $cTecnicos->getTecnicosBySucursal($idSucursal);
-			$dataResume     = $cCitas->getResumeByDay($idSucursal,$dFechaIn,$dFechaFin,$idTecnico);
+			$aTecnicos 		= $cTecnicos->getTecnicosBySucursal($aSucursales);
+			$dataResume     = $cCitas->getResumeByDay($aSucursales,$dFechaIn,$dFechaFin,$idTecnico,$bType);
 			$dataProcess	= $cFunciones->setResume($dataResume);
-			
+						
 			$this->view->cInstalaciones 	= $cFunciones->selectDb($dataCenter,$idSucursal);
 			$this->view->aTecnicos 			= $cFunciones->selectDb($aTecnicos,$idTecnico);	
+			$this->view->aTypeSearchs		= $cFunciones->cbo_from_array($aTypeSearch,$bType);
 			$this->view->data 				= $this->dataIn;
 			$this->view->dataResume 	 	= $dataProcess;
 			$this->view->dataResumeTotal 	= $dataProcess['TOTAL'];
 			$this->view->showUsers			= $bShowUsers;
 			$this->view->aResume 			= $dataResume;
-			unset($this->view->dataResume['TOTAL']);	
+			$this->view->iStatus			= $bStatus;
+			
+			unset($this->view->dataResume['TOTAL']);
+				
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -683,22 +702,33 @@ class atn_ServicesController extends My_Controller_Action
 			$idTecnico		= '';			
 			$dFechaIn		= '';
 			$dFechaFin		= '';
-			$bShowUsers		= false;		
+			$bShowUsers		= false;
+			$aTypeSearch	= Array(		
+								array("id"=>"1",'name'=>'Fecha inicio programada' ),
+								array("id"=>"2",'name'=>'Fecha inicio real ' )    );
+			$bType 			= 1;
+			$bStatus		= -1;	
+							
 			
 			$dataCenter		= $cInstalaciones->getCbo($this->view->dataUser['ID_EMPRESA']);			
 			$aTecnicos      = $cTecnicos->getAll($this->view->dataUser['ID_EMPRESA'],1);
+			$aSucursales	= $cInstalaciones->getList($this->view->dataUser['ID_EMPRESA']);
 
+			
 			$dFechaIn	= $this->dataIn['inputFechaIn'];
 			$dFechaFin	= $this->dataIn['inputFechaFin'];
 			$idSucursal	= $this->dataIn['cboInstalacion'];			
 			$bShowUsers=true;
-			
-			$idTecnico	= (isset($this->dataIn['inputTecnicos']) && $this->dataIn['inputTecnicos']!="") ? $this->dataIn['inputTecnicos'] : "";
+							
+			$bStatus	  = (isset($this->dataIn['inputStatus']) && $this->dataIn['inputStatus']!="") ? $this->dataIn['inputStatus'] : "-1";					
+			$aSucursalesIn= (isset($this->dataIn['cboInstalacion']) && $this->dataIn['cboInstalacion']!="") ? $this->dataIn['cboInstalacion'] : $aSucursales;							
+			$bType		  = (isset($this->dataIn['cboTypeSearch']) && $this->dataIn['cboTypeSearch']!="")   ? $this->dataIn['cboTypeSearch']  : "1";
+			$idTecnico	  = (isset($this->dataIn['inputTecnicos']) && $this->dataIn['inputTecnicos']!="")   ? $this->dataIn['inputTecnicos']  : "";
 
-			$aTecnicos 		= $cTecnicos->getTecnicosBySucursal($idSucursal);
-			$dataResume     = $cCitas->getResumeByDay($idSucursal,$dFechaIn,$dFechaFin,$idTecnico);
+			$aTecnicos 		= $cTecnicos->getTecnicosBySucursal($aSucursalesIn);
+			$dataResume     = $cCitas->getResumeByDay($aSucursalesIn,$dFechaIn,$dFechaFin,$idTecnico,$bType);
 			$dataProcess	= $cFunciones->setResume($dataResume);
-			
+						
 			/*
 			$this->view->cInstalaciones 	= $cFunciones->selectDb($dataCenter,$idSucursal);
 			$this->view->aTecnicos 			= $cFunciones->selectDb($aTecnicos,$idTecnico);	
@@ -710,8 +740,10 @@ class atn_ServicesController extends My_Controller_Action
 			
 			if(count($dataResume)>0){
 				/** PHPExcel */ 
-				require_once 'PHPExcel.php';		
-										
+				require_once 'PHPExcel.php';
+						
+				/*
+				 * 
 				if (!PHPExcel_Settings::setPdfRenderer(
 						PHPExcel_Settings::PDF_RENDERER_DOMPDF,
 						$this->realPath.'/PHPExcel/Classes/dompdf'
@@ -721,7 +753,7 @@ class atn_ServicesController extends My_Controller_Action
 						'<br />' .
 						'at the top of this script as appropriate for your directory structure'
 					);
-				}
+				}*/
 					/** PHPExcel_Writer_Excel2007*/ 								
 					$objPHPExcel = new PHPExcel();
 	 					
@@ -734,163 +766,172 @@ class atn_ServicesController extends My_Controller_Action
 											 ->setCategory("Reporte del Viaje");
 					
 					$objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);											 
-					$styleHeader = new PHPExcel_Style();
-					$styleAutor	 = new PHPExcel_Style();
-					$styleTittle = new PHPExcel_Style();
-					$styleHeadermin = new PHPExcel_Style();
-					$allBlank	 = new PHPExcel_Style(); 
+					$sHeaderBig   	 = new PHPExcel_Style();
 					$stylezebraTable = new PHPExcel_Style();  
-					
-					$allBlank->applyFromArray(array(
+					$sHeaderOrange 	 = new PHPExcel_Style();
+					$sTittleTable 	 = new PHPExcel_Style();
+							
+					$stylezebraTable->applyFromArray(array(
+						'fill' => array(
+							'type' => PHPExcel_Style_Fill::FILL_SOLID,'color' => array('argb' => 'e7f3fc')
+						)
+					));		
+
+					$sHeaderBig->applyFromArray(array(
 						'fill' => array(
 				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
 				            'color' => array('rgb' => 'FFFFFF')
 				        ),
+				        'font'  => array(
+					        'bold'  => true,
+					        'color' => array('rgb' => '000000'),
+					        'size'  => 16,
+					        'name'  => 'Arial'
+					    ),
 						  'borders' => array(
 						    'allborders' => array(
 						      'style' => PHPExcel_Style_Border::BORDER_NONE
 						    )
 						  )				        
-					));	
+					));			
 
-		
-					$stylezebraTable->applyFromArray(array(
+					$sHeaderOrange->applyFromArray(array(
 						'fill' => array(
-							'type' => PHPExcel_Style_Fill::FILL_SOLID,'color' => array('argb' => 'e7f3fc')
-						)
+				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+				            'color' => array('rgb' => 'FFFFFF')
+				        ),
+				        'font'  => array(
+					        'bold'  => true,
+					        'color' => array('rgb' => 'FF8000'),
+					        'size'  => 10,
+					        'name'  => 'Arial'
+					    ),
+						  'borders' => array(
+						    'allborders' => array(
+						      'style' => PHPExcel_Style_Border::BORDER_NONE
+						    )
+						  )
+					));		
+
+					$sTittleTable->applyFromArray(array(
+						'fill' => array(
+				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+				            'color' => array('rgb' => 'FF8000')
+				        ),
+				        'font'  => array(
+					        'bold'  => true,
+					        'color' => array('rgb' => 'FFFFFF'),
+					        'size'  => 10,
+					        'name'  => 'Arial'
+					    ),
+						  'borders' => array(
+						    'allborders' => array(
+						      'style' => PHPExcel_Style_Border::BORDER_NONE
+						    )
+						  )
 					));						
-		
-					$styleHeader->applyFromArray(array(
-						'fill' => array(
-				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-				            'color' => array('rgb' => '000000')
-				        ),
-				        'font'  => array(
-					        'bold'  => true,
-					        'color' => array('rgb' => 'FFFFFF'),
-					        'size'  => 15,
-					        'name'  => 'Arial'
-					    ),
-						  'borders' => array(
-						    'allborders' => array(
-						      'style' => PHPExcel_Style_Border::BORDER_NONE
-						    )
-						  )
-					));
-					$styleHeadermin->applyFromArray(array(
-						'fill' => array(
-				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-				            'color' => array('rgb' => '000000')
-				        ),
-				        'font'  => array(
-					        'bold'  => true,
-					        'color' => array('rgb' => 'FFFFFF'),
-					        'size'  => 15,
-					        'name'  => 'Arial'
-					    ),
-						  'borders' => array(
-						    'allborders' => array(
-						      'style' => PHPExcel_Style_Border::BORDER_NONE
-						    )
-						  )
-					));					
-					$styleAutor->applyFromArray(array(
-						'fill' => array(
-				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-				            'color' => array('rgb' => '6E6E6E')
-				        ),
-				        'font'  => array(
-					        'bold'  => true,
-					        'color' => array('rgb' => 'FFFFFF'),
-					        'name'  => 'Arial'
-					    ),
-						  'borders' => array(
-						    'allborders' => array(
-						      'style' => PHPExcel_Style_Border::BORDER_NONE
-						    )
-						  )
-					));
-					
-					$styleTittle->applyFromArray(array(
-						'fill' => array(
-				            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-				            'color' => array('rgb' => 'BDBDBD')
-				        ),
-				        'font'  => array(
-					        'bold'  => true,
-					        'color' => array('rgb' => 'FFFFFF'),
-					        'name'  => 'Arial'
-					    ),
-						  'borders' => array(
-						    'allborders' => array(
-						      'style' => PHPExcel_Style_Border::BORDER_NONE
-						    )
-						  )
-					));					
 				
 					/**
 					 * Header del Reporte
-					 **/				
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($allBlank, 'A1:Z99');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', 'Reporte de Citas');
-					$objPHPExcel->getActiveSheet()->mergeCells('A2:H2');
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($styleHeader, 'A2:H2');
-					$objPHPExcel->getActiveSheet()->getStyle('A2:H2')
-									->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);	
+					 **/					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', utf8_decode('Tracking Systems de Mexico, S.A de C.V.'));
+					$objPHPExcel->getActiveSheet()->mergeCells('B3:G3');
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sHeaderBig, 'B3:J3');
 					
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3', utf8_decode('Tracking Systems de Mexico, S.A de C.V.'));
-					$objPHPExcel->getActiveSheet()->mergeCells('A3:H3');
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($styleAutor, 'A3:H3');
-					$objPHPExcel->getActiveSheet()->getStyle('A3:H3')
-									->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);		
-				
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A5', 'Folio Cita');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', 'Estatus');										
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', 'Cliente');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('D5', 'Fecha Programada');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E5', 'Hora Programada');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F5', 'Hora Inicio');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', 'Hora Terminado');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H5', 'Tecnico Asignado');					
-														
-					$rowControl		= 7;
+					$objDrawing = new PHPExcel_Worksheet_Drawing();
+					
+					$objDrawing->setName('Logo');
+					$objDrawing->setDescription('Logo');
+					
+					$objDrawing->setPath($this->realPath.'/logoUDA.jpg');
+					$objDrawing->setWidth(70);
+					$objDrawing->setHeight(90);
+					//$objDrawing->setOffsetX(10);
+					$objDrawing->setCoordinates('I2');
+					
+					$objPHPExcel->getActiveSheet()->getRowDimension('I2')->setRowHeight(150);										
+					$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
+					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', utf8_decode('REPORTE DE CITAS'));
+					$objPHPExcel->getActiveSheet()->mergeCells('B5:G5');
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sHeaderOrange, 'B5:J5');												
+									
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A7', 'Folio Cita');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B7', 'Tipo Servicio');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C7', 'Estatus');										
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('D7', 'Cliente');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E7', 'Fecha Programada');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F7', 'Hora Programada');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G7', 'Hora Inicio');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H7', 'Hora Terminado');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I7', 'Tecnico Asignado');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J7', 'Direccion Cita');					
+					
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleTable, 'A7:J7');														
+					
+					$rowControl		= 8;
 					$zebraControl  	= 0;
 					
-					foreach($dataResume as $key => $items){						
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0,  ($rowControl), $items['FOLIO']);
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $items['DESCRIPCION']);								
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2,  ($rowControl), $items['NOMBRE_CLIENTE']);								
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3,  ($rowControl), $items['F_PROGRAMADA']);								
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4,  ($rowControl), $items['H_PROGRAMADA']);								
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5,  ($rowControl), $items['FECHA_INICIO']);								
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6,  ($rowControl), $items['FECHA_TERMINO']);								
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7,  ($rowControl), $items['NOMBRE_TECNICO']);
+					if($bStatus==-1){
+						foreach($dataResume as $key => $items){						
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0,  ($rowControl), $items['FOLIO']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $items['N_TIPO']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2,  ($rowControl), $items['DESCRIPCION']);								
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3,  ($rowControl), $items['NOMBRE_CLIENTE']);								
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4,  ($rowControl), $items['F_PROGRAMADA']);								
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5,  ($rowControl), $items['H_PROGRAMADA']);								
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6,  ($rowControl), $items['FECHA_INICIO']);								
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7,  ($rowControl), $items['FECHA_TERMINO']);								
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(8,  ($rowControl), $items['NOMBRE_TECNICO']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(9,  ($rowControl), $items['DIRECCION']);
+	
+							if($zebraControl++%2==1){
+								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':J'.$rowControl);			
+							}
+							$rowControl++;
+						}						
+					}else if($bStatus>0){
+						foreach($dataResume as $key => $items){
+							if($bStatus==$items['IDE']){
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0,  ($rowControl), $items['FOLIO']);
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $items['N_TIPO']);
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2,  ($rowControl), $items['DESCRIPCION']);								
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3,  ($rowControl), $items['NOMBRE_CLIENTE']);								
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4,  ($rowControl), $items['F_PROGRAMADA']);								
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5,  ($rowControl), $items['H_PROGRAMADA']);								
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6,  ($rowControl), $items['FECHA_INICIO']);								
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7,  ($rowControl), $items['FECHA_TERMINO']);								
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(8,  ($rowControl), $items['NOMBRE_TECNICO']);
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(9,  ($rowControl), $items['DIRECCION']);
+		
+								if($zebraControl++%2==1){
+									$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':J'.$rowControl);			
+								}
+								$rowControl++;								
+							}
+						}								
+					} 
 
-						if($zebraControl++%2==1){
-							$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':H'.$rowControl);			
-						}
-						$rowControl++;
-					}
 								
-					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(5);
-					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(5);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setAutoSize(true);
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('C')->setAutoSize(true);
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setAutoSize(true);
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('E')->setAutoSize(true);
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('F')->setAutoSize(true);
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('G')->setAutoSize(true);
-					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('H')->setAutoSize(true);	
-
-					/*
-					$objPHPExcel->setActiveSheetIndex(0)->setShowGridLines(true);
-					$objPHPExcel->setActiveSheetIndex(0)->setPrintGridLines(true);		*/			
-				
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('H')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('I')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('J')->setAutoSize(true);			
+						
 					$filename  = "Reporte_Citas_".date("YmdHi").".xlsx";	
 	
-					// Redirect output to a clientÍs web browser (PDF)
-					header('Content-Type: application/pdf');
-					header('Content-Disposition: attachment;filename="'.$filename.'"');
-					header('Cache-Control: max-age=0');									
+					header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+					header("Content-type:   application/x-msexcel; charset=utf-8");
+					header("Content-Disposition: attachment; filename=$filename"); 
+					header("Expires: 0");
+					header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+					header("Cache-Control: private",false);
 					
 					$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 					$objWriter->save('php://output');								
@@ -2430,6 +2471,48 @@ class atn_ServicesController extends My_Controller_Action
         	echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
 		}		
+	}
+	
+	public function posistiondateAction(){
+		try{
+			$aDataDate = Array();
+			$aPositon  = Array();
+			$result	   = '';
+			$this->view->layout()->setLayout('layout_blank');
+			
+			$cCitas		= new My_Model_Citas();
+			$cTecnicos  = new My_Model_Tecnicos();				
+			if(isset($this->dataIn['strInput']) && $this->dataIn['strInput']){
+				$aDataDate	= $cCitas->getCitasDet($this->dataIn['strInput']);				
+				if(isset($aDataDate['ID_OPERADOR']) && $aDataDate['ID_OPERADOR']!=""){
+					$dataPhone = $cTecnicos->getPhoneByuser($aDataDate['ID_OPERADOR']);
+					if(count($dataPhone)>0){
+						$dataPos    = $cTecnicos->getLastPositions($dataPhone['ID_TELEFONO']);
+						if(count($dataPos)>0){
+							$aPositon   = $dataPos[0];	
+							$result .=  $aPositon['ID']."|".
+										$aPositon['FECHA_GPS']."|".
+		                                $aPositon['EVENTO']."|".
+		                                $aPositon['LATITUD']."|".
+		                                $aPositon['LONGITUD']."|".
+		                                round($aPositon['VELOCIDAD'],2)."|".
+		                                round($aPositon['NIVEL_BATERIA'],2)."|".
+		                                $aPositon['TIPO_GPS']."|".
+		                                $aPositon['ANGULO']."|".
+		                                $aPositon['UBICACION'];
+						}							
+					}
+				}			
+			}
+    		
+    		$this->view->dataDate = $aDataDate;
+    		$this->view->dataPos  = $aPositon;
+    		$this->view->resultPos= $result;
+    		$this->view->data 	  = $this->dataIn;				
+		}catch(Zend_Exception $e) {
+        	echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+		}			
 	}
 
 }

@@ -41,13 +41,58 @@ class atn_MainController extends My_Controller_Action
 			$this->_helper->viewRenderer->setNoRender();    
 	                
 			$cCitas = new My_Model_Citas();
+			$type   = (isset($this->dataIn['iType']) && $this->dataIn['iType']!="") ? $this->dataIn['iType'] : -1;
 			
-			$dataCitas = $cCitas->getCitasPendientes();
+			$dataCitas = $cCitas->getCitasPendientes($type);
+				
+			if($type==2){
+				$dataCitas = $this->processData($dataCitas);	
+			}
+			
 			echo Zend_Json::encode($dataCitas);
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
         }    	
+    }
+    
+    public function processData($aDataToProcess){
+    	$aResult = Array();
+    	$cCitas = new My_Model_Citas();
+    	foreach($aDataToProcess as $key => $items){
+    		$sTittle = '';
+    		$sIds	 = '';
+    		$aDataCount = $cCitas->getResume($items['FECHA_CITA'],$items['HORA_CITA']);
+    		foreach($aDataCount as $key => $itemsCount){
+    			$sTittle .= ($sTittle!="") ? '
+    			' : '';
+    			$sIds	 .= ($sTittle!="") ? ',':'';
+    			$sTittle .= $itemsCount['N_TITTLE'].': '.$itemsCount['TOTAL'];
+    			$sIds	 .= $itemsCount['IDS'];    			
+    		}	
+    		$items['title']	= $sTittle;
+    		$items['IDS']	= $sIds;
+    		$aResult[]	= $items;
+    	}
+    	
+    	return $aResult;
+    }
+    
+    public function getlistdatesAction(){
+		try{
+			$aList = Array();
+			$this->view->layout()->setLayout('layout_blank');
+			$cCitas   = new My_Model_Citas();
+			if(isset($this->dataIn['strInput']) && $this->dataIn['strInput']!=''){
+				$sIds  = $this->dataIn['strInput'];
+				$aList = $cCitas->getDateByList($sIds);
+			}
+			
+			$this->view->dataSearch = $aList;
+        } catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }		
     }
     
 	public function searchcitasAction(){

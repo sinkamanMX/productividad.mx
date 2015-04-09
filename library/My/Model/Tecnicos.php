@@ -69,7 +69,7 @@ class My_Model_Tecnicos extends My_Db_Table
 				U.ANGULO,
 				U.UBICACION
 				FROM PROD_ULTIMA_POSICION U
-				INNER JOIN PROD_EVENTOS   E ON U.ID_EVENTO = E.ID_EVENTO
+				LEFT JOIN PROD_EVENTOS   E ON U.ID_EVENTO = E.ID_EVENTO
 				WHERE U.ID_TELEFONO IN ($values)";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -95,5 +95,21 @@ class My_Model_Tecnicos extends My_Db_Table
 		}
         
 		return $result;				
+	}
+	
+	public function getPhoneByuser($idUser){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT *
+				FROM  PROD_TELEFONOS T
+				INNER JOIN PROD_USR_TELEFONO R ON T.ID_TELEFONO = R.ID_TELEFONO
+				WHERE R.ID_USUARIO = $idUser
+				LIMIT 1";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0];			
+		}	
+        
+		return $result;			
 	}
 }

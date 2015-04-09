@@ -111,7 +111,7 @@ class external_RequestController extends My_Controller_Action
 				if (is_object($result)){
 			       	$x = get_object_vars($result);
 					$y = get_object_vars($x['HistoyDataLastLocationByCustomerPassResult']);
-			
+								
 					$xml = $y['any'];		
 					if($xml2 = simplexml_load_string($xml)){
 						$bContinue = 0;						
@@ -158,7 +158,7 @@ class external_RequestController extends My_Controller_Action
 			        		$this->resultop = 'okUpdate';			        		
 			        	}elseif($c=0 && $bContinue==0){
 			        		$this->errors['no-units'] = 1;
-			        	}else if($bContinue==1){
+			        	}else if($bContinue==2){
 			        		$this->errors['login'] = 1;
 			        	}else if($bContinue==1){
 			        		$this->errors['client-problem'] = 1;	

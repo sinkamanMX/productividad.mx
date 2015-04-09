@@ -33,6 +33,36 @@
                                   <div>El IMEI no se encuentra disponible</div>
                                 </div>  
                             <?php endif;?> 
+                            <?php if(@$this->errors['no-service']):?>
+                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+                                  <button type="button" class="close" data-dismiss="alert">×</button>
+                                  <h4>Error</h4>
+                                  <div>Ocurrio un error con el proveedors Ovision,favor de contactar al administrador del sistema</div>
+                                </div>  
+                            <?php endif;?>   
+                            <?php if(@$this->errors['no-service'] || @$this->errors['no-info'] || @$this->errors['client-problem']):?>
+                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+                                  <button type="button" class="close" data-dismiss="alert">×</button>
+                                  <h4>Error</h4>
+                                  <div>Ocurrio un error con el proveedors Ovision,favor de contactar al administrador del sistema</div>
+                                </div>  
+                            <?php endif;?>  
+                            <?php if(@$this->errors['login']):?>
+                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+                                  <button type="button" class="close" data-dismiss="alert">×</button>
+                                  <h4>Error</h4>
+                                  <div>Ocurrio un error con su clave de cliente,favor de contactar al administrador del sistema</div>
+                                </div>  
+                            <?php endif;?>      
+                            <?php if(@$this->errors['no-units']):?>
+                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+                                  <button type="button" class="close" data-dismiss="alert">×</button>
+                                  <h4>Error</h4>
+                                  <div>No cuenta con unidades registradas,favor de contactar al administrador del sistema</div>
+                                </div>  
+                            <?php endif;?> 
+                            <?php //Zend_Debug::dump(@$this->errors);?>                           
+                                                                                                            
                            <!-- BEGIN FORM-->
                             <form method="POST" action="/external/request/getinfo?catId=<?php echo $this->catId; ?>" id="FormData" class="form-horizontal ">
                                 <input type="hidden" id="optReg" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
@@ -50,6 +80,8 @@
                                         Las Unidades se han actualizado correctamente.
                                     </div>                                                        
                                 <?php endif; ?>
+
+
                                     <fieldset>
                                         <div class="row row-margin-left25">                                       
                                             <div class="span6">

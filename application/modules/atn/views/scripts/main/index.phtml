@@ -1,5 +1,6 @@
-<?php $this->headScript()->appendFile('/vendors/fullcalendar/fullcalendar.js') ?>   
-<?php $this->headScript()->appendFile('/vendors/fullcalendar/gcal.js') ?>   
+<?php $this->headScript()->appendFile('/libs/fullcalendar/lib/moment.min.js') ?>   
+<?php $this->headScript()->appendFile('/libs/fullcalendar/fullcalendar.js') ?>   
+<?php $this->headScript()->appendFile('/libs/fullcalendar/lang-all.js') ?>
 <?php $this->headScript()->appendFile('/js/atn/mainAtn.js') ?>   
     <div class="row panel-data">
 		<div class="span12">
@@ -24,7 +25,8 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		        <h4 class="modal-title" ></h4>
 	      	</div>
-	      <div class="modal-form i-body">             
+	      <div class="modal-form i-body">    
+	      	<img id="loader" class="offset4" src="/images/assets/loading.gif" alt="loading gif" style="display:none;"/>
 	        <iframe class="hmodal500" id="iFrameDetCita" src="" style="zoom:0" frameborder="0"></iframe>
 	      </div>
 	    </div>
@@ -39,8 +41,24 @@
 	        <h4 class="modal-title" >Buscar Citas</h4>
 	      </div>
 	      <div class="modal-form i-body">             
+	      	<img id="loader2" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>	      	
 			<iframe class="hmodal550" id="iFrameModaCita" src="" style="zoom:0" frameborder="0"></iframe>
 	      </div>
 	    </div>
 	  </div>
 	</div>	
+
+	<div class="modal fade hide modal-lg" id="mModalList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  <div class="modal-dialog ">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" ></h4>
+	      	</div>
+	      <div class="modal-form i-body">   
+	      	 <img id="loader3" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>          
+	        <iframe class="hmodal550" id="frameList" src="" style="zoom:0" frameborder="0"></iframe>
+	      </div>
+	    </div>
+	  </div>
+	</div>		

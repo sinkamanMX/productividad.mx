@@ -148,42 +148,53 @@ class My_Model_Citas extends My_Db_Table
 		return $result;			
 	}	
 	
-	public function getCitasPendientes(){
+	public function getCitasPendientes($iType=1){
 		$result= Array();
-		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT  'false' AS allday ,
-				PROD_ESTATUS_CITA.COLOR AS borderColor,
-				PROD_ESTATUS_CITA.COLOR AS color,
-				CONCAT(CALLE,' #',NO_EXT,', Col.',COLONIA,', ',MUNICIPIO,', ',ESTADO) AS description,
-				CONCAT(FECHA_CITA,' ',HORA_CITA) AS end,
-				CONCAT(FECHA_CITA,' ',HORA_CITA) AS start ,
-				CONCAT(
-					'Cli: ',
+		$this->query("SET NAMES utf8",false);
+		 	
+		if($iType==1){
+			$sql	= "SELECT 'false' AS allday ,
+					T.COLOR AS borderColor,
+					T.COLOR AS color,			
+					CONCAT(C.FECHA_CITA) AS start,
+					CONCAT(C.FECHA_CITA) AS end ,	
 					CONCAT(
-					PROD_CLIENTES.NOMBRE,' ',PROD_CLIENTES.APELLIDOS
-					)
-					,'
-					',
-					'Tec: ',
-					CONCAT(
-					USUARIOS.NOMBRE,' ', USUARIOS.APELLIDOS
-					),'
-					',
-					'Hora: ',
-					DATE_FORMAT(HORA_CITA, '%H:%i')
-					
-				)  AS title,
-				CONTACTO AS cliente,
-				TELEFONO_CONTACTO AS telefono,
-				PROD_CITAS.ID_CITA AS id,
-				PROD_ESTATUS_CITA.DESCRIPCION AS estatus
-    			FROM PROD_CITAS
-    			INNER JOIN PROD_CLIENTES       ON PROD_CITAS.ID_CLIENTE   = PROD_CLIENTES.ID_CLIENTE
-    			INNER JOIN PROD_CITA_DOMICILIO ON PROD_CITAS.ID_CITA      = PROD_CITA_DOMICILIO.ID_CITA
-    			INNER JOIN PROD_ESTATUS_CITA   ON PROD_CITAS.ID_ESTATUS   = PROD_ESTATUS_CITA.ID_ESTATUS
-    			INNER JOIN PROD_CITA_USR       ON PROD_CITAS.ID_CITA      = PROD_CITA_USR.ID_CITA
-    			INNER JOIN USUARIOS            ON PROD_CITA_USR.ID_USUARIO= USUARIOS.ID_USUARIO
-    			WHERE PROD_CITAS.ID_ESTATUS IN (1,2,5)";
+						T.DESCRIPCION,': ',COUNT(T.ID_TPO) 
+					)  AS title,
+					GROUP_CONCAT(DISTINCT C.ID_CITA ORDER BY T.DESCRIPCION SEPARATOR ',') AS IDS
+	    			FROM PROD_CITAS C
+	    			INNER JOIN PROD_CLIENTES       L ON C.ID_CLIENTE  = L.ID_CLIENTE
+	    			INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA     = D.ID_CITA
+	    			INNER JOIN PROD_ESTATUS_CITA   E ON C.ID_ESTATUS  = E.ID_ESTATUS
+	    			INNER JOIN PROD_CITA_USR       R ON C.ID_CITA     = R.ID_CITA
+	    			INNER JOIN USUARIOS            U ON R.ID_USUARIO  = U.ID_USUARIO
+	    			INNER JOIN PROD_TPO_CITA	   T ON C.ID_TPO	  = T.ID_TPO
+	    			WHERE C.ID_ESTATUS IN (1,2,5)
+	    			GROUP BY T.ID_TPO, C.FECHA_CITA
+	    			ORDER BY C.FECHA_CITA ASC";
+		}else{
+			$sql = "SELECT 'false' AS allday ,
+				'#438eb9' AS borderColor,
+				'#438eb9' AS color,
+				CONCAT(C.FECHA_CITA,'T',C.HORA_CITA,'+06:00') AS start,
+				CONCAT(C.FECHA_CITA,'T',(DATE_ADD(C.HORA_CITA, INTERVAL 1 HOUR)),'+06:00') AS end ,						
+				GROUP_CONCAT(CONCAT(T.DESCRIPCION, ':@' ) ORDER BY T.DESCRIPCION SEPARATOR '<br/> ')   AS title,
+				C.FECHA_CITA,
+				C.HORA_CITA,
+				GROUP_CONCAT(DISTINCT C.ID_CITA ORDER BY T.DESCRIPCION SEPARATOR ',') AS IDS
+    			FROM PROD_CITAS C
+    			INNER JOIN PROD_CLIENTES       L ON C.ID_CLIENTE  = L.ID_CLIENTE
+    			INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA     = D.ID_CITA
+    			INNER JOIN PROD_ESTATUS_CITA   E ON C.ID_ESTATUS  = E.ID_ESTATUS
+    			INNER JOIN PROD_CITA_USR       R ON C.ID_CITA     = R.ID_CITA
+    			INNER JOIN USUARIOS            U ON R.ID_USUARIO  = U.ID_USUARIO
+    			INNER JOIN PROD_TPO_CITA	   T ON C.ID_TPO	  = T.ID_TPO
+    			WHERE C.ID_ESTATUS IN (1,2,5)
+    			GROUP BY C.FECHA_CITA,C.HORA_CITA
+    			ORDER BY C.FECHA_CITA ASC";
+		}
+
+
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			
@@ -191,6 +202,24 @@ class My_Model_Citas extends My_Db_Table
         
 		return $result;			
 	}
+	
+	public function getResume($date,$hours){
+		$result= Array();
+		$this->query("SET NAMES utf8",false);		
+		$sql= "SELECT COUNT(C.ID_CITA) AS TOTAL, T.DESCRIPCION AS N_TITTLE, 
+					GROUP_CONCAT(DISTINCT C.ID_CITA ORDER BY T.DESCRIPCION SEPARATOR ',') AS IDS
+					FROM PROD_CITAS C
+					LEFT JOIN PROD_TPO_CITA	   T ON C.ID_TPO	  = T.ID_TPO
+					WHERE FECHA_CITA = '$date' 
+					  AND HORA_CITA  = '$hours'    		    	
+					  GROUP BY C.ID_TPO	";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}	
 	
 	public function getCboTipoServicio($showUser=false){
 		$result	= Array();
@@ -235,7 +264,9 @@ class My_Model_Citas extends My_Db_Table
   	               A.CONTACTO,
   	               A.TELEFONO_CONTACTO,
   	               A.FOLIO,
-  	               CONCAT(E.CALLE,' ',E.NUMERO_INT,' ',E.NUMERO_EXT,' ',E.COLONIA,' ',E.MUNICIPIO,' ',E.ESTADO,' ',E.CP) AS DIRECCION_CITA,
+  	               CONCAT(B.CALLE,' ',B.COLONIA,' ',B.NO_EXT,' ',B.NO_INT,' ',B.MUNICIPIO,' ',B.ESTADO,',CP:',B.CP) AS DIRECCION_CITA,
+  	               CONCAT(B.ESTADO,',',B.MUNICIPIO,',',B.COLONIA,',',B.CALLE,',',B.NO_EXT,',',B.NO_INT,',','CP:',B.CP) AS DIRECCION_MAPS,
+  	               /*CONCAT(E.CALLE,' ',E.NUMERO_INT,' ',E.NUMERO_EXT,' ',E.COLONIA,' ',E.MUNICIPIO,' ',E.ESTADO,' ',E.CP) AS DIRECCION_CITA,*/
   	               B.REFERENCIAS AS REF_CITA,
   	               B.CP AS CP_CITA,
   	               B.LATITUD AS LAT_CITA,
@@ -255,12 +286,14 @@ class My_Model_Citas extends My_Db_Table
                    U.ID_USUARIO AS ID_OPERADOR,
                    A.OPERADOR_AUTORIZO,
                    A.FOLIO_AUTORIZACION,
-                   D.RAZON_SOCIAL
+                   D.RAZON_SOCIAL,
+                   T.DESCRIPCION AS TIPO_CITA
   	        FROM PROD_CITAS A
   	           INNER JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
   	           LEFT JOIN PROD_CLIENTES           D ON D.ID_CLIENTE = A.ID_CLIENTE
   	           LEFT JOIN PROD_DOMICILIOS_CLIENTE E ON E.ID_CLIENTE = D.ID_CLIENTE
-  	           INNER JOIN PROD_ESTATUS_CITA       S ON A.ID_ESTATUS = S.ID_ESTATUS	  	           
+  	           INNER JOIN PROD_ESTATUS_CITA       S ON A.ID_ESTATUS = S.ID_ESTATUS	  	
+  	           INNER JOIN PROD_TPO_CITA           T ON A.ID_TPO     = T.ID_TPO           
   	           LEFT JOIN PROD_CITA_USR            C ON C.ID_CITA    = A.ID_CITA
   	           LEFT JOIN USUARIOS            	  U ON C.ID_USUARIO = U.ID_USUARIO
   	           ".$filter;  
@@ -447,10 +480,12 @@ class My_Model_Citas extends My_Db_Table
 		return $result;			
 	}
 
-	public function getResumeByDay($idSucursal,$dFechaIn,$dFechaFin,$idTecnico){
+	public function getResumeByDay($idSucursal,$dFechaIn,$dFechaFin,$idTecnico,$typeSearch=1){
 		$result= Array();
 		$this->query("SET NAMES utf8",false);
-		$sFilter = ($idTecnico!="") ? ' C.ID_USUARIO = '.$idTecnico: ' E.ID_SUCURSAL IN ('.$idSucursal.')'; 		
+		$sFilter 	 = ($idTecnico!="") ? ' C.ID_USUARIO = '.$idTecnico: ' E.ID_SUCURSAL IN ('.$idSucursal.')';
+		$sFilterDate = ($typeSearch==1)  ? "AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'" : "AND CAST(C.FECHA_INICIO  AS DATE) BETWEEN'$dFechaIn' AND '$dFechaFin'";
+				 		
     	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR,				
 				P.RAZON_SOCIAL AS NOMBRE_CLIENTE,C.FOLIO,
 				C.FECHA_CITA AS F_PROGRAMADA,
@@ -459,7 +494,10 @@ class My_Model_Citas extends My_Db_Table
 				IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
 				IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
 				IF(C.FECHA_CITA<'2015-01-19 00:00:00','A','N') AS NEW_FORM,
-				T.DESCRIPCION AS N_TIPO
+				T.DESCRIPCION AS N_TIPO,
+				CONCAT(D.CALLE,' ',D.COLONIA,' ',D.NO_EXT,' ',D.NO_INT,' ',D.MUNICIPIO,' ',D.ESTADO,',CP:',D.CP) AS DIRECCION,
+				IF(U.ID_USUARIO IS NULL,'0','1') AS TEC_ASIGNADO,
+				A.ID_USUARIO AS ID_USER
 				FROM PROD_CITAS C
 				INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
 				INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
@@ -473,7 +511,7 @@ class My_Model_Citas extends My_Db_Table
 					INNER JOIN USR_EMPRESA E ON C.ID_USUARIO = E.ID_USUARIO 
 					WHERE $sFilter
 					)
-				AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'
+				$sFilterDate
 				ORDER BY S.ID_ESTATUS";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -653,7 +691,8 @@ class My_Model_Citas extends My_Db_Table
 				IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
 				IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
 				IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
-				IF(C.FECHA_CITA<'2015-01-19 00:00:00','A','N') AS NEW_FORM
+				IF(C.FECHA_CITA<'2015-01-19 00:00:00','A','N') AS NEW_FORM,
+				CONCAT(D.CALLE,' ',D.COLONIA,' ',D.NO_EXT,' ',D.NO_INT,' ',D.MUNICIPIO,' ',D.ESTADO,',CP:',D.CP) AS DIRECCION
 				FROM PROD_CITAS C
 				INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
 				INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
@@ -670,4 +709,40 @@ class My_Model_Citas extends My_Db_Table
         
 		return $result;	
 	}	
+	
+	
+	public function getDateByList($sIdDates){
+		$filter = '';
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 
+		
+    	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR,				
+				P.RAZON_SOCIAL AS NOMBRE_CLIENTE,C.FOLIO,
+				C.FECHA_CITA AS F_PROGRAMADA,
+				C.HORA_CITA  AS H_PROGRAMADA,
+				IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
+				IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
+				IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
+				IF(C.FECHA_CITA<'2015-01-19 00:00:00','A','N') AS NEW_FORM,
+				T.DESCRIPCION AS N_TIPO,
+				CONCAT(D.CALLE,' ',D.COLONIA,' ',D.NO_EXT,' ',D.NO_INT,' ',D.MUNICIPIO,' ',D.ESTADO,',CP:',D.CP) AS DIRECCION,
+				IF(U.ID_USUARIO IS NULL,'0','1') AS TEC_ASIGNADO,
+				A.ID_USUARIO AS ID_USER
+				FROM PROD_CITAS C
+				INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
+				INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
+				INNER JOIN PROD_CLIENTES       P ON C.ID_CLIENTE = P.ID_CLIENTE
+				 LEFT JOIN PROD_CITA_USR       A ON C.ID_CITA	 = A.ID_CITA
+				 LEFT JOIN USUARIOS			   U ON A.ID_USUARIO = U.ID_USUARIO 
+				INNER JOIN PROD_TPO_CITA       T ON C.ID_TPO     = T.ID_TPO
+  	           WHERE A.ID_CITA IN ($sIdDates)    
+				ORDER BY S.ID_ESTATUS";  
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}		
+	
 }

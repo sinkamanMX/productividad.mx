@@ -226,6 +226,7 @@ class My_Controller_Functions
 		$result = Array();
 		$count = 0;
 		foreach($dataTable as $key => $items){
+			$result[$items['IDE']]['ID']    = $items['IDE'];
 			$result[$items['IDE']]['DESC']  = $items['DESCRIPCION'];
 			$result[$items['IDE']]['COLOR'] = $items['COLOR'];
 			if(isset($result[$items['IDE']]['TOTAL'])){

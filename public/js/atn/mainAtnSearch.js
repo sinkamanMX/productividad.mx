@@ -49,7 +49,7 @@ $( document ).ready(function() {
         "bFilter": false,
         "bSort": true,
         "bJQueryUI": true,
-        "iDisplayLength": 5,      
+        "iDisplayLength": 4,      
         "bProcessing": true,
         "bAutoWidth": true,
         "bSortClasses": false,

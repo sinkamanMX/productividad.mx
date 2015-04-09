@@ -48,7 +48,8 @@ $( document ).ready(function() {
     });	
 
     $('#dataTable').dataTable( {
-        "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+        /*"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p> >T<'clear'>lfrtip",*/
+        "sDom": "<'row'<'span6'l> >T<'clear'>lfrtip",
         "sPaginationType": "bootstrap",
         "bDestroy": true,
         "bLengthChange": false,
@@ -74,13 +75,33 @@ $( document ).ready(function() {
                 "sNext": "Siguiente"
               }          
           }
+          ,
+        "tableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "print",
+                    "sButtonText": " Imprimir <i class='icon-print'></i>",
+                    "sInfo"      : "<h6>Impresión</h6><p><button class='btn btn-primary' onClick='printPage()'>Da click Aqui Para Imprimir</button><br/><br/>Para salir oprime la tecla Esc.</p> "
+                }               
+            ]
+        }
     } );
 
-     $('[data-toggle="tooltip"]').tooltip();      
+    $('[data-toggle="tooltip"]').tooltip(); 
+
+    $('#iFrameDetCita').on('load', function () {        
+        $('#loader').hide();
+        $('#iFrameDetCita').show();
+    });          
 });
 
 function getReport(){
 	$( "#FormData" ).submit();
+}
+
+function setStatus(idStatus){
+  $("#inputStatus").val(idStatus);
+  getReport();
 }
 
 function getReportAll(){
@@ -89,7 +110,24 @@ function getReportAll(){
   var idSucursal  = $("#cboInstalacion").val(); 
   var idTecnico   = $("#inputTecnicos").val();
   var strOpt      = $("#optReg").val();
+  var iStatus     = $("#inputStatus").val();
+  var bType       = $("#cboTypeSearch").val();
 
-  var url = "/atn/services/exportall?optReg="+strOpt+"&cboInstalacion="+idSucursal+"&inputTecnicos="+idTecnico+"&inputFechaIn="+inputFecIn+"&inputFechaFin="+inputFecFin;
+  var url = "/atn/services/exportall?optReg="+strOpt+"&cboInstalacion="+idSucursal+"&inputTecnicos="+idTecnico+"&inputFechaIn="+inputFecIn+"&inputFechaFin="+inputFecFin+"&inputStatus="+iStatus+"&cboTypeSearch="+bType;
   window.open(url, '_blank');
+} 
+
+function showPosition(idDate){
+    $("#myModalinfoVis").modal("show");        
+    $('#iFrameDetCita').attr('src','/atn/services/posistiondate?strInput='+idDate);   
+}
+
+function printPage() {
+    $('#dataTable').print({
+        globalStyles: false,
+        mediaPrint: true,
+        stylesheet: "/css/tablePrint.css",
+        iframe: true,
+        noPrintSelector: ".avoid-this"
+    });
 }

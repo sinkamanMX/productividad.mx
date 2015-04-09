@@ -1,41 +1,83 @@
-var source = new Array();
-    source[0] = '/atn/main/getcitaspendientes';
-
+var sDate     = '';
+var lastView;
+var srcByDate = "/atn/main/getcitaspendientes?iType=1";
+var srcbyHour = "/atn/main/getcitaspendientes?iType=2";
 
 $( document ).ready(function() {
     $('#calendar').fullCalendar({
-        eventSources: [
-        source[0]
-        ],
         header: {
-            left: 'prev,next',
+            left: 'prev,next today',
             center: 'title',
-            right: 'month,basicWeek,basicDay'
+            right: 'month,agendaDay'
         },
-        eventRender: function (event, element) {
-
+        lang: 'es',
+        editable: false,
+        eventLimit: true, // allow "more" link when too many events
+        events: {
+            url: srcByDate,
+            error: function() {
+                $('#script-warning').show();
+            }
+        },
+        loading: function(bool) {
+            $('#loading').toggle(bool);
+        },   
+        dayClick: function(date, jsEvent, view) {
+            $('#calendar').fullCalendar( 'removeEventSource', srcByDate )
+            $('#calendar').fullCalendar( 'addEventSource', srcbyHour  ); 
+            $('#calendar').fullCalendar( 'changeView', 'agendaDay' );     
+            $('#calendar').fullCalendar( 'gotoDate', date );
         },
         eventClick: function (event) {
-            console.log("aqui se io click");
-            showDetail(event.id);
+            showDates(event.IDS);
             return false;
-        }
-    });  
+        }                 
+    }).on('click', '.fc-month-button', function(){
+        $('#calendar').fullCalendar( 'removeEventSource', srcbyHour );
+        $('#calendar').fullCalendar( 'addEventSource', srcByDate );
+    }).on('click', '.fc-agendaDay-button', function() {      
+        $('#calendar').fullCalendar( 'removeEventSource', srcByDate )
+        $('#calendar').fullCalendar( 'addEventSource', srcbyHour );
+    }); 
+
+    $('#iFrameDetCita').on('load', function () {        
+        $('#loader').hide();
+        $('#iFrameDetCita').show();
+    });      
+    $('#iFrameDetCita').on('load', function () {        
+        $('#loader2').hide();
+        $('#iFrameDetCita').show();
+    });      
+    $('#frameList').on('load', function () {        
+        $('#loader3').hide();
+        $('#frameList').show();
+    });              
 });
 
 function searchDialog(){    
+    $('#loader').show();
+    $('#iFrameModaCita').hide();  
     $('#iFrameModaCita').attr('src','/atn/main/searchcitas');
     $("#MyModalSearch").modal("show");
 }
 
 function showDetail(idDate){
+    $('#loader').show();  
+    $('#loader2').show();  
+    $('#loader3').show();  
+
+    $('#frameList').hide();
+    $("#mModalList").modal("hide");
+    
+    $('#iFrameDetCita').hide();  
     $("#MyModalSearch").modal("hide");
+
+
     $("#myModalinfoVis").modal("show");        
     $('#iFrameDetCita').attr('src','/atn/main/citadetalle?strInput='+idDate);    
 }
 
 function closeDetail(){
-    console.log("close windows");
     $("#MyModalSearch").modal("hide");
     $("#myModalinfoVis").modal("hide");    
     loadCalendar()
@@ -43,4 +85,11 @@ function closeDetail(){
 
 function loadCalendar(){
     $('#calendar').fullCalendar('refetchEvents');
+}
+
+function showDates(sDates){
+    $('#loader3').show();  
+    $('#frameList').hide();  
+    $("#mModalList").modal("show");        
+    $('#frameList').attr('src','/atn/main/getlistdates?strInput='+sDates);  
 }

@@ -52,4 +52,20 @@ class My_Model_Cinstalaciones extends My_Db_Table
         
 		return $result;		
 	}
+	
+	public function getList($idEmpresa){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT GROUP_CONCAT(DISTINCT ID_SUCURSAL ORDER BY ID_SUCURSAL) AS LIST_SUCURSALES
+				FROM SUCURSALES 
+				WHERE ID_EMPRESA = $idEmpresa";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0]['LIST_SUCURSALES'];			
+		}
+        
+		return $result;				
+		
+		
+	}
 }
