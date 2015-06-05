@@ -182,7 +182,7 @@ class external_RequestController extends My_Controller_Action
 							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
 							$sHorarioLog  = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<b>Horario 2</b:'.$dataInfo['N_HORARIO2'].'<br/>': '';							
 							
-							$sSubject 	= 'Revision de Solicitud de Cita';
+							$sSubject 	= 'Solicitud Aceptada por el usuario';
 							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';
 							$sBody     .= 'La solicitud ha sido aceptada con la siguiente informaci&oacute;n:<br/>'.
 										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
@@ -227,7 +227,7 @@ class external_RequestController extends My_Controller_Action
 							$sHorario	= $dataInfo['ID_HORARIO'];	
 							$sUnidad	= $dataInfo['ID_UNIDAD'];
 
-							$sSubject 	= 'Revision de Solicitud de Cita';
+							$sSubject 	= 'Solicitud Modificada por el usuario';
 							$sBody     .= 'La solicitud ha sido modificada con la siguiente informaci&oacute;n, favor de validarla:<br/>'.
 										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
 											'<tr><td><b>Horario</b></td><td>'.$dataInfo['N_HORARIO'].'</td></tr>'.
@@ -337,10 +337,12 @@ class external_RequestController extends My_Controller_Action
 				$aDataAdmin = $config->getOption('admin');					
 				$cMailing   = new My_Model_Mailing();
 				$aMailer    = Array(
+					'inputIdSolicitud'	 => $this->idToUpdate,
 					'inputDestinatarios' => $aDataAdmin['mails'],
 					'inputEmails' 		 => $aDataAdmin['mails'],
 					'inputTittle' 		 => $sSubject,
 					'inputBody' 		 => $sBody,
+					'inputLiveNotif'	 => 1,
 					'inputFromName' 	 => 'contacto@grupouda.com.mx',
 					'inputFromEmail' 	 => 'Siames - Grupo UDA'						
 				);	

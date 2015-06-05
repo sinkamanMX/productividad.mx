@@ -19,10 +19,13 @@ class My_Model_Telefonos extends My_Db_Table
 					M.DESCRIPCION AS MODELO,
 					E.DESCRIPCION,
 					E.TELEFONO,
-					E.IDENTIFICADOR
+					E.IDENTIFICADOR,
+					IF(R.ID_TELEFONO IS NULL,'Sin Asignar', IF(U.ID_USUARIO IS NULL,'Sin Asignar',CONCAT(U.NOMBRE,' ',U.APELLIDOS))) AS N_TECNICO
 				FROM PROD_TELEFONOS E
-				INNER JOIN PROD_MODELO_TELEFONO M ON E.ID_MODELO = M.ID_MODELO
+				INNER JOIN PROD_MODELO_TELEFONO M ON E.ID_MODELO  = M.ID_MODELO
 				INNER JOIN PROD_MARCA_TELEFONO  A ON M.ID_MARCA   = A.ID_MARCA
+				 LEFT JOIN PROD_USR_TELEFONO    R ON E.ID_TELEFONO= R.ID_TELEFONO
+				 LEFT JOIN USUARIOS			    U ON R.ID_USUARIO = U.ID_USUARIO
 				WHERE E.ID_EMPRESA = $idEmpresa
 				ORDER BY E.DESCRIPCION DESC";    	
 		$query   = $this->query($sql);
@@ -354,4 +357,39 @@ class My_Model_Telefonos extends My_Db_Table
         }
 		return $result;	 		
 	}    
+	
+	public function getAllPosition($idSucursal,$idEmpresa){
+		$result= Array();
+		$this->query("SET NAMES utf8",false);
+		$sFilter = ($idSucursal==-1) ? 'S.ID_EMPRESA = '.$idEmpresa : 'E.ID_SUCURSAL = '.$idSucursal;
+		
+    	$sql ="SELECT CONCAT(U.NOMBRE,' ',APELLIDOS) AS N_TECNICO, S.DESCRIPCION AS N_SUCURSAL, T.ID_TELEFONO,
+				L.`FECHA_GPS`,
+				L.`LATITUD`,
+				L.`LONGITUD`,
+				L.`NIVEL_SENAL_RED`,
+				L.`UBICACION`,
+				L.`VELOCIDAD`,
+				V.`DESCRIPCION_EVENTO` AS N_EVENTO,
+				F.IDENTIFICADOR,
+				L.`TIPO_GPS`,
+				L.NIVEL_BATERIA,
+				L.`FECHA_TELEFONO`,
+				IF(L.FECHA_GPS >= DATE_ADD(CURRENT_TIMESTAMP, INTERVAL -1 DAY),'OK','NOK') AS N_ESTATUS,	
+				IF(L.FECHA_GPS >= DATE_ADD(CURRENT_TIMESTAMP, INTERVAL -1 DAY),'#3ADF00','#cf1919') AS N_COLOR								
+				FROM USR_EMPRESA E
+				INNER JOIN USUARIOS   U ON E.ID_USUARIO  = U.ID_USUARIO AND U.ID_PERFIL = 4 AND U.FLAG_OPERACIONES = 1 
+				INNER JOIN SUCURSALES S ON E.ID_SUCURSAL  = S.ID_SUCURSAL				
+				INNER JOIN PROD_USR_TELEFONO   T ON U.ID_USUARIO  = T.ID_USUARIO
+				INNER JOIN PROD_TELEFONOS      F ON T.ID_TELEFONO = F.ID_TELEFONO
+				LEFT JOIN PROD_ULTIMA_POSICION L ON T.ID_TELEFONO = L.ID_TELEFONO
+				LEFT JOIN PROD_EVENTOS         V ON L.ID_EVENTO   = V.ID_EVENTO
+				WHERE $sFilter";    	
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}
 }

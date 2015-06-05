@@ -1,0 +1,214 @@
+<?php $this->headScript()->appendFile('/js/modules/leasing/validateUsers.js') ?>  
+<?php $disabled = ($this->dataUser['EDITAR']==0 && $this->dataUser['LECTURA']==1) ? 'disabled':'';?>
+
+<div class="row panel-data">
+    <input id="hRefLinkMain" type="hidden" value="/leasing/users/index" />
+	<div class="span12">
+		<!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">
+					<a href="javascript:backToMain()">
+						<i class="icon-circle-arrow-left fa-1"></i></a>Información del Usuario</div>
+            </div>
+            <div class="block-content collapse in">
+
+			    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+			        <li class="active"><a href="#informacion" data-toggle="tab">Información</a></li>	        
+			    </ul>
+
+				<div id="my-tab-content" class="tab-content bg-white">
+					<div class="tab-pane <?php echo (@$this->eventAction) ? '':'active';?> " id="informacion">
+		                <div class="span12">
+		            	<?php if(@$this->errors['eMail']):?>
+							<div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+							  <button type="button" class="close" data-dismiss="alert">×</button>
+							  <h4>Error</h4>
+							  <div>El E-mail no se encuentra disponible</div>
+							</div>	
+		            	<?php elseif(@$this->errors['eUsuario']):?>
+							<div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+							  <button type="button" class="close" data-dismiss="alert">×</button>
+							  <h4>Error</h4>
+							  <div>La Usuario no se encuentra disponible</div>
+							</div>	                	
+		            	<?php endif;?>
+						<?php if($this->dataUser['EDITAR']==0 && $this->dataUser['LECTURA']==0): ?>
+							<div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+							  <button type="button" class="close" data-dismiss="alert">×</button>
+							  <h4>Error</h4>
+							  <div>Usted no tiene permiso para ver esta información</div>
+							</div>						
+						<?php else:?>	
+
+						<!-- BEGIN FORM-->
+						<?php if($disabled!='disabled'):?>
+						<form method="POST" action="/leasing/users/getinfo" id="FormData" class="form-horizontal ">
+						<?php endif;?>	
+			                <input type="hidden" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
+			                <input type="hidden" id="catId" name="catId" value="<?php echo $this->catId; ?>" />
+			                
+			                <?php if($this->resultOp=='okRegister'): ?>
+			                    <div class="alert alert-success">
+			                        <button class="close" data-dismiss="alert"></button>
+			                        Datos se almacenaron correctamente.
+			                    </div>  		              
+			                <?php endif; ?>					
+				                <fieldset>
+				                	<input type="hidden" id="inputSucursal" name="inputSucursal" value="<?php echo $this->dataUser['ID_SUCURSAL'];?>" />
+				                	<input type="hidden" id="inputPerfil"   name="inputPerfil" value="<?php echo $this->dataUser['ID_PERFIL'];?>" />
+				                	<!--
+									<div class="control-group">
+										<label class="control-label">Sucursal<span class="required">*</span></label>
+										<div class="controls">
+											<select class="span6 m-wrap" name="inputSucursal" id="inputSucursal" <?php echo $disabled;?> >
+												<option value="">Seleccionar una opción</option>
+				                                <?php echo $this->aSucursales;?>
+											</select>
+										</div>
+									</div>										
+									<div class="control-group">
+										<label class="control-label">Perfil<span class="required">*</span></label>
+										<div class="controls">
+											<select class="span6 m-wrap" name="inputPerfil" id="inputPerfil" <?php echo $disabled;?> >
+												<option value="">Seleccionar una opción</option>
+				                                <?php echo $this->aPerfiles;?>
+											</select>
+										</div>
+									</div>	
+									-->
+									<div class="control-group">
+										<label class="control-label">Usuario<span class="required">*</span></label>
+										<div class="controls">
+											<input type="text" name="inputUsuario" id="inputUsuario" data-required="1" class="span6 m-wrap" value="<?php echo @$this->data['USUARIO']; ?>"  <?php echo $disabled;?> >
+										</div>
+									</div>
+
+									<div class="control-group">
+										<label class="control-label">Contraseña<span class="required">*</span></label>
+										<div class="controls">
+											<input type="password" name="inputPassword" id="inputPassword" data-required="1" class="span6 m-wrap" value="<?php echo @$this->data['']; ?>"  <?php echo $disabled;?> onChange="addValidatePass(this.value)">
+										</div>
+									</div>
+
+									<div class="control-group">
+										<label class="control-label">Confirmar Contraseña<span class="required">*</span></label>
+										<div class="controls">
+											<input type="password" name="inputPasswordC" id="inputPasswordC" class="span6 m-wrap" value="<?php echo @$this->data['']; ?>"  <?php echo $disabled;?> >
+										</div>
+									</div>
+
+									<div class="control-group">
+										<label class="control-label">Nombre<span class="required">*</span></label>
+										<div class="controls">
+											<input type="text" name="inputNombre" id="inputNombre" data-required="1"  class="span6 m-wrap" value="<?php echo @$this->data['NOMBRE']; ?>"  <?php echo $disabled;?> >
+										</div>
+									</div>
+
+									<div class="control-group">
+										<label class="control-label">Apellidos<span class="required">*</span></label>
+										<div class="controls">
+											<input type="text" name="inputApps" id="inputApps"  data-required="1" class="span6 m-wrap" value="<?php echo @$this->data['APELLIDOS']; ?>"  <?php echo $disabled;?> >
+										</div>
+									</div>		
+
+									<div class="control-group">
+										<label class="control-label">E-mail<span class="required">*</span></label>
+										<div class="controls">
+											<input type="mail" name="inputEmail" id="inputEmail"  data-required="1" class="span6 m-wrap" value="<?php echo @$this->data['EMAIL']; ?>"  <?php echo $disabled;?> >
+										</div>
+									</div>
+
+									<div class="control-group">
+										<label class="control-label">Tel. Fijo</label>
+										<div class="controls">
+											<input type="text" name="inputTelFijo" id="inputTelFijo" class="span6 m-wrap" value="<?php echo @$this->data['TEL_FIJO']; ?>"  <?php echo $disabled;?> >
+										</div>
+									</div>	
+
+									<div class="control-group">
+										<label class="control-label">Tel. móvil<span class="required">*</span></label>
+										<div class="controls">
+											<input type="text" name="inputMovil" id="inputMovil" class="span6 m-wrap" value="<?php echo @$this->data['TEL_MOVIL']; ?>"  <?php echo $disabled;?> >
+										</div>
+									</div>								
+
+									<div class="control-group">
+										<label class="control-label">Activo<span class="required">*</span></label>
+										<div class="controls">
+											<select class="m-wrap" name="inputEstatus" id="inputEstatus" <?php echo $disabled;?> >
+												<option value="">Seleccionar una opción</option>
+				                                <?php echo $this->aStatus;?>
+											</select>
+										</div>
+									</div>
+									<!--
+									<div class="control-group">
+										<label class="control-label">Operaciones<span class="required">*</span></label>
+										<div class="controls">
+											<select class="m-wrap" name="inputOperaciones" id="inputOperaciones" <?php echo $disabled;?>  onChange="showDivClaves(this.value);">
+												<option value="">Seleccionar una opción</option>
+				                                <?php echo $this->aOperaciones;?>
+											</select>
+										</div>
+									</div>	
+
+									<div id="divClaves" style="display: <?php echo (@$this->data['FLAG_OPERACIONES']) ? 'block': 'none';?>" >
+										<div class="control-group">
+											<label class="control-label">Id SAP<span class="required">*</span></label>
+											<div class="controls">
+												<input type="hidden" id="inputIdSap" name="inputIdSap" value="<?php echo @$this->data['ID_SAP'];?>"/>
+
+												<?php if(@$this->data['ID_SAP']==NULL || @$this->idToUpdate==-1):?>
+													<input name="inputSearchIdSap" id="inputSearchIdSap" type="text" class="span4 m-wrap" value="<?php echo (@$this->data['ID_SAP']==NULL) ? 'Sin Asignar': @$this->data['ID_SAP'];?>" readonly >
+													<button id="btnSearchIdSap" class="btn" ><i class="icon-search"></i></button>
+												<?php else:?>
+													<input name="inputAsignIdSap" type="text" class="span4 m-wrap" value="<?php echo @$this->data['ID_SAP']; ?>" readonly >
+													<button id="btnDelRelIdSap" class="btn btn-danger" ><i class="icon-remove-sign icon-white"></i></button>
+												<?php endif;?>										
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label">Clave Almacen<span class="required">*</span></label>
+											<div class="controls">
+												<input type="hidden" id="inputIdAlm" name="inputIdAlm" value="<?php echo @$this->data['CVE_SAP_ALMACEN'];?>"/>
+
+												<?php if(@$this->data['CVE_SAP_ALMACEN']=='NULL' || @$this->idToUpdate==-1):?>
+													<input name="inputSearchIdAlm" id="inputSearchIdAlm" type="text" class="span4 m-wrap" value="<?php echo (@$this->data['CVE_SAP_ALMACEN']=='NULL') ? 'Sin Asignar': @$this->data['CVE_SAP_ALMACEN'];?>" readonly >
+													<button id="btnSearchAlm" class="btn" ><i class="icon-search"></i></button>
+												<?php else:?>
+													<input name="inputDelRelAlm" type="text" class="span4 m-wrap" value="<?php echo @$this->data['CVE_SAP_ALMACEN']; ?>" readonly >
+													<button id="btnDelRelAlm" class="btn btn-danger" ><i class="icon-remove-sign icon-white"></i></button>
+												<?php endif;?>										
+											</div>
+										</div>												
+									</div>	-->																		
+
+									<div class="control-group">
+										<label class="control-label">Último Acceso</label>
+										<div class="controls">
+											<label><?php echo @$this->data['ULTIMO_ACCESO']; ?></label>
+										</div>
+									</div>														
+							
+									<?php if($disabled!='disabled'):?>
+									<div class="form-actions">
+										<?php if(@$this->dataUser['ID_USUARIO']!=@$this->data['ID_USUARIO']):?>
+											<button type="submit" class="btn btn-primary">Guardar</button>
+										<?php endif;?>										
+										<button type="button" class="btn" onClick="javascript:backToMain()">Cancelar</button>
+									</div>
+									<?php endif;?>
+									</fieldset>
+								<?php if($disabled!='disabled'):?>
+								</form>
+								<?php endif;?>
+								<!-- END FORM-->																
+								<?php endif;?>
+							</div>
+						</div>   
+				</div>			
+			</div>
+		</div>
+	</div>	
+</div> 

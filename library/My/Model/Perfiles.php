@@ -11,19 +11,22 @@ class My_Model_Perfiles extends My_Db_Table
 	protected $_name 	= 'PERFILES';
 	protected $_primary = 'ID_PERFIL';
 	
-	public function getCbo(){
+	public function getCbo($bVarOn=0){
 		$result= Array();
-		$this->query("SET NAMES utf8",false); 		
+		$this->query("SET NAMES utf8",false);
+		$filter = ($bVarOn!=0) ? 'WHERE  ID_PERFIL  = 17' : ' '; 		
     	$sql ="SELECT $this->_primary AS ID, DESCRIPCION AS NAME 
     			FROM $this->_name 
-    			ORDER BY NAME ASC";
+				$filter
+				GROUP BY NAME ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			
 		}	
         
 		return $result;			
-	}		
+	}  
+	
 	
 	public function getModuleDefault($idProfile){
 		$result= Array();

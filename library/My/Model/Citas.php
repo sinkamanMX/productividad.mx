@@ -264,8 +264,8 @@ class My_Model_Citas extends My_Db_Table
   	               A.CONTACTO,
   	               A.TELEFONO_CONTACTO,
   	               A.FOLIO,
-  	               CONCAT(B.CALLE,' ',B.COLONIA,' ',B.NO_EXT,' ',B.NO_INT,' ',B.MUNICIPIO,' ',B.ESTADO,',CP:',B.CP) AS DIRECCION_CITA,
-  	               CONCAT(B.ESTADO,',',B.MUNICIPIO,',',B.COLONIA,',',B.CALLE,',',B.NO_EXT,',',B.NO_INT,',','CP:',B.CP) AS DIRECCION_MAPS,
+  	               IF(B.ID_CITA  IS NULL,'Sin Direccion',CONCAT(B.CALLE,' ',B.COLONIA,' ',B.NO_EXT,' ',B.NO_INT,' ',B.MUNICIPIO,' ',B.ESTADO,',CP:',B.CP))  AS DIRECCION_CITA,
+  	               IF(B.ID_CITA  IS NULL,'Sin Direccion',CONCAT(B.ESTADO,',',B.MUNICIPIO,',',B.COLONIA,',',B.CALLE,',',B.NO_EXT,',',B.NO_INT,',','CP:',B.CP)) AS DIRECCION_MAPS,
   	               /*CONCAT(E.CALLE,' ',E.NUMERO_INT,' ',E.NUMERO_EXT,' ',E.COLONIA,' ',E.MUNICIPIO,' ',E.ESTADO,' ',E.CP) AS DIRECCION_CITA,*/
   	               B.REFERENCIAS AS REF_CITA,
   	               B.CP AS CP_CITA,
@@ -276,7 +276,7 @@ class My_Model_Citas extends My_Db_Table
                    D.TELEFONO_FIJO,
                    D.TELEFONO_MOVIL,
                    D.EMAIL,
-                   CONCAT(E.CALLE,' ',E.NUMERO_INT,' ',E.NUMERO_EXT,' ',E.COLONIA,' ',E.MUNICIPIO,' ',E.ESTADO,' ',E.CP) AS DIRECCION_CLIENTE,
+                   IF(E.ID_CLIENTE IS NULL,'Sin Direccion',CONCAT(E.CALLE,' ',E.NUMERO_INT,' ',E.NUMERO_EXT,' ',E.COLONIA,' ',E.MUNICIPIO,' ',E.ESTADO,' ',E.CP))  AS DIRECCION_CLIENTE,
                    E.REFERENCIAS,
                    E.LATITUD,
                    E.LONGITUD ,
@@ -289,7 +289,7 @@ class My_Model_Citas extends My_Db_Table
                    D.RAZON_SOCIAL,
                    T.DESCRIPCION AS TIPO_CITA
   	        FROM PROD_CITAS A
-  	           INNER JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
+  	           LEFT JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
   	           LEFT JOIN PROD_CLIENTES           D ON D.ID_CLIENTE = A.ID_CLIENTE
   	           LEFT JOIN PROD_DOMICILIOS_CLIENTE E ON E.ID_CLIENTE = D.ID_CLIENTE
   	           INNER JOIN PROD_ESTATUS_CITA       S ON A.ID_ESTATUS = S.ID_ESTATUS	  	
@@ -334,7 +334,7 @@ class My_Model_Citas extends My_Db_Table
   	               A.CONTACTO,
   	               A.TELEFONO_CONTACTO,
   	               A.FOLIO,
-  	               CONCAT(E.CALLE,' ',E.NUMERO_INT,' ',E.NUMERO_EXT,' ',E.COLONIA,' ',E.MUNICIPIO,' ',E.ESTADO,' ',E.CP) AS DIRECCION_CITA,
+  	               IF(E.ID_CLIENTE IS NULL, CONCAT(E.CALLE,' ',E.NUMERO_INT,' ',E.NUMERO_EXT,' ',E.COLONIA,' ',E.MUNICIPIO,' ',E.ESTADO,' ',E.CP)) AS DIRECCION_CITA,
   	               B.REFERENCIAS AS REF_CITA,
   	               B.CP AS CP_CITA,
   	               B.LATITUD AS LAT_CITA,
@@ -344,7 +344,7 @@ class My_Model_Citas extends My_Db_Table
                    D.TELEFONO_FIJO,
                    D.TELEFONO_MOVIL,
                    D.EMAIL,
-                   CONCAT(E.CALLE,' ',E.NUMERO_INT,' ',E.NUMERO_EXT,' ',E.COLONIA,' ',E.MUNICIPIO,' ',E.ESTADO,' ',E.CP) AS DIRECCION_CLIENTE,
+                   IF(E.ID_CLIENTE IS NULL, CONCAT(E.CALLE,' ',E.NUMERO_INT,' ',E.NUMERO_EXT,' ',E.COLONIA,' ',E.MUNICIPIO,' ',E.ESTADO,' ',E.CP)) AS DIRECCION_CLIENTE,
                    E.REFERENCIAS,
                    E.LATITUD,
                    E.LONGITUD ,
@@ -353,9 +353,9 @@ class My_Model_Citas extends My_Db_Table
                    IF(U.NOMBRE IS NULL ,'No asignado' ,CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS OPERADOR,
                    U.ID_USUARIO AS ID_OPERADOR
   	        FROM PROD_CITAS A
-  	           INNER JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
+  	           LEFT JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
   	           INNER JOIN PROD_CLIENTES           D ON D.ID_CLIENTE = A.ID_CLIENTE
-  	           INNER JOIN PROD_DOMICILIOS_CLIENTE E ON E.ID_CLIENTE = D.ID_CLIENTE
+  	           LEFT JOIN PROD_DOMICILIOS_CLIENTE E ON E.ID_CLIENTE = D.ID_CLIENTE
   	           INNER JOIN PROD_ESTATUS_CITA       S ON A.ID_ESTATUS = S.ID_ESTATUS	  	           
   	           LEFT JOIN PROD_CITA_USR            C ON C.ID_CITA    = A.ID_CITA
   	           LEFT JOIN USUARIOS            	  U ON C.ID_USUARIO = U.ID_USUARIO
@@ -495,11 +495,14 @@ class My_Model_Citas extends My_Db_Table
 				IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
 				IF(C.FECHA_CITA<'2015-01-19 00:00:00','A','N') AS NEW_FORM,
 				T.DESCRIPCION AS N_TIPO,
-				CONCAT(D.CALLE,' ',D.COLONIA,' ',D.NO_EXT,' ',D.NO_INT,' ',D.MUNICIPIO,' ',D.ESTADO,',CP:',D.CP) AS DIRECCION,
+				IF(D.ID_CITA  IS NULL,'Sin Direccion',CONCAT(D.CALLE,' ',D.COLONIA,' ',D.NO_EXT,' ',D.NO_INT,' ',D.MUNICIPIO,' ',D.ESTADO,',CP:',D.CP)) AS DIRECCION,
 				IF(U.ID_USUARIO IS NULL,'0','1') AS TEC_ASIGNADO,
-				A.ID_USUARIO AS ID_USER
+				A.ID_USUARIO AS ID_USER,
+				IF(D.MUNICIPIO  IS NULL,'Sin Direccion',D.MUNICIPIO) AS DIR_MUN,
+				IF(D.CP  IS NULL,'Sin Direccion',D.CP) AS DIR_CP,
+				IF(D.ESTADO  IS NULL,'Sin Direccion',D.ESTADO) AS DIR_ESTADO
 				FROM PROD_CITAS C
-				INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
+				LEFT JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
 				INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
 				INNER JOIN PROD_CLIENTES       P ON C.ID_CLIENTE = P.ID_CLIENTE
 				 LEFT JOIN PROD_CITA_USR       A ON C.ID_CITA	 = A.ID_CITA
@@ -513,6 +516,7 @@ class My_Model_Citas extends My_Db_Table
 					)
 				$sFilterDate
 				ORDER BY S.ID_ESTATUS";
+
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			
@@ -534,19 +538,22 @@ class My_Model_Citas extends My_Db_Table
 						C.TELEFONO_CONTACTO,
 						CONCAT(R.NOMBRE,' ',R.APELLIDOS) AS USR_REGISTRADO,
 						P.RAZON_SOCIAL AS NOMBRE_CLIENTE,		
-						CONCAT(M.CALLE,' ',M.NUMERO_EXT,' ',M.NUMERO_INT,' ',M.COLONIA) AS DIRECCION_CLIENTE1,
-						CONCAT(M.MUNICIPIO,' ',M.ESTADO,' ',M.CP) AS DIRECCION_CLIENTE2,
-						CONCAT(D.CALLE,' ',D.NO_EXT,' ',D.NO_INT,' ',D.COLONIA) AS DIRECCION_CITA1,
-						CONCAT(' ',D.MUNICIPIO,' ',D.ESTADO,' ',D.CP) AS DIRECCION_CITA2,	
+						IF(M.ID_CLIENTE IS NULL, 'sin direccion',CONCAT(M.CALLE,' ',M.NUMERO_EXT,' ',M.NUMERO_INT,' ',M.COLONIA)) AS DIRECCION_CLIENTE1,
+						IF(M.ID_CLIENTE IS NULL, 'sin direccion',CONCAT(M.MUNICIPIO,' ',M.ESTADO,' ',M.CP)) AS DIRECCION_CLIENTE2,						 
+						IF(D.ID_CITA IS NULL,'Sin direccion',CONCAT(D.CALLE,' ',D.NO_EXT,' ',D.NO_INT,' ',D.COLONIA)) AS DIRECCION_CITA1,						
+						IF(D.ID_CITA IS NULL,'Sin direccion',CONCAT(' ',D.MUNICIPIO,' ',D.ESTADO,' ',D.CP)) AS DIRECCION_CITA2,	
 						IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
 						IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
 						IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
 						L.DESCRIPCION AS SUCURSAL,
-						T.DESCRIPCION AS TIPO_CITA
+						T.DESCRIPCION AS TIPO_CITA,
+						IF(D.MUNICIPIO  IS NULL,'Sin Direccion',D.MUNICIPIO) AS DIR_MUN,
+						IF(D.CP  IS NULL,'Sin Direccion',D.CP) AS DIR_CP,
+						IF(D.ESTADO  IS NULL,'Sin Direccion',D.ESTADO) AS DIR_ESTADO
 				FROM PROD_CITAS C
 					INNER JOIN PROD_TPO_CITA       T ON C.ID_TPO = T.ID_TPO
 					INNER JOIN USUARIOS			   R ON C.ID_USUARIO_CREO = R.ID_USUARIO
-					INNER JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
+					 LEFT JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
 					INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
 					LEFT JOIN PROD_CLIENTES       P ON C.ID_CLIENTE = P.ID_CLIENTE
 					LEFT JOIN PROD_DOMICILIOS_CLIENTE M ON P.ID_CLIENTE = M.ID_CLIENTE
@@ -626,9 +633,9 @@ class My_Model_Citas extends My_Db_Table
                    	A.OPERADOR_AUTORIZO,
                    	A.FOLIO                  
 	  	        FROM PROD_CITAS A
-	  	           INNER JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
+	  	           LEFT JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
 	  	           INNER JOIN PROD_CLIENTES           D ON D.ID_CLIENTE = A.ID_CLIENTE
-	  	           INNER JOIN PROD_DOMICILIOS_CLIENTE E ON E.ID_CLIENTE = D.ID_CLIENTE
+	  	           LEFT JOIN PROD_DOMICILIOS_CLIENTE E ON E.ID_CLIENTE = D.ID_CLIENTE
 	  	           INNER JOIN PROD_ESTATUS_CITA       S ON A.ID_ESTATUS = S.ID_ESTATUS	  	           
 	  	           LEFT JOIN PROD_CITA_USR            C ON C.ID_CITA    = A.ID_CITA
 	  	           LEFT JOIN USUARIOS            	  U ON C.ID_USUARIO = U.ID_USUARIO
@@ -743,6 +750,35 @@ class My_Model_Citas extends My_Db_Table
 		}	
         
 		return $result;			
-	}		
+	}	
+
+	public function getDataSendbyFields($idOject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT E.ID_ELEMENTO,
+    					E.ID_TIPO,		
+				       IF (E.ID_TIPO = 8, 'ENCABEZADO','RESPUESTA') AS TIPO,			
+				       E.DESCIPCION AS DESCRIPCION,			
+				       B.CONTESTACION,			
+				       A.FECHA_CAPTURA_EQUIPO,
+				       L.ID_TIPO AS T_ELEMENTO		
+				FROM PROD_FORM_RESULTADO A			
+				  INNER JOIN PROD_FORM_DETALLE_RESULTADO B ON A.ID_RESULTADO = B.ID_RESULTADO			
+				  INNER JOIN PROD_FORMULARIO_ELEMENTOS C ON C.ID_ELEMENTO = B.ID_ELEMENTO			
+				  INNER JOIN PROD_CITA_FORMULARIO D ON D.ID_RESULTADO = A.ID_RESULTADO			
+				  INNER JOIN PROD_ELEMENTOS E ON E.ID_ELEMENTO = C.ID_ELEMENTO
+				  INNER JOIN PROD_TPO_ELEMENTO L ON E.ID_TIPO = L.ID_TIPO		
+				WHERE E.ID_ELEMENTO IN (
+					223,222,221,245,248,249,250,276,275,179,181
+				) AND							     	
+				      D.ID_CITA 	  = $idOject			
+				ORDER BY C.ORDEN ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result = $query;
+		}	
+        
+		return $result;			
+	}	
 	
 }

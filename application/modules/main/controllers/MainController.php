@@ -143,4 +143,51 @@ class main_MainController extends My_Controller_Action
     public function errorprofileAction(){
     	
     }
+    
+    public function validatemonitorAction()
+    {
+		try{
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender();
+			   
+			$answer = Array('answer' => 'no-data');
+			
+			$sessions = new My_Controller_Auth();
+	        if($sessions->validateSession()){
+            	$dataUser = $sessions->getContentSession();
+				$cMailing = new My_Model_Mailing();
+            	$aDataNotif= $cMailing->getNotifications();
+            	if(count($aDataNotif)>0){
+            		$answer = Array('answer' => 'pendings',
+            						'notifs' => $aDataNotif);
+            	}
+			}
+			
+	        echo Zend_Json::encode($answer);   			
+        } catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }
+    }  
+
+    public function readnotificationAction()
+    {
+		try{
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender();
+			
+			$aDataIn = $this->_request->getParams();			
+			$cMailing = new My_Model_Mailing();			
+			
+			if(isset($aDataIn['strInput']) && $aDataIn['strInput']!=""){
+				$sRead = $cMailing->readNotification($aDataIn);
+				if($sRead['status']){
+					$this->redirect('/atn/request/getinfo?catId='.$aDataIn['catId']);
+				}	
+			}		
+        } catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }
+    }    
 }

@@ -172,10 +172,12 @@ class atn_RequestController extends My_Controller_Action
 						}
 						
 						$aMailer    = Array(
+							'inputIdSolicitud'	 => $this->idToUpdate,
 							'inputDestinatarios' => $dataInfo['N_CONTACTO'],
 							'inputEmails' 		 => $dataInfo['EMAIL'],
 							'inputTittle' 		 => $sSubject,
 							'inputBody' 		 => $sBody,
+							'inputLiveNotif'	 => 0,
 							'inputFromName' 	 => 'contacto@grupouda.com.mx',
 							'inputFromEmail' 	 => 'Siames - Grupo UDA'						
 						);	

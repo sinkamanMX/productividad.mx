@@ -93,3 +93,30 @@ body {
 	letter-spacing:0.5px;
 	color:#b8b7b7;
 }
+
+#buttonsOthers {
+    margin-top: 100px;
+    position: absolute;
+    width: 100%;
+}
+
+.btnAccesos{
+    border: 1px none #ee4035;
+    border-radius: 5px;
+    color: #FFCAC6;
+    height: 25px;
+    width: 205px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#FF5D51), to(#ee4035));
+	background: -moz-linear-gradient(top,  #FF5D51, #ee4035);
+}
+
+.btnAccesos:hover{    
+    color: #FFFFFF;    
+    /*font-weight: bold; 
+    font-size: 12px;*/
+}
+
+a:link   
+{   
+ text-decoration:none;   
+} 

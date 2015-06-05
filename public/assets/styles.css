@@ -322,6 +322,10 @@ body {
   margin-left:  0px !important;
 }
 
+.no-margin-left{
+  margin-left:  0px !important;
+}
+
 .no-margin-b{
   margin-bottom:  0px !important;
 }
@@ -494,4 +498,9 @@ body {
   right: 2%;
   position: fixed;
   opacity: 0.8;
+}
+
+
+.cursor-hand{
+  cursor: pointer;  
 }

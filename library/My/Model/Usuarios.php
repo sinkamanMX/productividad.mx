@@ -133,11 +133,14 @@ class My_Model_Usuarios extends My_Db_Table
 						U.EMAIL,
 						U.ULTIMO_ACCESO,
 						U.FLAG_OPERACIONES,
-						U.ACTIVO
+						U.ACTIVO,
+						IF(A.ID_TELEFONO IS NULL,'Sin Asignar', IF(T.ID_TELEFONO IS NULL,'Sin Asignar',CONCAT(T.IDENTIFICADOR))) AS N_IMEI
 				FROM USUARIOS U
 				INNER JOIN PERFILES    P ON P.ID_PERFIL  = U.ID_PERFIL
 				INNER JOIN USR_EMPRESA R ON U.ID_USUARIO = R.ID_USUARIO
 				INNER JOIN SUCURSALES  S ON R.ID_SUCURSAL = S.ID_SUCURSAL
+				 LEFT JOIN PROD_USR_TELEFONO    A ON U.ID_USUARIO = A.ID_USUARIO				
+				 LEFT JOIN PROD_TELEFONOS		T ON A.ID_TELEFONO= T.ID_TELEFONO
 				WHERE S.ID_EMPRESA = ".$dataUser['ID_EMPRESA']."
 				ORDER BY NOMBRE ASC";
 		$query   = $this->query($sql);
@@ -197,6 +200,7 @@ class My_Model_Usuarios extends My_Db_Table
         			SET ID_PERFIL	=   ".$data['inputPerfil'].",
 						USUARIO		=  '".$data['inputUsuario']."',
 						PASSWORD	=  SHA1('".$data['inputPassword']."'),
+						PASSWORD_TEXT= '".$data['inputPassword']."',
 						$sFilter
 						NOMBRE		=  '".$data['inputNombre']."',
 						APELLIDOS	=  '".$data['inputApps']."',
@@ -230,7 +234,7 @@ class My_Model_Usuarios extends My_Db_Table
         
         $sPassword = '';
         if($data['inputPassword']!=""){
-        	$sPassword = " PASSWORD	=  SHA1('".$data['inputPassword']."'),";
+        	$sPassword = " PASSWORD	=  SHA1('".$data['inputPassword']."'), PASSWORD_TEXT= '".$data['inputPassword']."',";
         }
         
         $sFilter = '';
@@ -396,4 +400,83 @@ class My_Model_Usuarios extends My_Db_Table
         
 		return $result;		
 	}  	
+	
+	public function validateUserArrendadora($datauser){
+		$result= Array();		
+		$this->query("SET NAMES utf8",false);
+    	$sql ="SELECT $this->_primary
+	    		FROM USUARIOS U
+				WHERE U.USUARIO  = '".$datauser['usuario']."'
+                 AND  U.PASSWORD = SHA1('".$datauser['contrasena']."')
+                 AND  U.ACTIVO    = 1
+                 AND  U.ID_PERFIL = 17";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result	 = $query[0];
+		}
+        
+		return $result;			
+	} 	
+	
+    public function insertRowRegister($data){
+        $result     = Array();
+        $result['status']  = false;    
+
+        $sql="INSERT INTO $this->_name	
+        		SET ID_PERFIL		=  ".$data['inputPerfil'].",
+					USUARIO			= '".$data['inputUser']."',
+					PASSWORD		= SHA1('".$data['inputPassword']."'),
+					PASSWORD_TEXT	= '".$data['inputPassword']."',
+					NOMBRE			= '".$data['inputName']."',
+					APELLIDOS		= '".$data['inputApps']."',
+					EMAIL			= '".$data['inputUser']."',
+					TEL_MOVIL		= '".$data['inputTelMovilUser']."',
+					TEL_FIJO		= '".$data['inputTelFijoUser']."',
+					ACTIVO			= '".$data['inputEstatus']."',
+        			FECHA_REGISTRO	= CURRENT_TIMESTAMP";     	  
+        try{            
+    		$query   = $this->query($sql,false);
+    		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";
+			$query_id   = $this->query($sql_id);
+			if(count($query_id)>0){
+				$result['id']  = $query_id[0]['ID_LAST'];  			 	
+				$result['status']  = true;	
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;	
+    } 
+    
+  	public function userExist($sMail){
+		$result= Array();
+    	$sql ="SELECT  *
+                FROM ".$this->_name." 
+                WHERE USUARIO = '".$sMail."' LIMIT 1";			         	
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result	 = $query[0];			
+		}	
+        
+		return $result;			
+	}     
+	
+    public function setSucursalEmp($data){
+        $result = false;
+        try{
+        	$sql="INSERT INTO USR_EMPRESA
+        		SET ID_USUARIO    	= ".$data['inputIdUsuario'].",
+					ID_SUCURSAL		= ".$data['inputSucursal'];
+                    
+    		$query   = $this->query($sql,false);
+			if($query){  			 	
+				$result  = true;	
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;	
+    }  	
 }

@@ -93,22 +93,15 @@ class contacts_MainController extends My_Controller_Action
 										  '<table><tr><td>Usuario (Email): </td><td>'.$aContactInfo['EMAIL'].'</td></tr>'.
 										  '<tr><td>Contrase&ntilde;a: </td><td>'.$aDataQr['CADENA_QR'].'</td></tr>'.
 										  '<tr><td>Acceso al Sistema: </td><td>http://siames.grupouda.com.mx</td></tr>'.
-										  '</table>';									
-							/*$aMailer    = Array(
-								'emailTo' 	=> $aContactInfo['EMAIL'],
-								'nameTo' 	=> $aContactInfo['NOMBRE'].' '.$aContactInfo['APELLIDOS'],
-								'subjectTo' => ('GTP - Grupo UDA'),
-								'bodyTo' 	=> $bodymail,
-							);
-							
-						 	$enviar = $cFunctions->sendMailSmtp($aMailer);
-						 	*/
+										  '</table>';
 							$cMailing = new My_Model_Mailing();
 							$aMailer    = Array(
+								'inputIdSolicitud'	 => -1,
 								'inputDestinatarios' => $aContactInfo['NOMBRE'].' '.$aContactInfo['APELLIDOS'],
 								'inputEmails' 		 => $aContactInfo['EMAIL'],
 								'inputTittle' 		 => 'GTP - Grupo UDA',
 								'inputBody' 		 => $bodymail,
+								'inputLiveNotif'	 => 0,
 								'inputFromName' 	 => 'contacto@grupouda.com.mx',
 								'inputFromEmail' 	 => 'Siames - Grupo UDA'						
 							);	

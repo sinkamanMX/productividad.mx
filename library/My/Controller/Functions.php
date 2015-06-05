@@ -281,4 +281,18 @@ class My_Controller_Functions
 		$mail->setBodyHtml(html_entity_decode($sBody));
 		$enviado = $mail->send($sTransport);
 	}	
+	
+	function getRandomCodeReset(){
+	    $an = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZqazwsxedcrfvtgbyhnujmikolp";
+	    $su = strlen($an) - 1;
+	    return  substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1) .
+	            substr($an, rand(0, $su), 1);
+	} 	
 }

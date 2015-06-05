@@ -727,7 +727,8 @@ class atn_ServicesController extends My_Controller_Action
 
 			$aTecnicos 		= $cTecnicos->getTecnicosBySucursal($aSucursalesIn);
 			$dataResume     = $cCitas->getResumeByDay($aSucursalesIn,$dFechaIn,$dFechaFin,$idTecnico,$bType);
-			$dataProcess	= $cFunciones->setResume($dataResume);
+			//$dataProcess	= $cFunciones->setResume($dataResume);
+
 						
 			/*
 			$this->view->cInstalaciones 	= $cFunciones->selectDb($dataCenter,$idSucursal);
@@ -738,7 +739,7 @@ class atn_ServicesController extends My_Controller_Action
 			$this->view->showUsers			= $bShowUsers;
 			$this->view->aResume 			= $dataResume;*/
 			
-			if(count($dataResume)>0){
+			if(count($dataResume)>0){			
 				/** PHPExcel */ 
 				require_once 'PHPExcel.php';
 						
@@ -865,15 +866,55 @@ class atn_ServicesController extends My_Controller_Action
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G7', 'Hora Inicio');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H7', 'Hora Terminado');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I7', 'Tecnico Asignado');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J7', 'Direccion Cita');					
-					
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleTable, 'A7:J7');														
-					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J7', 'Municipio');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('K7', 'CP');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('L7', 'Estado');		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('M7', 'No. Eco.');		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('N7', 'Placas');		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('O7', 'Imei');		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('P7', 'Ip');		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q7', ('Hubo Sustitucion de equipo'));		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('R7', 'Imei');		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('S7', 'Ip');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('T7', 'Causa del cambio');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('U7', 'Observaciones');						
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleTable, 'A7:U7');
+									
 					$rowControl		= 8;
 					$zebraControl  	= 0;
 					
-					if($bStatus==-1){
-						foreach($dataResume as $key => $items){						
+					foreach($dataResume as $key => $items){
+						$dataEquipment = Array();
+						$bPrint = ($bStatus==-1) ? true : (($bStatus==$items['IDE']) ? true: false);
+						if($bPrint){
+							if($items['IDE']==4){								
+								$aDataEqForm = $cCitas->getDataSendbyFields($items['ID']);								
+								
+								foreach($aDataEqForm as $itemsFields){
+									if($itemsFields['ID_ELEMENTO']==223){
+										@$dataEquipment['IP'] = $itemsFields['CONTESTACION'];
+									}else if($itemsFields['ID_ELEMENTO']==222){
+										@$dataEquipment['IMEI'] = $itemsFields['CONTESTACION'];
+									}else if($itemsFields['ID_ELEMENTO']==221){
+										@$dataEquipment['MODELO'] = $itemsFields['CONTESTACION'];
+									}else if($itemsFields['ID_ELEMENTO']==245){
+										@$dataEquipment['SUSTITUCION'] = $itemsFields['CONTESTACION'];	
+									}else if($itemsFields['ID_ELEMENTO']==248){
+										@$dataEquipment['IMEI2'] = $itemsFields['CONTESTACION'];	
+									}else if($itemsFields['ID_ELEMENTO']==249){
+										@$dataEquipment['IP2'] = $itemsFields['CONTESTACION'];	
+									}else if($itemsFields['ID_ELEMENTO']==250){
+										@$dataEquipment['RAZON'] = $itemsFields['CONTESTACION'];	
+									}else if($itemsFields['ID_ELEMENTO']==275){
+										@$dataEquipment['OBSERVACIONES'] = $itemsFields['CONTESTACION'];									
+									}else if($itemsFields['ID_ELEMENTO']==179){
+										@$dataEquipment['PLACAS'] = $itemsFields['CONTESTACION'];	
+									}else if($itemsFields['ID_ELEMENTO']==181){
+										@$dataEquipment['ECO'] = $itemsFields['CONTESTACION'];	
+									}								
+								}									
+							}						
+											
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0,  ($rowControl), $items['FOLIO']);
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $items['N_TIPO']);
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2,  ($rowControl), $items['DESCRIPCION']);								
@@ -883,35 +924,26 @@ class atn_ServicesController extends My_Controller_Action
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6,  ($rowControl), $items['FECHA_INICIO']);								
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7,  ($rowControl), $items['FECHA_TERMINO']);								
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(8,  ($rowControl), $items['NOMBRE_TECNICO']);
-							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(9,  ($rowControl), $items['DIRECCION']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(9,  ($rowControl), $items['DIR_MUN']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(10, ($rowControl), $items['DIR_CP']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(11, ($rowControl), $items['DIR_ESTADO']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(12, ($rowControl), @$dataEquipment['ECO']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(13, ($rowControl), @$dataEquipment['PLACAS']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(15, ($rowControl), @$dataEquipment['IMEI']." ");
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(14, ($rowControl), @$dataEquipment['IP']." ");							
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(16, ($rowControl), @$dataEquipment['SUSTITUCION']." ");
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(17, ($rowControl), @$dataEquipment['IMEI2']." ");
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(18, ($rowControl), @$dataEquipment['IP2']." ");
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(19, ($rowControl), @$dataEquipment['RAZON']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(20, ($rowControl), @$dataEquipment['OBSERVACIONES']);
 	
 							if($zebraControl++%2==1){
-								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':J'.$rowControl);			
+								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':U'.$rowControl);			
 							}
-							$rowControl++;
-						}						
-					}else if($bStatus>0){
-						foreach($dataResume as $key => $items){
-							if($bStatus==$items['IDE']){
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0,  ($rowControl), $items['FOLIO']);
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $items['N_TIPO']);
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2,  ($rowControl), $items['DESCRIPCION']);								
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3,  ($rowControl), $items['NOMBRE_CLIENTE']);								
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4,  ($rowControl), $items['F_PROGRAMADA']);								
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5,  ($rowControl), $items['H_PROGRAMADA']);								
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6,  ($rowControl), $items['FECHA_INICIO']);								
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7,  ($rowControl), $items['FECHA_TERMINO']);								
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(8,  ($rowControl), $items['NOMBRE_TECNICO']);
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(9,  ($rowControl), $items['DIRECCION']);
-		
-								if($zebraControl++%2==1){
-									$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':J'.$rowControl);			
-								}
-								$rowControl++;								
-							}
-						}								
-					} 
-
+							
+							$rowControl++;							
+						}
+					}		
 								
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setAutoSize(true);
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setAutoSize(true);
@@ -922,7 +954,18 @@ class atn_ServicesController extends My_Controller_Action
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('G')->setAutoSize(true);
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('H')->setAutoSize(true);
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('I')->setAutoSize(true);
-					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('J')->setAutoSize(true);			
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('J')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('K')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('L')->setAutoSize(true);					
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('M')->setAutoSize(true);	
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('N')->setAutoSize(true);	
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('O')->setAutoSize(true);	
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('P')->setAutoSize(true);	
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('Q')->setAutoSize(true);	
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('R')->setAutoSize(true);	
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('S')->setAutoSize(true);	
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('T')->setAutoSize(true);	
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('U')->setAutoSize(true);			
 						
 					$filename  = "Reporte_Citas_".date("YmdHi").".xlsx";	
 	

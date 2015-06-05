@@ -89,5 +89,20 @@
       <?php echo $this->headStyle() ?>
       <?php echo $this->headScript() ?>      
     </body>
+    <div class="modal fade hide modal-lg" id="mTravelMonitor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+      <div class="modal-dialog ">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" >Notificaciones Pendientes</h4>
+          </div>
+          <div class="modal-form i-body">             
+            <input type="hidden" id="idTravel" value="-1" />
+            <div class="hmodal500" id="dTravelMonitor">
 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
 </html>

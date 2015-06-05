@@ -132,8 +132,10 @@
                                 <th>Hora Programada</th>
                                 <th>Hora Inicio</th>
                                 <th>Hora Terminado</th>
-                                <th>Técnico Asignado</th>
-                                <th>Dirección</th>
+                                <th>Técnico Asignado</th>                                
+                                <th>Municipio</th>
+                                <th>CP</th>
+                                <th>Estado</th>
                                 <th>Ociones</th>
                             </tr>
                         </thead>
@@ -152,7 +154,10 @@
                                         <td><?php echo $items['FECHA_INICIO'];?></td>
                                         <td><?php echo $items['FECHA_TERMINO'];?></td>
                                         <td><?php echo $items['NOMBRE_TECNICO'];?></td>
-                                        <td><?php echo $items['DIRECCION'];?></td>
+                                        <td><?php echo $items['DIR_MUN'];?></td>
+                                        <td><?php echo $items['DIR_CP'];?></td>
+                                        <td><?php echo $items['DIR_ESTADO'];?></td>
+                                        <!--<td><?php echo $items['DIRECCION'];?></td>-->
                                         <td class="text-center" style="width:160px;"> 
                                             <?php if($items['TEC_ASIGNADO']==1):?>
                                                 <div class="span3">

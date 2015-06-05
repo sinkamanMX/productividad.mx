@@ -26,6 +26,7 @@
                                 <th>Descripción</th>
                                 <th>Teléfono</th>
                                 <th>IMEI</th>
+                                <th>Asignado a</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -37,6 +38,7 @@
                                 <td><?php echo $items['DESCRIPCION']; ?></td>
                                 <td><?php echo $items['TELEFONO']; ?></td>
                                 <td><?php echo $items['IDENTIFICADOR']; ?></td>
+                                <td><?php echo $items['N_TECNICO']; ?></td>
                                 <td class="text-center">
                                     <?php if($this->dataUser['LECTURA']==1): ?>
                                         <a href="/main/phones/getinfo?catId=<?php echo $items['ID_TELEFONO']; ?>"><button class="btn btn-primary"> <i class="icon-eye-open icon-white"></i></button></a>   

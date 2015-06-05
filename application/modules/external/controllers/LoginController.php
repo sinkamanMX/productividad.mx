@@ -9,7 +9,7 @@ class external_LoginController extends My_Controller_Action
 		$sessions = new My_Controller_AuthContact();
 		if($sessions->validateSession()){
 	        $this->view->dataUser   = $sessions->getContentSession();
-		}
+		}			
     }
 
     public function indexAction()
@@ -17,10 +17,15 @@ class external_LoginController extends My_Controller_Action
 		$this->view->layout()->setLayout('contacto_login');    	
 		try{
 			$sessions = new My_Controller_AuthContact();
-			Zend_Debug::dump($sessions->validateSession());
 			if($sessions->validateSession()){
 	            $this->_redirect('/external/login/inicio');		
 			}
+			
+			$sessionsArr = new My_Controller_Auth();
+	    	if($sessionsArr->validateSession()){
+		        $this->_redirect('/main/main/inicio');	
+			}			
+			
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -32,20 +37,39 @@ class external_LoginController extends My_Controller_Action
 			$this->_helper->layout->disableLayout();
 			$this->_helper->viewRenderer->setNoRender();    
 	                
-	        $answer = Array('answer' => 'no-data');
-			$data = $this->_request->getParams();
+	        $answer   = Array('answer' => 'no-data');
+			$data 	  = $this->_request->getParams();
+			$usuarios = new My_Model_Contactos();
+			$cUsuarios= new My_Model_Usuarios();
+			
 	        if(isset($data['usuario']) && isset($data['contrasena'])){
-	            $usuarios = new My_Model_Contactos();
-				$validate = $usuarios->validateUser($data);            
-				if($validate){
+	        	$validate = $usuarios->validateUser($data); 
+	        	$bAnswer  = false;
+	        	
+	        	if(isset($validate['ID_CONTACTO_QR'])){
 					 $dataUser = $usuarios->getDataUser($validate['ID_CONTACTO_QR']);
 				     $sessions = new My_Controller_AuthContact();
 	                 $sessions->setContentSession($dataUser);
 	                 $sessions->startSession();
 	                 $usuarios->setLastAccess($dataUser);
-				     $answer = Array('answer' => 'logged');
-				}else{ 
-				    $answer = Array('answer' => 'no-perm'); 
+				     $answer = Array('answer' => 'logged','source'=>'contact');
+				     
+				     $bAnswer= true;				     
+				}else{
+					$bValidateUser = $cUsuarios->validateUserArrendadora($data);  
+					if($bValidateUser){
+						 $dataUser = $cUsuarios->getDataUser($bValidateUser['ID_USUARIO']);
+					     $sessions = new My_Controller_Auth();
+		                 $sessions->setContentSession($dataUser);
+		                 $sessions->startSession();
+		                 $cUsuarios->setLastAccess($dataUser);
+					     $answer = Array('answer' => 'logged','source'=>'system');
+					     $bAnswer= true;
+					}
+				}
+				
+				if(!$bAnswer){
+					$answer = Array('answer' => 'no-perm');
 				}
 	        }else{
 	            $answer = Array('answer' => 'problem');	

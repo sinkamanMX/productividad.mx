@@ -209,10 +209,12 @@ class sac_MainController extends My_Controller_Action
 					$aDataAdmin = $config->getOption('admin');					
 					$cMailing   = new My_Model_Mailing();
 					$aMailer    = Array(
+						'inputIdSolicitud'	 => $this->idToUpdate,
 						'inputDestinatarios' => $aDataAdmin['mails'],
 						'inputEmails' 		 => $aDataAdmin['mails'],
 						'inputTittle' 		 => $sSubject,
 						'inputBody' 		 => $sBody,
+						'inputLiveNotif'	 => 1,
 						'inputFromName' 	 => 'contacto@grupouda.com.mx',
 						'inputFromEmail' 	 => 'Siames - Grupo UDA'						
 					);	
