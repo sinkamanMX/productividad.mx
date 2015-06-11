@@ -159,6 +159,7 @@ class leasing_UnitsController extends My_Controller_Action
 					          		$sImei    	= (string) $xml2->Response->Plate[$i]['id'];
 					          		$sEconomico = (string) $xml2->Response->Plate[$i]->hst->Alias;
 					          		$sIp 		= (string) $xml2->Response->Plate[$i]->hst->IP;
+					          		$sIdent2 	= (string) $xml2->Response->Plate[$i]->hst->Imei;
 					          		
 					          		$validateUnit = $cUnidades->validateUnitByPlaque($sEconomico);
 					          		if(!$validateUnit){
@@ -167,6 +168,7 @@ class leasing_UnitsController extends My_Controller_Action
 					          			$aDataInsertUnit['inputEco'] 		   = $sEconomico;
 					          			$aDataInsertUnit['inputPlacas']   	   = $sEconomico;
 					          			$aDataInsertUnit['inputIden']  		   = $sImei;
+					          			$aDataInsertUnit['inputIden2']  	   = $sIdent2;
 					          			$aDataInsertUnit['inputStatus']  	   = 1;
 					          			$aDataInsertUnit['idEmpresa'] 		   = $this->view->dataUser['ID_EMPRESA'];
 					          			

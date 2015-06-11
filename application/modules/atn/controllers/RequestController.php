@@ -58,6 +58,10 @@ class atn_RequestController extends My_Controller_Action
 			$this->view->dataTable    = $cSolicitudes->getDataTable('1,4,5');
 			$this->view->dataTableOk  = $cSolicitudes->getDataTable(2);
 			$this->view->dataTableRev = $cSolicitudes->getDataTable(4);
+			
+			$this->view->dataTableEmp    = $cSolicitudes->getDataTableEmp('1,4');
+			//$this->view->dataTableEmpRev = $cSolicitudes->getDataEmp(5);
+			$this->view->dataTableEmpOk  = $cSolicitudes->getDataTableEmp(2);
         }catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -89,6 +93,8 @@ class atn_RequestController extends My_Controller_Action
 			if($this->idToUpdate >-1){
 				$dataInfo   = $classObject->getData($this->idToUpdate);
 				$aUnidades	= $cUnidades->getCbo($dataInfo['ID_CLIENTE']);
+				
+				
 				$aLogs		= $cLog->getDataTable($this->idToUpdate);
 				$sTipo		= $dataInfo['ID_TIPO'];
 				$sHorario	= $dataInfo['ID_HORARIO'];
@@ -203,6 +209,161 @@ class atn_RequestController extends My_Controller_Action
 			$this->view->resultOp   = $this->resultop;
 			$this->view->catId		= $this->idToUpdate;
 			$this->view->idToUpdate = $this->idToUpdate;			    	
+    	}catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }
+    } 
+    
+    
+    public function getinfoempAction(){    
+        	try{    		 
+			$dataInfo = Array();			
+			$classObject 	= new My_Model_Solicitudes();
+			$cCitas			= new My_Model_Citas();			
+			$cFunctions 	= new My_Controller_Functions();
+			$cHorariosCita  = new My_Model_HorariosCita();
+			$cUnidades 		= new My_Model_Unidades();
+			$cLog			= new My_Model_LogSolicitudes();
+			$cEstatus		= new My_Model_EstatusSolicitud();
+			$cSucursales	= new My_Model_Sucursales();			
+			$aEstatus 		= $cEstatus->getCbo(1);						
+			$sEstatus		= '';
+			
+			$aTipoServicio	= $cCitas->getCboTipoServicio(true);
+			$aHorarios		= $cHorariosCita->getHorarios();
+			$aUnidades		= $cUnidades->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
+			$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
+			
+			$sTipo			= '';
+			$sHorario		= '';
+			$sUnidad		= '';
+			$sSucursal		= '';
+			$aLogs			= Array();
+			
+        	$this->dataIn['inputIdEmpresa'] = $this->view->dataUser['ID_EMPRESA'];
+			$this->dataIn['inputIdUsuario'] = $this->view->dataUser['ID_USUARIO'];
+			
+    		if($this->idToUpdate >-1){
+				$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
+				$aLogs		= $cLog->getDataTable($this->idToUpdate);
+				$sTipo		= $dataInfo['ID_TIPO'];
+				$sHorario	= $dataInfo['ID_HORARIO'];
+				$sUnidad	= $dataInfo['ID_UNIDAD'];
+				$sSucursal  = $dataInfo['ID_SUCURSAL'];
+			}			
+					
+			$sModificaciones = '';
+    		if($this->operation=='update'){	  		
+				if($this->idToUpdate>-1){
+
+					if($this->dataIn['bOperation']=='modify'){
+						$sHorarioLog  = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<b>Horario 2</b:'.$dataInfo['N_HORARIO2'].'<br/>': '';						
+						
+						if($this->dataIn['inputHorario']!=$dataInfo['ID_HORARIO']){
+							$sModificaciones .= 'Se modifico el horario <br/>';							
+						}
+						
+						if($this->dataIn['inputFechaIn']!=$dataInfo['FECHA_CITA']){
+							$sModificaciones .= 'Se modifico la fecha de la cita <br/>';							
+						}						
+						
+						if($this->dataIn['inputRevision']!=$dataInfo['REVISION']){
+							$sModificaciones .= 'Comentario:'.$this->dataIn['inputRevision'].'<br/>';							
+						}
+					}
+					$updated = $classObject->updateAtencion($this->dataIn);
+					if($updated['status']){
+						$dataInfo   = $classObject->getDataEmp($this->idToUpdate);						
+						//$aUnidades	= $cUnidades->getCbo($dataInfo['ID_CLIENTE']);
+						$sTipo		= $dataInfo['ID_TIPO'];
+						$sHorario	= $dataInfo['ID_HORARIO'];
+						$sHorario2	= @$dataInfo['ID_HORARIO2'];
+						$sUnidad	= $dataInfo['ID_UNIDAD'];	
+
+						$cMailing   = new My_Model_Mailing();
+						$sSubject 	= 'Revision de Solicitud de Cita';
+						
+						if($this->dataIn['bOperation']=='accept'){
+							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';
+							$sBody     .= 'La solicitud ha sido aceptada con la siguiente informaci&oacute;n:<br/>'.
+										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
+											'<tr><td><b>Horario</b></td><td>'.$dataInfo['N_HORARIO'].'</td></tr>'.
+											$sHorario2.
+											'<tr><td><b>Tipo de Cita</b></td><td>'.$dataInfo['N_TIPO'].'</td></tr>'.	
+											'<tr><td><b>Unidad</b></td><td>'.$dataInfo['N_UNIDAD'].'</td></tr>'.		
+											'<tr><td><b>Informaci&oacute;n de la Unidad</b></td><td>'.$dataInfo['INFORMACION_UNIDAD'].'</td></tr>'.
+											'<tr><td><b>Comentarios</b></td><td>'.$dataInfo['COMENTARIO'].'</td></tr>'.			
+											'<tr><td><b>Comentarios CCUDA</b></td><td>'.$dataInfo['REVISION'].'</td></tr></table><br/>'.					  
+										  'Para revisarlo, debes de ingresar al siguiente link:<br/>'.
+										  '<a href="http://siames.grupouda.com.mx">Da Click Aqui</a><br/>'.
+										  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
+										  '<b> http://siames.grupouda.com.mx</b>';
+							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
+											'sAction' 		=> 'Solicitud Aceptada',
+											'sDescripcion' 	=> 'La solicitud ha sido aceptada por CCUDA',
+											'sOrigen'		=> 'CCUDA');
+							$cLog->insertRow($aLog);											
+						}else{
+							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
+							
+							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';
+							$sBody     .= 'La solicitud ha sido modificada con la siguiente informaci&oacute;n, favor de validarla:<br/>'.
+										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
+											'<tr><td><b>Horario</b></td><td>'.$dataInfo['N_HORARIO'].'</td></tr>'.
+											$sHorario2.
+											'<tr><td><b>Tipo de Cita</b></td><td>'.$dataInfo['N_TIPO'].'</td></tr>'.	
+											'<tr><td><b>Unidad</b></td><td>'.$dataInfo['N_UNIDAD'].'</td></tr>'.		
+											'<tr><td><b>Informaci&oacute;n de la Unidad</b></td><td>'.$dataInfo['INFORMACION_UNIDAD'].'</td></tr>'.			
+											'<tr><td><b>Comentarios</b></td><td>'.$dataInfo['COMENTARIO'].'</td></tr></table><br/>'.
+											'<tr><td><b>Comentarios CCUDA</b></td><td>'.$dataInfo['REVISION'].'</td></tr></table><br/>'.					  
+										  'Para revisarlo, debes de ingresar al siguiente link:<br/>'.
+										  '<a href="http://siames.grupouda.com.mx">Da Click Aqui</a><br/>'.
+										  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
+										  '<b> http://siames.grupouda.com.mx</b>';
+																		
+							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
+											'sAction' 		=> 'Cambio en la Solicitud',
+											'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones,
+											'sOrigen'		=> 'CCUDA');
+							$cLog->insertRow($aLog);																		
+						}
+						
+						$aMailer    = Array(
+							'inputIdSolicitud'	 => $this->idToUpdate,
+							'inputDestinatarios' => $dataInfo['N_CONTACTO'],
+							'inputEmails' 		 => $dataInfo['EMAIL'],
+							'inputTittle' 		 => $sSubject,
+							'inputBody' 		 => $sBody,
+							'inputLiveNotif'	 => 0,
+							'inputFromName' 	 => 'contacto@grupouda.com.mx',
+							'inputFromEmail' 	 => 'Siames - Grupo UDA'						
+						);	
+	
+						$cMailing->insertRow($aMailer);
+						
+						$this->resultop = 'okRegister';
+						$this->_redirect('/atn/request/index');
+					}					
+				}else{
+					$this->errors['status'] = 'no-info';
+				}	
+			}			
+			
+				
+			$this->view->aUnidades	= $cFunctions->selectDb($aUnidades,$sUnidad);
+			$this->view->aHorarioCita = $cFunctions->selectDb($aHorarios,$sHorario);					
+			$this->view->aTipos		= $cFunctions->selectDb($aTipoServicio,$sTipo);
+			$this->view->aSucursales= $cFunctions->selectDb($aSucursales,$sSucursal);
+						
+			$this->view->data 		= $dataInfo; 
+			$this->view->logTable   = $aLogs;
+			$this->view->errors 	= $this->errors;	
+			$this->view->resultOp   = $this->resultop;
+			$this->view->catId		= $this->idToUpdate;
+			$this->view->idToUpdate = $this->idToUpdate;
+
+			
     	}catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                

@@ -387,6 +387,24 @@
 	},
 	"buffers":
 	[
+		{
+			"contents": "Searching 4117 files for \"validateUnitByPlaque\" (regex)\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/controllers/RequestController.php:\n  133  				          		$sIdent2 	  = (string) $xml2->Response->Plate[$i]->hst->Imei;\n  134  				          		\n  135: 				          		$validateUnit = $cUnidades->validateUnitByPlaque($sEconomico);\n  136  				          		if(!$validateUnit){\n  137  				          			$aDataInsertUnit['inputIdCliente'] 	= $this->view->dataUser['ID_CLIENTE'];	\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/controllers/UnitsController.php:\n  162  					          		$sIdent2 	= (string) $xml2->Response->Plate[$i]->hst->Imei;\n  163  					          		\n  164: 					          		$validateUnit = $cUnidades->validateUnitByPlaque($sEconomico);\n  165  					          		if(!$validateUnit){\n  166  					          			$aDataInsertUnit['inputTransportista'] = $idTrans['ID_TRANSPORTISTA'];\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/controllers/MainController.php:\n  138  					          		$sIdent2 	  = (string) $xml2->Response->Plate[$i]->hst->Imei;\n  139  					          		\n  140: 					          		$validateUnit = $cUnidades->validateUnitByPlaque($sEconomico);\n  141  					          		if(!$validateUnit){\n  142  					          			$aDataInsertUnit['inputIdCliente'] 	= $aDataCliente['ID_CLIENTE'];	\n\n/Users/itecno2/Documents/workspace/productividad.mx/library/My/Model/Unidades.php:\n   26  	}	\n   27  	\n   28:     public function validateUnitByPlaque($sPlaque){\n   29  		try{     	        	\n   30  			$result= false;\n\n4 matches across 4 files\n",
+			"settings":
+			{
+				"buffer_size": 1649,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "application/modules/external/controllers/RequestController.php",
+			"settings":
+			{
+				"buffer_size": 21067,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -412,6 +430,25 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/controllers/MainController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/controllers/UnitsController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Model/Unidades.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/controllers/RequestController.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/marketing/validateCodes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfoemp.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/users/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/users/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateUsers.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateUsers.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateSolicitudes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/companies/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateUnits.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/units/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js",
 		"/Users/itecno2/Downloads/Orden_Servicio_6342-1.pdf",
 		"/Users/itecno2/Downloads/Orden_Servicio_6342-6.pdf",
@@ -427,7 +464,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout_login.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtnSearch.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/phones/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/rastreotels.js",
@@ -437,7 +473,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/reporte.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/phones/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/services/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtn.js",
@@ -454,19 +489,16 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/views/scripts/main/getinfo.phtml",
 		"/Users/itecno2/Dropbox/Tecnologizame/Clientes/UDA/Proyectos/Siames/Documentos/Accesos y URLS",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validatePublicSolicitud.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validateSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/validateSolicitudes.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/activation.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/sendMails.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Functions.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/controllers/RequestController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/RequestController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/public.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/gralTables.js",
@@ -491,7 +523,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/contacts/searchContacts.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/instalation.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/index/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/marketing/validateCodes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateEquipments.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/libs/qr/phpqrcode.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/getinfo.phtml",
@@ -502,7 +533,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/dashboard/productivity.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/autorizacion/citadetalle.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateUsers.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/searchsap.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/searchalm.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validatePhones.js",
@@ -527,19 +557,7 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/gral_forms.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Classes/dompdf/include/abstract_renderer.cls.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Classes/dompdf/include/image_frame_reflower.cls.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/datefinish.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/newservice/cardetail.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/cardetail.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/datefinish.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/main/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/siames/index.html",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/activos/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/tableUser.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/tableProfiles.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/units/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/units/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/profiles/getinfo.phtml"
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Classes/dompdf/include/image_frame_reflower.cls.php"
 	],
 	"find":
 	{
@@ -547,7 +565,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"<open folders>",
@@ -560,6 +578,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"validateUnitByPlaque",
+			"/main/",
+			"/external/",
+			"R",
 			"image not readable",
 			"Image not found",
 			"replace",
@@ -683,11 +705,7 @@
 			"console.log",
 			"timerUpdate()",
 			"margin-top",
-			"margin",
-			"padding",
-			"COLOR",
-			"refresh",
-			"h500"
+			"margin"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -695,6 +713,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"/leasing/",
 			"atn",
 			"/external/request",
 			"/external/",
@@ -748,8 +767,91 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 1649,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										333,
+										353
+									],
+									[
+										786,
+										806
+									],
+									[
+										1233,
+										1253
+									],
+									[
+										1536,
+										1556
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								346,
+								346
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "application/modules/external/controllers/RequestController.php",
+					"settings":
+					{
+						"buffer_size": 21067,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4915,
+								4915
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 37.0,
+						"translation.y": 3440.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

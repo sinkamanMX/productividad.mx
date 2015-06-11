@@ -130,7 +130,8 @@ class main_CompaniesController extends My_Controller_Action
 									);	
 			
 									$cMailing->insertRow($aMailer);											
-									$this->_resultOp = 'okRegister';
+								 	$this->_resultOp = 'okRegister';	
+								 	$this->_redirect('/admin/companies/index');
 								}else{
 									$this->_aErrors['status'] = 1;	
 								}						

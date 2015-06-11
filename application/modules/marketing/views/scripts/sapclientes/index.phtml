@@ -18,7 +18,17 @@
                              <a href="/main/sapclintes/getinfo?catId=-1"><button class="btn btn-success"> Agregar <i class="icon-plus icon-white"></i></button></a>
                           </div>-->
                         </div>  
-                    <?php endif;?>                          
+                    <?php endif;?>  
+                    <div class="button-excel-rel">
+                        <?php if(count($this->datatTable)>0): ?>
+                            <div class="btn-group">
+                             <a  target="_blank" href="/marketing/sapclientes/exportall"><button class="btn btn-success"> Exportar <i class="icon-file icon-white"></i></button></a>                                    
+                            </div>
+                             <!--<div class="btn-group">
+                                <button onClick="printPage()" class="btn btn-primary"> Imprimir <i class="icon-print icon-white"></i></button>
+                            </div>-->
+                        <?php endif;?>
+                    </div>                                              
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
                         <thead>
                             <tr>

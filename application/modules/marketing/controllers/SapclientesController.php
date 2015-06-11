@@ -336,5 +336,174 @@ class marketing_SapclientesController extends My_Controller_Action
         	echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
 		}  		
-    }    
+    } 
+
+	public function exportallAction(){
+	    try{
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender();
+			
+			$classObject = new My_Model_Sapclientes();
+			$aDataTable  = $classObject->getDataTables();
+			
+			if(count($aDataTable)>0){
+				// PHPExcel 
+				require_once 'PHPExcel.php';
+				// PHPExcel_Writer_Excel2007 								
+				$objPHPExcel = new PHPExcel();
+ 					
+				$objPHPExcel->getProperties()->setCreator("UDA")
+										 ->setLastModifiedBy("UDA")
+										 ->setTitle("Office 2007 XLSX")
+										 ->setSubject("Office 2007 XLSX")
+										 ->setDescription("Reporte del Viaje")
+										 ->setKeywords("office 2007 openxml php")
+										 ->setCategory("Reporte del Viaje");
+				
+				$objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);											 
+				$sHeaderBig   	 = new PHPExcel_Style();
+				$stylezebraTable = new PHPExcel_Style();  
+				$sHeaderOrange 	 = new PHPExcel_Style();
+				$sTittleTable 	 = new PHPExcel_Style();
+						
+				$stylezebraTable->applyFromArray(array(
+					'fill' => array(
+						'type' => PHPExcel_Style_Fill::FILL_SOLID,'color' => array('argb' => 'e7f3fc')
+					)
+				));		
+
+				$sHeaderBig->applyFromArray(array(
+					'fill' => array(
+			            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+			            'color' => array('rgb' => 'FFFFFF')
+			        ),
+			        'font'  => array(
+				        'bold'  => true,
+				        'color' => array('rgb' => '000000'),
+				        'size'  => 16,
+				        'name'  => 'Arial'
+				    ),
+					  'borders' => array(
+					    'allborders' => array(
+					      'style' => PHPExcel_Style_Border::BORDER_NONE
+					    )
+					  )				        
+				));			
+
+				$sHeaderOrange->applyFromArray(array(
+					'fill' => array(
+			            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+			            'color' => array('rgb' => 'FFFFFF')
+			        ),
+			        'font'  => array(
+				        'bold'  => true,
+				        'color' => array('rgb' => 'FF8000'),
+				        'size'  => 10,
+				        'name'  => 'Arial'
+				    ),
+					  'borders' => array(
+					    'allborders' => array(
+					      'style' => PHPExcel_Style_Border::BORDER_NONE
+					    )
+					  )
+				));		
+
+				$sTittleTable->applyFromArray(array(
+					'fill' => array(
+			            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+			            'color' => array('rgb' => 'FF8000')
+			        ),
+			        'font'  => array(
+				        'bold'  => true,
+				        'color' => array('rgb' => 'FFFFFF'),
+				        'size'  => 10,
+				        'name'  => 'Arial'
+				    ),
+					  'borders' => array(
+					    'allborders' => array(
+					      'style' => PHPExcel_Style_Border::BORDER_NONE
+					    )
+					  )
+				));						
+				
+				// 
+				// Header del Reporte
+				//					
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', utf8_decode('Tracking Systems de Mexico, S.A de C.V.'));
+				$objPHPExcel->getActiveSheet()->mergeCells('B3:G3');
+				$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sHeaderBig, 'B3:J3');
+				
+				$objDrawing = new PHPExcel_Worksheet_Drawing();
+				
+				$objDrawing->setName('Logo');
+				$objDrawing->setDescription('Logo');
+				
+				$objDrawing->setPath($this->realPath.'/logoUDA.jpg');
+				$objDrawing->setWidth(70);
+				$objDrawing->setHeight(90);
+				//$objDrawing->setOffsetX(10);
+				$objDrawing->setCoordinates('D2');
+				
+				$objPHPExcel->getActiveSheet()->getRowDimension('D2')->setRowHeight(150);										
+				$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
+				
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', utf8_decode('REPORTE DE CLIENTES SAP'));
+				$objPHPExcel->getActiveSheet()->mergeCells('B5:G5');
+				$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sHeaderOrange, 'B5:J5');						
+				
+
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A7', '# SAP');
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B7', 'Nombre');
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C7', 'Razon Social');										
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue('D7', 'Codigos Qr Activados');
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E7', 'Codigos Qr Sin Activados');
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F7', 'Codigos Qr Total');
+												
+				$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleTable, 'A7:F7');				
+				
+				$rowControl		= 8;
+				$zebraControl  	= 0;
+
+				foreach($aDataTable as $key => $items){
+					$varCliente = ($items['NAME']!='NULL') ? $items['NAME']: '--';
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0,  ($rowControl), $items['COD_CLIENTE']);
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1,  ($rowControl), $varCliente);										
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2,  ($rowControl), $items['RAZON_SOCIAL']);
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3,  ($rowControl), $items['ACTIVATE_QR']);								
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4,  ($rowControl), $items['INACTIVATE_QR']);								
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5,  ($rowControl), $items['TOTAL_QR']);													
+
+					if($zebraControl++%2==1){
+						$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':F'.$rowControl);			
+					}
+					$rowControl++;
+				}								
+				
+				
+				$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setAutoSize(true);
+				$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setAutoSize(true);
+				$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('C')->setAutoSize(true);
+				$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setAutoSize(true);
+				$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('E')->setAutoSize(true);
+				$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('F')->setAutoSize(true);
+				
+				$filename  = "Reporte_ClientesSap_".date("YmdHi").".xlsx";	
+
+				header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+				header("Content-type:   application/x-msexcel; charset=utf-8");
+				header("Content-Disposition: attachment; filename=$filename"); 
+				header("Expires: 0");
+				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+				header("Cache-Control: private",false);
+				
+				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+				$objWriter->save('php://output');						
+			}else{
+				echo "No Hay informaci—n";
+			}		
+        } catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }  	
+	}     
 }	

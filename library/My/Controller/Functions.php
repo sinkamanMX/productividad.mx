@@ -61,6 +61,11 @@ class My_Controller_Functions
 			'urlSmtp'  => 'smtp.tecnologiza.me',
 			'username' => 'no-reply@tecnologiza.me',			
 		    'password' => 'nOr3plym41l3r_');   
+	
+    public $aOptionsString = Array(
+		array("id"=>"S",'name'=>'Si' ),
+		array("id"=>"N",'name'=>'No' )    
+    );  	
 
     public function dateToText($fecha_db){
     	$fecha=explode("-",$fecha_db);
@@ -295,4 +300,14 @@ class My_Controller_Functions
 	            substr($an, rand(0, $su), 1) .
 	            substr($an, rand(0, $su), 1);
 	} 	
+	
+    public  function cboStatusYesNo($option=''){
+		$options='';
+		for($p=0;$p<count($this->aOptionsString);$p++){
+			$select='';
+			if($this->aOptionsString[$p]['id']==@$option){$select='selected';}
+			$options .= '<option '.$select.' value="'.$this->aOptionsString[$p]['id'].'" >'.$this->aOptionsString[$p]['name'].'</option>';
+		}
+		return $options;
+    } 	
 }

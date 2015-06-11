@@ -11,7 +11,7 @@ $().ready(function() {
                 required: true,
                 number: true,
                 min: 1,
-                max: 20
+                max: 50
             }
         },        
         // Se especifica el texto del mensaje a mostrar
@@ -20,7 +20,7 @@ $().ready(function() {
                 required  : "Campo Requerido",
                 number    : "Este campo acepta solo números",
                 min 	  : "La cantidad mínima es 1",
-                max	 	  : "La cantidad máxima es 20"
+                max	 	  : "La cantidad máxima es 50"
             }
         },
         

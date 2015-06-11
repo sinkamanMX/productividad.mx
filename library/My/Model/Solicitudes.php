@@ -182,7 +182,7 @@ class My_Model_Solicitudes extends My_Db_Table
     }     
     
     public function getDataTablebyEmp($idCliente,$iStatus=0){
-      	$this->query("SET NAMES utf8",false);         
+      	$this->query("SET NAMES utf8",false);
 		$result= Array();
 		$sFilter = ($iStatus==0) ?  ' = 1' : ' IN ('.$iStatus.') ';
     	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.NOMBRE AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
@@ -282,7 +282,8 @@ class My_Model_Solicitudes extends My_Db_Table
 		$this->query("SET NAMES utf8",false); 
     	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.RAZON_SOCIAL AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS,
 				CONCAT(Q.NOMBRE,' ',Q.APELLIDOS) AS N_CONTACTO , Q.EMAIL, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
-				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD
+				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,
+				CONCAT(L.`CALLE`,',',L.`COLONIA`,',',L.`MUNICIPIO`,',',L.`ESTADO`,',',L.`CP`) AS DIRECCION
 				FROM PROD_CITAS_SOLICITUD S
 				INNER JOIN PROD_TPO_CITA  T ON S.ID_TIPO = T.ID_TPO
 				INNER JOIN EMPRESAS       C ON S.ID_EMPRESA = C.ID_EMPRESA
@@ -291,6 +292,7 @@ class My_Model_Solicitudes extends My_Db_Table
 				INNER JOIN PROD_HORARIOS_CITA H ON S.ID_HORARIO     = H.ID_HORARIO_CITA
 				INNER JOIN PROD_UNIDADES      U ON S.ID_UNIDAD		= U.ID_UNIDAD
 				LEFT JOIN PROD_HORARIOS_CITA  R ON S.ID_HORARIO2    = R.ID_HORARIO_CITA		
+				LEFT JOIN SUCURSALES          L ON S.ID_SUCURSAL    = L.ID_SUCURSAL
                 WHERE S.$this->_primary = $idObject LIMIT 1";	
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -298,5 +300,28 @@ class My_Model_Solicitudes extends My_Db_Table
 		}	
         
 		return $result;	    	
-    }    
+    }
+
+    public function getDataTableEmp($iStatus=0){
+      	$this->query("SET NAMES utf8",false);
+		$result= Array();
+		$sFilter = ($iStatus==0) ?  ' = 1' : ' IN ('.$iStatus.') ';
+    	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.NOMBRE AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
+				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,A.`DESCRIPCION` AS N_SUCURSAL
+				FROM PROD_CITAS_SOLICITUD S
+				INNER JOIN PROD_TPO_CITA  T ON S.ID_TIPO = T.ID_TPO
+				INNER JOIN EMPRESAS       C ON S.ID_EMPRESA = C.ID_EMPRESA
+				INNER JOIN PROD_ESTATUS_SOLICITUD E ON S.ID_ESTATUS = E.ID_ESTATUS
+				INNER JOIN PROD_HORARIOS_CITA H ON S.ID_HORARIO     = H.ID_HORARIO_CITA
+				INNER JOIN PROD_UNIDADES      U ON S.ID_UNIDAD		= U.ID_UNIDAD
+				LEFT JOIN PROD_HORARIOS_CITA  R ON S.ID_HORARIO2    = R.ID_HORARIO_CITA	
+				INNER JOIN SUCURSALES         A ON S.ID_SUCURSAL    = A.ID_SUCURSAL
+				WHERE S.ID_ESTATUS $sFilter ";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result	 = $query;			
+		}	
+        
+		return $result;	        
+    }     
 }
