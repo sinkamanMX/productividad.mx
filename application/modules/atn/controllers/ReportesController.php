@@ -27,7 +27,7 @@ class atn_ReportesController extends My_Controller_Action
         }    	
     }
     
-
+/*
 	public function exportoservicioAction(){
 		try{
 			$aDataForms;
@@ -41,7 +41,7 @@ class atn_ReportesController extends My_Controller_Action
 				$dataCita = $cCitas->getDataRep($this->dataIn['strInput']);
 				
 				if(count($dataCita)>0){			
-					/** PHPExcel */ 
+					// PHPExcel
 					require_once 'PHPExcel.php';		
 											
 					if (!PHPExcel_Settings::setPdfRenderer(
@@ -55,7 +55,7 @@ class atn_ReportesController extends My_Controller_Action
 						);
 					}
 					
-					/** PHPExcel_Writer_Excel2007*/ 								
+					// PHPExcel_Writer_Excel2007 								
 					$objPHPExcel = new PHPExcel();
 	 					
 					$objPHPExcel->getProperties()->setCreator("UDA")
@@ -240,9 +240,9 @@ class atn_ReportesController extends My_Controller_Action
 					$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(12);
 					$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(15);						 
 											 
-					/**
-					 * Header del Reporte
-					 **/					
+					//
+					// Header del Reporte
+					//					
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', utf8_decode('Tracking Systems de Mexico, S.A de C.V.'));
 					$objPHPExcel->getActiveSheet()->mergeCells('B3:G3');
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sHeaderBig, 'B3:J3');
@@ -288,9 +288,9 @@ class atn_ReportesController extends My_Controller_Action
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'J9:J9');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J9', ($dataCita['TIPO_CITA']));
 					$objPHPExcel->getActiveSheet()->mergeCells('J9:J9');					
-					/**
-					 * Datos Generales de la Cita
-					 **/
+					//
+					 // Datos Generales de la Cita
+					//
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B11', utf8_decode('Datos generales'));
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleOrange, 'B11:J11');	
 					$objPHPExcel->getActiveSheet()->mergeCells('B11:J11');					
@@ -363,9 +363,9 @@ class atn_ReportesController extends My_Controller_Action
 					$objPHPExcel->getActiveSheet()->mergeCells('I17:J17');
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'I17:J17');
 
-					/**
-					 * Datos del Equipo y Accesorios Instalados
-					 **/
+					//
+					// Datos del Equipo y Accesorios Instalados
+					//
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B19', utf8_decode('Datos del Equipo y Accesorios Instalados'));
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleOrange, 'B19:J19');	
 					$objPHPExcel->getActiveSheet()->mergeCells('B19:J19');
@@ -390,7 +390,7 @@ class atn_ReportesController extends My_Controller_Action
 										$objPHPExcel->getActiveSheet()->getStyle('I20:J20')
 							->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);	
 					
-					/*------------- -------------*/
+					//
 					$aDataEqForm = $cCitas->getDataSendbyForms($this->dataIn['strInput'],13);
 					$dataEquipment = Array();
 					
@@ -442,7 +442,7 @@ class atn_ReportesController extends My_Controller_Action
 			
 					$iValColumn = 0;
 					$rowControl	= 25;
-					/* ----- -----*/
+					//
 					foreach($aDataEqForm as $items){
 						if($items['ID_ELEMENTO']>223 && $items['ID_ELEMENTO'] < 244){
 							$sRespuesta="";
@@ -498,7 +498,7 @@ class atn_ReportesController extends My_Controller_Action
 					
 					$iValColumn = 0;							
 					
-					/* ----- -----*/					
+					//				
 					foreach($aDataEqForm as $items){
 						if($items['ID_ELEMENTO']>244){
 							$sRespuesta = ($items['CONTESTACION']=='SI') ?  'X': '';
@@ -545,11 +545,10 @@ class atn_ReportesController extends My_Controller_Action
 					
 					
 					$rowControl = $rowControl+10;
-					
-																			
-					/**
-					 * Pruebas del Funcionamiento del Equipo
-					 **/
+																		
+					//
+					// Pruebas del Funcionamiento del Equipo
+					//
 					
 					$aDataPruebas = $cCitas->getDataSendbyForms($this->dataIn['strInput'],14);		
 					$aDataCUDA = Array();
@@ -681,9 +680,9 @@ class atn_ReportesController extends My_Controller_Action
 					$rowControl++;
 					$rowControl++;
 
-					/**
-					 * Firmas
-					 **/
+					//
+					// Firmas
+					//
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$rowControl, utf8_decode('Firmas'));	
 					$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':J'.$rowControl);
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleOrange, 'B'.$rowControl.':J'.$rowControl);
@@ -747,47 +746,10 @@ class atn_ReportesController extends My_Controller_Action
 							$objPHPExcel->getActiveSheet()->mergeCells('C'.$rowControl.':F'.$rowControl);										
 						}
 					}
-					
-
-					
-					
-					/*
-					$exist_file = file_exists($this->realPath.$dataFirma['FINSTALADOR']); 
-
-					if ($exist_file== true && $dataFirma['FINSTALADOR']!="") {
-						$objDrawing = new PHPExcel_Worksheet_Drawing();
-						
-						$objDrawing->setName('Picture1');
-						$objDrawing->setDescription('Picture1');
-						
-						$objDrawing->setPath($this->realPath.$dataFirma['FINSTALADOR']);
-						$objDrawing->setWidth(60);
-						//$objDrawing->setOffsetX(150);
-						$objDrawing->setHeight(75);
-						//$objDrawing->setOffsetY(-160);
-
-						$objDrawing->setCoordinates('G'.$rowControl);
-						
-						$objPHPExcel->getActiveSheet()->getRowDimension('G'.$rowControl)->setRowHeight(150);
-						$objPHPExcel->getActiveSheet()->getStyle('G'.$rowControl.':J'.$rowControl)
-							->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);									
-						$objPHPExcel->getActiveSheet()->mergeCells('G'.$rowControl.':J'.$rowControl);
-
-						//$objPHPExcel->getActiveSheet()->getRowDimension($rowControl)->setRowHeight(140);										
-						$objDrawing->setWorksheet($objPHPExcel->setActiveSheetIndex(0));									    
-					}else{
-						$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$rowControl, utf8_decode('Imagen no disponible.'));								
-						$objPHPExcel->getActiveSheet()->mergeCells('G'.$rowControl.':J'.$rowControl);										
-					}	*/				
+	
 					
 					$rowControl = $rowControl+5;	
-					/*				
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$rowControl, $dataCita['NOMBRE_TECNICO']);
-					$objPHPExcel->getActiveSheet()->getStyle('B'.$rowControl.':E'.$rowControl)
-							->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);		
-					$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':E'.$rowControl);
-					*/
-						
+										
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$rowControl, $dataFirma['NCLIENTE']);
 					$objPHPExcel->getActiveSheet()->getStyle('B'.$rowControl.':E'.$rowControl)
 							->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);							
@@ -796,20 +758,21 @@ class atn_ReportesController extends My_Controller_Action
 					
 					$rowControl = $rowControl-1;
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'B'.$rowControl.':E'.$rowControl);
-					/*$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'G'.$rowControl.':J'.$rowControl);*/	
+					//$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'G'.$rowControl.':J'.$rowControl);	
     
 					$objPHPExcel->setActiveSheetIndex(0)->setShowGridLines(false);
-					$objPHPExcel->setActiveSheetIndex(0)->setPrintGridLines(false);	
-					/*
-					$filename  = "Orden_Servicio_".$this->dataIn['strInput'].".xlsx";		
+					$objPHPExcel->setActiveSheetIndex(0)->setPrintGridLines(false);
+						
+					//
+					//$filename  = "Orden_Servicio_".$this->dataIn['strInput'].".xlsx";		
 					// Redirect output to a clientÕs web browser (PDF)
-					header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-					header('Content-Disposition: attachment;filename="'.$filename.'"');
-					header('Cache-Control: max-age=0');									
+					//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+					//header('Content-Disposition: attachment;filename="'.$filename.'"');
+					//header('Cache-Control: max-age=0');									
 					
-					$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-					$objWriter->save('php://output');
-					*/
+					//$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+					//$objWriter->save('php://output');
+					//
 					
 					$filename  = "Orden_Servicio_".$dataCita['FOLIO'].".pdf";
 					header('Content-Type: application/pdf');
@@ -830,7 +793,8 @@ class atn_ReportesController extends My_Controller_Action
         	echo "Message: " . $e->getMessage() . "\n";                
 		}	
 	}
-	
+*/	
+/*
 	public function exportchecklistAction(){
 		try{
 			$aDataForms;
@@ -844,7 +808,7 @@ class atn_ReportesController extends My_Controller_Action
 				$dataCita = $cCitas->getDataRep($this->dataIn['strInput']);
 				
 				if(count($dataCita)>0){	
-					/** PHPExcel */ 
+					// PHPExcel  
 					require_once 'PHPExcel.php';		
 											
 					if (!PHPExcel_Settings::setPdfRenderer(
@@ -858,7 +822,7 @@ class atn_ReportesController extends My_Controller_Action
 						);
 					}
 					
-					/** PHPExcel_Writer_Excel2007*/ 								
+					// PHPExcel_Writer_Excel2007 								
 					$objPHPExcel = new PHPExcel();
 
 					$objPHPExcel->getProperties()->setCreator("UDA")
@@ -1045,9 +1009,9 @@ class atn_ReportesController extends My_Controller_Action
 					$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(12);
 					$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(15);										 
 
-					/**
-					 * Header del Reporte
-					 **/					
+					//
+					// Header del Reporte
+					//					
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', utf8_decode('Tracking Systems de Mexico, S.A de C.V.'));
 					$objPHPExcel->getActiveSheet()->mergeCells('B3:G3');
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sHeaderBig, 'B3:H3');
@@ -1083,17 +1047,6 @@ class atn_ReportesController extends My_Controller_Action
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F9', @$dataCita['NOMBRE_TECNICO']);
 					$objPHPExcel->getActiveSheet()->mergeCells('F9:H9');
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'F9:H9');					
-					/*
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', utf8_decode('REVISION'));
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTextBlack, 'B9:B9');					
-					
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'D9:D9');					
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E9', utf8_decode('Corporativo (Mexico)'));
-					$objPHPExcel->getActiveSheet()->mergeCells('E9:F9');	
-					
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBorderOrange, 'G9:G9');					
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H9', utf8_decode('Sucursal'));
-					$objPHPExcel->getActiveSheet()->mergeCells('H9:H9');*/
 	
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I8', utf8_decode('Folio: '));
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'J8:J8');
@@ -1106,9 +1059,9 @@ class atn_ReportesController extends My_Controller_Action
 					$objPHPExcel->getActiveSheet()->mergeCells('J9:J9');					
 
 					
-					/**
-					 * Datos Generales de la Cita
-					 **/
+					//
+					// Datos Generales de la Cita
+					//
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleOrange, 'B11:J11');						
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B11', utf8_decode('Datos generales'));	
 					$objPHPExcel->getActiveSheet()->mergeCells('B11:J11');
@@ -1159,9 +1112,9 @@ class atn_ReportesController extends My_Controller_Action
 					$objPHPExcel->getActiveSheet()->mergeCells('I17:J17');		
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'I17:J17');			
 					
-					/**
-					 * Datos de veh’culo 
-					 **/
+					//
+					// Datos de veh’culo 
+					//
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleOrange, 'B19:J19');	
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B19', utf8_decode('Datos de vehiculo '));	
 					$objPHPExcel->getActiveSheet()->mergeCells('B19:J19');					
@@ -1188,7 +1141,7 @@ class atn_ReportesController extends My_Controller_Action
 							@$dataEquipment['NO_MOTOR']= $items['CONTESTACION'];	
 						}else if($items['ID_ELEMENTO']==184){
 							@$dataEquipment['FOTO_SERIE'] = $items['CONTESTACION'];								
-						/*LAS FOTOS DE LA CARROCERIA*/	
+						//LAS FOTOS DE LA CARROCERIA	
 						}else if($items['ID_ELEMENTO']==186){
 							@$dataEquipment['FOTO_FRENTE'] = $items['CONTESTACION'];		
 						}else if($items['ID_ELEMENTO']==187){
@@ -1287,9 +1240,9 @@ class atn_ReportesController extends My_Controller_Action
 					$objPHPExcel->getActiveSheet()->mergeCells('D29:F29');	
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'D29:F29');
 
-					/**
-					 * Datos de veh’culo 
-					 **/
+					//
+					// Datos de veh’culo 
+					//
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B31', utf8_decode('Carroceria (Indicar golpes, rayones y/o danos en la pintura)'));	
 					$objPHPExcel->getActiveSheet()->mergeCells('B31:J31');
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTextOrange, 'B31:J31');
@@ -1426,9 +1379,9 @@ class atn_ReportesController extends My_Controller_Action
 											
 					//$rowControl = $rowControl+2;
 
-					/**
-					 * Checklist de revisi—n de unidad
-					 **/
+					//
+					// Checklist de revisi—n de unidad
+					//
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleOrange, 'B55:J55');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B55', utf8_decode('Checklist de revision de unidad'));	
 					$objPHPExcel->getActiveSheet()->mergeCells('B55:J55');		
@@ -1553,9 +1506,9 @@ class atn_ReportesController extends My_Controller_Action
 					$rowControl++;
 					$rowControl++;					
 					
-					/**
-					 * FIRMAS
-					 **/
+					//
+					// FIRMAS
+					//
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleOrange, 'B'.$rowControl.':J'.$rowControl);
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$rowControl, utf8_decode('Firmas'));	
 					$objPHPExcel->getActiveSheet()->mergeCells('B'.$rowControl.':J'.$rowControl);						
@@ -1660,25 +1613,20 @@ class atn_ReportesController extends My_Controller_Action
 							->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);					
 
 					
-					/*$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sBordersBottom, 'G'.$rowControl.':J'.$rowControl);*/	
-    
-					/*
-					$rowControl++;
-					$rowControl++;	*/
 					
 					
 
 					$objPHPExcel->setActiveSheetIndex(0)->setShowGridLines(false);
 					$objPHPExcel->setActiveSheetIndex(0)->setPrintGridLines(false);								
-					/*
-					$filename  = "Checklist_Orden_".$dataCita['FOLIO'].".xlsx";
-					header('Content-Type: application/pdf');
-					header('Content-Disposition: attachment;filename="'.$filename.'"');
-					header('Cache-Control: max-age=0');									
+					//
+					//$filename  = "Checklist_Orden_".$dataCita['FOLIO'].".xlsx";
+					//header('Content-Type: application/pdf');
+					//header('Content-Disposition: attachment;filename="'.$filename.'"');
+					//header('Cache-Control: max-age=0');									
 					
-					$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-					$objWriter->save('php://output');
-					*/
+					//$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+					//$objWriter->save('php://output');
+					//
 					
 					$filename  = "Checklist_Orden_".$dataCita['FOLIO'].".pdf";
 					header('Content-Type: application/pdf');
@@ -1699,6 +1647,7 @@ class atn_ReportesController extends My_Controller_Action
         	echo "Message: " . $e->getMessage() . "\n";                
 		}		
 	}
+	*/
 	
 	public function exportsearchAction(){
 		try{   						
@@ -2094,21 +2043,813 @@ class atn_ReportesController extends My_Controller_Action
 					
 					$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
 					$objWriter->save('php://output');
+										
+					//$filename  = "Reporte_Cita_".date("YmdHi").".xlsx";
+					//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+					//header('Content-Disposition: attachment;filename="'.$filename.'"');
+					//header('Cache-Control: max-age=0');			
 					
-						/*
-					$filename  = "Reporte_Cita_".date("YmdHi").".xlsx";
-					header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-					header('Content-Disposition: attachment;filename="'.$filename.'"');
-					header('Cache-Control: max-age=0');			
-					
-					$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-					$objWriter->save('php://output');
-					*/
+					//$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+					//$objWriter->save('php://output');
+					//
 				}
 			}
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
         }    
+	}	
+	
+	
+	
+	
+	public function exportoservicioAction(){
+		try{
+			$aDataForms;
+			$dataCita;
+			$validate=0;
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender();
+			$cCitas = new My_Model_Citas();
+
+			if(isset($this->dataIn['strInput'])  	 && $this->dataIn['strInput']!=""){
+				$dataCita = $cCitas->getDataRep($this->dataIn['strInput']);
+				
+				if(count($dataCita)>0){		
+
+				    require_once($this->realPath.'/html_pdf/html2pdf.class.php');
+				    
+				    ob_start();
+				    include($this->realPath.'/layouts/reports/header_report.html');
+				    $lHeader = ob_get_clean();
+				    
+				    ob_start();
+				    include($this->realPath.'/layouts/reports/footer_report.html');
+				    $lFooter = ob_get_clean();	
+		
+				    $tittle  = 'BIT&Aacute;CORA DE CONTROL DIARIO DE OPERACI&Oacute;N';		    
+				    $lHeader = str_ireplace('0titulo0', $tittle, $lHeader);							
+					
+					$content = '<page backtop="15mm" backbottom="20mm" backleft="5mm" backright="20mm">
+						    '.$lHeader.'
+						    '.$lFooter.'					   
+						    <br>
+						    <br>
+							<table width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+							    <tbody>
+							    <tr>
+							    	<!--<th width="660" colspan="6" style="text-align:center;background-color:#F2F2F2;"></th>-->
+							    	<td colspan="4"></td>
+								 	<td style="font-weight:bold;text-align:right;font-size:12px;"><b>Folio</b></td>
+								 	<td style="text-align:center;font-size:10px;border-bottom:1pt solid #FF8000;width:20%;">'.@$dataCita['FOLIO'].'</td>
+								 </tr>
+								 <tr >
+								 	<td style="font-weight:bold;text-align:right;font-size:11px;">Sucursal</td>
+								 	<td style="text-align:center;margin-left:5px;font-size:11px;border-bottom:1pt solid #FF8000;width:17%;height:20px;">'.@$dataCita['SUCURSAL'].'</td>
+								 	<td style="font-weight:bold;text-align:right;font-size:11px;">T&eacute;cnico</td>
+								 	<td style="text-align:center;font-size:11px;border-bottom:1pt solid #FF8000;width:20%;">'.@$dataCita['NOMBRE_TECNICO'].'</td>
+								 	<td style="font-weight:bold;text-align:right;font-size:11px;">Tipo de Servicio</td>
+								 	<td style="text-align:center;font-size:11px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['TIPO_CITA'].'</td>
+								 </tr>
+								 </tbody>
+							</table><br/>';
+					
+					$content .= '<div style="font-weight:bold;font-size:12px;color:#FFFFFF;background-color:#FF8000;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Datos Generales</span>'.
+								'</div>';
+					
+					$content .= '<table width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;">Nombre o Raz&oacute;n Social</td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;">'.@$dataCita['NOMBRE_CLIENTE'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Fecha de Servicio</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['FECHA_CITA'].'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;">Direcci&oacute;n</td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;">'.$dataCita['DIRECCION_CITA1'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Hora de Cita</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['HORA_CITA'].'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;"></td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;">'.$dataCita['DIRECCION_CITA2'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Hora Inicial</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['FECHA_INICIO'].'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;"></td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;"></td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Hora Final</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['FECHA_TERMINO'].'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;">Contacto</td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;">'.$dataCita['CONTACTO'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Tel&eacute;fono</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['TELEFONO_CONTACTO'].'</td>
+									</tr>
+								</table><br/>';
+					
+					$content .= '<div style="font-weight:bold;font-size:12px;color:#FFFFFF;background-color:#FF8000;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Datos del Equipo y Accesorios Instalados</span>'.
+								'</div>';	
+					
+					$aDataEqForm   = $cCitas->getDataSendbyForms($this->dataIn['strInput'],13);
+					$dataEquipment = Array();
+					
+					foreach($aDataEqForm as $items){
+						if($items['ID_ELEMENTO']==220){
+							@$dataEquipment['MARCA'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==223){
+							@$dataEquipment['IP'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==222){
+							@$dataEquipment['IMEI'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==221){
+							@$dataEquipment['MODELO'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==246){
+							@$dataEquipment['MARCA_REMP'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==249){
+							@$dataEquipment['IP_REMP'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==248){
+							@$dataEquipment['IMEI_REMP'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==247){
+							@$dataEquipment['MODELO_REMP'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==245){
+							@$dataEquipment['H_CAMBIO'] = $items['CONTESTACION'];
+							@$dataEquipment['H_CAMBIO_TXT'] = $items['DESCRIPCION'];
+						}else if($items['ID_ELEMENTO']==250){
+							@$dataEquipment['CAUSA_CAMBIO'] = $items['CONTESTACION'];
+							@$dataEquipment['TXT_CAMBIO']   = $items['DESCRIPCION'];
+						}
+					}					
+
+					$content .= '<table cellspacing="1" width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:20%;">Marca</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:20%;">Modelo</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:19%;">IMEI</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:18%;">IP</td>
+									</tr>
+									<tr>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$dataEquipment['MARCA'].'</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$dataEquipment['MODELO'].'</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$dataEquipment['IMEI'].'</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$dataEquipment['IP'].'</td>
+									</tr>
+								</table><br/>';		
+
+					if($dataCita['FECHA_TERMINO']<'2015-02-20 23:59:00'){
+						$content .= '<div style="font-weight:bold;font-size:12px;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Partes Instaladas (Marca con un X)</span>'.
+								'</div><br/>'; 
+					}else{
+						$content .= '<div style="font-weight:bold;font-size:12px;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Partes: (IN)staladas, (RE)visadas, (SU)stituidas </span>'.
+								'</div>';
+					}
+					
+					$content .= '<table cellspacing="1" width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">';
+					
+					$iValColumn = 0;
+					$iControl   = 1;
+					foreach($aDataEqForm as $items){
+						if($items['ID_ELEMENTO']>223 && $items['ID_ELEMENTO'] < 244){
+							
+							if($dataCita['FECHA_TERMINO']<'2015-02-20 23:59:00'){
+								$sRespuesta = ($items['CONTESTACION']=='SI') ?  'X': '';
+							}else{
+								$sRespuesta  = strtoupper($items['CONTESTACION']);
+								//$stringUpper = strtoupper($items['CONTESTACION']);
+								//$sRespuesta  =  substr($stringUpper, 0, 2); 
+							}
+							
+							if($iValColumn==0){
+								$content .= '<tr>';	
+							}
+							
+							$content .= '<td  style="font-weight:bold;text-align:left;font-size:11px;width:18%;"> '.$iControl.') '.$items['DESCRIPCION'].'</td>
+										 <td  style="text-align:center;margin-left:5px;font-size:10px;border:1px solid #FF8000;width:5%;">'.$sRespuesta.'</td>';
+							
+							
+							if($iValColumn==2){
+								$content .= '</tr>';
+								$iValColumn=0;
+							}else{
+								$iValColumn++;	
+							}
+														
+							$iControl++;							
+						} 
+					}	
+
+					$content .= '</tr></table>';
+					
+					$content .= '<div style="font-weight:bold;font-size:12px;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Partes Reemplazadas (Marca con un X)</span>'.
+								'</div>';	
+
+					$content .= '<table cellspacing="1" width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;">'.@$dataEquipment['H_CAMBIO_TXT'].'</td>
+										<td style="width:5%;text-align:center;margin-left:5px;font-size:10px;border:1px solid #FF8000;">'.@$dataEquipment['H_CAMBIO'].'</td>
+									</tr>
+								</table>';
+					
+					$content .= '<table cellspacing="1" width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:20%;">Marca</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:20%;">Modelo</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:19%;">IMEI</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:18%;">IP</td>
+									</tr>
+									<tr>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$dataEquipment['MARCA_REMP'].'</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$dataEquipment['MODELO_REMP'].'</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$dataEquipment['IMEI_REMP'].'</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$dataEquipment['IP_REMP'].'</td>
+									</tr>
+									<tr>
+										<td style="height:20px;font-weight:bold;text-align:left;font-size:11px;width:20%;">'.@$dataEquipment['TXT_CAMBIO'].'</td>
+										<td colspan="3" style="height:20px;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$dataEquipment['CAUSA_CAMBIO'].'</td>
+									</tr>									
+								</table>';							
+
+					$content .= '<div style="font-weight:bold;font-size:12px;color:#FFFFFF;background-color:#FF8000;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Pruebas del Funcionamiento del Equipo</span>'.
+								'</div>';	
+
+				    //
+					// Pruebas del Funcionamiento del Equipo
+					//
+					$aDataPruebas = $cCitas->getDataSendbyForms($this->dataIn['strInput'],14);		
+					$aDataCUDA = Array();
+					foreach($aDataPruebas as $items){
+						if($items['ID_ELEMENTO']==252){
+							@$aDataCUDA['FOLIO'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==253){
+							@$aDataCUDA['EJUDA'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==254){
+							@$aDataCUDA['FOLCLI'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==55){
+							@$aDataCUDA['MCLI'] = $items['CONTESTACION'];
+						}											
+					}
+					
+					$content .= '<table cellspacing="1" width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:20%;">Folio de Validacion CCUDA</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:20%;">Folio de Validacion Cliente</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:19%;">Ejecutivo de Atencion CCUDA</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:18%;">Monitorista por parte del cliente</td>
+									</tr>
+									<tr>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$aDataCUDA['FOLIO'].'</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$aDataCUDA['FOLCLI'].'</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$aDataCUDA['EJUDA'].'</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$aDataCUDA['MCLI'].'</td>
+									</tr>							
+								</table>';
+										
+					$content .= '<table cellspacing="1" width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">';
+					
+					$iValColumnTest = 0;
+					$iControlTest	= 1;
+					foreach($aDataPruebas as $items){	
+						if($items['ID_ELEMENTO']>255){
+							//$sRespuesta = ($items['CONTESTACION']=='SI') ?  'X': '';
+							$sRespuesta = $items['CONTESTACION'];
+							
+							if($iValColumnTest==0){
+								$content .= '<tr>';	
+							}
+							
+							$content .= '<td  style="font-weight:bold;text-align:left;font-size:11px;width:21%;"> '.$iControlTest.') '.$items['DESCRIPCION'].'</td>
+										 <td  style="text-align:center;margin-left:5px;font-size:10px;border:1px solid #FF8000;width:5%;">'.$sRespuesta.'</td>';
+							
+							
+							if($iValColumnTest==2){
+								$content .= '</tr>';
+								$iValColumnTest=0;
+							}else{
+								$iValColumnTest++;	
+							}
+														
+							$iControlTest++;							
+						}						 
+					}		
+
+					$content .= '</tr></table>';
+					
+					$aDataFirma = $cCitas->getDataSendbyForms($this->dataIn['strInput'],15);
+					$dataFirma  = Array();
+					
+					foreach($aDataFirma as $items){
+						if($items['ID_ELEMENTO']==274){
+							@$dataFirma['NCLIENTE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==275){
+							@$dataFirma['OBSERVACIONES'] = $items['CONTESTACION'];		
+						}else if($items['ID_ELEMENTO']==276){
+							@$dataFirma['FCLIENTE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==283){
+							@$dataFirma['FQRCODE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==282){
+							@$dataFirma['TCONTESTA'] = $items['CONTESTACION'];		
+						}
+					}					
+					$content .= '<table width="900" style="margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="height:20px;font-weight:bold;text-align:left;font-size:11px;width:20%;">Observaciones</td>
+										<td colspan="3" style="margin-left:5px;font-size:10px;border-bottom:1px solid #FF8000;width:80%;">'.@$dataFirma['OBSERVACIONES'].'</td>										
+									</tr>									
+								</table>';		
+
+					$content .= '<div style="font-weight:bold;font-size:12px;color:#FFFFFF;background-color:#FF8000;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Firmas</span>'.
+								'</div>';
+					
+					
+					$sImageFirma = '';
+					if(@$dataFirma['TCONTESTA'] == 'FIRMA'){
+						$exist_file = file_exists($this->realPath.$dataFirma['FCLIENTE']);	
+
+						if($exist_file== true && $dataFirma['FCLIENTE']!="") {	
+							$simagen     = $this->realPath.$dataFirma['FCLIENTE'];
+							$sImageFirma = '<img src="'.$simagen.'" style="width:220px;"/>';
+						}else{
+							$sImageFirma = 'imagen no disponible';
+						}
+					}else if(@$dataFirma['TCONTESTA'] == 'QR'){
+						$qrExist    = file_exists($this->realPath."/movi/".$dataFirma['FQRCODE'].".png");
+							
+						if($qrExist== true && $dataFirma['FQRCODE']!="") {
+							$simagen     = $this->realPath."/movi/".$dataFirma['FQRCODE'].".png";
+							$sImageFirma = '<img src="'.$simagen.'" style="width:220px;"/>';
+						}else{
+							$sImageFirma = 'imagen no disponible';										
+						}
+					}					
+					//<img src="'.$this->realPath.'/movi/00000001-6.png" style="width:100px;"/>
+					$content .= '<table width="900" style="margin-top:10px;border-radius: 2px; width:100%;" align="center">
+									<tr>
+										<td style="text-align:center;">
+										'.$sImageFirma.'
+										</td>
+									</tr>
+									<tr>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-top:1px solid #FF8000;width:35%;">'.@$dataFirma['NCLIENTE'].'</td>										
+									</tr>									
+								</table>';						
+				
+					$content .='</page>';
+				    try
+				    {
+						$filename  = "Orden_Servicio_".$dataCita['FOLIO'].".pdf";
+						header('Content-Type: application/pdf');
+						header('Content-Disposition: attachment;filename="'.$filename.'"');
+						header('Cache-Control: max-age=0');		
+					
+				        $html2pdf = new HTML2PDF('P', 'A4', 'es', true, 'UTF-8', 3);
+				        $html2pdf->pdf->SetDisplayMode('fullpage');
+				        $html2pdf->writeHTML($content, isset($_GET['vuehtml']));
+				        $html2pdf->Output($filename);
+				    }
+				    catch(HTML2PDF_exception $e) {
+				        echo $e;
+				        exit;
+				    } 					
+					
+				}else{
+					echo "no hay informacion";
+				}
+			}else{
+				echo "no hay informacion";
+			}			
+		}catch(Zend_Exception $e) {
+        	echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+		}	
+	}   
+	
+	
+	
+	
+
+	public function exportchecklistAction(){
+		try{
+			$aDataForms;
+			$dataCita;
+			$validate=0;
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender();
+			$cCitas = new My_Model_Citas();
+			
+			if(isset($this->dataIn['strInput'])  	 && $this->dataIn['strInput']!=""){
+				$dataCita = $cCitas->getDataRep($this->dataIn['strInput']);
+				
+				if(count($dataCita)>0){	
+					require_once($this->realPath.'/html_pdf/html2pdf.class.php');
+				    
+				    ob_start();
+				    include($this->realPath.'/layouts/reports/header_report.html');
+				    $lHeader = ob_get_clean();
+				    
+				    ob_start();
+				    include($this->realPath.'/layouts/reports/footer_report.html');
+				    $lFooter = ob_get_clean();	
+		
+				    $tittle  = 'CHECKLIST DE SERVICIO';		    
+				    $lHeader = str_ireplace('0titulo0', $tittle, $lHeader);							
+					
+					$content = '<page backtop="15mm" backbottom="20mm" backleft="5mm" backright="20mm">
+						    '.$lHeader.'
+						    '.$lFooter.'					   
+						    <br>
+						    <br>
+							<table width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+							    <tbody>
+							    <tr>
+							    	<!--<th width="660" colspan="6" style="text-align:center;background-color:#F2F2F2;"></th>-->
+							    	<td colspan="4"></td>
+								 	<td style="font-weight:bold;text-align:right;font-size:12px;"><b>Folio</b></td>
+								 	<td style="text-align:center;font-size:10px;border-bottom:1pt solid #FF8000;width:20%;">'.@$dataCita['FOLIO'].'</td>
+								 </tr>
+								 <tr >
+								 	<td style="font-weight:bold;text-align:right;font-size:11px;">Sucursal</td>
+								 	<td style="text-align:center;margin-left:5px;font-size:11px;border-bottom:1pt solid #FF8000;width:17%;height:20px;">'.@$dataCita['SUCURSAL'].'</td>
+								 	<td style="font-weight:bold;text-align:right;font-size:11px;">T&eacute;cnico</td>
+								 	<td style="text-align:center;font-size:11px;border-bottom:1pt solid #FF8000;width:20%;">'.@$dataCita['NOMBRE_TECNICO'].'</td>
+								 	<td style="font-weight:bold;text-align:right;font-size:11px;">Tipo de Servicio</td>
+								 	<td style="text-align:center;font-size:11px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['TIPO_CITA'].'</td>
+								 </tr>
+								 </tbody>
+							</table><br/>';
+					
+					$content .= '<div style="font-weight:bold;font-size:12px;color:#FFFFFF;background-color:#FF8000;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Datos Generales</span>'.
+								'</div>';
+					
+					$content .= '<table width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;">Nombre o Raz&oacute;n Social</td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;">'.@$dataCita['NOMBRE_CLIENTE'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Fecha de Servicio</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['FECHA_CITA'].'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;">Direcci&oacute;n</td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;">'.$dataCita['DIRECCION_CITA1'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Hora de Cita</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['HORA_CITA'].'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;"></td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;">'.$dataCita['DIRECCION_CITA2'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Hora Inicial</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['FECHA_INICIO'].'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;"></td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;"></td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Hora Final</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['FECHA_TERMINO'].'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:15%;">Contacto</td>
+										<td style="margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:35%;">'.$dataCita['CONTACTO'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:12%;">Tel&eacute;fono</td>
+										<td style="text-align:center;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:15%;">'.@$dataCita['TELEFONO_CONTACTO'].'</td>
+									</tr>
+								</table><br/>';					
+					
+					$content .= '<div style="font-weight:bold;font-size:12px;color:#FFFFFF;background-color:#FF8000;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Datos del Veh&iacute;culo</span>'.
+								'</div>';					
+					
+					//
+					// Datos de veh’culo 
+					//
+					$aDataEqForm = $cCitas->getDataSendbyForms($this->dataIn['strInput'],12);
+					$dataEquipment = Array();
+					
+					foreach($aDataEqForm as $items){
+						if($items['ID_ELEMENTO']==176){
+							@$dataEquipment['MARCA'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==178){
+							@$dataEquipment['MODELO'] = $items['CONTESTACION'];	
+						}else if($items['ID_ELEMENTO']==179){
+							@$dataEquipment['PLACAS'] = $items['CONTESTACION'];	
+						}else if($items['ID_ELEMENTO']==177){
+							@$dataEquipment['TIPO'] = $items['CONTESTACION'];	
+						}else if($items['ID_ELEMENTO']==180){
+							@$dataEquipment['COLOR'] = $items['CONTESTACION'];	
+						}else if($items['ID_ELEMENTO']==181){
+							@$dataEquipment['ECO'] = $items['CONTESTACION'];	
+						}else if($items['ID_ELEMENTO']==182){
+							@$dataEquipment['SERIE'] = $items['CONTESTACION'];	
+						}else if($items['ID_ELEMENTO']==183){
+							@$dataEquipment['NO_MOTOR']= $items['CONTESTACION'];	
+						}else if($items['ID_ELEMENTO']==184){
+							@$dataEquipment['FOTO_SERIE'] = $items['CONTESTACION'];								
+						//LAS FOTOS DE LA CARROCERIA	
+						}else if($items['ID_ELEMENTO']==186){
+							@$dataEquipment['FOTO_FRENTE'] = $items['CONTESTACION'];		
+						}else if($items['ID_ELEMENTO']==187){
+							@$dataEquipment['FOTO_POST'] = $items['CONTESTACION'];	
+						}else if($items['ID_ELEMENTO']==188){
+							@$dataEquipment['FOTO_IZQ'] = $items['CONTESTACION'];	
+						}else if($items['ID_ELEMENTO']==189){
+							@$dataEquipment['FOTO_DER'] = $items['CONTESTACION'];	
+						}
+					}
+					
+					
+					$simagenSerie = (file_exists($this->realPath.$dataEquipment['FOTO_SERIE']) && $dataEquipment['FOTO_SERIE']!="") ? '<img src="'.$this->realPath.$dataEquipment['FOTO_SERIE'].'" style="width:100%;height:150px;"/>'	: '<b>Imagen No Disponible</b>'; 
+					
+					$content .= '<table width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;">Marca</td>
+										<td style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:12%;">'.@$dataEquipment['MARCA'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;">Placas</td>
+										<td style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:12%;">'.@$dataEquipment['PLACAS'].'</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:35%;">No. de Serie</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;">Tipo</td>
+										<td style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:12%;">'.@$dataEquipment['TIPO'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;">Color</td>
+										<td style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:12%;">'.@$dataEquipment['COLOR'].'</td>
+										<td rowspan="6" style="font-weight:bold;text-align:center;font-size:11px;width:9%;">'.$simagenSerie.'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;">Modelo</td>
+										<td style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:12%;">'.@$dataEquipment['MODELO'].'</td>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;">No. Eco.</td>
+										<td style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;width:12%;">'.@$dataEquipment['ECO'].'</td>
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;">No. Serie</td>
+										<td colspan="2" style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1px solid #FF8000;width:10%;">'.@$dataEquipment['SERIE'].'</td>										
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;">No. de Motor</td>
+										<td colspan="2" style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1px solid #FF8000;width:10%;">'.@$dataEquipment['NO_MOTOR'].'</td>										
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;"></td>
+										<td colspan="2" style="text-align:left;margin-left:5px;font-size:10px;"></td>										
+									</tr>									
+									<tr>
+										<td style="font-weight:bold;text-align:left;font-size:11px;width:9%;"></td>
+										<td colspan="2" style="text-align:left;margin-left:5px;font-size:10px;height:60px;"></td>										
+									</tr>									
+									</table><br/>';	
+						
+					$content .= '<div style="font-weight:bold;font-size:12px;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Carrocer&iacute;a (Indicar golpes, rayones y/o da&ntilde;os en la pintura)</span>'.
+								'</div>';						
+
+					$sImagenFrente = (file_exists($this->realPath.$dataEquipment['FOTO_FRENTE']) && $dataEquipment['FOTO_FRENTE']!="") ? '<img src="'.$this->realPath.$dataEquipment['FOTO_FRENTE'].'" style="height:200px;"/>'	: '<b>Imagen No Disponible</b>'; 
+					$sImagenAtras  = (file_exists($this->realPath.$dataEquipment['FOTO_POST'])   && $dataEquipment['FOTO_POST']!="")   ? '<img src="'.$this->realPath.$dataEquipment['FOTO_POST'].'" style="height:200px;"/>'  	: '<b>Imagen No Disponible</b>';
+					$sImagenIzq    = (file_exists($this->realPath.$dataEquipment['FOTO_IZQ'])    && $dataEquipment['FOTO_IZQ']!="")    ? '<img src="'.$this->realPath.$dataEquipment['FOTO_IZQ'].'" style="height:200px;"/>'		: '<b>Imagen No Disponible</b>';
+					$sImagenDer    = (file_exists($this->realPath.$dataEquipment['FOTO_DER'])    && $dataEquipment['FOTO_DER']!="")    ? '<img src="'.$this->realPath.$dataEquipment['FOTO_DER'].'" style="height:200px;"/>'		: '<b>Imagen No Disponible</b>';
+					
+					
+					$content .= '<table width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:40%;">FRENTE</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:40%;">POSTERIOR</td>
+									</tr>									
+									<tr>
+										<td style="font-weight:bold;text-align:center;font-size:11px;height:200px;">'.$sImagenFrente.'</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;">'.$sImagenAtras.'</td>																
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:center;font-size:11px;">IZQUIERDO</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;">DERECHO</td>										
+									</tr>
+									<tr>
+										<td style="font-weight:bold;text-align:center;font-size:11px;height:200px;">'.$sImagenIzq.'</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;">'.$sImagenDer.'</td>										
+									</tr>									
+								</table><br/></page>';
+					
+					$content .= '<page backtop="20mm" backbottom="20mm" backleft="5mm" backright="20mm">
+						    '.$lHeader.'
+						    '.$lFooter.'					   
+						    <br>
+						    <br>';
+					
+					$content .= '<div style="font-weight:bold;font-size:12px;color:#FFFFFF;background-color:#FF8000;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Checklist de revisi&oacute;n de unidad</span>'.
+								'</div>';	
+					$content .= '<div style="font-weight:bold;font-size:12px;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Si la parte mencionada funciona correctamente, marque con una <img src="'.$this->realPath.'/images/assets/ok.png" style="height:12px;"> , de lo contrario marque con una X</span>'.
+								'</div>';
+				
+				$aNivel  = Array();
+				$aNivel['0'] = '0';
+				$aNivel['1/8'] = '12.5';
+				$aNivel['2/8'] = '25';
+				$aNivel['3/8'] = '37.5';
+				$aNivel['4/8'] = '50';
+				$aNivel['5/8'] = '62.5';
+				$aNivel['6/8'] = '75';
+				$aNivel['7/8'] = '87.5';
+				$aNivel['8/8'] = '100';
+				
+				$aDataRev 	  = Array();					
+					$iValColumn   = 0;
+					
+					foreach($aDataEqForm as $items){
+						if($items['ID_ELEMENTO']==209){
+							@$aDataRev['BATERIA'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==210){
+							@$aDataRev['VOLTS'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==211){
+							@$aDataRev['AMP'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==214){
+							@$aDataRev['FOTO_COMB'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==213){
+							@$aDataRev['N_COMBUS'] = $aNivel[$items['CONTESTACION']];
+						}
+					}					
+
+					$sImagenComb = (file_exists($this->realPath.$aDataRev['FOTO_COMB'])    && $aDataRev['FOTO_COMB']!="")    ? '<img src="'.$this->realPath.$aDataRev['FOTO_COMB'].'" style="width:250px;height:200px;"/>'		: '<b>Imagen No Disponible</b>';
+					
+					$content .= '<table width="900" border="0" style="border: solid 1px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:38%;">';
+										$content .= '<table cellspacing="1" width="900" style="border: solid 0px #000000;  margin-top:10px;border-radius: 2px; width:100%;" align="left">';
+										$iValColumnTest = 0;
+										$iControlTest	= 1;
+										
+										foreach($aDataEqForm as $items){
+											if($items['ID_ELEMENTO']>190 && $items['ID_ELEMENTO']<209 && $items['ID_TIPO']!=8 &&  $items['ID_TIPO']!=9 ){
+												$sRespuesta = ($items['CONTESTACION']=='SI') ?  '<img src="'.$this->realPath.'/images/assets/ok.png" style="height:10px;">': '<b>X</b>';
+					
+												if($iValColumnTest==0){
+													$content .= '<tr>';	
+												}
+												
+												$content .= '<td  style="font-weight:bold;text-align:left;font-size:11px;width:15%;"> '.$iControlTest.') '.$items['DESCRIPCION'].'</td>
+															 <td  style="text-align:center;margin-left:5px;font-size:10px;border:1px solid #FF8000;width:5%;">'.$sRespuesta.'</td>';
+												
+												
+												if($iValColumnTest==1){
+													$content .= '</tr>';
+													$iValColumnTest=0;
+												}else{
+													$iValColumnTest++;	
+												}
+												$iControlTest++;												
+											}										
+										}
+										
+										$content .= '<tr><td  style="font-weight:bold;text-align:left;font-size:11px;width:15%;">Bateria</td><td style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$aDataRev['BATERIA'].'</td>';
+										$content .= '<td  style="font-weight:bold;text-align:left;font-size:11px;width:15%;">Voltaje</td><td  style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$aDataRev['VOLTS'].' volts</td></tr>';
+										$content .= '<tr><td  style="font-weight:bold;text-align:left;font-size:11px;width:15%;">Corriente</td><td style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;">'.@$aDataRev['AMP'].' amp.</td></tr>';
+										
+										$content .= '</table>';																		
+					$content .= 		'</td>
+										<td style="font-weight:bold;text-align:center;font-size:11px;width:35%;">
+											<table border="0" style="width:100%;">
+												<tr>
+													<td style="font-weight:bold;text-align:center;font-size:11px;width:100%;">Nivel de Combustible</td>
+												</tr>
+												<tr>
+													<td style="text-align:left;"><div style="position:relative;margin-left:10%;width:100%;border:1px solid #FF8000;"> <div style="width:'.@$aDataRev['N_COMBUS'].';background-color:#FF8000;height:15px;"></div></div></td>
+												</tr>
+												<tr>
+													<td style="height:180px;">'.$sImagenComb.'</td>
+												</tr>
+											</table>
+										</td>										
+									</tr>																	
+								</table>';			
+
+					$aDataFirma = $cCitas->getDataSendbyForms($this->dataIn['strInput'],16);
+					$dataFirma  = Array();
+					
+					foreach($aDataFirma as $items){
+						if($items['ID_ELEMENTO']==216){
+							@$dataFirma['NCLIENTE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==217){
+							@$dataFirma['OBSERVACIONES'] = $items['CONTESTACION'];		
+						}else if($items['ID_ELEMENTO']==218){
+							@$dataFirma['FCLIENTE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==283){
+							@$dataFirma['FQRCODE'] = $items['CONTESTACION'];
+						}else if($items['ID_ELEMENTO']==282){
+							@$dataFirma['TCONTESTA'] = $items['CONTESTACION'];		
+						}
+					}					
+
+					$content .= '<table width="900" style="margin-top:5px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="height:20px;font-weight:bold;text-align:left;font-size:11px;">Observaciones</td>
+										<td style="text-align:left;margin-left:5px;font-size:10px;border-bottom:1pt solid #FF8000;;width:68%;">'.@$dataFirma['OBSERVACIONES'].'</td>										
+									</tr>									
+								</table><br/>';						
+					
+					$content .= '<div style="font-weight:bold;font-size:12px;color:#FFFFFF;background-color:#FF8000;width:103%;height:25px;">'.
+									'<span style="margin:5px;">Firmas</span>'.
+								'</div>';
+					
+					
+					$sImageFirma = '';
+					if(@$dataFirma['TCONTESTA'] == 'FIRMA'){
+						$exist_file = file_exists($this->realPath.$dataFirma['FCLIENTE']);	
+
+						if($exist_file== true && $dataFirma['FCLIENTE']!="") {	
+							$simagen     = $this->realPath.$dataFirma['FCLIENTE'];
+							$sImageFirma = '<img src="'.$simagen.'" style="width:220px;"/>';
+						}else{
+							$sImageFirma = 'imagen no disponible';
+						}
+					}else if(@$dataFirma['TCONTESTA'] == 'QR'){
+						$qrExist    = file_exists($this->realPath."/movi/".$dataFirma['FQRCODE'].".png");
+							
+						if($qrExist== true && $dataFirma['FQRCODE']!="") {
+							$simagen     = $this->realPath."/movi/".$dataFirma['FQRCODE'].".png";
+							$sImageFirma = '<img src="'.$simagen.'" style="width:220px;"/>';
+						}else{
+							$sImageFirma = 'imagen no disponible';										
+						}
+					}					
+					//<img src="'.$this->realPath.'/movi/00000001-6.png" style="width:100px;"/>
+					$content .= '<table width="900" style="margin-top:10px;border-radius: 2px; width:100%;" align="left">
+									<tr>
+										<td style="width:38%;">
+											<table style="width:100%;">
+												<tr>
+													<td style="text-align:center;height:120px;width:100%;">
+													'.$sImageFirma.'
+													</td>
+												</tr>
+												<tr>
+													<td style="text-align:center;margin-left:5px;font-size:10px;border-top:1px solid #FF8000;width:35%;">'.@$dataFirma['NCLIENTE'].'</td>										
+												</tr>
+											</table>										
+										</td>
+										<td style="width:40%;">
+											
+											<table style="width:100%;font-size:10px;">
+												<tr>
+													<td style="text-align:right;width:100%;">Casa Matriz</td>
+												</tr>
+												<tr>
+													<td style="text-align:right;width:100%;">Carlos Arellano No.14,  Cto. Centro Comercial</td>										
+												</tr>
+												<tr>
+													<td style="text-align:right;width:100%;">Cd. Satelite, Naucalpan , Edo. De Mex.</td>										
+												</tr>	
+												<tr>
+													<td style="text-align:right;width:100%;">C.P. 53100 Tel: (0155)53749321</td>										
+												</tr>	
+												<tr>
+													<td style="text-align:right;width:100%;">Lada sin costo (01800)221.1367</td>										
+												</tr>	
+												<tr>
+													<td style="text-align:right;width:100%;">http://www.grupouda.com.mx</td>										
+												</tr>	
+												<tr>
+													<td style="text-align:right;height:10px;"></td>										
+												</tr>																																																	
+											</table>											
+											
+										
+										</td>
+									</tr>
+								</table>';							
+					
+					$content .='</page>';
+					
+				    try
+				    {
+						$filename  = "Checklist_Orden_".$dataCita['FOLIO'].".pdf";
+						header('Content-Type: application/pdf');
+						header('Content-Disposition: attachment;filename="'.$filename.'"');
+						header('Cache-Control: max-age=0');
+					
+				        $html2pdf = new HTML2PDF('P', 'A4', 'es', true, 'UTF-8', 3);
+				        $html2pdf->pdf->SetDisplayMode('fullpage');
+				        $html2pdf->writeHTML($content, isset($_GET['vuehtml']));
+				        $html2pdf->Output($filename);
+				    }
+				    catch(HTML2PDF_exception $e) {
+				        echo $e;
+				        exit;
+				    } 					
+				}else{
+					echo "no hay informacion";
+				}
+			}else{
+				echo "no hay informacion";
+			}				
+		}catch(Zend_Exception $e) {
+        	echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+		}		
 	}	
 }
