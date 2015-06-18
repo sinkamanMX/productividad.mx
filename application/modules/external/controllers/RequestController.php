@@ -17,7 +17,7 @@ class external_RequestController extends My_Controller_Action
 			$sessions = new My_Controller_AuthContact();
 			$perfiles = new My_Model_Perfiles();
 	        if(!$sessions->validateSession()){
-	            $this->_redirect('/external/login/index');		
+	            $this->_redirect('/external/login/index');
 			}
 			
 			$this->dataIn 			= $this->_request->getParams();
@@ -83,6 +83,7 @@ class external_RequestController extends My_Controller_Action
 			$sHorario2		= '';
 			$sUnidad		= '';
 			$aLogs			= Array();
+			$cHtmlMail		= new My_Controller_Htmlmailing();		
 			
 			$this->dataIn['inputCliente'] = $this->view->dataUser['ID_CLIENTE'];			
 			$this->dataIn['inputUserQr']  = $this->view->dataUser['ID_CONTACTO_QR'];
@@ -182,20 +183,8 @@ class external_RequestController extends My_Controller_Action
 							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
 							$sHorarioLog  = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<b>Horario 2</b:'.$dataInfo['N_HORARIO2'].'<br/>': '';							
 							
-							$sSubject 	= 'Solicitud Aceptada por el usuario';
-							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';
-							$sBody     .= 'La solicitud ha sido aceptada con la siguiente informaci&oacute;n:<br/>'.
-										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
-											'<tr><td><b>Horario</b></td><td>'.$dataInfo['N_HORARIO'].'</td></tr>'.
-											$sHorario2.
-											'<tr><td><b>Tipo de Cita</b></td><td>'.$dataInfo['N_TIPO'].'</td></tr>'.	
-											'<tr><td><b>Unidad</b></td><td>'.$dataInfo['N_UNIDAD'].'</td></tr>'.		
-											'<tr><td><b>Informaci&oacute;n de la Unidad</b></td><td>'.$dataInfo['INFORMACION_UNIDAD'].'</td></tr>'.
-											'<tr><td><b>Comentarios</b></td><td>'.$dataInfo['COMENTARIO'].'</td></tr>'.								  
-										  'Para revisarlo, debes de ingresar al siguiente link:<br/>'.
-										  '<a href="http://192.168.6.23">Da Click Aqui</a><br/>'.
-										  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
-										  '<b> http://192.168.6.23</b>';
+							$cHtmlMail->acceptuserExternalSolicitud($dataInfo,$this->view->dataUser);
+							
 							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Solicitud Aceptada',
 											'sDescripcion' 	=> 'La solicitud ha sido aceptada por el usuario',
@@ -227,20 +216,8 @@ class external_RequestController extends My_Controller_Action
 							$sHorario	= $dataInfo['ID_HORARIO'];	
 							$sUnidad	= $dataInfo['ID_UNIDAD'];
 
-							$sSubject 	= 'Solicitud Modificada por el usuario';
-							$sBody     .= 'La solicitud ha sido modificada con la siguiente informaci&oacute;n, favor de validarla:<br/>'.
-										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
-											'<tr><td><b>Horario</b></td><td>'.$dataInfo['N_HORARIO'].'</td></tr>'.
-											$sHorario2.
-											'<tr><td><b>Tipo de Cita</b></td><td>'.$dataInfo['N_TIPO'].'</td></tr>'.	
-											'<tr><td><b>Unidad</b></td><td>'.$dataInfo['N_UNIDAD'].'</td></tr>'.		
-											'<tr><td><b>Informaci&oacute;n de la Unidad</b></td><td>'.$dataInfo['INFORMACION_UNIDAD'].'</td></tr>'.			
-											'<tr><td><b>Comentarios</b></td><td>'.$dataInfo['COMENTARIO'].'</td></tr></table><br/>'.					  
-										  'Para revisarlo, debes de ingresar al siguiente link:<br/>'.
-										  '<a href="http://192.168.6.23">Da Click Aqui</a><br/>'.
-										  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
-										  '<b> http://192.168.6.23</b>';	
-											
+							$cHtmlMail->changeSolicitudExt($dataInfo,$this->view->dataUser);
+
 							$aLog = Array ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Cambio en la Solicitud',
 											'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones ,
@@ -276,19 +253,7 @@ class external_RequestController extends My_Controller_Action
 							$sUnidad	= $dataInfo['ID_UNIDAD'];
 							
 							if($sModificaciones!=''){
-								$sSubject 	= 'Cambio en Solicitud de Cita';
-								$sBody  	= 'El cliente <b>'.$this->view->dataUser['RAZON_SOCIAL'].'</b> ha realizado un cambio en la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>'.
-											  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
-												'<tr><td><b>Horario</b></td><td>'.$dataInfo['N_HORARIO'].'</td></tr>'.
-												$sHorario2.
-												'<tr><td><b>Tipo de Cita</b></td><td>'.$dataInfo['N_TIPO'].'</td></tr>'.	
-												'<tr><td><b>Unidad</b></td><td>'.$dataInfo['N_UNIDAD'].'</td></tr>'.		
-												'<tr><td><b>Informaci&oacute;n de la Unidad</b></td><td>'.$dataInfo['INFORMACION_UNIDAD'].'</td></tr>'.			
-												'<tr><td><b>Comentarios</b></td><td>'.$dataInfo['COMENTARIO'].'</td></tr></table><br/>'.							
-											  'Para revisarlo, debes de ingresar al siguiente link:<br/>'.
-											  '<a href="http://192.168.6.23">Da Click Aqui</a><br/>'.
-											  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
-											  '<b> http://192.168.6.23</b>';	
+								$cHtmlMail->changeSolicitudExt($dataInfo,$this->view->dataUser);
 								$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 												'sAction' 		=> 'Cambio en la Solicitud',
 												'sDescripcion' 	=> 'Modificaciones :  <br>'.$sModificaciones ,
@@ -333,7 +298,7 @@ class external_RequestController extends My_Controller_Action
 			}	
 			
 			if($this->resultop=='okRegister'){
-				$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+				/*$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
 				$aDataAdmin = $config->getOption('admin');					
 				$cMailing   = new My_Model_Mailing();
 				$aMailer    = Array(
@@ -347,8 +312,10 @@ class external_RequestController extends My_Controller_Action
 					'inputFromEmail' 	 => 'Siames - Grupo UDA'						
 				);	
 
-				$cMailing->insertRow($aMailer);								
-				//$cFunctions->sendMailAdmins($sSubject,$sBody);	
+				$cMailing->insertRow($aMailer);		
+				*/						
+				//$cFunctions->sendMailAdmins($sSubject,$sBody);
+					
 				$this->_redirect('/external/request/index');				
 			}
 

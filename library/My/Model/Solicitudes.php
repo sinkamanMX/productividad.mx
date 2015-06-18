@@ -38,7 +38,8 @@ class My_Model_Solicitudes extends My_Db_Table
 		$this->query("SET NAMES utf8",false); 
     	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.RAZON_SOCIAL AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS,
 				CONCAT(Q.NOMBRE,' ',Q.APELLIDOS) AS N_CONTACTO , Q.EMAIL, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
-				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD
+				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,
+				S.CALLE,S.COLONIA, S.MUNICIPIO, S.ESTADO,S.CP
 				FROM PROD_CITAS_SOLICITUD S
 				INNER JOIN PROD_TPO_CITA  T ON S.ID_TIPO = T.ID_TPO
 				INNER JOIN PROD_CLIENTES  C ON S.ID_CLIENTE = C.ID_CLIENTE
@@ -186,7 +187,8 @@ class My_Model_Solicitudes extends My_Db_Table
 		$result= Array();
 		$sFilter = ($iStatus==0) ?  ' = 1' : ' IN ('.$iStatus.') ';
     	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.NOMBRE AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
-				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,A.`DESCRIPCION` AS N_SUCURSAL
+				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,A.`DESCRIPCION` AS N_SUCURSAL,
+				IF(S.ID_TIPO_EQUIPO IS NULL,'--',D.NOMBRE) AS N_TEQUIPO
 				FROM PROD_CITAS_SOLICITUD S
 				INNER JOIN PROD_TPO_CITA  T ON S.ID_TIPO = T.ID_TPO
 				INNER JOIN EMPRESAS       C ON S.ID_EMPRESA = C.ID_EMPRESA
@@ -195,6 +197,7 @@ class My_Model_Solicitudes extends My_Db_Table
 				INNER JOIN PROD_UNIDADES      U ON S.ID_UNIDAD		= U.ID_UNIDAD
 				LEFT JOIN PROD_HORARIOS_CITA  R ON S.ID_HORARIO2    = R.ID_HORARIO_CITA	
 				INNER JOIN SUCURSALES         A ON S.ID_SUCURSAL    = A.ID_SUCURSAL
+				LEFT JOIN EQUIPOS_UDA         D ON S.ID_TIPO_EQUIPO = D.ID_EQUIPO
 				WHERE S.ID_EMPRESA = $idCliente AND S.ID_ESTATUS $sFilter ";
 		$query   = $this->query($sql);
 		if(count($query)>0){
@@ -218,9 +221,15 @@ class My_Model_Solicitudes extends My_Db_Table
 				ID_UNIDAD		=  ".$data['inputUnidad']." ,
 				ID_HORARIO		=  ".$data['inputHorario']." ,
 				ID_SUCURSAL		=  ".$data['inputPlace']." ,
+				ID_TIPO_EQUIPO  =  ".$data['inputTequipo']." ,
 				$sFilter
 				INFORMACION_UNIDAD= '".$data['inputInfo']."',
-				COMENTARIO		= '".$data['inputComment']."',		
+				COMENTARIO		= '".$data['inputComment']."',
+				CALLE			= '".$data['inputCalle']."',
+				COLONIA			= '".$data['inputColonia']."',
+				MUNICIPIO		= '".$data['inputMunicipio']."',
+				ESTADO			= '".$data['inputEstado']."',
+				CP				= '".$data['inputCP']."',
 				FECHA_CITA		= '".$data['inputFechaIn']."',
 				FECHA_CREADO 	=  CURRENT_TIMESTAMP";
         try{            
@@ -252,6 +261,11 @@ class My_Model_Solicitudes extends My_Db_Table
         	$sFilter .= "ID_ESTATUS		=  ".$data['inputEstatus']." ,
         				 ID_HORARIO		=  ".$data['inputHorario']." ,
         				 ID_SUCURSAL	=  ".$data['inputPlace']." ,
+						CALLE			= '".$data['inputCalle']."',
+						COLONIA			= '".$data['inputColonia']."',
+						MUNICIPIO		= '".$data['inputMunicipio']."',
+						ESTADO			= '".$data['inputEstado']."',
+						CP				= '".$data['inputCP']."',
         				 FECHA_CITA		= '".$data['inputFechaIn']."'";
         }else{
         	$sFilter .= "ID_UNIDAD		=  ".$data['inputUnidad']." ,
@@ -259,6 +273,11 @@ class My_Model_Solicitudes extends My_Db_Table
 						 ID_HORARIO		=  ".$data['inputHorario']." ,
 						 INFORMACION_UNIDAD= '".$data['inputInfo']."',								
 						 COMENTARIO		= '".$data['inputComment']."',
+						 CALLE			= '".$data['inputCalle']."',
+						 COLONIA		= '".$data['inputColonia']."',
+						 MUNICIPIO		= '".$data['inputMunicipio']."',
+						 ESTADO			= '".$data['inputEstado']."',
+						 CP				= '".$data['inputCP']."',
 						 FECHA_CITA		= '".$data['inputFechaIn']."'";
         }
         
@@ -283,7 +302,8 @@ class My_Model_Solicitudes extends My_Db_Table
     	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.RAZON_SOCIAL AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS,
 				CONCAT(Q.NOMBRE,' ',Q.APELLIDOS) AS N_CONTACTO , Q.EMAIL, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
 				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,
-				CONCAT(L.`CALLE`,',',L.`COLONIA`,',',L.`MUNICIPIO`,',',L.`ESTADO`,',',L.`CP`) AS DIRECCION
+				CONCAT(S.CALLE,',',S.COLONIA,',',S.MUNICIPIO,',',S.ESTADO,',',S.CP) AS DIRECCION,
+				D.NOMBRE AS N_EQUIPO								
 				FROM PROD_CITAS_SOLICITUD S
 				INNER JOIN PROD_TPO_CITA  T ON S.ID_TIPO = T.ID_TPO
 				INNER JOIN EMPRESAS       C ON S.ID_EMPRESA = C.ID_EMPRESA
@@ -291,8 +311,9 @@ class My_Model_Solicitudes extends My_Db_Table
 				INNER JOIN USUARIOS       Q ON S.ID_CONTACTO_QR = Q.ID_USUARIO
 				INNER JOIN PROD_HORARIOS_CITA H ON S.ID_HORARIO     = H.ID_HORARIO_CITA
 				INNER JOIN PROD_UNIDADES      U ON S.ID_UNIDAD		= U.ID_UNIDAD
-				LEFT JOIN PROD_HORARIOS_CITA  R ON S.ID_HORARIO2    = R.ID_HORARIO_CITA		
-				LEFT JOIN SUCURSALES          L ON S.ID_SUCURSAL    = L.ID_SUCURSAL
+				LEFT JOIN PROD_HORARIOS_CITA  R ON S.ID_HORARIO2    = R.ID_HORARIO_CITA	
+				INNER JOIN EQUIPOS_UDA        D ON S.ID_TIPO_EQUIPO        = D.ID_EQUIPO	
+				/*LEFT JOIN SUCURSALES          L ON S.ID_SUCURSAL    = L.ID_SUCURSAL*/
                 WHERE S.$this->_primary = $idObject LIMIT 1";	
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -307,7 +328,9 @@ class My_Model_Solicitudes extends My_Db_Table
 		$result= Array();
 		$sFilter = ($iStatus==0) ?  ' = 1' : ' IN ('.$iStatus.') ';
     	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.NOMBRE AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
-				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,A.`DESCRIPCION` AS N_SUCURSAL
+				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,A.`DESCRIPCION` AS N_SUCURSAL,
+				IF(S.ID_TIPO_EQUIPO IS NULL,'--',D.NOMBRE) AS N_TEQUIPO,
+				CONCAT(S.CALLE,',',S.COLONIA,',',S.MUNICIPIO,',',S.ESTADO,',',S.CP) AS N_DIR						
 				FROM PROD_CITAS_SOLICITUD S
 				INNER JOIN PROD_TPO_CITA  T ON S.ID_TIPO = T.ID_TPO
 				INNER JOIN EMPRESAS       C ON S.ID_EMPRESA = C.ID_EMPRESA
@@ -316,6 +339,7 @@ class My_Model_Solicitudes extends My_Db_Table
 				INNER JOIN PROD_UNIDADES      U ON S.ID_UNIDAD		= U.ID_UNIDAD
 				LEFT JOIN PROD_HORARIOS_CITA  R ON S.ID_HORARIO2    = R.ID_HORARIO_CITA	
 				INNER JOIN SUCURSALES         A ON S.ID_SUCURSAL    = A.ID_SUCURSAL
+				LEFT JOIN EQUIPOS_UDA         D ON S.ID_TIPO_EQUIPO = D.ID_EQUIPO
 				WHERE S.ID_ESTATUS $sFilter ";
 		$query   = $this->query($sql);
 		if(count($query)>0){

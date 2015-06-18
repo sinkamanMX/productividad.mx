@@ -38,7 +38,8 @@ class My_Model_Contactos extends My_Db_Table
       	$this->query("SET NAMES utf8",false); 
         
 		$result= Array();
-    	$sql ="SELECT 6 AS ID_PERFIL,  O.*,Q.*,C.*, O.EMAIL AS S_MAIL
+    	$sql ="SELECT 6 AS ID_PERFIL,  O.*,Q.*,C.*, O.EMAIL AS S_MAIL, C.RAZON_SOCIAL AS N_EMPRESA,
+				CONCAT(O.NOMBRE,' ',O.APELLIDOS) AS N_USER    	
 				FROM PROD_QR_CONTACTOS O
 				INNER JOIN PROD_CLIENTES_QR Q ON O.ID_QR = Q.ID_QR
 				INNER JOIN PROD_CLIENTES    C ON Q.COD_CLIENTE = C.COD_CLIENTE

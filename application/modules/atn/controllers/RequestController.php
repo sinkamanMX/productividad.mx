@@ -84,6 +84,7 @@ class atn_RequestController extends My_Controller_Action
 			$aHorarios		= $cHorariosCita->getHorarios();
 			$cLog			= new My_Model_LogSolicitudes();
 			$aLogs			= Array();
+			$cHtmlMail		= new My_Controller_Htmlmailing();	
 			
 			$sTipo			= '';
 			$sHorario		= '';
@@ -133,20 +134,8 @@ class atn_RequestController extends My_Controller_Action
 						$sSubject 	= 'Revision de Solicitud de Cita';
 						
 						if($this->dataIn['bOperation']=='accept'){
-							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';
-							$sBody     .= 'La solicitud ha sido aceptada con la siguiente informaci&oacute;n:<br/>'.
-										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
-											'<tr><td><b>Horario</b></td><td>'.$dataInfo['N_HORARIO'].'</td></tr>'.
-											$sHorario2.
-											'<tr><td><b>Tipo de Cita</b></td><td>'.$dataInfo['N_TIPO'].'</td></tr>'.	
-											'<tr><td><b>Unidad</b></td><td>'.$dataInfo['N_UNIDAD'].'</td></tr>'.		
-											'<tr><td><b>Informaci&oacute;n de la Unidad</b></td><td>'.$dataInfo['INFORMACION_UNIDAD'].'</td></tr>'.
-											'<tr><td><b>Comentarios</b></td><td>'.$dataInfo['COMENTARIO'].'</td></tr>'.			
-											'<tr><td><b>Comentarios CCUDA</b></td><td>'.$dataInfo['REVISION'].'</td></tr></table><br/>'.					  
-										  'Para revisarlo, debes de ingresar al siguiente link:<br/>'.
-										  '<a href="http://siames.grupouda.com.mx">Da Click Aqui</a><br/>'.
-										  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
-										  '<b> http://siames.grupouda.com.mx</b>';
+							$cHtmlMail->acceptAdminSolicitud($dataInfo,$this->view->dataUser);		
+											
 							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Solicitud Aceptada',
 											'sDescripcion' 	=> 'La solicitud ha sido aceptada por CCUDA',
@@ -154,41 +143,14 @@ class atn_RequestController extends My_Controller_Action
 							$cLog->insertRow($aLog);											
 						}else{
 							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
-							
-							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';
-							$sBody     .= 'La solicitud ha sido modificada con la siguiente informaci&oacute;n, favor de validarla:<br/>'.
-										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
-											'<tr><td><b>Horario</b></td><td>'.$dataInfo['N_HORARIO'].'</td></tr>'.
-											$sHorario2.
-											'<tr><td><b>Tipo de Cita</b></td><td>'.$dataInfo['N_TIPO'].'</td></tr>'.	
-											'<tr><td><b>Unidad</b></td><td>'.$dataInfo['N_UNIDAD'].'</td></tr>'.		
-											'<tr><td><b>Informaci&oacute;n de la Unidad</b></td><td>'.$dataInfo['INFORMACION_UNIDAD'].'</td></tr>'.			
-											'<tr><td><b>Comentarios</b></td><td>'.$dataInfo['COMENTARIO'].'</td></tr></table><br/>'.
-											'<tr><td><b>Comentarios CCUDA</b></td><td>'.$dataInfo['REVISION'].'</td></tr></table><br/>'.					  
-										  'Para revisarlo, debes de ingresar al siguiente link:<br/>'.
-										  '<a href="http://siames.grupouda.com.mx">Da Click Aqui</a><br/>'.
-										  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
-										  '<b> http://siames.grupouda.com.mx</b>';
-																		
+							$cHtmlMail->changeSolicitudExt($dataInfo,$this->view->dataUser);
+										
 							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Cambio en la Solicitud',
 											'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones,
 											'sOrigen'		=> 'CCUDA');
 							$cLog->insertRow($aLog);																		
 						}
-						
-						$aMailer    = Array(
-							'inputIdSolicitud'	 => $this->idToUpdate,
-							'inputDestinatarios' => $dataInfo['N_CONTACTO'],
-							'inputEmails' 		 => $dataInfo['EMAIL'],
-							'inputTittle' 		 => $sSubject,
-							'inputBody' 		 => $sBody,
-							'inputLiveNotif'	 => 0,
-							'inputFromName' 	 => 'contacto@grupouda.com.mx',
-							'inputFromEmail' 	 => 'Siames - Grupo UDA'						
-						);	
-	
-						$cMailing->insertRow($aMailer);
 						
 						$this->resultop = 'okRegister';
 						$this->_redirect('/atn/request/index');
@@ -227,18 +189,22 @@ class atn_RequestController extends My_Controller_Action
 			$cLog			= new My_Model_LogSolicitudes();
 			$cEstatus		= new My_Model_EstatusSolicitud();
 			$cSucursales	= new My_Model_Sucursales();			
-			$aEstatus 		= $cEstatus->getCbo(1);						
+			$aEstatus 		= $cEstatus->getCbo(1);	
+			$cTipoEquipo	= new My_Model_Tequipos();					
 			$sEstatus		= '';
 			
-			$aTipoServicio	= $cCitas->getCboTipoServicio(true);
+			$aTipoServicio	= $cCitas->getCboTipoServicio();
 			$aHorarios		= $cHorariosCita->getHorarios();
 			$aUnidades		= $cUnidades->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
 			$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
+			$cHtmlMail		= new My_Controller_Htmlmailing();	
+			$aTipoEquipo	= $cTipoEquipo->getCbo();	
 			
 			$sTipo			= '';
 			$sHorario		= '';
 			$sUnidad		= '';
 			$sSucursal		= '';
+			$sTequipo		= '';
 			$aLogs			= Array();
 			
         	$this->dataIn['inputIdEmpresa'] = $this->view->dataUser['ID_EMPRESA'];
@@ -251,6 +217,7 @@ class atn_RequestController extends My_Controller_Action
 				$sHorario	= $dataInfo['ID_HORARIO'];
 				$sUnidad	= $dataInfo['ID_UNIDAD'];
 				$sSucursal  = $dataInfo['ID_SUCURSAL'];
+				$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];
 			}			
 					
 			$sModificaciones = '';
@@ -285,6 +252,8 @@ class atn_RequestController extends My_Controller_Action
 						$sSubject 	= 'Revision de Solicitud de Cita';
 						
 						if($this->dataIn['bOperation']=='accept'){
+							
+							/*$cHtmlMail		= new My_Controller_Htmlmailing();	
 							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';
 							$sBody     .= 'La solicitud ha sido aceptada con la siguiente informaci&oacute;n:<br/>'.
 										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
@@ -299,14 +268,18 @@ class atn_RequestController extends My_Controller_Action
 										  '<a href="http://siames.grupouda.com.mx">Da Click Aqui</a><br/>'.
 										  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
 										  '<b> http://siames.grupouda.com.mx</b>';
+											*/
+							$cHtmlMail->acceptAdminSolicitudArrenda($dataInfo,$this->view->dataUser);
+							
 							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Solicitud Aceptada',
 											'sDescripcion' 	=> 'La solicitud ha sido aceptada por CCUDA',
 											'sOrigen'		=> 'CCUDA');
-							$cLog->insertRow($aLog);											
+							$cLog->insertRow($aLog);			
 						}else{
 							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
-							
+							$cHtmlMail->changeSolicitudArrenda($dataInfo,$this->view->dataUser);
+							/*
 							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';
 							$sBody     .= 'La solicitud ha sido modificada con la siguiente informaci&oacute;n, favor de validarla:<br/>'.
 										  '<table><tr><td><b>Fecha</b></td><td>'.$dataInfo['FECHA_CITA'].'</td></tr>'.	
@@ -321,6 +294,7 @@ class atn_RequestController extends My_Controller_Action
 										  '<a href="http://siames.grupouda.com.mx">Da Click Aqui</a><br/>'.
 										  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
 										  '<b> http://siames.grupouda.com.mx</b>';
+											*/
 																		
 							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Cambio en la Solicitud',
@@ -328,7 +302,7 @@ class atn_RequestController extends My_Controller_Action
 											'sOrigen'		=> 'CCUDA');
 							$cLog->insertRow($aLog);																		
 						}
-						
+						/*
 						$aMailer    = Array(
 							'inputIdSolicitud'	 => $this->idToUpdate,
 							'inputDestinatarios' => $dataInfo['N_CONTACTO'],
@@ -340,17 +314,17 @@ class atn_RequestController extends My_Controller_Action
 							'inputFromEmail' 	 => 'Siames - Grupo UDA'						
 						);	
 	
-						$cMailing->insertRow($aMailer);
+						$cMailing->insertRow($aMailer);*/
 						
 						$this->resultop = 'okRegister';
-						$this->_redirect('/atn/request/index');
+						//$this->_redirect('/atn/request/index');
 					}					
 				}else{
 					$this->errors['status'] = 'no-info';
 				}	
 			}			
 			
-				
+			$this->view->aTequipos	= $cFunctions->selectDb($aTipoEquipo,$sTequipo);	
 			$this->view->aUnidades	= $cFunctions->selectDb($aUnidades,$sUnidad);
 			$this->view->aHorarioCita = $cFunctions->selectDb($aHorarios,$sHorario);					
 			$this->view->aTipos		= $cFunctions->selectDb($aTipoServicio,$sTipo);

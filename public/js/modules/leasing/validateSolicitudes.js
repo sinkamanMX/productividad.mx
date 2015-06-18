@@ -1,9 +1,12 @@
 $().ready(function() {
+    $("#btnNewDir").click(function() { openDirection(); return false; });
+
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
     var dateInter  = parseInt(nowTemp.getMonth())+1;  
     var todayMonth = (dateInter<10) ? "0"+dateInter : dateInter;
-    var todayDay   = (nowTemp.getDate()<10) ? "0"+nowTemp.getDate(): nowTemp.getDate();        
+    var inDate     = nowTemp.getDate() + 1;
+    var todayDay   = (inDate<10) ? "0"+inDate: inDate;          
 
     if($("#inputFechaIn").val()==""){
       $("#inputFechaIn").val(nowTemp.getFullYear()+"-"+todayMonth+"-"+todayDay);      
@@ -25,7 +28,15 @@ $().ready(function() {
             inputUnidad     :      "required",    
             inputComment    :      "required",
             inputHorario    :      "required",
-            inputPlace      :       "required"
+            inputPlace      :      "required",
+            inputTequipo    :      "required",
+            inputCalle      :      "required",
+            inputColonia    :      "required",
+            inputMunicipio  :      "required",
+            inputEstado     :      "required",
+            inputCP         :      "required",
+            inputDescripcion:      "required",
+
         },
         messages: {                          
             inputFechaIn    :      "Campo Requerido",        
@@ -33,13 +44,22 @@ $().ready(function() {
             inputUnidad     :      "Campo Requerido",        
             inputComment    :      "Campo Requerido",
             inputHorario    :      "Campo Requerido",
-            inputPlace      :      "Selecciona una unidad"
+            inputPlace      :      "Selecciona una unidad",
+            inputTequipo    :      "Campo Requerido",
+            inputCalle      :      "Campo Requerido",
+            inputColonia    :      "Campo Requerido",
+            inputMunicipio  :      "Campo Requerido",
+            inputEstado     :      "Campo Requerido",
+            inputCP         :      "Campo Requerido",
+            inputDescripcion:      "Campo Requerido",
         },
         submitHandler: function(form) {
             form.submit();
         }
     }); 
 
+    $("#inputDescripcion").rules("remove", "required");  
+    
     $('.dataTable').dataTable( {
         "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
         "sPaginationType": "bootstrap",
@@ -70,40 +90,13 @@ $().ready(function() {
     });  
 
     $('[data-toggle="tooltip"]').tooltip();  
+
 });
 
 function backToMain(){
   var mainPage = $("#hRefLinkMain").val();
   location.href= mainPage;
 }
-/*
-function getInfoUnit(inputIdValue){
-    if(inputIdValue>0){
-        $("#infoUnit").html('<img src="/images/assets/loading.gif" alt="loading gif"/>'); 
-        $.ajax({
-            url: "/external/request/getinfodata",
-            type: "GET",
-            dataType : 'json',
-            data: { catId: inputIdValue },
-            success: function(data) {
-                var result = data.answer; 
-
-                if(result=='ok'){
-                    var sTableInfo = '<b>Ult.reporte:</b> '+ data.uReporte  + '<br/>'+
-                                    '<b>Placas:</b> '      + data.Placas    + '<br/>'+
-                                    '<b>Eco:</b> '         + data.Eco       + '<br/>'+
-                                    '<b>Ip:</b> '          + data.Ip        + '<br/>'+
-                                    '<b>Tipo Equipo:</b> ' + data.TipoE     + '<br/>'+
-                                    '<b>Tipo Unidad:</b> ' + data.Tunidad   + '<br/>';
-                    $("#infoUnit").html(sTableInfo);
-                    $("#inputInfo").html(sTableInfo);
-                }else{
-                  alert("La unidad no tiene pocisión válida");
-                }
-            }
-        });
-    }
-}*/
 
 function modifyFields(){
     $("#btnSaveOk").hide('slow');
@@ -134,8 +127,74 @@ function updateUnits(){
     $("#optReg").val("updateUnits");
     $("#bOperation").val("");     
 
-    /*
-    $("#infoUnit").rules("remove", "required");   */
-
     $("#FormData").submit();    
 }
+
+function newdireccion(inputValue){
+    if(inputValue=="-1"){
+        $("#inputCalle").val("");
+        $("#inputColonia").val("");
+        $("#inputMunicipio").val("");
+        $("#inputEstado").val("");
+        $("#inputCP").val("");
+
+        $("#divDireNew").show('slow');   
+        $("#divSaveDir").show('slow');   
+        $(".inputDir").prop('readonly', false);
+    }else{
+        $("#divSaveDir").hide('slow');   
+        $("#divDireNew").hide('slow'); 
+        $(".inputDir").prop('readonly', true);
+        var iValue = parseInt(inputValue);
+        if(inputValue>0){
+            getInfoDir(inputValue);
+        }
+    }
+}
+
+function getInfoDir(inputIdValue){
+    if(inputIdValue>0){
+        $("#infoUnit").html('<img src="/images/assets/loading.gif" alt="loading gif"/>'); 
+        $.ajax({
+            url: "/leasing/request/getinfodir",
+            type: "GET",
+            dataType : 'json',
+            data: { catId: inputIdValue },
+            success: function(data) {
+                var result = data.answer; 
+                var values = data.aData;
+
+                if(result=='ok'){
+                    $("#inputCalle").val(values.CALLE);
+                    $("#inputColonia").val(values.COLONIA);
+                    $("#inputMunicipio").val(values.MUNICIPIO);
+                    $("#inputEstado").val(values.ESTADO);
+                    $("#inputCP").val(values.CP);
+
+                    $("#divDireNew").show('slow');
+                    $("#infoUnit").html("");
+                }else{
+                  alert("No hay direccion");
+                }
+            }
+        });
+    }
+}
+
+function addNameDir(){
+    var option = $("#chkSaveDir").is(':checked');
+    if(option){
+        $("#inputDescripcion").rules("add",  {required:true});
+        $("#divNameDes").show('slow');
+    }else{
+        $("#divNameDes").hide('slow');
+        $("#inputDescripcion").val('');
+        $("#inputDescripcion").rules("remove", "required");  
+    }
+}
+
+/*
+function openDirection(){
+    $('#iFrameSearch').attr('src','/main/tequipos/newdireccion');
+    $("#MyModalSearch").modal("show");
+}*/

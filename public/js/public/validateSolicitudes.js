@@ -3,7 +3,8 @@ $().ready(function() {
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
     var dateInter  = parseInt(nowTemp.getMonth())+1;  
     var todayMonth = (dateInter<10) ? "0"+dateInter : dateInter;
-    var todayDay   = (nowTemp.getDate()<10) ? "0"+nowTemp.getDate(): nowTemp.getDate();        
+    var inDate     = nowTemp.getDate() + 1;
+    var todayDay   = (inDate<10) ? "0"+inDate: inDate;           
 
     if($("#inputFechaIn").val()==""){
       $("#inputFechaIn").val(nowTemp.getFullYear()+"-"+todayMonth+"-"+todayDay);      

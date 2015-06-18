@@ -92,19 +92,6 @@
                                                 </div>              
                                             </div>
                                             <div class="span6">
-                                                <div class="control-group">
-                                                    <label class="control-label">Horario<span class="required">*</span></label>
-                                                    <div class="controls">
-                                                        <select class="m-wrap" name="inputHorario" id="inputHorario" <?php echo $disabled;?> >
-                                                            <option value="">Seleccionar una opción</option>
-                                                            <?php echo $this->aHorarioCita;?>
-                                                        </select>
-                                                    </div>
-                                                </div>                              
-                                            </div>                                    
-                                        </div>  
-                                        <div class="row row-margin-left25">                                       
-                                            <div class="span6">
                                                 <div class="control-group">                                            
                                                     <label class="control-label">Tipo Cita<span class="required">*</span></label>
                                                     <div class="controls">
@@ -113,7 +100,20 @@
                                                             <?php echo $this->aTipos;?>
                                                         </select>
                                                     </div>
-                                                </div>                                          
+                                                </div>                                                                                
+                                            </div>                                    
+                                        </div>  
+                                        <div class="row row-margin-left25">                                       
+                                            <div class="span6">
+                                                <div class="control-group">
+                                                    <label class="control-label">Horario<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <select class="m-wrap" name="inputHorario" id="inputHorario" <?php echo $disabled;?> >
+                                                            <option value="">Seleccionar una opción</option>
+                                                            <?php echo $this->aHorarioCita;?>
+                                                        </select>
+                                                    </div>
+                                                </div>                                        
                                             </div>
                                             <div class="span6">
                                                 <div class="control-group">
@@ -124,30 +124,100 @@
                                                             <?php echo $this->aUnidades;?>
                                                         </select> 
                                                     </div>
-                                                </div>  
-                                            <!--    <div class="control-group">                                            
-                                                    <label class="control-label">Horario 2</label>
-                                                    <div class="controls">
-                                                        <select class="m-wrap" name="inputHorario2" id="inputHorario2" <?php echo $disabled;?> >
-                                                            <option value="">Seleccionar una opción</option>
-                                                            <?php echo $this->aHorarioCita2;?>
-                                                        </select>
-                                                    </div>
-                                                </div> -->
+                                                </div>                
                                             </div> 
                                         </div> 
 
-                                        <div class="row row-margin-left25">    
+                                        <div class="row row-margin-left25">                                       
                                             <div class="span6">
                                                 <div class="control-group">
+                                                    <label class="control-label">Tipo Equipo<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <select class="m-wrap" name="inputTequipo" id="inputTequipo" <?php echo $disabled;?> >
+                                                            <option value="">Seleccionar una opción</option>
+                                                            <?php echo $this->aTequipos;?>
+                                                        </select>
+                                                    </div>
+                                                </div>                                        
+                                            </div>
+                                            <div class="span6">
+                                                <!--<div class="control-group">
                                                     <label class="control-label">Lugar de Instalación<span class="required">*</span></label>
                                                     <div class="controls">
                                                         <select class="m-wrap" name="inputPlace" id="inputPlace" <?php echo $disabled;?> >
                                                             <option value="">Seleccionar una opción</option>
                                                             <?php echo $this->aSucursales;?>
                                                         </select> 
+                                                        <button id="btnNewDir" class="btn btn-success" data-toggle="tooltip" data-placement="left" title="Agregar Nueva Dirección">+</button>
                                                     </div>
-                                                </div>                                                
+                                                </div> -->               
+                                            </div> 
+                                        </div>                                         
+                                        <div class="row row-margin-left25">    
+                                            <div class="span6">
+                                                <div class="control-group">
+                                                    <label class="control-label">Lugar de Instalación<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <select onChange="newdireccion(this.value);" class="m-wrap" name="inputPlace" id="inputPlace" <?php echo $disabled;?> >
+                                                            <option value="">Seleccionar una opción</option>
+                                                            <?php echo $this->aSucursales;?>
+                                                            <option value="-1">Otro</option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                                <div id="divDireNew" style="display:<?php echo ($this->catId>-1) ? 'block':'none' ;?>">
+                                                    <div id="infoUnit"></div>
+                                                    <div class="span12">
+                                                        <div class="control-group">
+                                                            <label class="control-label">Calle<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputCalle" name="inputCalle" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CALLE']; ?>"  readonly="readonly"  >
+                                                            </div>
+                                                        </div> 
+                                                        <div class="control-group">
+                                                            <label class="control-label">Colonia<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputColonia" name="inputColonia" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['COLONIA']; ?>" readonly="readonly"  >
+                                                            </div>
+                                                        </div>  
+                                                        <div class="control-group">
+                                                            <label class="control-label">Municipio<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputMunicipio" name="inputMunicipio" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['MUNICIPIO']; ?>" readonly="readonly"  >
+                                                            </div>
+                                                        </div>  
+                                                        <div class="control-group">
+                                                            <label class="control-label">Estado<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputEstado" name="inputEstado" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['ESTADO']; ?>" readonly="readonly"  >
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+                                                    <div class="span12 no-margin-left">
+                                                        <div class="span6">
+                                                            <div class="control-group">
+                                                                <label class="control-label">CP<span class="required">*</span></label>
+                                                                <div class="controls">
+                                                                    <input type="text" id="inputCP" name="inputCP" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CP']; ?>" readonly="readonly"  >
+                                                                </div>
+                                                            </div>  
+                                                        </div>
+                                                        <div class="span6" id="divSaveDir" style="display:none">                                                            
+                                                            <input id="chkSaveDir" name="chkSaveDir" type="checkbox" onChange="addNameDir();"/>
+                                                            Deseo guardar esta direccion en mis Luages
+                                                        </div>                                                                      
+                                                    </div>
+                                                    <div class="span12 no-margin-left" id="divNameDes" style="display:none;">
+                                                        <div class="control-group">
+                                                            <label class="control-label">Nombre<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputDescripcion" name="inputDescripcion" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['DESCRIPCION']; ?>" >
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+
+
+                                                </div>
                                             </div>
                                             <div class="span6">
                                                 <div class="control-group">
@@ -156,6 +226,32 @@
                                                         <textarea name="inputComment" id="inputComment" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['COMENTARIO']; ?></textarea>
                                                     </div>
                                                 </div>                                          
+                                            </div> 
+
+                                        </div>
+                                        <div class="row row-margin-left25">    
+                                            <div class="span6">
+                                                <!--
+                                                <div class="control-group">
+                                                    <label class="control-label">Lugar de Instalación<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <select class="m-wrap" name="inputPlace" id="inputPlace" <?php echo $disabled;?> >
+                                                            <option value="">Seleccionar una opción</option>
+                                                            <?php echo $this->aSucursales;?>
+                                                        </select> 
+                                                    </div>
+                                                </div>  -->                                              
+                                            </div>
+                                            <div class="span6">
+                                                <!--
+                                                <div class="control-group">
+                                                    <label class="control-label">Comentarios<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <textarea name="inputComment" id="inputComment" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['COMENTARIO']; ?></textarea>
+                                                    </div>
+                                                </div> 
+                                                -->
+
                                                 <!--
                                                 <label class="control-label"> </label>
                                                 <div class="controls">
@@ -243,14 +339,14 @@
             </div>          
         </div>
     </div>
-</div> 
+</div>
 
 <div class="modal fade hide modal-lg" id="MyModalSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
   <div class="modal-dialog ">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" >Buscar Activos Sin Asignar</h4>
+        <h4 class="modal-title" >Nueva Dirección</h4>
       </div>
       <div class="modal-form i-body">             
         <iframe class="hmodal550" id="iFrameSearch" src="" style="zoom:0" frameborder="0"></iframe>

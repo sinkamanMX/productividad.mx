@@ -96,7 +96,7 @@ class main_ActivosController extends My_Controller_Action
 					$this->resultop = 'okRegister';
 				 }
 			}else{
-				$this->errors['status'] = 'no-info';
+				$this->errors['status'] = 'no-insert';
 			}	
 		}else if($this->operation=='new'){
 			$this->dataIn['userRegister']= $this->view->dataUser['ID_USUARIO'];

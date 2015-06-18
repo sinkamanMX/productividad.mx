@@ -82,7 +82,7 @@ class My_Model_Formularios extends My_Db_Table
         $result['status']  = false;
         
         $sFilter  = (isset($aDataIn['inputIdAssign']) && $aDataIn['inputIdAssign'] !="" ) ? 'ID_ICONO = '.$aDataIn['inputIdAssign'].', ' : '';
-        $sFilter  .= (isset($aDataIn['inputIdOvision']) && $aDataIn['inputIdOvision'] !="" ) ? 'ID_OVISION		=  '.$aDataIn['inputIdOvision'].', ' : '';
+        $sFilter  .= (isset($aDataIn['inputIdOvision']) && $aDataIn['inputIdOvision'] !="" ) ? 'ID_OVISION		=  "'.$aDataIn['inputIdOvision'].'", ' : '';
         
         $sql="INSERT INTO $this->_name			 
 					SET ID_EMPRESA		=  ".$aDataIn['inputEmpresa'].",
@@ -124,7 +124,7 @@ class My_Model_Formularios extends My_Db_Table
         $result['status']  = false;
         
         $sFilter  = (isset($aDataIn['inputIdAssign']) && $aDataIn['inputIdAssign'] !="" ) ? 'ID_ICONO = '.$aDataIn['inputIdAssign'].', ' : '';
-		$sFilter  .= (isset($aDataIn['inputIdOvision']) && $aDataIn['inputIdOvision'] !="" ) ? 'ID_OVISION		=  '.$aDataIn['inputIdOvision'].', ' : '';
+		$sFilter  .= (isset($aDataIn['inputIdOvision']) && $aDataIn['inputIdOvision'] !="" ) ? 'ID_OVISION		=  "'.$aDataIn['inputIdOvision'].'", ' : '';
 		
         $sql="UPDATE $this->_name			 
 				SET TITULO			= '".$aDataIn['inputTitulo']."',
