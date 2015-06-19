@@ -24,7 +24,8 @@ class My_Model_Empresas extends My_Db_Table
         		SET	NOMBRE 			= '".$data['inputDescripcion']."',
         			RFC				= '".$data['inputRFC']."',
         		 	RAZON_SOCIAL	= '".$data['inputRazonSocial']."',
-					ESTATUS			=  ".$data['inputEstatus'].",					
+					ESTATUS			=  ".$data['inputEstatus'].",
+					ID_TIPO_EMPRESA =  ".$data['inputTipo'].", 					
         			FECHA_REGISTRO	= CURRENT_TIMESTAMP";       			  
         try{            
     		$query   = $this->query($sql,false);
@@ -75,8 +76,9 @@ class My_Model_Empresas extends My_Db_Table
 	public function getDataTables(){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT *
+    	$sql ="SELECT $this->_name.*, EMPRESAS_TIPO.DESCRIPCION AS N_TIPO
 				FROM $this->_name
+				INNER JOIN EMPRESAS_TIPO ON $this->_name.ID_TIPO_EMPRESA = EMPRESAS_TIPO.ID_TIPO_EMPRESA
 				ORDER BY RAZON_SOCIAL ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){
@@ -112,10 +114,11 @@ class My_Model_Empresas extends My_Db_Table
         			RFC				= '".$data['inputRFC']."',
         		 	RAZON_SOCIAL	= '".$data['inputRazonSocial']."',
 					ESTATUS			=  ".$data['inputEstatus'].",
-					CLIENTE_UDA		=  ".$data['inputClienteUDA'].",
+					/*CLIENTE_UDA		=  ".$data['inputClienteUDA'].",
 					USUARIO_UDA  	= '".$sUserUda."',
 					PASSWORD_UDA	= '".$sPassUda."',
-					COBRAR_VIAJES	=  ".$data['inputCobro']."
+					COBRAR_VIAJES	=  ".$data['inputCobro']."*/
+					ID_TIPO_EMPRESA =  ".$data['inputTipo']."
 				WHERE $this->_primary   = ".$idObject;
         try{            
     		$query   = $this->query($sql,false);
@@ -141,5 +144,18 @@ class My_Model_Empresas extends My_Db_Table
 			$result = $query;			
 		}
 		return $result;
-	}       
+	}   
+
+	public function getCboTipos(){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT ID_TIPO_EMPRESA AS ID, DESCRIPCION AS NAME
+				FROM EMPRESAS_TIPO
+				ORDER BY NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result = $query;			
+		}
+		return $result;
+	}  	
 }

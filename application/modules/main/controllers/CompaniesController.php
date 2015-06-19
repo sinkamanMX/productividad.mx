@@ -76,12 +76,15 @@ class main_CompaniesController extends My_Controller_Action
 			$sEstatus		 = '';
 			$sClientUda		 = 0;
 			$sCViajes 		 = 1;
+			$sTipoEmpresa	 = '';
 			$aDataInfo		 = Array();
+			$aTiposEmpresa   = $cEmpresas->getCboTipos();
 			
 			$this->_dataIn['inputEmpresa'] = $this->view->idEmpresa;			
 			if($this->_idUpdate >-1){
 				$aDataInfo  = $cEmpresas->getData($this->_idUpdate);
 				$sEstatus	= $aDataInfo['ESTATUS'];
+				$sTipoEmpresa= $aDataInfo['ID_TIPO_EMPRESA'];
 				/*$sClientUda = $aDataInfo['CLIENTE_UDA'];
 				$sCViajes 	= $aDataInfo['COBRAR_VIAJES'];*/
 			}
@@ -164,7 +167,8 @@ class main_CompaniesController extends My_Controller_Action
 	    	$this->view->resultOp    = $this->_resultOp;	    	
 	    	$this->view->bUsuarioUda = $cFunctions->cboOptions($sClientUda);
 	    	$this->view->aCviajes    = $cFunctions->cboOptions($sCViajes);	
-	    	$this->view->status      = $cFunctions->cboStatus($sEstatus);	
+	    	$this->view->status      = $cFunctions->cboStatus($sEstatus);
+	    	$this->view->aTipos		 = $cFunctions->selectDb($aTiposEmpresa,$sTipoEmpresa);	
 	    	$this->view->data	     = $aDataInfo;   
 			$this->view->catId		 = $this->_idUpdate;
 			$this->view->idToUpdate  = $this->_idUpdate;

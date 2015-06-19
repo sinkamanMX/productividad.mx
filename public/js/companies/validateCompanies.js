@@ -4,7 +4,8 @@ $().ready(function() {
             inputDescripcion	: "required",
             inputRazonSocial	: "required",
             inputDireccion	    : "required",
-            inputRFC	    : "required",
+            inputRFC	        : "required",
+            inputTipo           : "required",
             inputTelFijo        : {
                 required: true,
                 number: true,
@@ -62,7 +63,8 @@ $().ready(function() {
             inputUser : {
                 required     : "Campo Requerido",
                 email        :   "Debe de ingresar un mail válido"
-            },        
+            },      
+            inputTipo        : "Campo Requerido",
             /*inputUserUda     : "Campo Requerido",
             inputPasswordUda : "Campo Requerido",
 			inputCobro 		 : "Campo Requerido",*/
