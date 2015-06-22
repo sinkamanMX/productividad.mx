@@ -154,13 +154,15 @@ class main_MainController extends My_Controller_Action
 			
 			$sessions = new My_Controller_Auth();
 	        if($sessions->validateSession()){
-            	$dataUser = $sessions->getContentSession();
-				$cMailing = new My_Model_Mailing();
-            	$aDataNotif= $cMailing->getNotifications();
-            	if(count($aDataNotif)>0){
-            		$answer = Array('answer' => 'pendings',
-            						'notifs' => $aDataNotif);
-            	}
+	        	$dataUser = $sessions->getContentSession();
+	        	$cMailing = new My_Model_Mailing();
+	        	if($dataUser['ID_PERFIL']==1 || $dataUser['ID_PERFIL']==2 || $dataUser['ID_PERFIL']==5 || $dataUser['ID_PERFIL']==3){
+	            	$aDataNotif= $cMailing->getNotifications();
+	            	if(count($aDataNotif)>0){
+	            		$answer = Array('answer' => 'pendings',
+	            						'notifs' => $aDataNotif);
+	            	}
+	        	}	
 			}
 			
 	        echo Zend_Json::encode($answer);   			

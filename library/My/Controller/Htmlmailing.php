@@ -1,8 +1,8 @@
 <?php
 class My_Controller_Htmlmailing
 {
-	public $realPath='/var/www/vhosts/sima/htdocs/public';
-	//public $realPath='/Users/itecno2/Documents/workspace/productividad.mx/public';
+	//public $realPath='/var/www/vhosts/sima/htdocs/public';
+	public $realPath='/Users/itecno2/Documents/workspace/productividad.mx/public';
 	
 	public function newSolicitud($dataSol, $dataUser){
 		$cMailing   = new My_Model_Mailing();
@@ -88,7 +88,7 @@ class My_Controller_Htmlmailing
 		$lBodyUda = str_ireplace('@_infounit_@', 	$dataSol['INFORMACION_UNIDAD'], $lBodyUda);
 		$lBodyUda = str_ireplace('@_observaciones_@', $dataSol['COMENTARIO'] , $lBodyUda);
 		$lBodyUda = str_ireplace('@_mensaje_@',     $sMensaje ,                $lBodyUda);		
-
+			
 		$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
 		$aDataAdmin = $config->getOption('admin');					
 		
@@ -206,7 +206,7 @@ class My_Controller_Htmlmailing
 		$sMensaje = 'acepto la solicitud de cita';
 
 		$lBodyUda = str_ireplace('@_usuario_@', 	@$dataUser['N_USER']   , $lBodyUda);
-		$lBodyUda = str_ireplace('@_empresa_@', 	$dataUser['N_EMPRESA'] , $lBodyUda);
+		$lBodyUda = str_ireplace('@_empresa_@', 	$dataUser['N_CLIENTE'] , $lBodyUda);
 		$lBodyUda = str_ireplace('@_tservicio_@', 	$dataSol['N_TIPO']     , $lBodyUda);
 		$lBodyUda = str_ireplace('@_fecha_@',	 	$dataSol['FECHA_CITA'] , $lBodyUda);
 		$lBodyUda = str_ireplace('@_horario_@', 	$dataSol['N_HORARIO']  , $lBodyUda);
@@ -249,7 +249,8 @@ class My_Controller_Htmlmailing
 		$lBodyUda = str_ireplace('@_infounit_@', 	$dataSol['INFORMACION_UNIDAD'], $lBodyUda);
 		$lBodyUda = str_ireplace('@_observaciones_@', $dataSol['COMENTARIO'] , $lBodyUda);
 		$lBodyUda = str_ireplace('@_mensaje_@',     $sMensaje ,                $lBodyUda);
-		$lBodyUda = str_ireplace('@_coment_uda_@',  $dataSol['REVISION'] ,     $lBodyUda);			
+		$lBodyUda = str_ireplace('@_coment_uda_@',  $dataSol['REVISION'] ,     $lBodyUda);		
+		$lBodyUda = str_ireplace('@_sskey_@',       $dataSol['CLAVE_SOLICITUD'],$lBodyUda);		
 
 		$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
 		$aDataAdmin = $config->getOption('admin');					
@@ -351,7 +352,8 @@ class My_Controller_Htmlmailing
 		$lBodyUda = str_ireplace('@_infounit_@', 	$dataSol['INFORMACION_UNIDAD'], $lBodyUda);
 		$lBodyUda = str_ireplace('@_observaciones_@', $dataSol['COMENTARIO'] , $lBodyUda);
 		$lBodyUda = str_ireplace('@_mensaje_@',     $sMensaje ,                $lBodyUda);
-		$lBodyUda = str_ireplace('@_coment_uda_@',  $dataSol['REVISION'] ,     $lBodyUda);		
+		$lBodyUda = str_ireplace('@_coment_uda_@',  $dataSol['REVISION'] ,     $lBodyUda);	
+		$lBodyUda = str_ireplace('@_sskey_@',       $dataSol['CLAVE_SOLICITUD'],$lBodyUda);		
 
 		$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
 		$aDataAdmin = $config->getOption('admin');					

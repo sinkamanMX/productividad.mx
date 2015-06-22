@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<head>
+	<body style="width: 100%;">
+			<table style="width:70%;align:center;margin-left:13%;">
+				<tr>	
+					<td colspan="2">  <img style="width:100%;" src="/layouts/mail/header.png"></td>
+				</tr>
+
+
+				<?php if($this->aResult == "key-novalid"):?>
+					<tr>
+						<td colspan="2" style="text-align:center;font-size:15px;">					
+							<span style="font-weight: bold;font-size: 17px;">El servicio no esta disponible</span>
+							<p> <a href="http://siames.grupouda.com.mx">Continuar</a>.</p>
+						</td>
+					</tr>
+				<?php elseif($this->aResult == "ok"):?>
+				<tr>
+					<td colspan="2" style="text-align:right;font-size:18px;">
+						<span><?php echo $this->aDataSol['N_CONTACTO'];?></span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:right;font-size:15px;">
+						<span><?php echo $this->aDataSol['N_CLIENTE'];?></span>
+					</td>
+				</tr>	
+				<tr>
+					<td colspan="2">					
+						<span style="font-weight: bold;font-size: 17px;">Su servicio ha sido agendado</span>
+						<p>	Para Tracking Systems de México, S.A de C.V., es placer poder atenderle.</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:center;background-color:#FA6503;color:#FFFFFF;padding:5px;font-weight:bold;">
+						Detalle de su solicitud de servicio
+					</td>
+				</tr>	
+				<tr>
+					<td>Tipo de servicio:</td><td><?php echo $this->aDataSol['N_TIPO'];?></td>
+				</tr>	
+				<?php if(isset($this->aDataSol['N_EQUIPO'])):?>
+					<tr>
+						<td>Tipo de equipo:</td><td><?php echo $this->aDataSol['N_EQUIPO'];?></td>
+					</tr>
+				<?php endif;?>		
+				<tr>
+					<td>Fecha solicitada:</td><td><?php echo $this->aDataSol['FECHA_CITA'];?></td>
+				</tr>
+				<tr>
+					<td>Horario:</td><td><?php echo $this->aDataSol['N_HORARIO'];?></td>
+				</tr>
+				<?php if(isset($this->aDataSol['N_EQUIPO'])):?>
+				<tr>
+					<td>Lugar de servicio:</td><td><?php echo $this->aDataSol['DIRECCION'];?></td>
+				</tr>
+				<?php endif;?>													
+				<tr>
+					<td>Información del vehículo:</td>
+					<td><?php echo $this->aDataSol['INFORMACION_UNIDAD'];?></td>
+				</tr>	
+				<tr>
+					<td>Observaciones:</td><td><?php echo $this->aDataSol['COMENTARIO'];?></td>
+				</tr>		
+				<tr>
+					<td>Comentarios Centro de Operaciones TSM.</td>
+					<td><?php echo $this->aDataSol['REVISION'];?></td>
+				</tr>				
+				<tr>
+					<td colspan="2">
+						<span style="font-weight: bold;font-size: 17px;">Para dudas y aclaraciones:</span><br>
+						<p>
+						Correo electrónico: <a href="mailto:servicioaclientes@grupouda.com.mx">servicioaclientes@grupouda.com.mx</a><br>
+						Teléfonos: 53 74 93 35 y 01 800 221 13 67<br>
+						Horarios de atención Lunes a Viernes 09:00 a 18:00<br>
+						Sábados de 09:00 a 14:30 <br>
+						</p>					
+					</td>
+					<td></td>
+				</tr>			
+			</table>
+		<?php endif;?>
+	</body>
+</html>

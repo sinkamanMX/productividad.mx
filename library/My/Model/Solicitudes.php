@@ -62,7 +62,7 @@ class My_Model_Solicitudes extends My_Db_Table
         $result['status']  = false;
         
         $sFilter = (isset($data['inputHorario2']) && $data['inputHorario2']!="") ? 'ID_HORARIO2 	=  '.$data['inputHorario2'].',' : '';
-        
+        $sClave  = $data['inputCliente']."_".$data['inputTipo'].Date("YmdHis");
         $sql=" INSERT INTO $this->_name SET 
         		ID_CLIENTE		= ".$data['inputCliente'].",
 				ID_TIPO			= ".$data['inputTipo'].",
@@ -74,6 +74,7 @@ class My_Model_Solicitudes extends My_Db_Table
 				INFORMACION_UNIDAD= '".$data['inputInfo']."',					
 				COMENTARIO		= '".$data['inputComment']."',		
 				FECHA_CITA		= '".$data['inputFechaIn']."',
+				CLAVE_SOLICITUD = '".$sClave."',
 				FECHA_CREADO 	=  CURRENT_TIMESTAMP";
         try{            
     		$query   = $this->query($sql,false);
@@ -91,14 +92,16 @@ class My_Model_Solicitudes extends My_Db_Table
     } 
 
     public function updateRow($data){
-       $result     = Array();
+       	$result     = Array();
         $result['status']  = false;
+        
         $sFilter = '';
-		$sFilter = (isset($data['inputHorario2']) && $data['inputHorario2']!="") ? 'ID_HORARIO2 	=  '.$data['inputHorario2'].',' : '';
-		        
+        $sFilter .= (isset($data['sskeyValid'])    && $data['sskeyValid']   !="")    ? 'CLAVE_SOLICITUD =  NULL ,'    : '';        
+		$sFilter .= (isset($data['inputHorario2']) && $data['inputHorario2']!="") ? 'ID_HORARIO2 	=  '.$data['inputHorario2'].',' : '';
+		
         if(isset($data['bOperation']) && $data['bOperation']=='accept'){
         	$data['inputEstatus'] = 2;
-        	$sFilter = "ID_ESTATUS		=  ".$data['inputEstatus']." ,";	
+        	$sFilter .= "ID_ESTATUS		=  ".$data['inputEstatus']." ";	
         }else if(isset($data['bOperation']) && $data['bOperation']=='modify'){
         	$data['inputEstatus'] = 4;	
         	$sFilter .= "ID_ESTATUS		=  ".$data['inputEstatus']." ,
@@ -115,6 +118,7 @@ class My_Model_Solicitudes extends My_Db_Table
         $sql="UPDATE $this->_name SET
         		$sFilter
         		WHERE $this->_primary =".$data['catId']." LIMIT 1";
+        		Zend_Debug::dump($sql);
         try{            
     		$query   = $this->query($sql,false);
 			if($query){
@@ -212,7 +216,7 @@ class My_Model_Solicitudes extends My_Db_Table
         $result['status']  = false;
         
         $sFilter = (isset($data['inputHorario2']) && $data['inputHorario2']!="") ? 'ID_HORARIO2 	=  '.$data['inputHorario2'].',' : '';
-        
+        $sClave  = $data['inputIdEmpresa']."_".$data['inputTipo'].Date("YmdHis");
         $sql=" INSERT INTO $this->_name SET 
         		ID_EMPRESA		= ".$data['inputIdEmpresa'].",
 				ID_TIPO			= ".$data['inputTipo'].",
@@ -231,6 +235,7 @@ class My_Model_Solicitudes extends My_Db_Table
 				ESTADO			= '".$data['inputEstado']."',
 				CP				= '".$data['inputCP']."',
 				FECHA_CITA		= '".$data['inputFechaIn']."',
+				CLAVE_SOLICITUD = '".$sClave."',
 				FECHA_CREADO 	=  CURRENT_TIMESTAMP";
         try{            
     		$query   = $this->query($sql,false);
@@ -251,13 +256,14 @@ class My_Model_Solicitudes extends My_Db_Table
        $result     = Array();
         $result['status']  = false;
         $sFilter = '';
-		$sFilter = (isset($data['inputHorario2']) && $data['inputHorario2']!="") ? 'ID_HORARIO2 	=  '.$data['inputHorario2'].',' : '';
+        $sFilter .= (isset($data['sskeyValid'])    && $data['sskeyValid']!="")    ? 'CLAVE_SOLICITUD =  NULL ,'    : '';
+		$sFilter .= (isset($data['inputHorario2']) && $data['inputHorario2']!="") ? 'ID_HORARIO2 	=  '.$data['inputHorario2'].',' : '';
 		        
         if(isset($data['bOperation']) && $data['bOperation']=='accept'){
         	$data['inputEstatus'] = 2;
-        	$sFilter = "ID_ESTATUS		=  ".$data['inputEstatus']." ";	
+        	$sFilter .= "ID_ESTATUS		=  ".$data['inputEstatus']." ";	
         }else if(isset($data['bOperation']) && $data['bOperation']=='modify'){
-        	$data['inputEstatus'] = 4;	
+        	$data['inputEstatus'] = 4;
         	$sFilter .= "ID_ESTATUS		=  ".$data['inputEstatus']." ,
         				 ID_HORARIO		=  ".$data['inputHorario']." ,
         				 ID_SUCURSAL	=  ".$data['inputPlace']." ,
@@ -347,5 +353,21 @@ class My_Model_Solicitudes extends My_Db_Table
 		}	
         
 		return $result;	        
-    }     
+    }    
+    
+    
+    public function validateKey($skeyInput){
+		$result= Array();		
+		$this->query("SET NAMES utf8",false);
+    	$sql ="SELECT S.*,E.ID_TIPO_EMPRESA
+				FROM PROD_CITAS_SOLICITUD S
+				LEFT JOIN EMPRESAS E ON S.ID_EMPRESA = E.ID_EMPRESA
+				WHERE CLAVE_SOLICITUD = '$skeyInput' LIMIT 1";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result	 = $query[0];
+		}
+        
+		return $result;	    	
+    }
 }
