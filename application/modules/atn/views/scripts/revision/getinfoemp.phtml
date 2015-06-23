@@ -1,7 +1,7 @@
 <?php $this->headScript()->appendFile('/js/atn/validateSolicitudes.js') ?>  
 <?php $disabled = (@$this->data['ID_ESTATUS']!=1) ? 'disabled':'';?>
 <div class="row panel-data">
-    <input id="hRefLinkMain" type="hidden" value="/atn/request/index" />
+    <input id="hRefLinkMain" type="hidden" value="/atn/revision/index" />
     <div class="span12">
         <!-- block -->
         <div class="block">
@@ -31,7 +31,7 @@
                                 </div>  
                             <?php endif;?> 
                             <?php if($disabled!='disabled'):?>
-                            <form method="POST" action="/atn/request/getinfoemp" id="FormData" class="form-horizontal ">
+                            <form method="POST" action="/atn/revision/getinfoemp" id="FormData" class="form-horizontal ">
                             <?php else:?>
                             <form id="FormData" class="form-horizontal ">
                             <?php endif;?>  
@@ -157,7 +157,7 @@
                                                 <div class="control-group">
                                                     <label class="control-label">Comentarios<span class="required">*</span></label>
                                                     <div class="controls">
-                                                        <textarea name="inputrequest" id="inputrequest" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['request']; ?></textarea>
+                                                        <textarea name="inputRevision" id="inputRevision" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['REVISION']; ?></textarea>
                                                     </div>
                                                 </div>                                                
                                             </div>   

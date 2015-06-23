@@ -132,10 +132,11 @@ class My_Model_Solicitudes extends My_Db_Table
     }    
     
     
-    public function getDataTable($sOptions=0){
+    public function getDataTable($sOptions=0,$iFilter=0){
       	$this->query("SET NAMES utf8",false);         
 		$result= Array();
 		$sFilter = ($sOptions==0) ?  ' = 1' : ' IN ('.$sOptions.') ';
+		$sFilter.= ($iFilter==0)  ?  '' 	: ' AND ID_TIPO = 3 '; 
     	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.RAZON_SOCIAL AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
 				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD
 				FROM PROD_CITAS_SOLICITUD S
@@ -329,10 +330,11 @@ class My_Model_Solicitudes extends My_Db_Table
 		return $result;	    	
     }
 
-    public function getDataTableEmp($iStatus=0){
+    public function getDataTableEmp($iStatus=0,$iFilter=0){
       	$this->query("SET NAMES utf8",false);
 		$result= Array();
 		$sFilter = ($iStatus==0) ?  ' = 1' : ' IN ('.$iStatus.') ';
+		$sFilter.= ($iFilter==0)  ?  ' ' 	: ' AND ID_TIPO = 3 '; 
     	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.NOMBRE AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
 				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,A.`DESCRIPCION` AS N_SUCURSAL,
 				IF(S.ID_TIPO_EQUIPO IS NULL,'--',D.NOMBRE) AS N_TEQUIPO,

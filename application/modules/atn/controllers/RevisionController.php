@@ -1,8 +1,8 @@
 <?php 
 
-class atn_RequestController extends My_Controller_Action
+class atn_RevisionController extends My_Controller_Action
 {
-	protected $_clase = 'msolicitud';
+	protected $_clase = 'mrevision';
 	public $validateNumbers;
 	public $validateAlpha;
 	public $dataIn;
@@ -55,13 +55,13 @@ class atn_RequestController extends My_Controller_Action
 			$cFunciones		= new My_Controller_Functions();			
 			$cSolicitudes	= new My_Model_Solicitudes();
 
-			$this->view->dataTable    = $cSolicitudes->getDataTable('1,4,5');
-			$this->view->dataTableOk  = $cSolicitudes->getDataTable(2);
-			$this->view->dataTableRev = $cSolicitudes->getDataTable(4);
+			$this->view->dataTable    = $cSolicitudes->getDataTable('1,4,5',1);
+			$this->view->dataTableOk  = $cSolicitudes->getDataTable(2,1);
+			$this->view->dataTableRev = $cSolicitudes->getDataTable(4,1);
 			
-			$this->view->dataTableEmp    = $cSolicitudes->getDataTableEmp('1,4');
+			$this->view->dataTableEmp    = $cSolicitudes->getDataTableEmp('1,4',1);
 			//$this->view->dataTableEmpRev = $cSolicitudes->getDataEmp(5);
-			$this->view->dataTableEmpOk  = $cSolicitudes->getDataTableEmp(2);
+			$this->view->dataTableEmpOk  = $cSolicitudes->getDataTableEmp(2,1);
         }catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -365,5 +365,7 @@ class atn_RequestController extends My_Controller_Action
 		}
 		
 		return $aResult;
-	}	    
+	}	
+
 }
+?>
