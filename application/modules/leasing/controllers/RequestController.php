@@ -255,8 +255,12 @@ class leasing_RequestController extends My_Controller_Action
 			}
 			
     	    if($this->resultop=='okRegister'){
-				$this->_redirect('/leasing/request/index');				
-			}			
+    	    	if($this->view->dataUser['ID_TIPO_EMPRESA']==3 && $dataInfo['ID_TIPO']==1){
+    	    		$this->_redirect('/leasing/request/newprotocol?strSol='.$this->idToUpdate);	
+    	    	}else{
+    	    		$this->_redirect('/leasing/request/index');	
+    	    	}
+			}
 			
     	    if(count($this->errors)>0 && $this->operation!=""){
     			$dataInfo['FECHA_CITA'] 	= $this->dataIn['inputFechaIn'];
@@ -269,7 +273,7 @@ class leasing_RequestController extends My_Controller_Action
     			$dataInfo['ESTADO']			= $this->dataIn['inputEstado'];
     			$dataInfo['CP']				= $this->dataIn['inputCP'];
     			$sSucursal  				= $this->dataIn['inputPlace'];
-			}			
+			}
 			
 			$this->view->aTequipos	= $cFunctions->selectDb($aTipoEquipo,$sTequipo);
 			$this->view->aUnidades	= $cFunctions->selectDb($aUnidades,$sUnidad);
@@ -286,6 +290,131 @@ class leasing_RequestController extends My_Controller_Action
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
         }
+    }
+    
+    public function newprotocolAction(){
+    	try{
+    		$this->view->dataUser['allwindow'] = true;   
+    		$validateNumbers = new Zend_Validate_Digits();    		
+    		$cSolicitudes    = new My_Model_Solicitudes();
+    		$cProtocolos	 = new My_Model_Protocolos();
+    		$cFunctions		 = new My_Controller_Functions();
+    		$aTiposContrato  = $cProtocolos->getTipo();
+    		$aContactos 	 = Array();
+    		$aProtInfo       = Array();
+    		$aDataInfo       = Array();
+    		$myOpt			 = 0;
+    		
+    		$sTipoContrato   = '';
+    		
+    		if($validateNumbers->isValid($this->dataIn['strSol']) ){
+    			$idSolicitud = $this->dataIn['strSol'];
+				$aDataInfo   = $cSolicitudes->getDataEmp($idSolicitud);
+    			if($aDataInfo['ID_TIPO']==1){
+    				
+    				$aProtInfo  = $cProtocolos->getData($idSolicitud);    				
+    				if(isset($aProtInfo['ID_PROTOCOLO']) && $aProtInfo['ID_PROTOCOLO']!=""){
+    					$aContactos = $cProtocolos->getPersonas($aProtInfo['ID_PROTOCOLO']);
+    					$myOpt=1;	
+    				}
+    				    				
+    				if($this->operation=='new'){
+    					$this->dataIn['idSolicitud'] = $idSolicitud;
+    					$this->dataIn['idAgencia']   = $this->view->dataUser['ID_EMPRESA'];
+    					$insertSolic = $cProtocolos->insertRow($this->dataIn);
+    					if($insertSolic['status']){
+    						$this->idToUpdate = $insertSolic['id'];
+    						$idProtocolo = $insertSolic['id'];
+	    					$aProtInfo  = $cProtocolos->getData($idSolicitud);
+		    				$aContactos = $cProtocolos->getPersonas($aProtInfo['ID_PROTOCOLO']);	
+		    				
+    						$iControlE = 0;
+							$aValuesForm = $this->dataIn['aElements'];
+							if(count($aValuesForm)>0){
+								for($i=0;$i<count($aValuesForm);$i++){	
+									$aResult = false;											
+									$aElement = $aValuesForm[$i];
+									if($aElement['op']=='new' && $aElement['id']==-1){
+										$aResult = $cProtocolos->insertElement($aElement,$idProtocolo);
+									}else if($aElement['op']=='up' && $aElement['id']>-1){
+										$aResult = $cProtocolos->updateRowRel($aElement);
+									}else if($aElement['op']=='del' && $aElement['id']>-1){
+										$aResult = $cProtocolos->deleteRowRel($aElement,$idProtocolo);
+									}
+									
+									if($aResult){
+										$iControlE++;
+									}
+								}
+								
+								if($iControlE==count($aValuesForm)){
+									$this->resultop = 'okRegister';
+									$myOpt=1;
+									$aContactos = $cProtocolos->getPersonas($aProtInfo['ID_PROTOCOLO']);	
+								}
+							}
+    					}else{
+    						$this->errors['errorInsert'] = 1;		
+    					}
+    				}else if($this->operation=='update'){
+    					$this->dataIn['idSolicitud'] = $idSolicitud;
+    					$this->dataIn['idAgencia']   = $this->view->dataUser['ID_EMPRESA'];
+    					$this->dataIn['idProtocolo'] = $aProtInfo['ID_PROTOCOLO'];
+    					$idProtocolo = $aProtInfo['ID_PROTOCOLO'];
+    					
+    					$update = $cProtocolos->updateRow($this->dataIn);    					
+    					if($update['status']){
+    						$aProtInfo  = $cProtocolos->getData($idSolicitud);		    				
+
+    						$iControlE = 0;
+							$aValuesForm = $this->dataIn['aElements'];
+							if(count($aValuesForm)>0){
+								for($i=0;$i<count($aValuesForm);$i++){	
+									$aResult = false;											
+									$aElement = $aValuesForm[$i];
+									if($aElement['op']=='new' && $aElement['id']==-1){
+										$aResult = $cProtocolos->insertElement($aElement,$idProtocolo);
+									}else if($aElement['op']=='up' && $aElement['id']>-1){
+										$aResult = $cProtocolos->updateRowRel($aElement);
+									}else if($aElement['op']=='del' && $aElement['id']>-1){
+										$aResult = $cProtocolos->deleteRowRel($aElement,$idProtocolo);
+									}
+									
+									if($aResult){
+										$iControlE++;
+									}
+								}
+								
+								if($iControlE==count($aValuesForm)){
+									
+									$this->resultop = 'okRegister';
+									$aContactos = $cProtocolos->getPersonas($aProtInfo['ID_PROTOCOLO']);	
+								}
+							}    						
+    						
+    					}else{
+    						$this->errors['errorInsert'] = 1;		
+    					}
+    				}
+    			}else{
+    				$this->_redirect('/leasing/request/index');
+    			}
+			}else{
+				$this->_redirect('/leasing/request/index');		
+			}
+			
+			$this->view->sTipos    = $cFunctions->selectDb($aTiposContrato,$sTipoContrato);
+			$this->view->data 	   = $aDataInfo;
+			$this->view->dataProt  = $aProtInfo;
+			$this->view->aPosition = $cFunctions->cboOptions('');
+			$this->view->aPersonas = $this->processFields($aContactos);
+			$this->view->strSol    = $this->dataIn['strSol'];
+			$this->view->myOpte	   = $myOpt;
+			$this->view->resultOp  = $this->resultop;
+		 }catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        } 
     }
     
 	public function getinfodirAction(){
@@ -314,4 +443,16 @@ class leasing_RequestController extends My_Controller_Action
         	echo "Message: " . $e->getMessage() . "\n";                
         }  
 	}
+	
+	public function processFields($aElements){
+		$aResult    = Array();
+		$cFunctions 	= new My_Controller_Functions();
+		foreach($aElements as $key => $items){
+			$items['cboPalta'] = $cFunctions->cboOptions($items['EVENTOS_PRIORIDAD']);
+			$items['cboPosic'] = $cFunctions->cboOptions($items['SOLICITAR_POSICION']);
+			$aResult[] = $items;
+		}
+		
+		return $aResult;
+	}	
 }
