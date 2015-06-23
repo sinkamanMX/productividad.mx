@@ -12,8 +12,12 @@ $().ready(function() {
             },
             inputIdOvision   : {
                 number: true
+            },            
+            inputEstatus     : "required",
+            inputLength      : {
+                required     : true,
+                number       : true
             },
-            inputEstatus     : "required"
         },
         messages: {
             inputTipo        : "Campo Requerido",
@@ -25,14 +29,44 @@ $().ready(function() {
               }, 
             inputIdOvision  : {
                 number    : "Este campo acepta solo números",
-            }  
+            },
+            inputLength      : {
+                required     : "Campo Requerido",
+                number       : "Este campo acepta solo números",
+            }, 
         },
         
         submitHandler: function(form) {
             form.submit();
         }
     });	
+
+    var idUpdate = $("#catId").val();
+    if(idUpdate==-1){
+        //$("#inputPassword").rules("add",  {required:true});
+        //$("#inputPasswordC").rules("add", {required: true,equalTo: "#inputPassword"});  
+        $("#inputLength").rules("remove", "required");
+    }
 });
+
+function oncChangeType(inputValue){
+    if(inputValue=='M'){
+        $("#inputLength").rules( "add", {
+          required: true,
+          number  : true,
+          messages: {
+            required: "Requerido",
+            number  :  "Campo Requerido"
+          }
+        });          
+        $("#divControlNumber").show('slow');
+    }else{
+        $("#inputLength").val(0);
+        $("#divControlNumber").hide('slow');
+        $("#inputLength").rules("remove", "required");   
+
+    }
+}
 
 function backToMainModule(){
 	var mainPage = $("#hRefLinkMain").val();

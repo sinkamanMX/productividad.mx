@@ -56,7 +56,8 @@
                                                 <div class="control-group">
                                                     <label for="inputTipo" class="control-label"><span class="required">*</span> Tipo Formulario</label>
                                                     <div class="controls">
-                                                        <select class="span6 m-wrap" name="inputTipo" id="inputTipo" <?php echo $disabled;?> >
+                                                        <select class="span6 m-wrap" name="inputTipo" id="inputTipo" <?php echo $disabled;?> onChange="oncChangeType(this.value)">
+                                                            <option value="-1"> Seleccione una opción</option>
                                                             <?php echo $this->aTipoForm;?>
                                                         </select>                                                
                                                     </div>
@@ -79,12 +80,24 @@
                                             </div>
                                         </div>
                                         
-
-                                        <div class="control-group">
-                                            <label for="inputTitulo" class="control-label"><span class="required">*</span> Titulo</label>
-                                            <div class="controls">
-                                                <input id="inputTitulo" name="inputTitulo" type="text" class="input-inline form-control"  value="<?php echo @$this->aDataInfo['TITULO'];?>"  autocomplete="off">
+                                        <div class="span12 no-margin-l">
+                                            <div class="span6">
+                                                <div class="control-group">
+                                                    <label for="inputTitulo" class="control-label"><span class="required">*</span> Titulo</label>
+                                                    <div class="controls">
+                                                        <input id="inputTitulo" name="inputTitulo" type="text" class="input-inline form-control"  value="<?php echo @$this->aDataInfo['TITULO'];?>"  autocomplete="off">
+                                                    </div>
+                                                </div>
                                             </div>
+
+                                            <div class="span6">
+                                                <div id="divControlNumber" class="control-group" style="display:<?php echo (@$this->aDataInfo['TIPO_FORMULARIO'] == 'M') ? 'block': 'none'; ?>;">
+                                                    <label for="inputOrden" class="control-label"> # Caracteres</label>
+                                                    <div class="controls">
+                                                        <input id="inputLength" name="inputLength" type="text" class="input-inline form-control"  value="<?php echo @$this->aDataInfo['CARACTERES_CAMPO'];?>"  autocomplete="off">
+                                                    </div>
+                                                </div>  
+                                            </div>                                        
                                         </div>
 
                                         <div class="control-group">
@@ -116,7 +129,7 @@
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <!--
                                         <div class="control-group">
                                             <label for="inputLocate" class="control-label"><span class="required">*</span> Localización</label>
                                             <div class="controls">
@@ -151,8 +164,8 @@
                                                     <?php echo $this->aFirms ;?>
                                                 </select>
                                             </div>
-                                        </div>    
-      
+                                        </div>  
+                                        -->
 
                                         <?php if($disabled!='disabled'):?>
                                         <div class="form-actions">

@@ -73,8 +73,7 @@ class forms_MainController extends My_Controller_Action
 		try{
 			$cFormularios = new My_Model_Formularios();
 			$cFunctions   = new My_Controller_Functions();
-			$cTipos			= new My_Model_TipoFormularios();
-			$aTipos			= $cTipos->getCbo();
+			$cTipos		  = new My_Model_TipoFormularios();			
 			
 			$aDataInfo	  = Array();
 			$aElementos	  = Array();
@@ -83,10 +82,11 @@ class forms_MainController extends My_Controller_Action
 			$aFirms 	  = '';
 			$aFotos		  = '';
 			$aLocalizacion= '';	
-			$sTipoForm	  = '';	    
+			$sTipoForm	  = '';	 
+			$aTipos		  = Array();   
 
 			if($this->idToUpdate>0){
-				$aDataInfo 	  = $cFormularios->getData($this->idToUpdate);
+				$aDataInfo 	  = $cFormularios->getData($this->idToUpdate);				
 				$aEstatus	  = $aDataInfo['ACTIVO'];
 				$aQrs  		  = $aDataInfo['QRS_EXTRAS'];
 				$aFirms 	  = $aDataInfo['FIRMAS_EXTRAS'];
@@ -94,6 +94,9 @@ class forms_MainController extends My_Controller_Action
 				$aLocalizacion= $aDataInfo['LOCALIZACION'];
 				$sTipoForm    = $aDataInfo['TIPO_FORMULARIO'];
 				$aElementos	  = $cFormularios->getElementos($this->idToUpdate,$this->_dataUser['ID_EMPRESA']);
+				
+				$sTipo        = ($aDataInfo['ID_TIPO']="S") ? 0 : 1;
+				$aTipos		  = $cTipos->getCbo($sTipo);
 			}
 			
 			if($this->operation=='update'){	  		
@@ -108,7 +111,9 @@ class forms_MainController extends My_Controller_Action
 						$aFotos		  = $aDataInfo['FOTOS_EXTRAS'];
 						$aLocalizacion= $aDataInfo['LOCALIZACION'];
 						$sTipoForm    = $aDataInfo['TIPO_FORMULARIO'];
-						$aElementos	  = $cFormularios->getElementos($this->idToUpdate,$this->_dataUser['ID_EMPRESA']);		
+						$aElementos	  = $cFormularios->getElementos($this->idToUpdate,$this->_dataUser['ID_EMPRESA']);
+						$sTipo        = ($aDataInfo['ID_TIPO']="S") ? 0 : 1;
+						$aTipos		  = $cTipos->getCbo($sTipo);		
 						$this->resultop = 'okRegister';
 					 }
 				}else{
@@ -127,7 +132,9 @@ class forms_MainController extends My_Controller_Action
 					$aFotos		  = $aDataInfo['FOTOS_EXTRAS'];
 					$aLocalizacion= $aDataInfo['LOCALIZACION'];
 					$sTipoForm    = $aDataInfo['TIPO_FORMULARIO'];
-					$aElementos	  = $cFormularios->getElementos($this->idToUpdate,$this->_dataUser['ID_EMPRESA']);		
+					$aElementos	  = $cFormularios->getElementos($this->idToUpdate,$this->_dataUser['ID_EMPRESA']);
+					$sTipo        = ($aDataInfo['ID_TIPO']="S") ? 0 : 1;
+					$aTipos		  = $cTipos->getCbo($sTipo);		
 			 		$this->resultop = 'okRegister';
 				}else{
 					$this->errors['status'] = 'no-insert';

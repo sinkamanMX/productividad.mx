@@ -83,6 +83,7 @@ class My_Model_Formularios extends My_Db_Table
         
         $sFilter  = (isset($aDataIn['inputIdAssign']) && $aDataIn['inputIdAssign'] !="" ) ? 'ID_ICONO = '.$aDataIn['inputIdAssign'].', ' : '';
         $sFilter  .= (isset($aDataIn['inputIdOvision']) && $aDataIn['inputIdOvision'] !="" ) ? 'ID_OVISION		=  "'.$aDataIn['inputIdOvision'].'", ' : '';
+        $sFilter  .= (isset($aDataIn['inputLength']) && $aDataIn['inputLength'] !="" ) ? ' CARACTERES_CAMPO=  '.$aDataIn['inputLength'].', ' : '';
         
         $sql="INSERT INTO $this->_name			 
 					SET ID_EMPRESA		=  ".$aDataIn['inputEmpresa'].",
@@ -93,11 +94,8 @@ class My_Model_Formularios extends My_Db_Table
 						ID_USUARIO_MODIFICO= ".$aDataIn['userRegister'].",
 						FECHA_CREACION	= CURRENT_TIMESTAMP,
 						$sFilter
-						ACTIVO			= '".$aDataIn['inputEstatus']."',
-						FOTOS_EXTRAS	= '".$aDataIn['inputPhotos']."',
-						QRS_EXTRAS		= '".$aDataIn['inputQrs']."',
-						FIRMAS_EXTRAS	= '".$aDataIn['inputFirma']."',
-						LOCALIZACION	= '".$aDataIn['inputLocate']."'";
+						TIPO_FORMULARIO	= '".$aDataIn['inputTipo']."',
+						ACTIVO			= '".$aDataIn['inputEstatus']."'";
         try{            
     		$query   = $this->query($sql,false);
     		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";
@@ -125,6 +123,7 @@ class My_Model_Formularios extends My_Db_Table
         
         $sFilter  = (isset($aDataIn['inputIdAssign']) && $aDataIn['inputIdAssign'] !="" ) ? 'ID_ICONO = '.$aDataIn['inputIdAssign'].', ' : '';
 		$sFilter  .= (isset($aDataIn['inputIdOvision']) && $aDataIn['inputIdOvision'] !="" ) ? 'ID_OVISION		=  "'.$aDataIn['inputIdOvision'].'", ' : '';
+		$sFilter  .= (isset($aDataIn['inputLength']) && $aDataIn['inputLength'] !="" ) ? ' CARACTERES_CAMPO=  '.$aDataIn['inputLength'].', ' : '';
 		
         $sql="UPDATE $this->_name			 
 				SET TITULO			= '".$aDataIn['inputTitulo']."',
@@ -133,11 +132,8 @@ class My_Model_Formularios extends My_Db_Table
 					ID_USUARIO_MODIFICO	= ".$aDataIn['userRegister'].",
 					FECHA_MODIFICACION	= CURRENT_TIMESTAMP,
 					$sFilter
-					ACTIVO			= '".$aDataIn['inputEstatus']."',
-					FOTOS_EXTRAS	= '".$aDataIn['inputPhotos']."',
-					QRS_EXTRAS		= '".$aDataIn['inputQrs']."',
-					FIRMAS_EXTRAS	= '".$aDataIn['inputFirma']."',
-					LOCALIZACION	= '".$aDataIn['inputLocate']."'
+					TIPO_FORMULARIO	= '".$aDataIn['inputTipo']."',
+					ACTIVO			= '".$aDataIn['inputEstatus']."'
 				WHERE $this->_primary =".$aDataIn['catId']." LIMIT 1";
         try{            
     		$query   = $this->query($sql,false);
