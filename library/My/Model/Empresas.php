@@ -25,6 +25,7 @@ class My_Model_Empresas extends My_Db_Table
         			RFC				= '".$data['inputRFC']."',
         		 	RAZON_SOCIAL	= '".$data['inputRazonSocial']."',
 					ESTATUS			=  ".$data['inputEstatus'].",
+					COD_CLIENTE		= '".$data['inputSap']."',
 					ID_TIPO_EMPRESA =  ".$data['inputTipo'].", 					
         			FECHA_REGISTRO	= CURRENT_TIMESTAMP";       			  
         try{            
@@ -114,7 +115,8 @@ class My_Model_Empresas extends My_Db_Table
         			RFC				= '".$data['inputRFC']."',
         		 	RAZON_SOCIAL	= '".$data['inputRazonSocial']."',
 					ESTATUS			=  ".$data['inputEstatus'].",
-					/*CLIENTE_UDA		=  ".$data['inputClienteUDA'].",
+					COD_CLIENTE		= '".$data['inputSap']."',
+					/*CLIENTE_UDA		=  ".$data['inputClienteUDA'].",					
 					USUARIO_UDA  	= '".$sUserUda."',
 					PASSWORD_UDA	= '".$sPassUda."',
 					COBRAR_VIAJES	=  ".$data['inputCobro']."*/
