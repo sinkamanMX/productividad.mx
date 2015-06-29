@@ -72,4 +72,19 @@ class My_Model_Clientes extends My_Db_Table
         }
 		return $result;			
 	}
+	
+	function getData($codCliente){
+		$filter = '';
+		$result= Array();
+		$this->query("SET NAMES utf8",false);		
+    	$sql ="SELECT  *
+    			FROM $this->_name
+				WHERE COD_CLIENTE = '".$codCliente."'";  
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0];			
+		}	
+        
+		return $result;			
+	}
 }
