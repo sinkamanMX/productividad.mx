@@ -21,6 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>Tipo</th>
+                                    <th>Cliente SAP</th>
                                     <th>Nombre</th>
                                     <th class="span3 text-center">Razón Social</th>
                                     <th class="span2 text-center">RFC</th>
@@ -32,6 +33,7 @@
                                 <?php foreach($this->datatTable as $key => $items): ?>  
                                 <tr class="odd gradeX">
                                     <td><?php echo $items['N_TIPO']; ?></td>
+                                    <td><?php echo $items['COD_CLIENTE']; ?></td>
                                     <td><?php echo $items['NOMBRE']; ?></td>
                                     <td><?php echo $items['RAZON_SOCIAL']; ?></td>
                                     <td><?php echo $items['RFC']; ?></td>
