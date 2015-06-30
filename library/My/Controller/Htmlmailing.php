@@ -1,8 +1,8 @@
 <?php
 class My_Controller_Htmlmailing
 {
-	//public $realPath='/var/www/vhosts/sima/htdocs/public';
-	public $realPath='/Users/itecno2/Documents/workspace/productividad.mx/public';
+	public $realPath='/var/www/vhosts/sima/htdocs/public';
+	//public $realPath='/Users/itecno2/Documents/workspace/productividad.mx/public';
 	
 	public function newSolicitud($dataSol, $dataUser){
 		$cMailing   = new My_Model_Mailing();
@@ -66,7 +66,23 @@ class My_Controller_Htmlmailing
 			'inputFromEmail' 	 => 'Siames - Grupo UDA'
 		);
 													
-		$cMailing->insertRow($aMailer);		
+		$cMailing->insertRow($aMailer);	
+
+		if($dataSol['ID_TIPO']==3){
+			$aDataRev = $config->getOption('mrevision');
+			$aMailerR    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $aDataRev['mails'],
+				'inputEmails' 		 => $aDataRev['mails'],
+				'inputTittle' 		 => 'Solicitud de Servicio',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 0,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);
+													
+			$cMailing->insertRow($aMailerR);	
+		}
 	}
 	
 	public function changeSolicitud($dataSol, $dataUser){
@@ -169,6 +185,22 @@ class My_Controller_Htmlmailing
 		);
 													
 		$cMailing->insertRow($aMailer);
+		
+		if($dataSol['ID_TIPO']==3){
+			$aDataRev = $config->getOption('mrevision');
+			$aMailerR    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $aDataRev['mails'],
+				'inputEmails' 		 => $aDataRev['mails'],
+				'inputTittle' 		 => 'Solicitud de Servicio',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 0,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);
+													
+			$cMailing->insertRow($aMailerR);	
+		}		
 	}
 	
 	public function acceptuserExternalSolicitud($dataSol, $dataUser){
@@ -230,6 +262,22 @@ class My_Controller_Htmlmailing
 		);
 													
 		$cMailing->insertRow($aMailer);
+		
+		if($dataSol['ID_TIPO']==3){
+			$aDataRev = $config->getOption('mrevision');
+			$aMailerR    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $aDataRev['mails'],
+				'inputEmails' 		 => $aDataRev['mails'],
+				'inputTittle' 		 => 'Solicitud de Servicio',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 0,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);
+													
+			$cMailing->insertRow($aMailerR);	
+		}		
 	}
 	
 	public function changeSolicitudExt($dataSol, $dataUser){
@@ -266,7 +314,23 @@ class My_Controller_Htmlmailing
 			'inputFromEmail' 	 => 'Siames - Grupo UDA'
 		);
 													
-		$cMailing->insertRow($aMailer);		
+		$cMailing->insertRow($aMailer);	
+
+		if($dataSol['ID_TIPO']==3){
+			$aDataRev = $config->getOption('mrevision');
+			$aMailerR    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $aDataRev['mails'],
+				'inputEmails' 		 => $aDataRev['mails'],
+				'inputTittle' 		 => 'Solicitud de Servicio',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 0,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);
+													
+			$cMailing->insertRow($aMailerR);	
+		}			
 	}	
 	
 	public function acceptAdminSolicitud($dataSol, $dataUser){
@@ -369,6 +433,22 @@ class My_Controller_Htmlmailing
 			'inputFromEmail' 	 => 'Siames - Grupo UDA'
 		);
 													
-		$cMailing->insertRow($aMailer);		
+		$cMailing->insertRow($aMailer);	
+
+		if($dataSol['ID_TIPO']==3){
+			$aDataRev = $config->getOption('mrevision');
+			$aMailerR    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $aDataRev['mails'],
+				'inputEmails' 		 => $aDataRev['mails'],
+				'inputTittle' 		 => 'Solicitud de Servicio',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 0,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);
+													
+			$cMailing->insertRow($aMailerR);	
+		}			
 	}	
 }
