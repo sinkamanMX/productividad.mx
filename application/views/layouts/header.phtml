@@ -6,8 +6,9 @@
                      <span class="icon-bar"></span>
                     </a>
                     <a class="brand" href="/main/dashboard/index">
+                        <img style="width:25px;" src="/images/logo_siames.png">
                         <?php if(!isset($this->bUserContact)):?>
-                            SIMA-<?php echo $this->dataUser['N_EMPRESA']; ?>
+                             <?php echo $this->dataUser['N_EMPRESA']; ?>
                         <?php else:?>
                             <?php echo $this->dataUser['RAZON_SOCIAL']; ?>
                         <?php endif;?>

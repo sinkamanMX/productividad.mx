@@ -395,6 +395,38 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "application/modules/main/views/scripts/companies/index.phtml",
+			"settings":
+			{
+				"buffer_size": 4118,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/main/views/scripts/companies/getinfo.phtml",
+			"settings":
+			{
+				"buffer_size": 14363,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/leasing/views/scripts/services/index.phtml",
+			"settings":
+			{
+				"buffer_size": 11501,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/leasing/jsValidateServices.js",
+			"settings":
+			{
+				"buffer_size": 3084,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -420,6 +452,7 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/CompaniesController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateUsers.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/forms/jsValidateForms.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/forms/views/scripts/main/getinfo.phtml",
@@ -546,8 +579,7 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/libs/qr/phpqrcode.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/sapclientes/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/getinformation.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Style/Supervisor.php"
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/getinformation.phtml"
 	],
 	"find":
 	{
@@ -761,8 +793,123 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "application/modules/main/views/scripts/companies/index.phtml",
+					"settings":
+					{
+						"buffer_size": 4118,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2250,
+								2250
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "application/modules/main/views/scripts/companies/getinfo.phtml",
+					"settings":
+					{
+						"buffer_size": 14363,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9492,
+								9492
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"word_wrap": false
+						},
+						"translation.x": 298.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "application/modules/leasing/views/scripts/services/index.phtml",
+					"settings":
+					{
+						"buffer_size": 11501,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8029,
+								8029
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1838.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public/js/leasing/jsValidateServices.js",
+					"settings":
+					{
+						"buffer_size": 3084,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2958,
+								2958
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 886.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
