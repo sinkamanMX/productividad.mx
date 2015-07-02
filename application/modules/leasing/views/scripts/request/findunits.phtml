@@ -1,0 +1,33 @@
+<?php $this->headScript()->appendFile('/js/modules/leasing/jsValidateSearchU.js') ?>  	
+    <!-- block -->
+    <div class="block">
+        <div class="block-content collapse in">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                    <thead>
+                        <tr>
+                        	<th>Marca</th>
+                            <th>Modelo</th>
+                            <th>VIN</th>
+                            <th>Placas</th>
+                            <th>No. Serie</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>                                
+                        <?php foreach($this->dataTable as $key => $items): ?>  
+                        <tr class="odd gradeX">
+                            <td><?php echo $items['N_MARCA']; ?></td>
+                            <td><?php echo $items['N_MODELO']; ?></td>
+                            <td><?php echo $items['ECONOMICO']; ?></td>
+                            <td><?php echo $items['PLACAS']; ?></td>
+                            <td><?php echo $items['IDENTIFICADOR']; ?></td>
+                            <td class="text-center">                                
+                                <a href="javascript:parent.assignValue(<?php echo $items['ID']; ?>)"><button class="btn btn-primary"> <i class="icon-circle-arrow-down icon-white"></i></button></a>
+                            </td>
+                        </tr>    
+                        <?php endforeach;?>                                             
+                    </tbody>
+                </table>
+        </div>
+    </div>
+    <!-- /block -->

@@ -80,7 +80,8 @@ class leasing_RequestController extends My_Controller_Action
 			
 			$aTipoServicio	= $cCitas->getCboTipoServicio();
 			$aHorarios		= $cHorariosCita->getHorarios();
-			$aUnidades		= $cUnidades->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
+			
+			$aUnidades		= $cUnidades->getCbobyEmpLe($this->view->dataUser['ID_EMPRESA']);
 			$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
 			$aTipoEquipo	= $cTipoEquipo->getCbo();			
 			
@@ -95,6 +96,7 @@ class leasing_RequestController extends My_Controller_Action
 			$this->dataIn['inputIdUsuario'] = $this->view->dataUser['ID_USUARIO'];
 			
     		if($this->idToUpdate >-1){
+    			$aUnidades		= $cUnidades->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
 				$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
 				$aLogs		= $cLog->getDataTable($this->idToUpdate);
 				$sTipo		= $dataInfo['ID_TIPO'];
@@ -125,7 +127,7 @@ class leasing_RequestController extends My_Controller_Action
 						$cSucursales = new My_Model_Sucursales();
 						$this->dataIn['inputEmpresa'] = $this->view->dataUser['ID_EMPRESA'];
 						$this->dataIn['inputEstatus'] = 1;
-						$insert = $cSucursales->insertRow($this->dataIn);
+						$insert = $cSucursales->insertRowLeasing($this->dataIn);
 						$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);						
 					}
 					
@@ -454,5 +456,18 @@ class leasing_RequestController extends My_Controller_Action
 		}
 		
 		return $aResult;
-	}	
+	}
+	
+	public function findunitsAction(){
+		try{
+			$this->view->layout()->setLayout('layout_blank');
+			$cUnidades 		= new My_Model_Unidades();
+			$aUnidades		= $cUnidades->getCbobyEmpLe($this->view->dataUser['ID_EMPRESA']);			
+			
+			$this->view->dataTable = $aUnidades;
+		 }catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }  
+	} 	
 }

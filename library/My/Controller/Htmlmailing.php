@@ -10,7 +10,8 @@ class My_Controller_Htmlmailing
 		include($this->realPath.'/layouts/mail/tSolicitud_nueva.html');
 		$lBody = ob_get_clean();
 		
-		$sDireccion = $dataSol['CALLE'].", ".$dataSol['COLONIA'].", ".$dataSol['MUNICIPIO'].", ".$dataSol['ESTADO'].", CP: ".$dataSol['CP'];
+		$sDireccion = $dataSol['CALLE'].", Entre Calles:".$dataSol['ENTRE_CALLES'].", ".$dataSol['COLONIA'].", ".$dataSol['MUNICIPIO'].", ".$dataSol['ESTADO'].", CP: ".$dataSol['CP']."</br>".
+					  "Referencias: ".$dataSol['REFERENCIAS'].", Contacto:".$dataSol['CONTACTO'].", Tel. Contacto:".$dataSol['CONTACTO_TEL'];
 							   
 		$lBody = str_ireplace('@_usuario_@', 	@$dataUser['N_USER']   , $lBody);
 		$lBody = str_ireplace('@_empresa_@', 	$dataUser['N_EMPRESA'] , $lBody);
@@ -92,7 +93,8 @@ class My_Controller_Htmlmailing
 		$lBodyUda = ob_get_clean();	
 		
 		$sMensaje = 'Cambio de fecha y horario de instalacion';
-		$sDireccion = $dataSol['CALLE'].", ".$dataSol['COLONIA'].", ".$dataSol['MUNICIPIO'].", ".$dataSol['ESTADO'].", CP: ".$dataSol['CP'];
+		$sDireccion = $dataSol['CALLE'].", Entre Calles:".$dataSol['ENTRE_CALLES'].", ".$dataSol['COLONIA'].", ".$dataSol['MUNICIPIO'].", ".$dataSol['ESTADO'].", CP: ".$dataSol['CP']."</br>".
+					  "Referencias: ".$dataSol['REFERENCIAS'].", Contacto:".$dataSol['CONTACTO'].", Tel. Contacto:".$dataSol['CONTACTO_TEL'];
 		
 		$lBodyUda = str_ireplace('@_usuario_@', 	@$dataUser['N_USER']   , $lBodyUda);
 		$lBodyUda = str_ireplace('@_empresa_@', 	$dataUser['N_EMPRESA'] , $lBodyUda);
@@ -128,7 +130,8 @@ class My_Controller_Htmlmailing
 		include($this->realPath.'/layouts/mail/tSolicitd_aceptada.html');
 		$lBody = ob_get_clean();
 		
-		$sDireccion = $dataSol['CALLE'].", ".$dataSol['COLONIA'].", ".$dataSol['MUNICIPIO'].", ".$dataSol['ESTADO'].", CP: ".$dataSol['CP'];
+		$sDireccion = $dataSol['CALLE'].", Entre Calles:".$dataSol['ENTRE_CALLES'].", ".$dataSol['COLONIA'].", ".$dataSol['MUNICIPIO'].", ".$dataSol['ESTADO'].", CP: ".$dataSol['CP']."</br>".
+					  "Referencias: ".$dataSol['REFERENCIAS'].", Contacto:".$dataSol['CONTACTO'].", Tel. Contacto:".$dataSol['CONTACTO_TEL'];
 							   
 		$lBody = str_ireplace('@_usuario_@', 	@$dataUser['N_USER']   , $lBody);
 		$lBody = str_ireplace('@_empresa_@', 	$dataUser['N_EMPRESA'] , $lBody);

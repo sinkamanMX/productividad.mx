@@ -253,5 +253,25 @@ class My_Model_Unidades extends My_Db_Table
 		}	
         
 		return $result;	    	
-    }     
+    }  
+
+	public function getCbobyEmpLe($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT U.ID_UNIDAD AS ID, IDENTIFICADOR AS NAME, M.DESCRIPCION AS N_MODELO, R.DESCRIPCION AS N_MARCA,
+				U.PLACAS,U.IDENTIFICADOR,U.ECONOMICO
+				FROM PROD_UNIDADES  U
+				INNER JOIN AVL_MODELO_ACTIVO M ON U.ID_MODELO = M.ID_MODELO
+				INNER JOIN AVL_MARCA_ACTIVO  R ON M.ID_MARCA  = R.ID_MARCA
+				LEFT JOIN PROD_CITAS_SOLICITUD S ON U.ID_UNIDAD = S.ID_UNIDAD AND S.ID_ESTATUS IN(1,2,5)
+				WHERE S.ID_UNIDAD IS NULL
+				  AND U.ID_EMPRESA = $idObject
+				  ORDER BY NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}      
 }

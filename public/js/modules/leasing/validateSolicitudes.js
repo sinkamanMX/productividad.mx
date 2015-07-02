@@ -1,5 +1,11 @@
 $().ready(function() {
     $("#btnNewDir").click(function() { openDirection(); return false; });
+    $("#bntSearchUnit").click(function() { openSearch(1); return false; });
+
+    $('#iFrameSearch').on('load', function () {        
+      $('#loader').hide();
+      $('#iFrameSearch').show();
+    });       
 
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
@@ -170,6 +176,10 @@ function getInfoDir(inputIdValue){
                     $("#inputMunicipio").val(values.MUNICIPIO);
                     $("#inputEstado").val(values.ESTADO);
                     $("#inputCP").val(values.CP);
+                    $("#inputEntreCalles").val(values.CP);
+                    $("#inputRefs").val(values.CP);
+                    $("#inputContacto").val(values.CP);
+                    $("#inputTelCont").val(values.CP);                    
 
                     $("#divDireNew").show('slow');
                     $("#infoUnit").html("");
@@ -193,8 +203,14 @@ function addNameDir(){
     }
 }
 
-/*
-function openDirection(){
-    $('#iFrameSearch').attr('src','/main/tequipos/newdireccion');
+function openSearch(option){
+    $("#loader").show('slow');
+    $('#iFrameSearch').hide();
+    $('#iFrameSearch').attr('src','/leasing/request/findunits');    
     $("#MyModalSearch").modal("show");
-}*/
+}
+
+function assignValue(idValue){
+    $("#inputUnidad").val(idValue);
+    $("#MyModalSearch").modal("hide");
+}

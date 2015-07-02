@@ -1,5 +1,6 @@
 <?php $this->headScript()->appendFile('/js/modules/leasing/validateSolicitudes.js') ?>  
 <?php $disabled = (@$this->data['ID_ESTATUS']==2 || @$this->data['ID_ESTATUS']==5 || @$this->data['ID_ESTATUS']==4) ? 'disabled':'';?>
+<?php $showOpts = (@$this->data['ID_ESTATUS']==2 || @$this->data['ID_ESTATUS']==5 || @$this->data['ID_ESTATUS']==4) ? 'none'    :'block';?>
 <div class="row panel-data">
     <input id="hRefLinkMain" type="hidden" value="/leasing/request/index" />
     <div class="span12">
@@ -128,10 +129,13 @@
                                                 <div class="control-group">
                                                     <label class="control-label">Unidad<span class="required">*</span></label>
                                                     <div class="controls">
-                                                        <select class="m-wrap" name="inputUnidad" id="inputUnidad" <?php echo $disabled;?> >
+                                                        <select class="m-wrap class="span4 m-wrap"" name="inputUnidad" id="inputUnidad" <?php echo $disabled;?> >
                                                             <option value="">Seleccionar una opción</option>
                                                             <?php echo $this->aUnidades;?>
                                                         </select> 
+                                                        <?php if($this->idToUpdate ==-1 || $showOpts=='block'):?>
+                                                            <button id="bntSearchUnit" class="btn" ><i class="icon-search"></i></button>
+                                                        <?php endif;?>
                                                     </div>
                                                 </div>                
                                             </div> 
@@ -184,6 +188,18 @@
                                                             </div>
                                                         </div> 
                                                         <div class="control-group">
+                                                            <label class="control-label">Entre Calle<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputEntreCalles" name="inputEntreCalles" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['ENTRE_CALLES']; ?>"  readonly="readonly"  >
+                                                            </div>
+                                                        </div>
+                                                        <div class="control-group">
+                                                            <label class="control-label">Referencias<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputRefs" name="inputRefs" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['REFERENCIAS']; ?>"  readonly="readonly"  >
+                                                            </div>
+                                                        </div>                                                        
+                                                        <div class="control-group">
                                                             <label class="control-label">Colonia<span class="required">*</span></label>
                                                             <div class="controls">
                                                                 <input type="text" id="inputColonia" name="inputColonia" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['COLONIA']; ?>" readonly="readonly"  >
@@ -200,17 +216,36 @@
                                                             <div class="controls">
                                                                 <input type="text" id="inputEstado" name="inputEstado" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['ESTADO']; ?>" readonly="readonly"  >
                                                             </div>
+                                                        </div>
+                                                        <div class="control-group">
+                                                            <label class="control-label">CP<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputCP" name="inputCP" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CP']; ?>" readonly="readonly" >
+                                                            </div>
                                                         </div>  
+                                                       <div class="control-group">
+                                                            <label class="control-label">Contacto</label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputContacto" name="inputContacto" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CONTACTO']; ?>" readonly="readonly" >
+                                                            </div>
+                                                        </div>   
+
+                                                        <div class="control-group">
+                                                            <label class="control-label">Tel. Contacto</label>
+                                                            <div class="controls">
+                                                                <input type="text" id="inputTelCont" name="inputTelCont" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CONTACTO_TEL']; ?>" readonly="readonly" >
+                                                            </div>
+                                                        </div>                                                         
                                                     </div>
                                                     <div class="span12 no-margin-left">
-                                                        <div class="span6">
+                                                        <!--<div class="span6">
                                                             <div class="control-group">
                                                                 <label class="control-label">CP<span class="required">*</span></label>
                                                                 <div class="controls">
                                                                     <input type="text" id="inputCP" name="inputCP" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CP']; ?>" readonly="readonly"  >
                                                                 </div>
                                                             </div>  
-                                                        </div>
+                                                        </div>-->
                                                         <div class="span6" id="divSaveDir" style="display:none">                                                            
                                                             <input id="chkSaveDir" name="chkSaveDir" type="checkbox" onChange="addNameDir();"/>
                                                             Deseo guardar esta direccion en mis Luages
@@ -349,7 +384,7 @@
         </div>
     </div>
 </div>
-
+<!--
 <div class="modal fade hide modal-lg" id="MyModalSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
   <div class="modal-dialog ">
     <div class="modal-content">
@@ -358,6 +393,21 @@
         <h4 class="modal-title" >Nueva Dirección</h4>
       </div>
       <div class="modal-form i-body">             
+        <iframe class="hmodal550" id="iFrameSearch" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>   -->
+
+<div class="modal fade hide modal-lg" id="MyModalSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Buscar Unidad</h4>
+      </div>
+      <div class="modal-form i-body">  
+        <img id="loader" class="col-xs-offset-4" src="/images/assets/images/loading.gif" alt="loading gif"/>            
         <iframe class="hmodal550" id="iFrameSearch" src="" style="zoom:0" frameborder="0"></iframe>
       </div>
     </div>
