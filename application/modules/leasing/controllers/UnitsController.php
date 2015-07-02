@@ -64,20 +64,36 @@ class leasing_UnitsController extends My_Controller_Action
     public function getinfoAction(){
     	try{
 	    	$sProveedor = '';
-			$dataInfo = Array();
-			$classObject = new My_Model_Unidades();
-			$functions = new My_Controller_Functions();
+			$dataInfo 	= Array();
+			$classObject= new My_Model_Unidades();
+			$functions	= new My_Controller_Functions();
+			$cColores	= new My_Model_Colores();
+			$cMarcas 	= new My_Model_Activosmarcas();
+			$cModelos 	= new My_Model_Activosmodelos();
+			
+			$aColores	= $cColores->getCbo();
+			$aMarcas	= $cMarcas->getCbo();
+			$sModelo	= '';
+			$sColor		= '';
+			$sMarca		= '';
+			$sAnio		= '';
 			
 			if($this->idToUpdate >-1){
-				$dataInfo    = $classObject->getData($this->idToUpdate);
-				$sProveedor  = $dataInfo['ID_PROVEEDOR'];
+				$dataInfo    = $classObject->getDataLeasing($this->idToUpdate);
+				$sColor 	 = $dataInfo['ID_COLOR'];
+				$sAnio	 	 = $dataInfo['ANIO'];
+				$sModelo	 = $dataInfo['ID_MODELO'];
+				$sMarca		 = $dataInfo['ID_MARCA'];
+
+				$aModelos	= $cModelos->getCbo($sMarca);
+				$this->view->aModelos    = $functions->selectDb($aModelos,$sModelo);				
 			}
 			
 			if($this->operation=='update'){			
 				if($this->idToUpdate>-1){
-					 $updated = $classObject->updateRow($this->dataIn);
+					 $updated = $classObject->updateRowLeasing($this->dataIn);
 					 if($updated['status']){
-					 	$dataInfo    = $classObject->getData($this->idToUpdate);
+					 	$dataInfo    = $classObject->getDataLeasing($this->idToUpdate);
 					 	$this->resultop = 'okRegister';	
 					 }
 				}else{
@@ -85,11 +101,11 @@ class leasing_UnitsController extends My_Controller_Action
 				}	
 			}else if($this->operation=='new'){
 				$this->dataIn['idEmpresa'] = $this->view->dataUser['ID_EMPRESA'];
-				$insert = $classObject->insertNewRow($this->dataIn);
+				$insert = $classObject->insertNewRowLeasing($this->dataIn);
 				if($insert['status']){
 					$this->idToUpdate	= $insert['id'];
 					$this->resultop = 'okRegister';	
-					$dataInfo    = $classObject->getData($this->idToUpdate);
+					$dataInfo    = $classObject->getDataLeasing($this->idToUpdate);
 					$this->_redirect('/leasing/units/index');
 				}else{
 					$this->errors['status'] = 'no-insert';
@@ -110,8 +126,11 @@ class leasing_UnitsController extends My_Controller_Action
 			}
 			
 			$this->view->status     = $functions->cboStatus(@$dataInfo['ACTIVO']);
-			//$this->view->transportistas = $transports->getRowsEmp($this->view->dataUser['ID_EMPRESA']);
-			//$this->view->aProveedores= $functions->selectDb($aProveedores,$sProveedor);
+			$yearEnd= Date("Y")+2;
+			$yearIn	= Date("Y")-15;
+			$this->view->aMarcas	= $functions->selectDb($aMarcas,$sMarca);		
+			$this->view->sAnios	    = $functions->cbo_rangeNumber($yearIn,$yearEnd,$sAnio);
+			$this->view->sColores	= $functions->selectDb($aColores,$sColor);
 			$this->view->data 		= $dataInfo; 
 			$this->view->error 		= $this->errors;	
 	    	$this->view->mOption 	= 'units';

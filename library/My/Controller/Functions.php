@@ -129,6 +129,16 @@ class My_Controller_Functions
 	  return $select;  		    
 	}
 	
+	public function cbo_rangeNumber($iInital=0,$iFinal=0,$option=''){
+		$select='';
+	  for($i=$iInital; $i<$iFinal; $i++){
+		  $h = ($i<=9)?"0".$i:$i;
+		  $current = ($h==$option) ? 'selected': '';
+		  $select .= '<option '.$current.' value="'.$h.'" >'.$h.'</option>';
+		  }
+	  return $select;  		    
+	}	
+	
 	public function selectDb($dataTable,$option=''){	
 		$result='';	
 		if(count($dataTable)>0){

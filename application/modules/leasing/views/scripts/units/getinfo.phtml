@@ -41,13 +41,49 @@
 			                    <div class="alert alert-success hide">
 			                        <button class="close" data-dismiss="alert"></button>
 			                        Datos correctos
-			                    </div>								                    
+			                    </div>
+                                <div class="control-group">
+                                    <label class="control-label">Marca<span class="required">*</span></label>
+                                    <div class="controls">
+                                        <select class="span4 m-wrap" name="inputMarca" id="inputMarca" <?php echo $disabled;?>  onChange="getoptionsCbo('Modelo','modeloa',this.value,'','');">
+                                            <option value="">Seleccionar una opción</option>
+                                            <?php echo $this->aMarcas;?>
+                                        </select>
+                                    </div>
+                                </div>  
+                                <div class="control-group">
+                                    <label class="control-label">Modelo<span class="required">*</span></label>
+                                    <div class="controls">
+                                        <div id="divModelo">
+                                            <select class="span4 m-wrap" name="inputModelo" id="inputModelo" <?php echo $disabled;?> >
+                                                <option value="">Seleccionar una opción</option>
+                                                <?php echo $this->aModelos;?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>			                    
 								<div class="control-group">
-									<label class="control-label">No. Eco<span class="required">*</span></label>
+									<label class="control-label">Color<span class="required">*</span></label>
+									<div class="controls">
+										<select class="span6 m-wrap" name="inputColor" <?php echo $disabled;?> >
+											<?php echo $this->sColores; ?>
+										</select>
+									</div>
+								</div>	
+								<div class="control-group">
+									<label class="control-label">Año<span class="required">*</span></label>
+									<div class="controls">
+										<select class="span6 m-wrap" name="inputAnio" <?php echo $disabled;?> >
+											<?php echo $this->sAnios; ?>
+										</select>
+									</div>
+								</div>								
+								<div class="control-group">
+									<label class="control-label">VIN<span class="required">*</span></label>
 									<div class="controls">
 										<input type="text" name="inputEco" data-required="1" class="span6 m-wrap upperClass" value="<?php echo @$this->data['ECONOMICO']; ?>"  <?php echo $disabled;?> >
 									</div>
-								</div>
+								</div>								
 								<div class="control-group">
 									<label class="control-label">Placas<span class="required">*</span></label>
 									<div class="controls">
@@ -55,18 +91,20 @@
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">Identificador<span class="required">*</span></label>
+									<label class="control-label">No. serie<span class="required">*</span></label>
 									<div class="controls">
 										<input name="inputIden" type="text" class="span6 m-wrap upperClass" value="<?php echo @$this->data['IDENTIFICADOR']; ?>" <?php echo $disabled;?> >
 									</div>
 								</div>
+
+								<!--
 								<div class="control-group">
 									<label class="control-label">Identificador 2<span class="required">*</span></label>
 									<div class="controls">
 										<input name="inputIden2" type="text" class="span6 m-wrap upperClass" value="<?php echo @$this->data['IDENTIFICADOR_2']; ?>" <?php echo $disabled;?> >
 									</div>
-								</div>	
-
+								</div>	-->
+								<!--
 								<div class="control-group">
 									<label class="control-label">Tipo Equipo<span class="required">*</span></label>
 									<div class="controls">
@@ -79,6 +117,7 @@
 										<input name="inputVehiculo" type="text" class="span6 m-wrap upperClass" value="<?php echo @$this->data['TIPO_VEHICULO']; ?>" <?php echo $disabled;?> >
 									</div>
 								</div>	
+								-->
 																															
 								<div class="control-group">
 									<label class="control-label">Estatus<span class="required">*</span></label>

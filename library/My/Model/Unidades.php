@@ -186,4 +186,72 @@ class My_Model_Unidades extends My_Db_Table
         
 		return $result;			
 	}    
+	
+    public function updateRowLeasing($data){
+        $result     = Array();
+        $result['status']  = false;
+
+        $sql="UPDATE  $this->_name
+ 				SET ECONOMICO		='".$data['inputEco']."', 
+ 					ID_MODELO		= ".$data['inputModelo'].",
+			  		PLACAS			='".$data['inputPlacas']."',
+			  		IDENTIFICADOR	='".$data['inputIden']."',
+			  		ANIO			='".$data['inputAnio']."',
+			  		ID_COLOR		= ".$data['inputColor']."
+				WHERE $this->_primary =".$data['catId']." LIMIT 1";
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;	      	
+    }  
+
+    public function insertNewRowLeasing($data){
+        $result     = Array();
+        $result['status']  = false;
+        
+        $sql="INSERT INTO $this->_name
+			  SET   ID_EMPRESA		= ".$data['idEmpresa']." ,
+			  		ID_CLIENTE		= -1 ,
+			  		ID_MODELO		= ".$data['inputModelo'].",
+			  		ECONOMICO		='".$data['inputEco']."', 
+			  		PLACAS			='".$data['inputPlacas']."',
+			  		IDENTIFICADOR	='".$data['inputIden']."',
+			  		ANIO			='".$data['inputAnio']."',
+			  		ID_COLOR		= ".$data['inputColor'].",
+			  		REGISTRADO		= CURRENT_TIMESTAMP";
+        try{            
+    		$query   = $this->query($sql,false);
+    		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";
+			$query_id   = $this->query($sql_id);
+			if(count($query_id)>0){
+				$result['id']	   = $query_id[0]['ID_LAST'];
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;	      	
+    }   
+
+    public function getDataLeasing($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 
+    	$sql ="SELECT U.* , M.ID_MARCA             
+				FROM PROD_UNIDADES U
+				LEFT JOIN AVL_MODELO_ACTIVO M ON U.ID_MODELO = M.ID_MODELO
+				WHERE U.ID_UNIDAD = $idObject LIMIT 1";	
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0];			
+		}	
+        
+		return $result;	    	
+    }     
 }

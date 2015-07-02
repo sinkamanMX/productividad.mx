@@ -169,5 +169,69 @@ class My_Model_Sucursales extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;	     	
+    }    
+
+	public function updateRowLeasing($aData,$idObject){
+        $result     = Array();
+        $result['status']  = false;
+        
+        $sql="UPDATE  $this->_name
+        		SET	DESCRIPCION 	= '".$aData['inputDescripcion']."',        			
+        			CALLE			= '".$aData['inputCalle']."',
+        			ENTRE_CALLES	= '".$aData['inputEntreCalles']."',    
+        			REFERENCIAS		= '".$aData['inputRefs']."',    
+        			CONTACTO		= '".$aData['inputContacto']."',    
+        			CONTACTO_TEL	= '".$aData['inputTelCont']."',     
+        			COLONIA 		= '".$aData['inputColonia']."',    
+        			MUNICIPIO		= '".$aData['inputMunicipio']."',    
+        			ESTADO			= '".$aData['inputEstado']."',    
+        			CP				= '".$aData['inputCP']."',
+        			ESTATUS			=  ".$aData['inputEstatus']."
+				WHERE $this->_primary   = ".$idObject;
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+            echo $sql;
+        }
+		return $result;	      	
+    }  
+    
+    public function insertRowLeasing($aData){
+        $result     = Array();
+        $result['status']  = false;
+
+        $sql="INSERT INTO  $this->_name
+				SET ID_EMPRESA 	=  ".$aData['inputEmpresa'].",
+        			DESCRIPCION 	= '".$aData['inputDescripcion']."',        			
+        			CALLE			= '".$aData['inputCalle']."',    
+        			ENTRE_CALLES	= '".$aData['inputEntreCalles']."',    
+        			REFERENCIAS		= '".$aData['inputRefs']."',    
+        			CONTACTO		= '".$aData['inputContacto']."',    
+        			CONTACTO_TEL	= '".$aData['inputTelCont']."',    
+        			COLONIA 		= '".$aData['inputColonia']."',    
+        			MUNICIPIO		= '".$aData['inputMunicipio']."',    
+        			ESTADO			= '".$aData['inputEstado']."',    
+        			CP				= '".$aData['inputCP']."',
+        			ESTATUS			=  ".$aData['inputEstatus'].",
+					FECHA_CREADO    = CURRENT_TIMESTAMP";
+        try{            
+    		$query   = $this->query($sql,false);
+    		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";
+			$query_id   = $this->query($sql_id);
+			if(count($query_id)>0){
+				$result['id']	   = $query_id[0]['ID_LAST'];
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+            echo $sql;
+        }
+		return $result;	       	
     }      
 }

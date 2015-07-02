@@ -79,7 +79,7 @@ class leasing_BranchesController extends My_Controller_Action
 			}
 			
     		if($this->_dataOp=='new'){
-				$insert = $classObject->insertRow($this->_dataIn);
+				$insert = $classObject->insertRowLeasing($this->_dataIn);
 				if($insert['status']){
 					$this->_idUpdate = $insert['id'];
 					$this->resultop  = 'okRegister';	
@@ -90,7 +90,7 @@ class leasing_BranchesController extends My_Controller_Action
 				}
     		}else if($this->_dataOp=='update'){				
 				if($this->_idUpdate>-1){
-					 $updated = $classObject->updateRow($this->_dataIn,$this->_idUpdate); //mandar el ide del transportista
+					 $updated = $classObject->updateRowLeasing($this->_dataIn,$this->_idUpdate); //mandar el ide del transportista
 					 if($updated['status']){
 					 	$aDataInfo    = $classObject->getData($this->_idUpdate);
 					 	$this->_resultOp = 'okRegister';	

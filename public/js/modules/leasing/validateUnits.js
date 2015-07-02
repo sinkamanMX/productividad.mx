@@ -5,20 +5,23 @@ $().ready(function() {
             inputPlacas	: "required",
             inputIden	: "required",
             inputStatus	: "required",
-            inputIden2: "required",
-            inputEquipo: "required",
-            inputVehiculo: "required",
+            inputColor  : "required",
+            inputAnio   : "required",
+            inputMarca  : "required",
+            inputModelo : "required",
         },
         
         // Se especifica el texto del mensaje a mostrar
         messages: {
+            inputMarca  : "Campo Requerido",
+            inputModelo : "Campo Requerido",
             inputEco	: "Campo Requerido",
             inputPlacas	: "Campo Requerido",
             inputIden	: "Campo Requerido",
             inputStatus	: "Debe de seleccionar una opción",
-            inputIden2  : "Campo Requerido",
-            inputEquipo : "Campo Requerido",
-            inputVehiculo : "Campo Requerido"
+            inputColor  : "Campo Requerido",
+            inputAnio   : "Campo Requerido"        
+
         },
         
         submitHandler: function(form) {
