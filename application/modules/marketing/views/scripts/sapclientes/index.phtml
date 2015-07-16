@@ -1,5 +1,5 @@
 <?php $this->headScript()->appendFile('/js/modules/gralTables.js') ?>   
-<?php $this->headScript()->appendFile('/js/main/validateEquipments.js') ?>  
+<?php $this->headScript()->appendFile('/js/marketing/listClientesSap.js') ?>  
 <div class="row panel-data">
 
     <input id="hRefLinkEdit" type="hidden" value="/main/sapclintes/getinfo?idRow=" />
@@ -50,8 +50,23 @@
                                 <td><?php echo $items['ACTIVATE_QR']; ?></td>
                                 <td><?php echo $items['INACTIVATE_QR']; ?></td>
                                 <td><?php echo $items['TOTAL_QR']; ?></td>
-                                <td class="text-center">
-                                    <a href="/marketing/sapclientes/getinfo?catId=<?php echo $items['COD_CLIENTE']; ?>"><button class="btn btn-primary"> <i class="icon-eye-open icon-white"></i></button></a>  
+
+                                <td class="text-center" style="width:160px;"> 
+                                        <div class="span3">
+                                            <a href="/marketing/sapclientes/getinfo?catId=<?php echo $items['COD_CLIENTE']; ?>">
+                                                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="left" title="Generar QR`s"><i class="icon-qrcode icon-white"></i></button>
+                                            </a>
+                                        </div>
+                                        <div class="span3">
+                                            <a href="javascript:migrateUnits('<?php echo $items['COD_CLIENTE']; ?>')">
+                                                <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Sincronizar Unidades con Ovision"><i class="icon-plane icon-white"></i></button>
+                                            </a>
+                                        </div>
+                                        <div class="span3">
+                                            <a href="javascript:assignForms('<?php echo $items['COD_CLIENTE']; ?>')">
+                                                <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Formularios"><i class="icon-list-alt icon-white"></i></button>
+                                            </a>  
+                                        </div>
                                 </td>
                             </tr>    
                             <?php endforeach;?>
@@ -77,4 +92,35 @@
         <a class="btn btn-primary" href="javascript:deleteRow();">Eliminar</a>
         <a data-dismiss="modal" class="btn" href="#">Cancelar</a>
     </div>
-</div>    
+</div>  
+
+
+<div class="modal fade hide modal-lg" id="divModalUnits" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" ></h4>
+        </div>
+      <div class="modal-form i-body"> 
+        <img id="loader" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>            
+        <iframe class="hmodal500" id="iFrameUnits" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade hide modal-lg" id="divModalForms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" ></h4>
+        </div>
+      <div class="modal-form i-body"> 
+        <img id="loaderForms" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>            
+        <iframe class="hmodal500" id="iFrameForms" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>

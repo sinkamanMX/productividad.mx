@@ -73,7 +73,8 @@ class forms_MainController extends My_Controller_Action
 		try{
 			$cFormularios = new My_Model_Formularios();
 			$cFunctions   = new My_Controller_Functions();
-			$cTipos		  = new My_Model_TipoFormularios();			
+			$cTipos		  = new My_Model_TipoFormularios();	
+			$cSapClientes = new My_Model_Sapclientes();		
 			
 			$aDataInfo	  = Array();
 			$aElementos	  = Array();
@@ -83,7 +84,9 @@ class forms_MainController extends My_Controller_Action
 			$aFotos		  = '';
 			$aLocalizacion= '';	
 			$sTipoForm	  = '';	 
+			$sClienteSap  = '';
 			$aTipos		  = Array();   
+			$aClientesSap = $cSapClientes->getCbo();
 
 			if($this->idToUpdate>0){
 				$aDataInfo 	  = $cFormularios->getData($this->idToUpdate);				
@@ -97,6 +100,7 @@ class forms_MainController extends My_Controller_Action
 				
 				$sTipo        = ($aDataInfo['ID_TIPO']="S") ? 0 : 1;
 				$aTipos		  = $cTipos->getCbo($sTipo);
+				$sClienteSap  = $aDataInfo['ID_CLIENTE'];
 			}
 			
 			if($this->operation=='update'){	  		
@@ -113,7 +117,8 @@ class forms_MainController extends My_Controller_Action
 						$sTipoForm    = $aDataInfo['TIPO_FORMULARIO'];
 						$aElementos	  = $cFormularios->getElementos($this->idToUpdate,$this->_dataUser['ID_EMPRESA']);
 						$sTipo        = ($aDataInfo['ID_TIPO']="S") ? 0 : 1;
-						$aTipos		  = $cTipos->getCbo($sTipo);		
+						$aTipos		  = $cTipos->getCbo($sTipo);	
+						$sClienteSap  = $aDataInfo['ID_CLIENTE'];	
 						$this->resultop = 'okRegister';
 					 }
 				}else{
@@ -134,7 +139,8 @@ class forms_MainController extends My_Controller_Action
 					$sTipoForm    = $aDataInfo['TIPO_FORMULARIO'];
 					$aElementos	  = $cFormularios->getElementos($this->idToUpdate,$this->_dataUser['ID_EMPRESA']);
 					$sTipo        = ($aDataInfo['ID_TIPO']="S") ? 0 : 1;
-					$aTipos		  = $cTipos->getCbo($sTipo);		
+					$aTipos		  = $cTipos->getCbo($sTipo);	
+					$sClienteSap  = $aDataInfo['ID_CLIENTE'];	
 			 		$this->resultop = 'okRegister';
 				}else{
 					$this->errors['status'] = 'no-insert';
@@ -183,9 +189,6 @@ class forms_MainController extends My_Controller_Action
 					}
 				}
 			}	
-
-			
-			
 			
 			$this->view->aElements	= $this->processFields($aElementos);
 			$this->view->aDataInfo 	= $aDataInfo;
@@ -203,7 +206,7 @@ class forms_MainController extends My_Controller_Action
     		$this->view->selectStatus  = $cFunctions->cboStatusString();
     		$this->view->selectOptions = $cFunctions->cboStatusYesNo();
     		$this->view->selectTypes   = $cFunctions->selectDb($aTipos,'');
-			
+    		$this->view->aClientesSap  = $cFunctions->selectDb($aClientesSap,$sClienteSap);
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                

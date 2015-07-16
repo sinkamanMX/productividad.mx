@@ -505,5 +505,192 @@ class marketing_SapclientesController extends My_Controller_Action
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
         }  	
-	}     
+	}  
+
+	public function migrateunitsAction(){
+		try{
+			$this->view->layout()->setLayout('layout_blank');
+			$dataInfo = Array();
+			$dataTable= Array();
+			$classObject 	= new My_Model_Sapclientes();
+			$functions 		= new My_Controller_Functions();
+			$cMutUnidades	= new My_Model_MutUnidades();
+	
+	        if(isset($this->dataIn['strInput']) && $this->dataIn['strInput'] != ""){
+	        	$dataInfo	= $classObject->getData($this->dataIn['strInput']);
+	        	$dataTable  = $cMutUnidades->getDataTable($dataInfo['COD_CLIENTE']);
+			}
+						
+			$this->view->data 		= $dataInfo;	
+			$this->view->dataTable 	= $dataTable;
+			$this->view->errors 	= $this->errors;	
+			$this->view->resultOp   = $this->resultop;
+			$this->view->catId		= $this->idToUpdate;
+			$this->view->idToUpdate = $this->idToUpdate;	
+        } catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }  	
+	}
+	
+	public function processunitsAction(){
+    	try{
+    		$this->view->layout()->setLayout('layout_blank');
+			$dataInfo = Array();
+			$classObject 	= new My_Model_Sapclientes();
+			$functions 		= new My_Controller_Functions();
+			$cMutUnidades	= new My_Model_MutUnidades();
+			$c = 0;
+	        if(isset($this->dataIn['strInput']) && $this->dataIn['strInput'] != ""){
+	        	$dataInfo	= $classObject->getData($this->dataIn['strInput']);
+	        	//http://201.131.96.40
+	        	//http://192.168.6.41
+	        	$soap_client = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+   				$aParams 	 = array('sLogin'         => 'wbs_admin@grupouda.com.mx',
+	                  				'sPassword'       => 'w3b4dm1n',
+	                  				'strCustomerPass' => $dataInfo['COD_CLIENTE']);
+   				
+   				$result = $soap_client->HistoyDataLastLocationByCustomerPass($aParams);
+   				if (is_object($result)){
+					$x = get_object_vars($result);
+					$y = get_object_vars($x['HistoyDataLastLocationByCustomerPassResult']);
+					
+					$xml = $y['any'];		
+					if($xml2 = simplexml_load_string($xml)){
+						$cuenta = count($xml2->Response->Plate);
+       					
+       					for($i = 0 ; $i < count($xml2->Response->Plate) ; $i++){
+							$dataInsert = Array();
+							$dataInsert['gpsdate'] 	= (string)$xml2->Response->Plate[$i]->hst->DateTimeGPS;
+							$dataInsert['latitud'] 	= (string)$xml2->Response->Plate[$i]->hst->Latitude;
+							$dataInsert['longitud'] = (string)$xml2->Response->Plate[$i]->hst->Longitude;
+							$dataInsert['speed'] 	= (string)$xml2->Response->Plate[$i]->hst->Speed;
+							$dataInsert['heading'] 	= (string)$xml2->Response->Plate[$i]->hst->Heading;
+							$dataInsert['eventid'] 	= (string)$xml2->Response->Plate[$i]->hst->EventID;
+							$dataInsert['event'] 	= (string)$xml2->Response->Plate[$i]->hst->Event;
+							$dataInsert['imei'] 	= (string)$xml2->Response->Plate[$i]->hst->Imei;
+							$dataInsert['ignition'] = (string)$xml2->Response->Plate[$i]->hst->IgnitionState;
+							$dataInsert['fleet'] 	= (string)$xml2->Response->Plate[$i]->hst->Fleet;
+							$dataInsert['ip'] 		= (string)$xml2->Response->Plate[$i]->hst->IP;
+							$dataInsert['devicename'] = (string)$xml2->Response->Plate[$i]->hst->DeviceName;    
+							$dataInsert['devicedesc'] = (string)$xml2->Response->Plate[$i]->hst->DeviceDesc;
+							$dataInsert['lcoation'] = (string)$xml2->Response->Plate[$i]->hst->Location; 
+
+							$validateUnit = $cMutUnidades->validateUnitByimei($dataInsert['imei']);
+					          
+							if(!$validateUnit['status']){
+								$dataInsert['codCliente'] = $dataInfo['COD_CLIENTE'];
+					        	$insertunit = $cMutUnidades->insertRow($dataInsert);
+								if(!$insertunit){
+					          		$errors[$c] = $sImei;
+					          	}
+							}else{
+								$dataInsert['idUnit'] = $validateUnit['data']['ID_UNIDAD'];
+					          	$updateUnit = $cMutUnidades->updateRow($dataInsert);
+					          	if(!$updateUnit){
+					          		$errors[$c] = $sImei;
+					          	}
+							}
+				        	$c = $c+1;
+				       }
+						
+						if($c >0){
+			        		$this->_redirect('/marketing/sapclientes/migrateunits?strInput='.$dataInfo['COD_CLIENTE']);	
+			        	}elseif($c==0){	
+			        		$this->errors['no-units'] = 1;
+			        	}											
+					}else{
+						$this->errors['no-info'] = 1;
+					}
+	        	}else{
+					$this->errors['no-service'] = 1;
+				}
+			}
+
+			$this->view->bPageAll = true;
+    		$this->view->resultOp = $this->resultop;
+    		$this->view->errors	  = $this->errors;
+		} catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        } 			
+	}
+	
+	public function clientformsAction(){
+		try{
+			$this->view->layout()->setLayout('layout_blank');
+			$dataInfo = Array();
+			$dataTable= Array();
+			$classObject 	= new My_Model_Sapclientes();
+			$functions 		= new My_Controller_Functions();
+			$cFormularios   = new My_Model_Formularios();
+	
+	        if(isset($this->dataIn['strInput']) && $this->dataIn['strInput'] != ""){
+	        	$dataInfo	= $classObject->getData($this->dataIn['strInput']);	        	
+	        	$dataTable	= $cFormularios->getDataByClient($dataInfo['ID_CLIENTE']);
+	        	
+	        	if($this->operation=='updateListForms'){
+					$iControlE = 0;
+					$aValuesForm = $this->dataIn['formsValues'];
+					if(count($aValuesForm)>0){		
+						$delete = $classObject->deleteForms($dataInfo['ID_CLIENTE']);					
+						for($i=0;$i<count($aValuesForm);$i++){
+							$aResult = false;
+							
+							if(isset($aValuesForm[$i]) && @$aValuesForm[$i]!=""){
+								$idFormulario = $aValuesForm[$i];							
+								$updateRel    = $classObject->updateRelForm($dataInfo['ID_CLIENTE'],$idFormulario);
+								if($updateRel['status']){
+									$aResult = true;
+								}
+							}else{
+								$aResult = true;
+							}
+								
+							if($aResult){
+								$iControlE++;
+							}
+						}
+						
+						if($iControlE==count($aValuesForm)){
+							$dataTable	= $cFormularios->getDataByClient($dataInfo['ID_CLIENTE']);
+		    				$this->resultop = 'okRegister';		    				
+						}
+					}
+					$this->resultop = 'okRegister';					      	
+	        	}	        			
+	        	$dataTable	= $cFormularios->getDataByClient($dataInfo['ID_CLIENTE']);
+			}			
+						
+			$this->view->data 		= $dataInfo;
+			$this->view->dataTable 	= $dataTable;
+			$this->view->errors 	= $this->errors;	
+			$this->view->resultOp   = $this->resultop;			
+		} catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        } 	
+	}
+	
+	public function processformAction(){
+		try{
+			$this->view->layout()->setLayout('layout_blank');
+			$dataInfo = Array();
+			$dataTable= Array();
+			$classObject 	= new My_Model_Sapclientes();
+			$functions 		= new My_Controller_Functions();
+			$cFormularios   = new My_Model_Formularios();
+	
+	        if(isset($this->dataIn['strInput']) && $this->dataIn['strInput'] != ""){
+	        	$dataInfo	= $classObject->getData($this->dataIn['strInput']);	        	
+	        	$dataTable	= $cFormularios->getDataByClient($dataInfo['ID_CLIENTE']);
+	        	$codeReset  = $cFormularios->getRandomCodeReset();
+	        	$sUrl		= '/marketing/sapclientes/clientforms?strInput='.$dataInfo['ID_CLIENTE']."&codeR=".$codeReset;
+		    	$this->_redirect($sUrl);
+	        }
+		} catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        } 	        			
+	}
 }	

@@ -26,6 +26,7 @@ class My_Model_Formularios extends My_Db_Table
         
 		return $result;			
 	}
+	
 	/**
 	 * 
 	 * Devuelve la informacion de un unformulario.
@@ -84,6 +85,7 @@ class My_Model_Formularios extends My_Db_Table
         $sFilter  = (isset($aDataIn['inputIdAssign']) && $aDataIn['inputIdAssign'] !="" ) ? 'ID_ICONO = '.$aDataIn['inputIdAssign'].', ' : '';
         $sFilter  .= (isset($aDataIn['inputIdOvision']) && $aDataIn['inputIdOvision'] !="" ) ? 'ID_OVISION		=  "'.$aDataIn['inputIdOvision'].'", ' : '';
         $sFilter  .= (isset($aDataIn['inputLength']) && $aDataIn['inputLength'] !="" ) ? ' CARACTERES_CAMPO=  '.$aDataIn['inputLength'].', ' : '';
+        $sFilter  .= (isset($aDataIn['inputCliente']) && $aDataIn['inputCliente'] !="-1" ) ? ' ID_CLIENTE =  '.$aDataIn['inputCliente'].', ' : ' ID_CLIENTE = NULL,';
         
         $sql="INSERT INTO $this->_name			 
 					SET ID_EMPRESA		=  ".$aDataIn['inputEmpresa'].",
@@ -124,7 +126,7 @@ class My_Model_Formularios extends My_Db_Table
         $sFilter  = (isset($aDataIn['inputIdAssign']) && $aDataIn['inputIdAssign'] !="" ) ? 'ID_ICONO = '.$aDataIn['inputIdAssign'].', ' : '';
 		$sFilter  .= (isset($aDataIn['inputIdOvision']) && $aDataIn['inputIdOvision'] !="" ) ? 'ID_OVISION		=  "'.$aDataIn['inputIdOvision'].'", ' : '';
 		$sFilter  .= (isset($aDataIn['inputLength']) && $aDataIn['inputLength'] !="" ) ? ' CARACTERES_CAMPO=  '.$aDataIn['inputLength'].', ' : '';
-		
+		$sFilter  .= (isset($aDataIn['inputCliente']) && $aDataIn['inputCliente'] !="-1" ) ? ' ID_CLIENTE =  '.$aDataIn['inputCliente'].', ' : ' ID_CLIENTE = NULL,';
         $sql="UPDATE $this->_name			 
 				SET TITULO			= '".$aDataIn['inputTitulo']."',
 					DESCRIPCION		= '".$aDataIn['inputDescripcion']."',
@@ -293,5 +295,27 @@ class My_Model_Formularios extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;	         	
-    }     
+    }  
+
+	/**
+	 * 
+	 * Devuelve la informacion de un unformulario.
+	 * @param int $idObject
+	 */
+	public function getDataByClient($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT IF(F.ID_CLIENTE IS NULL,0,1) AS ASIGNADO, F.TITULO, F.DESCRIPCION,F.ID_OVISION, F.FECHA_CREACION, I.NOMBRE_IMAGEN AS N_IMAGEN, F.ID_FORMULARIO AS ID
+				FROM PROD_FORMULARIO F
+				LEFT JOIN  PROD_ICONOS I ON F.ID_ICONO = I.ID_ICONO
+				WHERE F.TIPO_FORMULARIO = 'M'
+				AND (F.ID_CLIENTE IS NULL OR F.ID_CLIENTE = ".$idObject.")
+				ORDER BY ASIGNADO DESC, TITULO";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}    
 }

@@ -314,6 +314,10 @@ body {
   background-color: #FFFFFF;
 }
 
+.no-margin{
+  margin: 0px !important;
+}
+
 .no-margin-t{
   margin-top: 0px !important;
 }

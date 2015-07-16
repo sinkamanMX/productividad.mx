@@ -1,6 +1,5 @@
 $( document ).ready(function() {
-	$('[data-toggle="tooltip"]').tooltip(); 
-	$('#dataTable').dataTable( {
+	/*$('#dataTable').dataTable( {
 		"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
 		"sPaginationType": "bootstrap",
 		"bDestroy": true,
@@ -9,7 +8,7 @@ $( document ).ready(function() {
 		"bFilter": true,
 		"bSort": true,
 		"bJQueryUI": true,
-		"iDisplayLength": 10,      
+		"iDisplayLength": 5,      
 		"bProcessing": true,
 		"bAutoWidth": true,
 		"bSortClasses": false,
@@ -27,13 +26,14 @@ $( document ).ready(function() {
 	            "sNext": "Siguiente"
 	          }          
 	      }
-	} );	
+	} );*/
 });	
 
-function confirmDelete(idtableRow){	
-	$("#inputDelete").val(idtableRow);	
-	$("#modalConfirmDelete").modal('show');
-	$('#modalConfirmDelete').on('hidden.bs.modal', function () {
-        location.reload();
-    }); 		
+
+function optionAll(inputCheck){
+    if(inputCheck){
+        $('.chkOn').prop('checked', true);         
+    }else{
+        $('.chkOn').prop('checked', false);
+    }
 }

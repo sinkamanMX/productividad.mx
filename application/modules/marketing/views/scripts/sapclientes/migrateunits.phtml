@@ -1,0 +1,42 @@
+<?php $this->headScript()->appendFile('/js/marketing/listUnits.js') ?>   
+<div class="block-content collapse in" id="divLoading" style="display:none;">
+    <div class="offset4">
+        <h3> Migrando Unidades</h3>
+    </div>
+    <img id="loaderForms" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/> 
+</div>
+
+<form method="POST" action="/marketing/sapclientes/processunits" id="FormData" class="form-horizontal ">
+    <input type="hidden" id="optReg"   name="optReg" value="updateUnits" />
+    <input type="hidden" id="strInput" name="strInput" value="<?php echo $this->data['COD_CLIENTE'];?>" />
+</form>                                
+
+<div class="block no-margin" id="divTable">
+    <div class="block-content collapse in">
+            <div class="muted pull-right">
+                <a data-toggle="tooltip" data-placement="bottom" title="Utilizar esta opción cuando no se tengan unidades ó falte alguna." href="javascript:sendMigrate();" class="btn btn-warning span3 pull-right no-margin-t"><i class="icon-refresh icon-white"></i> Migrar de Ovision</a>
+            </div>            
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Flota</th>
+                        <th>IMEI</th>
+                        <th>IP</th>
+                        <th>Nombre Dispositivo</th>
+                        <th>Descripcion Dispositivo</th>
+                    </tr>
+                </thead>
+                <tbody>                                
+                    <?php foreach($this->dataTable as $key => $items): ?>  
+                    <tr class="odd gradeX">
+                        <td><?php echo $items['FLOTA']; ?></td>
+                        <td><?php echo $items['IMEI']; ?></td>
+                        <td><?php echo $items['IP']; ?></td>
+                        <td><?php echo $items['DEVICE_NAME']; ?></td>
+                        <td><?php echo $items['DEVICE_DESC']; ?></td>
+                    </tr>    
+                    <?php endforeach;?>
+                </tbody>
+            </table>
+        </div>
+</div>

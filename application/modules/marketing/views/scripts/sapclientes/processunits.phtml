@@ -1,0 +1,38 @@
+<div class="block-content collapse in">
+    <?php if(count(@$this->errors)>0):?>
+            <?php if(@$this->errors['no-service']==1):?>
+                <div class="alert alert-error" style="display:block;">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <b>¡Atención Error!</b>
+                    <div>El servicio no se encuentra disponible, favor de intentarlo mas tarde.</div>
+                 </div>                                
+            <?php elseif(@$this->errors['no-info']==1):?>
+                <div class="alert alert-error" style="display:block;">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <b>¡Atención Error!</b>
+                    <div>No hay informacion, favor de verificar usuario y contraseña.</div>
+                 </div>                                  
+            <?php elseif(@$this->errors['no-units']==1):?>     
+                <div class="alert alert-error" style="display:block;">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <b>¡Atención Error!</b>
+                    <div>El usuario no tiene unidades asignadas.</div>
+                 </div>   
+            <?php elseif(@$this->errors['login']==1):?>     
+                <div class="alert alert-error" style="display:block;">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <b>¡Atención Error!</b>
+                    <div>
+                        Existe un problema con el usuario y/o contraseña para conectarse al sistema de Ovision Favor de verificarlo con el supervisor.</div>
+                 </div>     
+            <?php endif;?>                            
+    <?php endif; ?>
+
+    <?php if(@$this->resultOp=='okRegister'):?>
+        <div class="alert alert-success alert-dismissable" style="display:block;">
+            <i class="fa fa-check"></i>                                                      
+            Las unidades se han registrado correctamente<br/>
+            Para continuar dar click <a href="/marketing/sapclientes/migrateunits?strInput=<?php echo $this->data['COD_CLIENTE'];?>"> AQUI</a>
+        </div>                      
+    <?php endif;?> 
+</div>

@@ -177,5 +177,60 @@ class My_Model_Sapclientes extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;	
-    }      
+    }   
+
+	public function deleteForms($idObject){
+        $result     = Array();
+        $result['status']  = false;    
+
+        $sql="UPDATE PROD_FORMULARIO
+				SET ID_CLIENTE = NULL
+				WHERE ID_CLIENTE = $idObject";
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result['status'];	 		
+	}
+
+	public function updateRelForm($idCliente,$idFormulario){
+        $result     = Array();
+        $result['status']  = false;    
+
+        $sql="UPDATE PROD_FORMULARIO
+				SET ID_CLIENTE   	= $idCliente
+				WHERE ID_FORMULARIO = $idFormulario 
+				LIMIT 1";
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result['status'];	 		
+	}  	
+
+	public function getCbo(){
+		$result= Array();
+		$this->query("SET NAMES utf8",false);
+		 		
+    	$sql ="SELECT ID_CLIENTE AS ID, CONCAT(COD_CLIENTE,'-',RAZON_SOCIAL) AS NAME
+    			FROM $this->_name 
+    			WHERE COD_CLIENTE IS NOT NULL AND COD_CLIENTE <> ''
+    			ORDER BY NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}		
 }

@@ -18,6 +18,7 @@ $().ready(function() {
                 required     : true,
                 number       : true
             },
+            inputCliente     : true
         },
         messages: {
             inputTipo        : "Campo Requerido",
@@ -34,6 +35,7 @@ $().ready(function() {
                 required     : "Campo Requerido",
                 number       : "Este campo acepta solo números",
             }, 
+            inputCliente     : "Campo Requerido",
         },
         
         submitHandler: function(form) {
@@ -46,6 +48,7 @@ $().ready(function() {
         //$("#inputPassword").rules("add",  {required:true});
         //$("#inputPasswordC").rules("add", {required: true,equalTo: "#inputPassword"});  
         $("#inputLength").rules("remove", "required");
+        $("#inputCliente").rules("remove", "required");
     }
 });
 
@@ -58,13 +61,18 @@ function oncChangeType(inputValue){
             required: "Requerido",
             number  :  "Campo Requerido"
           }
-        });          
+        });
+
+        $("#inputCliente").rules("add",  {required:true});
         $("#divControlNumber").show('slow');
-    }else{
+        $("#divControlCliente").show('slow');
+    }else{        
         $("#inputLength").val(0);
         $("#divControlNumber").hide('slow');
+        $("#divControlCliente").hide('slow');
         $("#inputLength").rules("remove", "required");   
-
+        $("#inputCliente").rules("remove", "required");
+        $("#inputCliente").val("NULL");
     }
 }
 
