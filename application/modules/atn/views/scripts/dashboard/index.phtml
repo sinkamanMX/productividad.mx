@@ -1,0 +1,142 @@
+<?php //$this->headScript()->appendFile('/libs/fullcalendar/lib/moment.min.js') ?>   
+<?php //$this->headScript()->appendFile('/libs/fullcalendar/fullcalendar.js') ?>   
+<?php $this->headLink()->appendStylesheet('/libs/gantt/css/style.css');?>
+<?php $this->headScript()->appendFile('/libs/gantt/js/jquery.fn.gantt.js') ?>
+<?php $this->headScript()->appendFile('/js/atn/jsDashboard.js') ?>   
+
+<?php $this->headScript()->captureStart() ?>
+	adataSource = [
+		<?php $iSucursal = -1;?>
+		<?php foreach($this->aData as $key => $items):?>
+			<?php if($iSucursal!=$items['ID_SUCURSAL']):?>
+				<?php $sNameSuc  = $items['N_SUCURSAL'];?>
+				<?php $iSucursal = $items['ID_SUCURSAL'];?>			
+			<?php else:?>
+				<?php $sNameSuc  = '' ;?>
+			<?php endif;?>
+			{
+	            name: "<?php echo $sNameSuc;?>",
+	            desc: "<?php echo $items['N_TECNICO'];?>",	            
+	            values: [<?php foreach($items['citas'] as $key => $itemDates):?>{
+			                from: "/Date(<?php echo $itemDates['fechaSin'];?>)/",
+			                to: "/Date(<?php echo $itemDates['fechaSfin'];?>)/",
+			                label: "<?php echo $itemDates['FOLIO'];?>",
+			                desc: "<?php echo "Cliente: ".$itemDates['RAZON_SOCIAL']."</br>".
+			                				   "Fecha: ".$itemDates['FECHA_CITA']."</br>".
+			                				   "Hora : ".$itemDates['HORA_CITA']."</br>".
+			                				   "Folio: ".$itemDates['FOLIO']."</br>".
+			                				   "Estatus: ".$itemDates['N_ESTATUS']."</br>";?>",
+			                customClass: "ganttCode_<?php echo $itemDates['ID_ESTATUS'];?>",
+			                dataObj: <?php echo $itemDates['ID_CITA'];?>,
+			            },<?php endforeach;?>]
+	        },
+
+		<?php endforeach;?>
+	];
+<?php $this->headScript()->captureEnd(); ?>
+
+
+<div class="row panel-data formcustom">
+	<div class="span12">
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Resumen de Actividades</div>
+
+                <div class="muted pull-right">
+                    <div class="desStatus">
+                    	<table>
+                    		<?php $control = 0;?>
+                    		<?php foreach($this->aEstatus as $key => $items):?>
+								<?php if($control==0):?>
+                    				<tr>
+                    			<?php endif;?>
+                    			<td>
+                    				<div style="width:10px;height:5px;background-color:<?php echo $items['COLOR'];?>;"></div>
+                    			</td>
+                    			<td><?php echo $items['NAME'];?></td>
+                    			<?php $control++;?>
+
+                    			<?php if($control==7):?>
+                    				</tr>           
+                    				<?php $control=0;?>         				
+                    			<?php endif;?>
+                    		<?php endforeach;?>
+                    	</table>
+                    </div>                	
+                </div>
+            </div>
+            <div class="block-content collapse in row-min-h no-margin">
+                <div class="span12">
+                    <div class="gantt no-margin"></div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>   
+
+
+	<div class="modal fade hide modal-lg" id="myModalinfoVis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  <div class="modal-dialog ">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" ></h4>
+	      	</div>
+	      <div class="modal-form i-body">    
+	      	<img id="loader" class="offset4" src="/images/assets/loading.gif" alt="loading gif" style="display:none;"/>
+	        <iframe class="hmodal500" id="iFrameDetCita" src="" style="zoom:0" frameborder="0"></iframe>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+
+
+
+
+<!--
+	<div class="modal fade hide modal-lg" id="myModalinfoVis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  <div class="modal-dialog ">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" ></h4>
+	      	</div>
+	      <div class="modal-form i-body">    
+	      	<img id="loader" class="offset4" src="/images/assets/loading.gif" alt="loading gif" style="display:none;"/>
+	        <iframe class="hmodal500" id="iFrameDetCita" src="" style="zoom:0" frameborder="0"></iframe>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+
+	<div class="modal fade hide modal-lg" id="MyModalSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  <div class="modal-dialog ">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" >Buscar Citas</h4>
+	      </div>
+	      <div class="modal-form i-body">             
+	      	<img id="loader2" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>	      	
+			<iframe class="hmodal550" id="iFrameModaCita" src="" style="zoom:0" frameborder="0"></iframe>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+
+	<div class="modal fade hide modal-lg" id="mModalList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  <div class="modal-dialog ">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" ></h4>
+	      	</div>
+	      <div class="modal-form i-body">   
+	      	 <img id="loader3" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>          
+	        <iframe class="hmodal550" id="frameList" src="" style="zoom:0" frameborder="0"></iframe>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+
+	-->	

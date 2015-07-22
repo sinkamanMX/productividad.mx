@@ -396,50 +396,44 @@
 	"buffers":
 	[
 		{
-			"file": "public/js/public/validateSolicitudes.js",
+			"file": "application/modules/atn/views/scripts/dashboard/index.phtml",
 			"settings":
 			{
-				"buffer_size": 5027,
+				"buffer_size": 3120,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "application/modules/leasing/views/scripts/request/index.phtml",
+			"contents": "Searching 4389 files for \"headStyle\" (regex)\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/dashboard/index.phtml:\n    1  <?php //$this->headScript()->appendFile('/libs/fullcalendar/lib/moment.min.js') ?>   \n    2  <?php //$this->headScript()->appendFile('/libs/fullcalendar/fullcalendar.js') ?>   \n    3: <?php $this->headStyle()->appendStyle('/libs/gantt/css/style.css'); ?>\n    4  <?php $this->headScript()->appendFile('/libs/gantt/js/jquery.fn.gantt.js') ?>\n    5  <?php $this->headScript()->appendFile('/js/atn/jsDashboard.js') ?>   \n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/callcenter/views/scripts/rastreo/mapa.phtml:\n    2  <?php $this->headScript()->appendFile('/js/bootstrap-slider.js'); ?> \n    3  <?php $this->headScript()->appendFile('/js/jquery.countdown360.js'); ?> \n    4: <?php $this->headStyle()->appendStyle('/css/slider.css'); ?>\n    5  <?php echo $this->headLink()->appendStylesheet('/css/slider.css'); ?>\n    6  <?php $this->headScript()->appendFile('/js/callcenter/mapDetail.js') ?> \n\n/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/blank.phtml:\n    6  	<?php echo $this->layout()->content; ?>\n    7  	<?php echo $this->headLink() ?>\n    8:     <?php echo $this->headStyle() ?>\n    9      <?php echo $this->headScript() ?>\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/contacto_layout.phtml:\n   91          <script src=\"/js/bootstrap-datetimepicker.min.js\"></script>          \n   92        <?php echo $this->headLink() ?>\n   93:       <?php echo $this->headStyle() ?>\n   94        <?php echo $this->headScript() ?>      \n   95      </body>\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout.phtml:\n   87          <script src=\"/js/bootstrap-datetimepicker.min.js\"></script>          \n   88        <?php echo $this->headLink() ?>\n   89:       <?php echo $this->headStyle() ?>\n   90        <?php echo $this->headScript() ?>      \n   91      </body>\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout_blank.phtml:\n   45          <script src=\"/js/bootstrap-datetimepicker.min.js\"></script>         \n   46        <?php echo $this->headLink() ?>\n   47:       <?php echo $this->headStyle() ?>\n   48        <?php echo $this->headScript() ?>      \n   49      </body>\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/public.phtml:\n   69          <script src=\"/js/bootstrap-datetimepicker.min.js\"></script>          \n   70        <?php echo $this->headLink() ?>\n   71:       <?php echo $this->headStyle() ?>\n   72        <?php echo $this->headScript() ?>      \n   73      </body>\n\n/Users/itecno2/Documents/workspace/productividad.mx/library/Zend/Dojo/View/Helper/BorderContainer.php:\n   70          // this will ensure that the border container is viewable:\n   71          if (!$this->_styleIsRegistered) {\n   72:             $this->view->headStyle()->appendStyle('html, body { height: 100%; width: 100%; margin: 0; padding: 0; }');\n   73              $this->_styleIsRegistered = true;\n   74          }\n\n/Users/itecno2/Documents/workspace/productividad.mx/library/Zend/View/Helper/HeadStyle.php:\n   17   * @subpackage Helper\n   18   * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)\n   19:  * @version    $Id: HeadStyle.php 24593 2012-01-05 20:35:02Z matthew $\n   20   * @license    http://framework.zend.com/license/new-bsd     New BSD License\n   21   */\n   ..\n   33   * @license    http://framework.zend.com/license/new-bsd     New BSD License\n   34   */\n   35: class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_Standalone\n   36  {\n   37      /**\n   ..\n   39       * @var string\n   40       */\n   41:     protected $_regKey = 'Zend_View_Helper_HeadStyle';\n   42  \n   43      /**\n   ..\n   88  \n   89      /**\n   90:      * Return headStyle object\n   91       *\n   92:      * Returns headStyle helper object; optionally, allows specifying\n   93       *\n   94       * @param  string $content Stylesheet contents\n   95       * @param  string $placement Append, prepend, or set\n   96       * @param  string|array $attributes Optional attributes to utilize\n   97:      * @return Zend_View_Helper_HeadStyle\n   98       */\n   99:     public function headStyle($content = null, $placement = 'APPEND', $attributes = array())\n  100      {\n  101          if ((null !== $content) && is_string($content)) {\n  ...\n  276          if ($this->_captureLock) {\n  277              require_once 'Zend/View/Helper/Placeholder/Container/Exception.php';\n  278:             $e = new Zend_View_Helper_Placeholder_Container_Exception('Cannot nest headStyle captures');\n  279              $e->setView($this->view);\n  280              throw $e;\n\n16 matches across 9 files\n",
 			"settings":
 			{
-				"buffer_size": 8832,
+				"buffer_size": 4861,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "public/js/atn/jsDashboard.js",
+			"settings":
+			{
+				"buffer_size": 3466,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "application/modules/leasing/views/scripts/request/getinfo.phtml",
+			"file": "public/libs/gantt/css/style.css",
 			"settings":
 			{
-				"buffer_size": 34662,
+				"buffer_size": 8948,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/js/modules/leasing/validateSolicitudes.js",
+			"file": "public/libs/gantt/js/jquery.fn.gantt.js",
 			"settings":
 			{
-				"buffer_size": 7312,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/modules/main/views/scripts/users/getinfo.phtml",
-			"settings":
-			{
-				"buffer_size": 13987,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "public/js/main/validateUsers.js",
-			"settings":
-			{
-				"buffer_size": 4908,
+				"buffer_size": 84954,
 				"line_ending": "Unix"
 			}
 		}
@@ -468,6 +462,25 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/clientforms.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/marketing/listForms.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/marketing/listClientesSap.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/forms/views/scripts/main/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/forms/jsValidateForms.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/migrateunits.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/marketing/listUnits.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/gralTables.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/processunits.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/processuntis.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validateSolicitudes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateSolicitudes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateUsers.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/findunits.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/jsValidateSearchU.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/branches/getinfo.phtml",
@@ -483,15 +496,10 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/RequestController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/CompaniesController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateUsers.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/forms/jsValidateForms.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/forms/views/scripts/main/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/revision/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/revision/getinfoemp.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/revision/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfoemp.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/newprotocol.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/jsValidateProtocols.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateUsers.js",
@@ -504,7 +512,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_gracias.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/companies/validateCompanies.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_nueva.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tempIntNuevo.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tempIntNuevo_ext.html",
@@ -512,7 +519,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/jsValidateTequipos.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/tequipos/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/tequipos/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validateSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/reports/footer_report.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/reports/header_report.html",
@@ -527,7 +533,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/controllers/UnitsController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Model/Unidades.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/marketing/validateCodes.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/users/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/users/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/index.phtml",
@@ -538,7 +543,6 @@
 		"/Users/itecno2/Downloads/Orden_Servicio_6342.pdf",
 		"/Applications/MAMP/conf/php5.5.3/php.ini",
 		"/Users/itecno2/Downloads/Orden_Servicio_6441.pdf",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
 		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Model/Activos.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Model/Usuarios.php",
 		"/private/var/folders/xg/lt4w3ztj27l4zjhjht4rjhww0000gn/T/fz3temp-1/login.phtml",
@@ -546,7 +550,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtnSearch.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/phones/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/rastreotels.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/reporteRastreo.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/reporte.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout.phtml",
@@ -576,7 +579,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/sendMails.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Functions.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/public.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/gralTables.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/tableSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/activos/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validateServices.js",
@@ -587,15 +589,7 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/public/views/login/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/public/controllers/LoginController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/contacts/validateContacts.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/dashboard/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/reports/repTravelDetail.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/autorizacion/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/Autorizaciones.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/exportcard.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/public_header.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/callcenter/newservice.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/contacts/searchContacts.js"
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/dashboard/index.phtml"
 	],
 	"find":
 	{
@@ -603,7 +597,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"<open folders>",
@@ -616,6 +610,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"navigate",
+			" no-margin",
+			"headStyle",
+			"margin-t",
+			"margin",
+			"no-mar",
 			"Unidad",
 			"Htmlmailing",
 			"/atn/revision",
@@ -737,13 +737,7 @@
 			"equipment",
 			"/callcenter/newservice/",
 			"/callcenter/newservice/index",
-			"2D66F5",
-			"getAll",
-			"sDom",
-			"nPaging",
-			"Data",
-			"filter",
-			"span6"
+			"2D66F5"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -809,45 +803,115 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "public/js/public/validateSolicitudes.js",
+					"file": "application/modules/atn/views/scripts/dashboard/index.phtml",
 					"settings":
 					{
-						"buffer_size": 5027,
+						"buffer_size": 3120,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								695,
-								695
+								1017,
+								1017
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"word_wrap": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1787.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "application/modules/leasing/views/scripts/request/index.phtml",
 					"settings":
 					{
-						"buffer_size": 8832,
+						"buffer_size": 4861,
 						"regions":
 						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										363,
+										372
+									],
+									[
+										878,
+										887
+									],
+									[
+										1292,
+										1301
+									],
+									[
+										1615,
+										1624
+									],
+									[
+										1956,
+										1965
+									],
+									[
+										2302,
+										2311
+									],
+									[
+										2643,
+										2652
+									],
+									[
+										2989,
+										2998
+									],
+									[
+										3397,
+										3406
+									],
+									[
+										3674,
+										3683
+									],
+									[
+										3863,
+										3872
+									],
+									[
+										3948,
+										3957
+									],
+									[
+										4001,
+										4010
+									],
+									[
+										4309,
+										4318
+									],
+									[
+										4361,
+										4370
+									],
+									[
+										4738,
+										4747
+									]
+								],
+								"scope": ""
+							}
 						},
 						"selection":
 						[
@@ -858,9 +922,13 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"detect_indentation": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -870,103 +938,74 @@
 				},
 				{
 					"buffer": 2,
-					"file": "application/modules/leasing/views/scripts/request/getinfo.phtml",
+					"file": "public/js/atn/jsDashboard.js",
 					"settings":
 					{
-						"buffer_size": 34662,
+						"buffer_size": 3466,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								11255,
-								11255
+								462,
+								462
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": false
+							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 283.0,
-						"translation.y": 1766.0,
+						"translation.x": 0.0,
+						"translation.y": 1226.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "public/js/modules/leasing/validateSolicitudes.js",
+					"file": "public/libs/gantt/css/style.css",
 					"settings":
 					{
-						"buffer_size": 7312,
+						"buffer_size": 8948,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6647,
-								6647
+								4103,
+								4113
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"syntax": "Packages/CSS/CSS.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3146.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "application/modules/main/views/scripts/users/getinfo.phtml",
+					"file": "public/libs/gantt/js/jquery.fn.gantt.js",
 					"settings":
 					{
-						"buffer_size": 13987,
+						"buffer_size": 84954,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8551,
-								8075
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false,
-							"word_wrap": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "public/js/main/validateUsers.js",
-					"settings":
-					{
-						"buffer_size": 4908,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4492,
-								4458
+								891,
+								891
 							]
 						],
 						"settings":
@@ -975,8 +1014,8 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 2093.0,
+						"translation.x": 7.0,
+						"translation.y": 391.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
