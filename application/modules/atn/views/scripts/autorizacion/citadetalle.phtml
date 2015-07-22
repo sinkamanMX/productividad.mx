@@ -15,7 +15,13 @@
             	<input type="hidden" name="inputChangeDate" id="inputChangeDate" value="0"/>
 
                 <div class="span6">
-                    <h4>Detalle de la Cita <!-- <a href="javascript:setEditDate()"><i class=" icon-edit"></i></a> --></h4>
+                    <h4>Detalle de la Cita <!-- <a href="javascript:setEditDate()"><i class=" icon-edit"></i></a> -->
+                        
+                        <a target="_blank" href="/atn/reportes/exportchecklist?strInput=<?php echo $this->data['ID_CITA']; ?>&strDownload=false">
+                            <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Checklist de Servicio"><i class="icon-eye-open icon-white"></i></button>
+                        </a>  
+                        
+                    </h4>
                 </div>
                 <div class="span6">
                     <h4>Folio Autorización: <?php echo (isset($this->data['FOLIO_AUTORIZACION'])) ? $this->data['FOLIO_AUTORIZACION']: 'Sin Autorización';?></h4>

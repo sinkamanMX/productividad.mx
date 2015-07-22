@@ -2827,11 +2827,13 @@ class atn_ReportesController extends My_Controller_Action
 					
 				    try
 				    {
-						$filename  = "Checklist_Orden_".$dataCita['FOLIO'].".pdf";
-						header('Content-Type: application/pdf');
-						header('Content-Disposition: attachment;filename="'.$filename.'"');
-						header('Cache-Control: max-age=0');
-					
+				    	if(!isset($this->dataIn['strDownload']) && $this->dataIn['strDownload']==""){
+				    		$filename  = "Checklist_Orden_".$dataCita['FOLIO'].".pdf";
+							header('Content-Type: application/pdf');
+							header('Content-Disposition: attachment;filename="'.$filename.'"');
+							header('Cache-Control: max-age=0');	
+				    	}
+						
 				        $html2pdf = new HTML2PDF('P', 'A4', 'es', true, 'UTF-8', 3);
 				        $html2pdf->pdf->SetDisplayMode('fullpage');
 				        $html2pdf->writeHTML($content, isset($_GET['vuehtml']));
