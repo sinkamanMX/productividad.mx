@@ -40,3 +40,7 @@ function showDetail(idDate){
     $("#myModalinfoVis").modal("show");        
     $('#iFrameDetCita').attr('src','/atn/main/citadetalle?strInput='+idDate);    
 }
+
+function submitForm(){
+    $( "#FormData" ).submit();
+}

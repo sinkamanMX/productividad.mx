@@ -44,7 +44,7 @@
             onItemClick: function (data) { return; },
             onAddClick: function (data) { return; },
             onRender: function() { return; },
-            scrollToToday: true
+            scrollToToday: false
         };
 
         /**
@@ -1293,7 +1293,7 @@
             // Move chart via mousewheel
             wheelScroll: function (element, e) {
                 e.preventDefault(); // e is a jQuery Event
-
+                /*
                 // attempts to normalize scroll wheel velocity
                 var delta = ( 'detail' in e ? e.detail :
                               'wheelDelta' in e.originalEvent ? - 1/120 * e.originalEvent.wheelDelta :
@@ -1301,13 +1301,15 @@
                               e.originalEvent.detail );
 
                 // simpler normalization, ignoring per-device/browser/platform acceleration & semantic variations
-                //var delta = e.detail || - (e = e.originalEvent).wheelData || e.deltaY /* || e.deltaX */ || e.detail;
+                //var delta = e.detail || - (e = e.originalEvent).wheelData || e.deltaY  || e.detail;
                 //delta = ( delta / Math.abs(delta) ) || 0;
 
                 core.scrollPanel(element, -50 * delta);
 
                 clearTimeout(element.scrollNavigation.repositionDelay);
                 element.scrollNavigation.repositionDelay = setTimeout(core.repositionLabel, 50, element);
+
+                */
             },
 
             // Move chart via slider control

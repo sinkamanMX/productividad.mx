@@ -7,9 +7,10 @@
  */
 class My_Model_Resumen extends My_Db_Table
 {	
-	public function getTecnicos(){
+	public function getTecnicos($idSucursal){
 		$result= Array();
-		$this->query("SET NAMES utf8",false); 		
+		$this->query("SET NAMES utf8",false);
+		$sFilter = ($idSucursal==-1) ? ' ' : 'AND S.ID_SUCURSAL = '.$idSucursal; 		
     	$sql ="SELECT U.ID_USUARIO, S.ID_SUCURSAL,S.DESCRIPCION AS N_SUCURSAL, CONCAT(U.NOMBRE,' ',U.APELLIDOS) N_TECNICO
 				FROM USUARIOS U 
 				INNER JOIN USR_EMPRESA R ON U.ID_USUARIO = R.ID_USUARIO
@@ -17,6 +18,7 @@ class My_Model_Resumen extends My_Db_Table
 				WHERE U.ID_PERFIL 	   	= 4 
 				  AND U.FLAG_OPERACIONES= 1
 				  AND U.ACTIVO			= 1
+				  $sFilter
 				ORDER BY N_SUCURSAL ASC, N_TECNICO ASC";    	
 		$query   = $this->query($sql);
 		if(count($query)>0){

@@ -76,7 +76,8 @@
 }
 
 .fn-gantt .leftPanel .fn-wide, .fn-gantt .leftPanel .fn-wide .fn-label {
-    width: 225px;
+    /*width: 225px;*/
+    width:100%;
 }
 
 .fn-gantt .spacer {

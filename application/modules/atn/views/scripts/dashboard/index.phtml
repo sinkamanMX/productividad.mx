@@ -13,8 +13,8 @@
 				<?php $sNameSuc  = '' ;?>
 			<?php endif;?>
 			{
-	            name: "<?php echo $sNameSuc;?>",
-	            desc: "<?php echo $items['N_TECNICO'];?>",	            
+	            name: "<?php echo ($this->iCinstalac==-1) ? $sNameSuc : $items['N_TECNICO'];?>",
+	            desc: "<?php echo ($this->iCinstalac==-1) ? $items['N_TECNICO'] : '';?>",	            
 	            values: [<?php foreach($items['citas'] as $key => $itemDates):?>{
 			                from: "/Date(<?php echo $itemDates['fechaSin'];?>)/",
 			                to: "/Date(<?php echo $itemDates['fechaSfin'];?>)/",
@@ -60,11 +60,30 @@
                     			<?php endif;?>
                     		<?php endforeach;?>
                     	</table>
-                    </div>                	
+                    </div>    
                 </div>
             </div>
             <div class="block-content collapse in row-min-h no-margin">
-                <div class="span12">
+				<div class="span12 no-margin">          	
+            	 	<div class="muted pull-right">
+
+	                	<form method="POST" action="/atn/dashboard/index" id="FormData" class="form-horizontal formcustom">
+	                        <input type="hidden" name="optReg" value="search" />
+	                		<div class="span10">
+	                			<div class="span3">
+	                				<label>Sucursal</label>
+	                			</div>
+	                			<div class="span9">
+									<select class="chzn-select" id="inputSucursal" name="inputSucursal" onChange="submitForm();">
+										<option value="-1">Todos</option>
+										<?php echo $this->cInstalaciones;?>
+									</select>
+	                			</div>
+	                		</div>						
+	                	</form>
+            		</div>
+				</div>
+                <div class="span12 no-margin">          	
                     <div class="gantt no-margin"></div>
                 </div>
             </div>

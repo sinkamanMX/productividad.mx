@@ -53,14 +53,21 @@ class atn_DashboardController extends My_Controller_Action
     {
 		try{
 			$this->view->dataUser['allwindow'] = true;
-			$cResumen  = new My_Model_Resumen();
+			$cResumen  		= new My_Model_Resumen();
+			$cInstalaciones = new My_Model_Cinstalaciones();
+			$cFunciones		= new My_Controller_Functions();
 			
-			$aTecnicos 		= $cResumen->getTecnicos();			
+			$sInstalacion	= (isset($this->dataIn['inputSucursal']) && $this->dataIn['inputSucursal']!="") ? $this->dataIn['inputSucursal'] : -1;
+			
+			$aTecnicos 		= $cResumen->getTecnicos($sInstalacion);			
 			$aCitas    		= $cResumen->getCitasPendientes();
 			$aDataProcess 	= $this->processInfo($aTecnicos, $aCitas);
-
+			$dataCenter		= $cInstalaciones->getCbo($this->view->dataUser['ID_EMPRESA']);
+			
 			$this->view->aData 		= $aDataProcess;
 			$this->view->aEstatus 	= $cResumen->getStatus();
+			$this->view->iCinstalac = $sInstalacion;
+			$this->view->cInstalaciones = $cFunciones->selectDb($dataCenter,$sInstalacion);			
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
