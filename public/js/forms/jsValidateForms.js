@@ -53,20 +53,29 @@ $().ready(function() {
 });
 
 function oncChangeType(inputValue){
-    if(inputValue=='M'){
-        $("#inputLength").rules( "add", {
-          required: true,
-          number  : true,
-          messages: {
-            required: "Requerido",
-            number  :  "Campo Requerido"
-          }
-        });
+    if(inputValue!=""){
+        if(inputValue=='M'){
+            $("#inputLength").rules( "add", {
+              required: true,
+              number  : true,
+              messages: {
+                required: "Requerido",
+                number  :  "Campo Requerido"
+              }
+            });
 
-        $("#inputCliente").rules("add",  {required:true});
-        $("#divControlNumber").show('slow');
-        $("#divControlCliente").show('slow');
-    }else{        
+            $("#inputCliente").rules("add",  {required:true});
+            $("#divControlNumber").show('slow');
+            $("#divControlCliente").show('slow');
+        }else{        
+            $("#inputLength").val(0);
+            $("#divControlNumber").hide('slow');
+            $("#divControlCliente").hide('slow');
+            $("#inputLength").rules("remove", "required");   
+            $("#inputCliente").rules("remove", "required");
+            $("#inputCliente").val("NULL");
+        }
+    }else{
         $("#inputLength").val(0);
         $("#divControlNumber").hide('slow');
         $("#divControlCliente").hide('slow');
