@@ -16,8 +16,9 @@ class My_Model_Formularios extends My_Db_Table
 		$result= Array();
 		$this->query("SET NAMES utf8",false);
 		
-    	$sql ="SELECT *
-				FROM $this->_name
+    	$sql ="SELECT C.RAZON_SOCIAL AS N_CLIENTE, F.*
+				FROM PROD_FORMULARIO F
+				LEFT JOIN PROD_CLIENTES C ON F.ID_CLIENTE = C.ID_CLIENTE
 				ORDER BY DESCRIPCION ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  

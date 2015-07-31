@@ -120,6 +120,7 @@ class forms_MainController extends My_Controller_Action
 						$aTipos		  = $cTipos->getCbo($sTipo);	
 						$sClienteSap  = $aDataInfo['ID_CLIENTE'];	
 						$this->resultop = 'okRegister';
+						$this->redirect('/forms/main/getinfo?catId='.$this->idToUpdate);
 					 }
 				}else{
 					$this->errors['status'] = 'no-info';
@@ -142,6 +143,8 @@ class forms_MainController extends My_Controller_Action
 					$aTipos		  = $cTipos->getCbo($sTipo);	
 					$sClienteSap  = $aDataInfo['ID_CLIENTE'];	
 			 		$this->resultop = 'okRegister';
+			 		
+			 		$this->redirect('/forms/main/getinfo?catId='.$this->idToUpdate);
 				}else{
 					$this->errors['status'] = 'no-insert';
 				}
@@ -183,9 +186,10 @@ class forms_MainController extends My_Controller_Action
 					}
 					
 					if($iControlE==count($aValuesForm)){
-						$this->_resultOp = 'okRegister';
+						$this->_resultOp = 'okRegister';						
 						$aElementos	  = $cFormularios->getElementos($this->idToUpdate,$this->_dataUser['ID_EMPRESA']);
 						$this->view->eventAction = true;
+						$this->redirect('/forms/main/getinfo?catId='.$this->idToUpdate);
 					}
 				}
 			}	

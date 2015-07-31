@@ -20,10 +20,11 @@
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
                         <thead>
                             <tr>
-                                <th>Tipo</th>     
+                                <th>Tipo</th>                                
                                 <th>Titulo</th>
                                 <th>Descripción</th>                                                  
                                 <th>Id Ovision</th>
+                                <th>Cliente</th>
                                 <th>Estatus</th>
                                 <th></th>
                             </tr>
@@ -32,9 +33,10 @@
                             <?php foreach($this->datatTable as $key => $items): ?>  
                             <tr class="odd gradeX">
                                 <td><?php echo ($items['TIPO_FORMULARIO']=='M') ? 'MT':'Siames'; ?></td>
-                                <td><?php echo $items['TITULO']; ?></td>
-                                <td><?php echo $items['DESCRIPCION']; ?></td>                                
+                                <td><?php echo $items['TITULO'];     ?></td>
+                                <td><?php echo $items['DESCRIPCION'];?></td>                                
                                 <td><?php echo $items['ID_OVISION']; ?></td>
+                                <td><?php echo $items['N_CLIENTE'];  ?></td>
                                 <td><?php echo ($items['ACTIVO']=='S') ? 'Activo':'Inactivo'; ?></td>
                                 <td class="text-center">
                                     <?php if($this->dataUser['LECTURA']==1): ?>

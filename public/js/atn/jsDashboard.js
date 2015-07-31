@@ -6,7 +6,9 @@ $( document ).ready(function() {
         navigate: "scroll",
         maxScale: "months",
         minScale: "hours",
+        scale:    "months",
         itemsPerPage: 20,
+        /*scrollToToday: true,*/
         onItemClick: function(data) {    
             showDetail(data);
             console.log(data);

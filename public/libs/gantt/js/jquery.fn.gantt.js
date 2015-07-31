@@ -257,13 +257,14 @@
             // **Render the grid**
             render: function (element) {
                 var content = $('<div class="fn-content"/>');
+                content.append(core.navigation(element));
                 var $leftPanel = core.leftPanel(element);
                 content.append($leftPanel);
                 var $rightPanel = core.rightPanel(element, $leftPanel);
                 var mLeft, hPos;
 
                 content.append($rightPanel);
-                content.append(core.navigation(element));
+                
 
                 var $dataPanel = $rightPanel.find(".dataPanel");
 
