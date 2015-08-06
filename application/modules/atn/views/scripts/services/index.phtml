@@ -166,18 +166,18 @@
                                             <?php endif;?>
                                             <?php if($items['IDE']==4):?>
                                                 <div class="span3">
-                                                    <a href="/atn/reportes/exportsearch?strInput=<?php echo $items['ID']; ?>">
+                                                    <a target="_blank" href="/atn/reportes/exportsearch?strInput=<?php echo $items['ID']; ?>">
                                                         <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Formato General"><i class=" icon-align-center icon-white"></i></button>
                                                     </a>
                                                 </div>
                                                 <?php if($items['NEW_FORM']=='N'):?>
                                                     <div class="span3">
-                                                        <a href="/atn/reportes/exportoservicio?strInput=<?php echo $items['ID']; ?>">
+                                                        <a target="_blank" href="/atn/reportes/exportoservicio?strInput=<?php echo $items['ID']; ?>">
                                                             <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Orden de Servicio"><i class="icon-file icon-white"></i></button>
                                                         </a>
                                                     </div>
                                                     <div class="span3">
-                                                        <a href="/atn/reportes/exportchecklist?strInput=<?php echo $items['ID']; ?>">
+                                                        <a target="_blank" href="/atn/reportes/exportchecklist?strInput=<?php echo $items['ID']; ?>">
                                                             <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="right" title="Checklist de Servicio"><i class="icon-list-alt icon-white"></i></button>
                                                         </a>  
                                                     </div>
