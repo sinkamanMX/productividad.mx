@@ -69,7 +69,11 @@ class atn_AutorizacionController extends My_Controller_Action
 						$cHttpService = new Zend_Http_Client();
 						$sUrl = "http://192.168.6.116/siames/sap_update_monitoreo.php?folio=".$dataDate['FOLIO'];
 						$cHttpService->setUri($sUrl);
-						$response = $cHttpService->request();	
+						$response = $cHttpService->request();
+
+						$cHtmlMail		= new My_Controller_Htmlmailing();							
+						$cHtmlMail->notif_autorizacion($dataDate,$this->view->dataUser);
+						
 						$statusOpr = true;				
 					}
 				}				

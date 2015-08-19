@@ -453,5 +453,44 @@ class My_Controller_Htmlmailing
 													
 			$cMailing->insertRow($aMailerR);	
 		}			
-	}	
+	}
+
+	public function notif_autorizacion($dataSol, $dataUser){
+		$cMailing   = new My_Model_Mailing();		
+		ob_start();
+		include($this->realPath.'/layouts/mail/tNotification_aut.html');
+		$lBodyUda = ob_get_clean();	
+		
+		$sMensaje = 'Cita Autorizada';
+		
+		$lBodyUda = str_ireplace('@_status_@', 	 	@$dataSol['ESTATUS']   		, $lBodyUda);
+		$lBodyUda = str_ireplace('@_folio_@', 	 	@$dataSol['FOLIO']   		, $lBodyUda);
+		$lBodyUda = str_ireplace('@_fechahora_@',	@$dataSol['FECHA_CITA']." ".@$dataSol['HORA_CITA']   , $lBodyUda);
+		$lBodyUda = str_ireplace('@_pasignado_@',	@$dataSol['OPERADOR']   	, $lBodyUda);
+		$lBodyUda = str_ireplace('@_contacto_@', 	@$dataSol['CONTACTO']   	, $lBodyUda);
+		$lBodyUda = str_ireplace('@_telcontacto_@',	@$dataSol['TELEFONO_CONTACTO'], $lBodyUda);
+		$lBodyUda = str_ireplace('@_dire_@', 		@$dataSol['DIRECCION_CITA'] , $lBodyUda);
+		$lBodyUda = str_ireplace('@_refes_@', 		@$dataSol['REF_CITA']   	, $lBodyUda);
+		$lBodyUda = str_ireplace('@_nombrecliente_@',@$dataSol['NOMBRE_CLIENTE'], $lBodyUda);
+		$lBodyUda = str_ireplace('@_razon_@', 		@$dataSol['RAZON_SOCIAL']   , $lBodyUda);
+		$lBodyUda = str_ireplace('@_tel_@', 		@$dataSol['TELEFONO_FIJO']  , $lBodyUda);
+		$lBodyUda = str_ireplace('@_movil_@', 		@$dataSol['TELEFONO_MOVIL'] , $lBodyUda);
+		$lBodyUda = str_ireplace('@_mail_@', 		@$dataSol['EMAIL']   		, $lBodyUda);
+				
+		$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+		$aDataAdmin = $config->getOption('notifs');					
+		
+		$aMailer    = Array(
+			'inputIdSolicitud'	 => -1,
+			'inputDestinatarios' => $aDataAdmin['mails'],
+			'inputEmails' 		 => $aDataAdmin['mails'],
+			'inputTittle' 		 => $sMensaje,
+			'inputBody' 		 => $lBodyUda,
+			'inputLiveNotif'	 => 0,
+			'inputFromName' 	 => 'contacto@grupouda.com.mx',
+			'inputFromEmail' 	 => 'Siames - Grupo UDA'
+		);
+													
+		$cMailing->insertRow($aMailer);		
+	}
 }

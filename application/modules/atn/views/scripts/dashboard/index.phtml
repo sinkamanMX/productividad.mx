@@ -1,6 +1,6 @@
  <?php $this->headLink()->appendStylesheet('/libs/gantt/css/style.css');?>
 <?php $this->headScript()->appendFile('/libs/gantt/js/jquery.fn.gantt.js') ?>
-<?php $this->headScript()->appendFile('/js/atn/jsDashboard.js') ?>   
+<?php $this->headScript()->appendFile('/js/atn/jsDashboard.js'); ?>
 <?php $aLast = strtotime(date('Y-m-d', strtotime('-15 day'))) ;?>
 <?php $aNext = strtotime(date('Y-m-d', strtotime('+15 day'))) ;?>
 <?php $aNext = str_pad($aNext,13,"0",STR_PAD_RIGHT);?>
