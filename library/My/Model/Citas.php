@@ -287,7 +287,8 @@ class My_Model_Citas extends My_Db_Table
                    A.OPERADOR_AUTORIZO,
                    A.FOLIO_AUTORIZACION,
                    D.RAZON_SOCIAL,
-                   T.DESCRIPCION AS TIPO_CITA
+                   T.DESCRIPCION AS TIPO_CITA,
+                   IF(A.OPERADOR_AUTORIZO IS NULL ,'Sin autorizar' ,CONCAT(R.NOMBRE,' ',R.APELLIDOS)) AS N_AUTORIZO
   	        FROM PROD_CITAS A
   	           LEFT JOIN PROD_CITA_DOMICILIO     B ON B.ID_CITA    = A.ID_CITA
   	           LEFT JOIN PROD_CLIENTES           D ON D.ID_CLIENTE = A.ID_CLIENTE
@@ -296,6 +297,7 @@ class My_Model_Citas extends My_Db_Table
   	           INNER JOIN PROD_TPO_CITA           T ON A.ID_TPO     = T.ID_TPO           
   	           LEFT JOIN PROD_CITA_USR            C ON C.ID_CITA    = A.ID_CITA
   	           LEFT JOIN USUARIOS            	  U ON C.ID_USUARIO = U.ID_USUARIO
+  	           LEFT JOIN USUARIOS				  R ON A.OPERADOR_AUTORIZO = R.ID_USUARIO
   	           ".$filter;  
 		$query   = $this->query($sql);
 		if(count($query)>0){		  

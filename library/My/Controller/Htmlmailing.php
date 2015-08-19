@@ -476,6 +476,7 @@ class My_Controller_Htmlmailing
 		$lBodyUda = str_ireplace('@_tel_@', 		@$dataSol['TELEFONO_FIJO']  , $lBodyUda);
 		$lBodyUda = str_ireplace('@_movil_@', 		@$dataSol['TELEFONO_MOVIL'] , $lBodyUda);
 		$lBodyUda = str_ireplace('@_mail_@', 		@$dataSol['EMAIL']   		, $lBodyUda);
+		$lBodyUda = str_ireplace('@_autorizo_@', 	@$dataSol['N_AUTORIZO']   	, $lBodyUda);
 				
 		$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
 		$aDataAdmin = $config->getOption('notifs');					
