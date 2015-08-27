@@ -104,9 +104,10 @@ class external_RequestController extends My_Controller_Action
 			if($this->operation=='updateUnits'){
 				//192.168.6.41
 				//201.131.96.40
+				//$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
 				$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
-				$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',
-				                  	  'sPassword'  => 't3stud4',
+				$aParams 	  = array('sLogin'         => 'wbs_admin@grupouda.com.mx',
+	                  				  'sPassword'       => 'w3b4dm1n',
 									  'strCustomerPass' => $this->view->dataUser['COD_CLIENTE']);		
 				$result=$soap_client->HistoyDataLastLocationByCustomerPass($aParams);
 				if (is_object($result)){
@@ -114,7 +115,7 @@ class external_RequestController extends My_Controller_Action
 					$y = get_object_vars($x['HistoyDataLastLocationByCustomerPassResult']);
 								
 					$xml = $y['any'];		
-					if($xml2 = simplexml_load_string($xml)){
+					if($xml2 = simplexml_load_string($xml)){						
 						$bContinue = 0;						
 						if($xml2->Response->Status->code=='101'){
 							$bContinue = 1;								
@@ -163,7 +164,7 @@ class external_RequestController extends My_Controller_Action
 			        		$this->errors['login'] = 1;
 			        	}else if($bContinue==1){
 			        		$this->errors['client-problem'] = 1;	
-			        	}
+			        	}			        	
 					}else{
 						$this->errors['no-info'] = 1;
 					}
@@ -367,8 +368,8 @@ class external_RequestController extends My_Controller_Action
 				//192.168.6.41
 				//201.131.96.40
 				$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
-				$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',
-				                  	  'sPassword'  => 't3stud4',
+				$aParams 	  = array('sLogin'         => 'wbs_admin@grupouda.com.mx',
+	                  				  'sPassword'       => 'w3b4dm1n',
 									  'strCustomerPass' => $dataInfo['COD_CLIENTE']);
 
 				$result=$soap_client->HistoyDataLastLocationByCustomerPass($aParams);
@@ -439,16 +440,9 @@ class external_RequestController extends My_Controller_Action
 			//192.168.6.41
 			//201.131.96.40
 			$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
-			$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',
-			                  	  'sPassword'  => 't3stud4',
-								  'strCustomerPass' => 'CL00000851');		
-			
-			
-			
-			/*
-			
-
-			*/
+			$aParams 	  = array('sLogin'         => 'wbs_admin@grupouda.com.mx',
+	                  			  'sPassword'       => 'w3b4dm1n',
+								  'strCustomerPass' => 'CL00000851');
     	}catch(Zend_Exception $e) {
         	echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
