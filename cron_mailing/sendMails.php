@@ -5,12 +5,16 @@
 	$mail = new PHPMailer();
 	$mail->IsSMTP();
 	$mail->SMTPDebug  = 0;
-	$mail->Host       = 'smtp.tecnologiza.me';
+	/*$mail->Host       = 'smtp.tecnologiza.me';
 	$mail->Port       = 587;
 	$mail->SMTPSecure = 'tls';
 	$mail->SMTPAuth   = true;
 	$mail->Username   = "no-reply@tecnologiza.me";
-	$mail->Password   = "nOr3plym41l3r_";
+	$mail->Password   = "nOr3plym41l3r_";*/
+	$mail->Host    = "mail2.grupouda.com.mx"; // specify main and backup server
+    $mail->SMTPAuth  = true; // turn on SMTP authentication
+    $mail->Username  = "avl.4togo"; // SMTP username
+    $mail->Password  = "qazwsx"; // SMTP password
 
 	$conexion = new mysqli('192.168.6.23','dba','t3cnod8A!','SIMA') or die("Some error occurred during connection " . mysqli_error($conexion));
 	
@@ -30,7 +34,7 @@
 			if($count==0){
 				$mail->AddAddress($aDestinos[$i], $aNDestino[$i]);
 			}else{
-				$mail->AddReplyTo($aDestinos[$i], $aNDestino[$i]);
+				$mail->addBCC($aDestinos[$i], $aNDestino[$i]);
 			}
 			$count++;
 		}		

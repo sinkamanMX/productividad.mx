@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"is",
+				"insert"
+			],
+			[
+				"l",
+				"lBodyUda"
+			],
+			[
+				"a",
+				"aInfo"
+			],
+			[
 				"con",
 				"control"
 			],
@@ -204,10 +216,6 @@
 				"sApm"
 			],
 			[
-				"l",
-				"label	Tag"
-			],
-			[
 				"sl",
 				"sl2-img-r"
 			],
@@ -403,32 +411,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "application/modules/atn/views/scripts/dashboard/index.phtml",
-			"settings":
-			{
-				"buffer_size": 6980,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Searching 4390 files for \"/layouts/\" (regex)\n\n/Users/itecno2/Documents/workspace/productividad.mx/productividad.sublime-workspace:\n  450  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css\",\n  451  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/libs/gantt/css/style.css\",\n  452: 		\"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/public.phtml\",\n  453: 		\"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout.phtml\",\n  454: 		\"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/contacto_layout.phtml\",\n  455  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/index.phtml\",\n  456  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/autorizacion/citadetalle.phtml\",\n  ...\n  483  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/services/index.phtml\",\n  484  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/js/leasing/jsValidateServices.js\",\n  485: 		\"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml\",\n  486  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/RequestController.php\",\n  487  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/CompaniesController.php\",\n  ...\n  494  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateUsers.js\",\n  495  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/receive/accept.phtml\",\n  496: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_cambio.html\",\n  497: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_cambio_ext.html\",\n  498  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js\",\n  499: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitd_aceptada.html\",\n  500: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitd_aceptada_ext.html\",\n  501: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_gracias.html\",\n  502  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/js/companies/validateCompanies.js\",\n  503  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/index.phtml\",\n  504: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_nueva.html\",\n  505: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tempIntNuevo.html\",\n  506: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tempIntNuevo_ext.html\",\n  507: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitd_aceptada ext.html\",\n  508  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/jsValidateTequipos.js\",\n  509  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/tequipos/getinfo.phtml\",\n  510  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/tequipos/index.phtml\",\n  511: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/reports/footer_report.html\",\n  512: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/reports/header_report.html\",\n  513  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/forms/controllers/MainController.php\",\n  514  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/forms/views/scripts/main/searchicons.phtml\",\n  ...\n  534  		\"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Model/Usuarios.php\",\n  535  		\"/private/var/folders/xg/lt4w3ztj27l4zjhjht4rjhww0000gn/T/fz3temp-1/login.phtml\",\n  536: 		\"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/layout_login.phtml\",\n  537  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtnSearch.js\",\n  538  		\"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/phones/index.phtml\",\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/configs/app.ini:\n   38  resources.frontController.params.displayExceptions = 1\n   39  resources.frontController.prefixDefaultModule = 1\n   40: ;resources.layout.layoutPath = APPLICATION_PATH \"/views/layouts/\"\n   41  \n   42  resources.db.adapter         = \"pdo_mysql\"\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/ReportesController.php:\n 2081  				    \n 2082  				    ob_start();\n 2083: 				    include($this->realPath.'/layouts/reports/header_report.html');\n 2084  				    $lHeader = ob_get_clean();\n 2085  				    \n 2086  				    ob_start();\n 2087: 				    include($this->realPath.'/layouts/reports/footer_report.html');\n 2088  				    $lFooter = ob_get_clean();	\n 2089  		\n ....\n 2452  				    \n 2453  				    ob_start();\n 2454: 				    include($this->realPath.'/layouts/reports/header_report.html');\n 2455  				    $lHeader = ob_get_clean();\n 2456  				    \n 2457  				    ob_start();\n 2458: 				    include($this->realPath.'/layouts/reports/footer_report.html');\n 2459  				    $lFooter = ob_get_clean();	\n 2460  		\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/receive/accept.phtml:\n    6  			<table style=\"width:70%;align:center;margin-left:13%;\">\n    7  				<tr>	\n    8: 					<td colspan=\"2\">  <img style=\"width:100%;\" src=\"/layouts/mail/header.png\"></td>\n    9  				</tr>\n   10  \n\n/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Htmlmailing.php:\n    8  		$cMailing   = new My_Model_Mailing();\n    9  		ob_start();\n   10: 		include($this->realPath.'/layouts/mail/tSolicitud_nueva.html');\n   11  		$lBody = ob_get_clean();\n   12  		\n   ..\n   38  		\n   39  		ob_start();\n   40: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n   41  		$lBodyUda = ob_get_clean();	\n   42  		\n   ..\n   90  		$cMailing   = new My_Model_Mailing();		\n   91  		ob_start();\n   92: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n   93  		$lBodyUda = ob_get_clean();	\n   94  		\n   ..\n  128  		$cMailing   = new My_Model_Mailing();\n  129  		ob_start();\n  130: 		include($this->realPath.'/layouts/mail/tSolicitd_aceptada.html');\n  131  		$lBody = ob_get_clean();\n  132  		\n  ...\n  158  		\n  159  		ob_start();\n  160: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n  161  		$lBodyUda = ob_get_clean();	\n  162  		\n  ...\n  210  		$cMailing   = new My_Model_Mailing();\n  211  		ob_start();\n  212: 		include($this->realPath.'/layouts/mail/tSolicitd_aceptada_ext.html');\n  213  		$lBody = ob_get_clean();\n  214  		\n  ...\n  236  		\n  237  		ob_start();\n  238: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n  239  		$lBodyUda = ob_get_clean();	\n  240  		\n  ...\n  287  		$cMailing   = new My_Model_Mailing();		\n  288  		ob_start();\n  289: 		include($this->realPath.'/layouts/mail/tSolicitud_cambio_ext.html');\n  290  		$lBodyUda = ob_get_clean();	\n  291  		\n  ...\n  340  		$cMailing   = new My_Model_Mailing();\n  341  		ob_start();\n  342: 		include($this->realPath.'/layouts/mail/tSolicitd_aceptada_ext.html');\n  343  		$lBody = ob_get_clean();\n  344  							   \n  ...\n  371  		$cMailing   = new My_Model_Mailing();\n  372  		ob_start();\n  373: 		include($this->realPath.'/layouts/mail/tSolicitd_aceptada.html');\n  374  		$lBody = ob_get_clean();\n  375  		\n  ...\n  404  		$cMailing   = new My_Model_Mailing();		\n  405  		ob_start();\n  406: 		include($this->realPath.'/layouts/mail/tSolicitud_cambio.html');\n  407  		$lBodyUda = ob_get_clean();	\n  408  		\n\n/Users/itecno2/Documents/workspace/productividad.mx/library/Zend/Tool/Project/Provider/Layout.php:\n   37          * @var string Layout path\n   38          */\n   39:        protected $_layoutPath = 'APPLICATION_PATH \"/layouts/scripts/\"';\n   40  \n   41      public static function createResource(Zend_Tool_Project_Profile $profile, $layoutName = 'layout')\n\n/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tempIntNuevo.html:\n    6  		<table>\n    7  			<tr>	\n    8: 				<td colspan=\"2\">  <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/header.png\"></td>\n    9  			</tr>\n   10  			<tr>\n\n/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tempIntNuevo_ext.html:\n    6  		<table>\n    7  			<tr>	\n    8: 				<td colspan=\"2\">  <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/header.png\"></td>\n    9  			</tr>\n   10  			<tr>\n\n/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitd_aceptada.html:\n    6  		<table>\n    7  			<tr>	\n    8: 				<td colspan=\"2\">  <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/header.png\"></td>\n    9  			</tr>\n   10  			<tr>\n   ..\n   71  			</tr>\n   72  			<tr>	\n   73: 				<td colspan=\"2\"> <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/footer.png\"></td>\n   74  			</tr>		\n   75  \n\n/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitd_aceptada_ext.html:\n    6  		<table>\n    7  			<tr>	\n    8: 				<td colspan=\"2\">  <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/header.png\"></td>\n    9  			</tr>\n   10  			<tr>\n   ..\n   68  			</tr>\n   69  			<tr>	\n   70: 				<td colspan=\"2\"> <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/footer.png\"></td>\n   71  			</tr>		\n   72  \n\n/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_cambio.html:\n    6  		<table>\n    7  			<tr>	\n    8: 				<td colspan=\"2\">  <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/header.png\"></td>\n    9  			</tr>\n   10  			<tr>\n   ..\n   77  			</tr>\n   78  			<tr>	\n   79: 				<td colspan=\"2\"> <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/footer.png\"></td>\n   80  			</tr>		\n   81  \n\n/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_cambio_ext.html:\n    6  		<table>\n    7  			<tr>	\n    8: 				<td colspan=\"2\">  <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/header.png\"></td>\n    9  			</tr>\n   10  			<tr>\n   ..\n   77  			</tr>\n   78  			<tr>	\n   79: 				<td colspan=\"2\"> <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/footer.png\"></td>\n   80  			</tr>		\n   81  \n\n/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_gracias.html:\n    6  		<table>\n    7  			<tr>	\n    8: 				<td colspan=\"2\">  <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/header.png\"></td>\n    9  			</tr>\n   10  			<tr>\n   ..\n   62  			</tr>\n   63  			<tr>	\n   64: 				<td colspan=\"2\"> <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/footer.png\"></td>\n   65  			</tr>		\n   66  \n\n/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_nueva.html:\n    6  		<table>\n    7  			<tr>	\n    8: 				<td colspan=\"2\">  <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/header.png\"></td>\n    9  			</tr>\n   10  			<tr>\n   ..\n   72  			</tr>\n   73  			<tr>	\n   74: 				<td colspan=\"2\"> <img style=\"width:100%;\" src=\"http://201.131.96.56/layouts/mail/footer.png\"></td>\n   75  			</tr>		\n   76  \n\n48 matches across 14 files\n",
-			"settings":
-			{
-				"buffer_size": 11516,
-				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "library/My/Controller/Htmlmailing.php",
-			"settings":
-			{
-				"buffer_size": 20526,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -454,7 +436,12 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/endProcess.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/tSolicitud_gracias.html",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/endProcess.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/dashboard/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Htmlmailing.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tNotification_aut.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/libs/fullcalendar/fullcalendar.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/index.phtml",
@@ -576,12 +563,7 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/validateSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/activation.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/sendMails.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Functions.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/tableSolicitudes.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/activos/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validateServices.js"
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/activation.phtml"
 	],
 	"find":
 	{
@@ -589,7 +571,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"<open folders>",
@@ -795,294 +777,8 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "application/modules/atn/views/scripts/dashboard/index.phtml",
-					"settings":
-					{
-						"buffer_size": 6980,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								322,
-								322
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"word_wrap": false
-						},
-						"translation.x": 2.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"settings":
-					{
-						"buffer_size": 11516,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										395,
-										404
-									],
-									[
-										498,
-										507
-									],
-									[
-										601,
-										610
-									],
-									[
-										1205,
-										1214
-									],
-									[
-										1785,
-										1794
-									],
-									[
-										1892,
-										1901
-									],
-									[
-										2101,
-										2110
-									],
-									[
-										2209,
-										2218
-									],
-									[
-										2321,
-										2330
-									],
-									[
-										2656,
-										2665
-									],
-									[
-										2762,
-										2771
-									],
-									[
-										2864,
-										2873
-									],
-									[
-										2970,
-										2979
-									],
-									[
-										3433,
-										3442
-									],
-									[
-										3539,
-										3548
-									],
-									[
-										4095,
-										4104
-									],
-									[
-										4605,
-										4614
-									],
-									[
-										4870,
-										4879
-									],
-									[
-										5034,
-										5043
-									],
-									[
-										5215,
-										5224
-									],
-									[
-										5379,
-										5388
-									],
-									[
-										5732,
-										5741
-									],
-									[
-										5983,
-										5992
-									],
-									[
-										6137,
-										6146
-									],
-									[
-										6330,
-										6339
-									],
-									[
-										6521,
-										6530
-									],
-									[
-										6677,
-										6686
-									],
-									[
-										6868,
-										6877
-									],
-									[
-										7028,
-										7037
-									],
-									[
-										7221,
-										7230
-									],
-									[
-										7421,
-										7430
-									],
-									[
-										7626,
-										7635
-									],
-									[
-										7821,
-										7830
-									],
-									[
-										8126,
-										8135
-									],
-									[
-										8468,
-										8477
-									],
-									[
-										8739,
-										8748
-									],
-									[
-										9012,
-										9021
-									],
-									[
-										9191,
-										9200
-									],
-									[
-										9463,
-										9472
-									],
-									[
-										9642,
-										9651
-									],
-									[
-										9909,
-										9918
-									],
-									[
-										10088,
-										10097
-									],
-									[
-										10359,
-										10368
-									],
-									[
-										10538,
-										10547
-									],
-									[
-										10806,
-										10815
-									],
-									[
-										10985,
-										10994
-									],
-									[
-										11251,
-										11260
-									],
-									[
-										11430,
-										11439
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								5862,
-								5862
-							]
-						],
-						"settings":
-						{
-							"detect_indentation": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1539.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "library/My/Controller/Htmlmailing.php",
-					"settings":
-					{
-						"buffer_size": 20526,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								746,
-								746
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
