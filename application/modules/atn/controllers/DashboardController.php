@@ -57,7 +57,7 @@ class atn_DashboardController extends My_Controller_Action
 			$cInstalaciones = new My_Model_Cinstalaciones();
 			$cFunciones		= new My_Controller_Functions();
 			
-			$sInstalacion	= (isset($this->dataIn['inputSucursal']) && $this->dataIn['inputSucursal']!="") ? $this->dataIn['inputSucursal'] : -1;
+			$sInstalacion	= (isset($this->dataIn['inputSucursal']) && $this->dataIn['inputSucursal']!="") ? $this->dataIn['inputSucursal'] : 1;
 			
 			$aTecnicos 		= $cResumen->getTecnicos($sInstalacion);			
 			$aCitas    		= $cResumen->getCitasPendientes();
