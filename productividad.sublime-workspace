@@ -411,6 +411,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "application/modules/external/views/scripts/request/getinfo.phtml",
+			"settings":
+			{
+				"buffer_size": 19389,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -436,7 +444,11 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/configs/app.ini",
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/endProcess.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/tSolicitud_gracias.html",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/sendMails.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/sendMails.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/tSolicitud_gracias.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/endProcess.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/dashboard/index.phtml",
@@ -559,11 +571,7 @@
 		"/Users/itecno2/Dropbox/Tecnologizame/Clientes/UDA/Proyectos/Siames/Documentos/Accesos y URLS",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validatePublicSolicitud.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/controllers/MainController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/validateSolicitudes.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/request/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/activation.phtml"
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml"
 	],
 	"find":
 	{
@@ -574,6 +582,7 @@
 		"height": 0.0,
 		"where_history":
 		[
+			"/Users/itecno2/Documents/workspace/productividad.mx",
 			"<open folders>",
 			"/Users/itecno2/Documents/workspace/taccsi/library/Zend",
 			"<open folders>"
@@ -584,6 +593,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"PENA",
+			"er.pena",
+			"sinka.187",
+			"sinka.187@gmail.com",
+			"CC",
+			"sinka",
 			"/layouts/",
 			"A.NOMBRE",
 			"monthNames",
@@ -705,13 +720,7 @@
 			"modal-lg",
 			"countdown",
 			"countdown360",
-			"datetimepicker",
-			"datetime",
-			"validate",
-			"Image not readable or empty",
-			"build_url",
-			"build_url\nbuild_url",
-			"build_url"
+			"datetimepicker"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -777,8 +786,38 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "application/modules/external/views/scripts/request/getinfo.phtml",
+					"settings":
+					{
+						"buffer_size": 19389,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3774,
+								3774
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 156.0,
+						"translation.y": 639.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

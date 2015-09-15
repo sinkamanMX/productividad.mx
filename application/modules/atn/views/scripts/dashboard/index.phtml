@@ -23,7 +23,7 @@
 			                from: "/Date(<?php echo $itemDates['fechaSin'];?>)/",
 			                to: "/Date(<?php echo $itemDates['fechaSfin'];?>)/",
 			                label: "<?php echo $itemDates['FOLIO'];?>",
-			                desc: "<?php echo "Cliente: ".$itemDates['RAZON_SOCIAL']."</br>".
+			                desc: "<?php echo "Cliente: ".str_replace("´", " ", $itemDates['RAZON_SOCIAL'])."</br>".
 			                				   "Fecha: ".$itemDates['FECHA_CITA']."</br>".
 			                				   "Hora : ".$itemDates['HORA_CITA']."</br>".
 			                				   "Folio: ".$itemDates['FOLIO']."</br>".
@@ -78,7 +78,7 @@
 	                			</div>
 	                			<div class="span9">
 									<select class="chzn-select" id="inputSucursal" name="inputSucursal" onChange="submitForm();">
-										<option value="-1">Todos</option>
+										<!--<option value="-1">Todos</option>-->
 										<?php echo $this->cInstalaciones;?>
 									</select>
 	                			</div>
