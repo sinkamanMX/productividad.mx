@@ -59,7 +59,7 @@
 			'inputFromEmail' 	 => 'Siames - Grupo UDA'
 		);
 
-			$insert = insertMailing($aUDA);		
+		$insert = insertMailing($aUDA);		
 	}
 
 	function getDataInfo($idCita){

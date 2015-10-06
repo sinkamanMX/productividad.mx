@@ -27,7 +27,12 @@ $().ready(function() {
                 number: true,
                 minlength: 10,
                 maxlength: 10
-            }       
+            },              
+            inputTelFijo    : {
+                number: true,
+                minlength: 10,
+                maxlength: 10
+            }          
         },
         messages: {
             inputSucursal   : "Campo Requerido",
@@ -50,7 +55,12 @@ $().ready(function() {
                 number    : "Este campo acepta solo números",
                 minlength : "El Teléfono debe de ser de 10 dígitos",
                 maxlength : "El Teléfono debe de ser de 10 dígitos"
-            },                           
+            },              
+            inputTelFijo    : {
+                number    : "Este campo acepta solo números",
+                minlength : "El Teléfono debe de ser de 10 dígitos",
+                maxlength : "El Teléfono debe de ser de 10 dígitos"
+            }                             
         },
         submitHandler: function(form) {
             form.submit();

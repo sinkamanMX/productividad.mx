@@ -412,10 +412,10 @@
 	"buffers":
 	[
 		{
-			"file": "application/modules/external/views/scripts/request/getinfo.phtml",
+			"file": "public/js/marketing/validateCodes.js",
 			"settings":
 			{
-				"buffer_size": 19389,
+				"buffer_size": 1834,
 				"line_ending": "Unix"
 			}
 		}
@@ -444,6 +444,12 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/request/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/dashboard/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/jsDashboard.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateUsers.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/profiles/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateProfile.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/configs/app.ini",
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/endProcess.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/tSolicitud_gracias.html",
@@ -451,7 +457,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/sendMails.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/tSolicitud_gracias.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/endProcess.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/dashboard/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Htmlmailing.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tNotification_aut.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
@@ -462,7 +467,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/forms/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/forms/views/scripts/main/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/forms/jsValidateForms.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/jsDashboard.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/libs/gantt/js/jquery.fn.gantt.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/assets/styles.css",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/libs/gantt/css/style.css",
@@ -487,7 +491,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validateUsers.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/findunits.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/jsValidateSearchU.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/branches/getinfo.phtml",
@@ -565,13 +568,10 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/css/tablePrint.css",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/dataTables.tableTools.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/bootstrap/css/bootstrap.css",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/request/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/views/scripts/main/getinfo.phtml",
 		"/Users/itecno2/Dropbox/Tecnologizame/Clientes/UDA/Proyectos/Siames/Documentos/Accesos y URLS",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validatePublicSolicitud.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/controllers/MainController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml"
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validatePublicSolicitud.js"
 	],
 	"find":
 	{
@@ -791,29 +791,28 @@
 			[
 				{
 					"buffer": 0,
-					"file": "application/modules/external/views/scripts/request/getinfo.phtml",
+					"file": "public/js/marketing/validateCodes.js",
 					"settings":
 					{
-						"buffer_size": 19389,
+						"buffer_size": 1834,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3774,
-								3774
+								484,
+								484
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": false
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 156.0,
-						"translation.y": 639.0,
+						"translation.x": 0.0,
+						"translation.y": 325.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
