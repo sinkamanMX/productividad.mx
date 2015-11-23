@@ -80,6 +80,7 @@ class My_Model_Empresas extends My_Db_Table
     	$sql ="SELECT $this->_name.*, EMPRESAS_TIPO.DESCRIPCION AS N_TIPO
 				FROM $this->_name
 				INNER JOIN EMPRESAS_TIPO ON $this->_name.ID_TIPO_EMPRESA = EMPRESAS_TIPO.ID_TIPO_EMPRESA
+				WHERE $this->_name.ID_TIPO_EMPRESA NOT IN (1,4)
 				ORDER BY RAZON_SOCIAL ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){
@@ -148,16 +149,33 @@ class My_Model_Empresas extends My_Db_Table
 		return $result;
 	}   
 
-	public function getCboTipos(){
+	public function getCboTipos($filter=false){
 		$result= Array();
+		$sFilter = ($filter==0) ? 'WHERE ON_ADMIN = 1': 'WHERE ON_BROKER';
 		$this->query("SET NAMES utf8",false); 		
     	$sql ="SELECT ID_TIPO_EMPRESA AS ID, DESCRIPCION AS NAME
 				FROM EMPRESAS_TIPO
+				$sFilter
 				ORDER BY NAME ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){
 			$result = $query;			
 		}
 		return $result;
-	}  	
+	}
+
+	public function getBrokers(){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT $this->_name.*, EMPRESAS_TIPO.DESCRIPCION AS N_TIPO
+				FROM $this->_name
+				INNER JOIN EMPRESAS_TIPO ON $this->_name.ID_TIPO_EMPRESA = EMPRESAS_TIPO.ID_TIPO_EMPRESA
+				WHERE $this->_name.ID_TIPO_EMPRESA = 4 
+				ORDER BY RAZON_SOCIAL ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result = $query;			
+		}
+		return $result;
+	}   	
 }

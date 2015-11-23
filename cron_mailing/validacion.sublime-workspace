@@ -475,22 +475,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/dashboard/views/scripts/main/index.phtml",
-			"settings":
-			{
-				"buffer_size": 11555,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/reports/views/scripts/main/index.phtml",
-			"settings":
-			{
-				"buffer_size": 8554,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -520,6 +504,9 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/validacion.mx/application/modules/reports/views/scripts/main/index.phtml",
+		"/Users/itecno2/Documents/workspace/validacion.mx/test_mail/Mailbox.php",
+		"/Users/itecno2/Documents/workspace/validacion.mx/application/modules/dashboard/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/zendblog.net/test_mail/Libs/cFunctions",
 		"/Users/itecno2/Documents/workspace/zendblog.net/test_mail/sGetInfo.php",
 		"/Users/itecno2/Documents/workspace/productividapp.mx/public/js/modules/general/jsImportFunctions.js",
@@ -644,10 +631,7 @@
 		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/dbman/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/main/views/scripts/phones/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/main/views/scripts/phones/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividapp.mx/application/views/layouts/chat.phtml",
-		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/messages/views/scripts/main/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/messages/views/scripts/main/chatmessages.phtml",
-		"/Users/itecno2/Documents/workspace/productividapp.mx/public/assets/js/slimscroll/jquery.slimscroll.js"
+		"/Users/itecno2/Documents/workspace/productividapp.mx/application/views/layouts/chat.phtml"
 	],
 	"find":
 	{
@@ -876,64 +860,6 @@
 		{
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/dashboard/views/scripts/main/index.phtml",
-					"settings":
-					{
-						"buffer_size": 11555,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								8729,
-								8708
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": false
-						},
-						"translation.x": 124.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/reports/views/scripts/main/index.phtml",
-					"settings":
-					{
-						"buffer_size": 8554,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5235,
-								5235
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": false
-						},
-						"translation.x": 227.0,
-						"translation.y": 1430.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
