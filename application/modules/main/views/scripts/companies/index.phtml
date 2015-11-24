@@ -21,7 +21,9 @@
                             <thead>
                                 <tr>
                                     <th>Tipo</th>
-                                    <th>Cliente SAP</th>
+                                    <?php if($this->dataUser['ID_PERFIL']!=19): ?>
+                                        <th>Cliente SAP</th>
+                                    <?php endif;?>                                    
                                     <th>Nombre</th>
                                     <th class="span3 text-center">Razón Social</th>
                                     <th class="span2 text-center">RFC</th>
@@ -33,7 +35,9 @@
                                 <?php foreach($this->datatTable as $key => $items): ?>  
                                 <tr class="odd gradeX">
                                     <td><?php echo $items['N_TIPO']; ?></td>
-                                    <td><?php echo $items['COD_CLIENTE']; ?></td>
+                                    <?php if($this->dataUser['ID_PERFIL']!=19): ?>
+                                        <td><?php echo $items['COD_CLIENTE']; ?></td>
+                                    <?php endif;?>
                                     <td><?php echo $items['NOMBRE']; ?></td>
                                     <td><?php echo $items['RAZON_SOCIAL']; ?></td>
                                     <td><?php echo $items['RFC']; ?></td>
@@ -42,6 +46,9 @@
                                         <?php if($this->dataUser['LECTURA']==1): ?>
                                             <!--<a href="/admin/companies/getinfo?catId=<?php echo $items['ID_EMPRESA']; ?>"><button class="btn btn-info"> <i class="icon-info-sign icon-white"></i></button></a>   -->
                                             <a href="/admin/companies/getinfo?catId=<?php echo $items['ID_EMPRESA']; ?>"><button class="btn btn-primary"> <i class="icon-pencil icon-white"></i></button></a>   
+                                        <?php endif;?>
+                                        <?php if($this->dataUser['ID_PERFIL']==19): ?>
+                                            <!--<a href="/admin/companies/getinfo?catId=<?php echo $items['ID_EMPRESA']; ?>"><button class="btn btn-info"> <i class="icon-info-sign icon-white"></i></button></a>-->
                                         <?php endif;?>
                                     </td>
                                 </tr>    

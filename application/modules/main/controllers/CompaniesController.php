@@ -47,7 +47,7 @@ class main_CompaniesController extends My_Controller_Action
 			}
 
 			$this->view->dataUser = $this->_dataUser;
-
+			
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -57,9 +57,10 @@ class main_CompaniesController extends My_Controller_Action
     public function indexAction(){
     	try{
 	    	$this->view->mOption = 'mcompanies';			
-			$cRutas      = new My_Model_Empresas();
+			$cRutas      = new My_Model_Empresas();			
+			$idBroker  	 = ($this->_dataUser['ID_PERFIL']!=19) ? -1 : $this->_dataUser['ID_EMPRESA'];			
 			
-			$this->view->datatTable = $cRutas->getDataTables();
+			$this->view->datatTable = $cRutas->getDataTables($idBroker);
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -77,8 +78,10 @@ class main_CompaniesController extends My_Controller_Action
 			$sClientUda		 = 0;
 			$sCViajes 		 = 1;
 			$sTipoEmpresa	 = '';
-			$aDataInfo		 = Array();
-			$aTiposEmpresa   = $cEmpresas->getCboTipos();
+			$aDataInfo		 = Array();			
+			$optionEmp		 = ($this->_dataUser['ID_PERFIL']!=19) ? false : true;	
+			$this->_dataIn['idBroker'] = ($this->_dataUser['ID_PERFIL']!=19) ? -1    : $this->_dataUser['ID_EMPRESA'];		
+			$aTiposEmpresa   = $cEmpresas->getCboTipos($optionEmp);
 			
 			$this->_dataIn['inputEmpresa'] = $this->view->idEmpresa;			
 			if($this->_idUpdate >-1){

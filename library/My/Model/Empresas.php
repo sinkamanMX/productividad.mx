@@ -21,7 +21,8 @@ class My_Model_Empresas extends My_Db_Table
         $sPassUda 	 = (isset($data['inputPasswordUda']) && $data['inputPasswordUda'] !="") ? $data['inputPasswordUda']: '';
         
         $sql="INSERT INTO $this->_name	
-        		SET	NOMBRE 			= '".$data['inputDescripcion']."',
+        		SET	ID_BROKER		=  ".$data['idBroker'].",
+        			NOMBRE 			= '".$data['inputDescripcion']."',
         			RFC				= '".$data['inputRFC']."',
         		 	RAZON_SOCIAL	= '".$data['inputRazonSocial']."',
 					ESTATUS			=  ".$data['inputEstatus'].",
@@ -74,13 +75,15 @@ class My_Model_Empresas extends My_Db_Table
 		return $result;	      	
     }	
 
-	public function getDataTables(){
+	public function getDataTables($idBroker=-1){
 		$result= Array();
+		$filter = ($idBroker!=-1) ? 'AND ID_BROKER = '.$idBroker: '';
 		$this->query("SET NAMES utf8",false); 		
     	$sql ="SELECT $this->_name.*, EMPRESAS_TIPO.DESCRIPCION AS N_TIPO
 				FROM $this->_name
 				INNER JOIN EMPRESAS_TIPO ON $this->_name.ID_TIPO_EMPRESA = EMPRESAS_TIPO.ID_TIPO_EMPRESA
 				WHERE $this->_name.ID_TIPO_EMPRESA NOT IN (1,4)
+				$filter
 				ORDER BY RAZON_SOCIAL ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){
@@ -151,7 +154,7 @@ class My_Model_Empresas extends My_Db_Table
 
 	public function getCboTipos($filter=false){
 		$result= Array();
-		$sFilter = ($filter==0) ? 'WHERE ON_ADMIN = 1': 'WHERE ON_BROKER';
+		$sFilter = ($filter==0) ? 'WHERE ON_ADMIN = 1': 'WHERE ON_BROKER = 1';
 		$this->query("SET NAMES utf8",false); 		
     	$sql ="SELECT ID_TIPO_EMPRESA AS ID, DESCRIPCION AS NAME
 				FROM EMPRESAS_TIPO
