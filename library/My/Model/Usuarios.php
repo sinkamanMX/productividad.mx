@@ -119,8 +119,7 @@ class My_Model_Usuarios extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;	      	
-    }	
-
+    }
 	
 	public function getDataTables($dataUser){
 		$result= Array();

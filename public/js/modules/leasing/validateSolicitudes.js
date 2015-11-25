@@ -42,7 +42,7 @@ $().ready(function() {
             inputEstado     :      "required",
             inputCP         :      "required",
             inputDescripcion:      "required",
-
+            inpuClienteEmp  :      "required"
         },
         messages: {                          
             inputFechaIn    :      "Campo Requerido",        
@@ -58,6 +58,7 @@ $().ready(function() {
             inputEstado     :      "Campo Requerido",
             inputCP         :      "Campo Requerido",
             inputDescripcion:      "Campo Requerido",
+            inpuClienteEmp  :      "Campo Requerido"
         },
         submitHandler: function(form) {
             form.submit();
@@ -213,4 +214,54 @@ function openSearch(option){
 function assignValue(idValue){
     $("#inputUnidad").val(idValue);
     $("#MyModalSearch").modal("hide");
+}
+
+function searchUnits(idClient){
+    $("#divUnidad").html("Cargando Información");
+
+    $.ajax({
+        url: "/leasing/request/getunits",
+        type: "GET",
+        data: { catId : idClient, 
+                oprDb : 'searchUnits' },
+        success: function(data) { 
+            $("#divUnidad").html("");
+            var dataCbo = '<select class=" m-wrap " id="inputUnidad" name="inputUnidad">';
+            if(data!="no-info"){
+                dataCbo += '<option value="">Seleccionar una opción</option>'+data+'</select>';
+            }else{
+                dataCbo += '<option value="">Sin Información</option>';
+            }
+            dataCbo += '</select>';
+
+            $("#divUnidad").html(dataCbo);            
+            $(".chosen-select").chosen({disable_search_threshold: 10});
+            searchPlaces(idClient);
+        }
+    }); 
+}
+
+function searchPlaces(idClient){
+    $("#divLugares").html("Cargando Información");
+
+    $.ajax({
+        url: "/leasing/request/getplaces",
+        type: "GET",
+        data: { catId : idClient, 
+                oprDb : 'searchUnits' },
+        success: function(data) { 
+            $("#divLugares").html("");
+            var dataCbo = '<select class=" m-wrap " id="inputPlace" name="inputPlace"  onChange="newdireccion(this.value);" >';
+            if(data!="no-info"){
+                dataCbo += '<option value="">Seleccionar una opción</option>'+data+'<option value="-1">Otro</option> </select>';
+            }else{
+                dataCbo += '<option value="">Sin Información</option><option value="-1">Otro</option> ';
+            }
+            dataCbo += '</select>';
+
+            $("#divLugares").html(dataCbo);            
+            $(".chosen-select").chosen({disable_search_threshold: 10});
+            
+        }
+    });     
 }

@@ -77,14 +77,16 @@ class leasing_RequestController extends My_Controller_Action
 			$cSucursales	= new My_Model_Sucursales();
 			$cTipoEquipo	= new My_Model_Tequipos();
 			$cHtmlMail		= new My_Controller_Htmlmailing();			
-			
+			$cClientes	 	= new My_Model_Clientesint();
 			$aTipoServicio	= $cCitas->getCboTipoServicio();
 			$aHorarios		= $cHorariosCita->getHorarios();
-			
+			$aSucursales	= Array();
 			$aUnidades		= $cUnidades->getCbobyEmpLe($this->view->dataUser['ID_EMPRESA']);
-			$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
+			//$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
 			$aTipoEquipo	= $cTipoEquipo->getCbo();			
+			$aClientes		= $cClientes->getCbo($this->view->dataUser['ID_EMPRESA']);
 			
+			$sCliente		= '';				
 			$sTipo			= '';
 			$sHorario		= '';
 			$sUnidad		= '';
@@ -94,23 +96,26 @@ class leasing_RequestController extends My_Controller_Action
 			
 			$this->dataIn['inputIdEmpresa'] = $this->view->dataUser['ID_EMPRESA'];
 			$this->dataIn['inputIdUsuario'] = $this->view->dataUser['ID_USUARIO'];
-			
-    		if($this->idToUpdate >-1){
-    			$aUnidades		= $cUnidades->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
-				$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
+						
+    		if($this->idToUpdate >-1){    			
+				$dataInfo   = $classObject->getDataEmp($this->idToUpdate);				
 				$aLogs		= $cLog->getDataTable($this->idToUpdate);
 				$sTipo		= $dataInfo['ID_TIPO'];
 				$sHorario	= $dataInfo['ID_HORARIO'];
 				$sUnidad	= $dataInfo['ID_UNIDAD'];
 				$sSucursal  = $dataInfo['ID_SUCURSAL'];
 				$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];
+				$sCliente	= $dataInfo['ID_EMP_CLIENTE'];
+				$aUnidades	= $cUnidades->getCboByEmpCliente($sCliente);
+				$aSucursales= $cSucursales->getCbobyClient($sCliente);
 			}
 			
 			$sSubject = '';
 			$sBody    = '';
-			$sModificaciones = '';
-			
-    		if($this->operation=='new'){	
+			$sModificaciones = '';		
+				
+    		if($this->operation=='new'){
+    			$this->dataIn['inputCliente'] = -1;	
 				$aDataUnit = $cUnidades->getData($this->dataIn['inputUnidad']);
 				$this->dataIn['inputInfo'] = "<b>Ult.reporte:</b> S/N<br/><b>Placas:</b>".$aDataUnit['PLACAS']."<br/><b>Eco:</b> ".$aDataUnit['ECONOMICO']."<br/><b>Ip:</b>".$aDataUnit['IDENTIFICADOR']."<br/><b>Tipo Equipo:</b>".$aDataUnit['TIPO_EQUIPO']."<br/><b>Tipo Unidad:</b>".$aDataUnit['TIPO_VEHICULO']."<br/>";		
 				$insert = $classObject->insertRowEmp($this->dataIn);			
@@ -263,7 +268,7 @@ class leasing_RequestController extends My_Controller_Action
     	    		$this->_redirect('/leasing/request/index');	
     	    	}
 			}
-			
+
     	    if(count($this->errors)>0 && $this->operation!=""){
     			$dataInfo['FECHA_CITA'] 	= $this->dataIn['inputFechaIn'];
     			$sTipo						= $this->dataIn['inputTipo'];
@@ -275,8 +280,10 @@ class leasing_RequestController extends My_Controller_Action
     			$dataInfo['ESTADO']			= $this->dataIn['inputEstado'];
     			$dataInfo['CP']				= $this->dataIn['inputCP'];
     			$sSucursal  				= $this->dataIn['inputPlace'];
-			}
+    			$sCliente					= $this->dataIn['inputCliente'];
+			}			
 			
+			$this->view->aClientes  = $cFunctions->selectDb($aClientes,$sCliente);
 			$this->view->aTequipos	= $cFunctions->selectDb($aTipoEquipo,$sTequipo);
 			$this->view->aUnidades	= $cFunctions->selectDb($aUnidades,$sUnidad);
 			$this->view->aHorarioCita = $cFunctions->selectDb($aHorarios,$sHorario);					
@@ -404,7 +411,7 @@ class leasing_RequestController extends My_Controller_Action
 			}else{
 				$this->_redirect('/leasing/request/index');		
 			}
-			
+						
 			$this->view->sTipos    = $cFunctions->selectDb($aTiposContrato,$sTipoContrato);
 			$this->view->data 	   = $aDataInfo;
 			$this->view->dataProt  = $aProtInfo;
@@ -469,5 +476,53 @@ class leasing_RequestController extends My_Controller_Action
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
         }  
-	} 	
+	} 
+
+	public function getunitsAction(){
+    	try{
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender();    
+			    	
+	    	$result = 'no-info';
+			$this->dataIn = $this->_request->getParams();
+			$functions = new My_Controller_Functions();				
+			$validateNumbers = new Zend_Validate_Digits();
+			$validateAlpha   = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
+											
+			if($validateNumbers->isValid($this->dataIn['catId']) && $validateAlpha->isValid($this->dataIn['oprDb'])){
+				$cClassUnits = new My_Model_Unidades();
+				$cboValues   = $cClassUnits->getCboByEmpCliente($this->dataIn['catId']);
+				$result      = $functions->selectDb($cboValues);
+			}
+			
+			echo $result;		
+		} catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }
+	}
+	
+	public function getplacesAction(){
+	    try{
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender();    
+			    	
+	    	$result = 'no-info';
+			$this->dataIn = $this->_request->getParams();
+			$functions = new My_Controller_Functions();				
+			$validateNumbers = new Zend_Validate_Digits();
+			$validateAlpha   = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
+											
+			if($validateNumbers->isValid($this->dataIn['catId']) && $validateAlpha->isValid($this->dataIn['oprDb'])){
+				$cClassObject = new My_Model_Sucursales();				
+				$cboValues   = $cClassObject->getCbobyClient($this->dataIn['catId']);
+				$result      = $functions->selectDb($cboValues);
+			}
+			
+			echo $result;		
+		} catch (Zend_Exception $e) {
+            echo "Caught exception: " . get_class($e) . "\n";
+        	echo "Message: " . $e->getMessage() . "\n";                
+        }		
+	}
 }

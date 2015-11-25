@@ -7,7 +7,12 @@ $().ready(function() {
             inputMunicipio      : "required", 
             inputEstado         : "required", 
             inputCP             : "required", 
-            inputEstatus        : "required"
+            inputEstatus        : "required",
+            inputCliente        : "required",
+            inputMail  : {
+                required: true,
+                email: true
+            }            
         },
         messages: {
             inputDescripcion    : "Campo Requerido",     
@@ -16,7 +21,12 @@ $().ready(function() {
             inputMunicipio      : "Campo Requerido",     
             inputEstado         : "Campo Requerido",     
             inputCP             : "Campo Requerido",     
-            inputEstatus        : "Campo Requerido"
+            inputEstatus        : "Campo Requerido",
+            inputCliente        : "Campo Requerido",
+            inputMail          : {
+                required: "Campo Requerido",
+                email: "Debe de ingresar un mail válido"
+            },
         },
         
         submitHandler: function(form) {

@@ -33,6 +33,28 @@
 		                    </div>                
 		                <?php endif; ?>	  
 		                	<fieldset>
+                				<div class="span12 no-margin-left">
+			                		<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Cliente<span class="required">*</span></label>
+											<div class="controls">
+												<select class="span12 m-wrap"  autocomplete="off" name="inputCliente">
+													<?php echo $this->aClientes; ?>
+												</select>
+											</div>
+										</div>	
+			                		</div>
+									<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Estatus:<span class="required"></span></label>
+											<div class="controls">
+												<select class="span12 m-wrap"  autocomplete="off" name="inputEstatus">
+													<?php echo $this->status; ?>
+												</select>
+											</div>
+										</div>
+			                		</div>			                		
+			                	</div>		                		
 	                				<div class="span12 no-margin-left">
 				                		<div class="span12">
 											<div class="control-group">
@@ -133,100 +155,14 @@
 
 	                				<div class="span12 no-margin-left">
 				                		<div class="span6">
-											<div class="control-group">
-												<label class="control-label">Estatus:<span class="required"></span></label>
+				                			<div class="control-group">
+												<label class="control-label">Email Contacto</label>
 												<div class="controls">
-													<select class="span6 m-wrap"  autocomplete="off" name="inputEstatus" onChange="requiredData(this.value)">
-														<?php echo $this->status; ?>
-													</select>
+													<input type="text" name="inputMail" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['EMAIL_CONTACTO']; ?>" >
 												</div>
-											</div>
-				                		</div>
-				                		<div class="span6">
-
+											</div>	
 				                		</div>				                						                				                		
-				                	</div>					                						                						                					           
-
-<!--
-	                				<div class="span12 no-margin-left">
-				                		<div class="span6">
-				                			<div class="control-group">
-												<label class="control-label">Calle y No.<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" name="inputCalle" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['CALLE']; ?>" >
-												</div>
-											</div>	
-				                		</div>
-										<div class="span6">
-				                			<div class="control-group">
-												<label class="control-label">Colonia<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" name="inputColonia" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['COLONIA']; ?>" >
-												</div>
-											</div>	
-				                		</div>				                		
-				                	</div>	
-
-	                				<div class="span12 no-margin-left">
-				                		<div class="span6">
-				                			<div class="control-group">
-												<label class="control-label">Municipio<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" name="inputMunicipio" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['MUNICIPIO']; ?>" >
-												</div>
-											</div>	
-				                		</div>
-										<div class="span6">
-				                			<div class="control-group">
-												<label class="control-label">Estado<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" name="inputEstado" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['ESTADO']; ?>" >
-												</div>
-											</div>	
-				                		</div>				                		
-				                	</div>	
-
-	                				<div class="span12 no-margin-left">
-				                		<div class="span6">
-					                		<div class="control-group">
-												<label class="control-label">CP<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" name="inputCP" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['CP']; ?>" >
-												</div>
-											</div>	
-				                		</div>
-				                		<div class="span6">
-											<div class="control-group">
-												<label class="control-label">Estatus:<span class="required"></span></label>
-												<div class="controls">
-													<select class="span6 m-wrap"  autocomplete="off" name="inputEstatus" onChange="requiredData(this.value)">
-														<?php echo $this->status; ?>
-													</select>
-												</div>
-											</div>
-				                		</div>				                				                		
-				                	</div>	
-
-    								<div class="span12 no-margin-left">
-				                		<div class="span6">
-					                		<div class="control-group">
-												<label class="control-label">Referencias<span class="required">*</span></label>
-												<div class="controls">
-													<input type="text" name="inputCP" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['CP']; ?>" >
-												</div>
-											</div>	
-				                		</div>
-				                		<div class="span6">
-											<div class="control-group">
-												<label class="control-label">Estatus:<span class="required"></span></label>
-												<div class="controls">
-													<select class="span6 m-wrap"  autocomplete="off" name="inputEstatus" onChange="requiredData(this.value)">
-														<?php echo $this->status; ?>
-													</select>
-												</div>
-											</div>
-				                		</div>				                				                		
-				                	</div>		-->			                	
+				                	</div>	                	
 			               
 									<div class="control-group">
 									</div>

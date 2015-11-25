@@ -1,7 +1,7 @@
 <?php
-class leasing_BranchesController extends My_Controller_Action
+class leasing_ClientsController extends My_Controller_Action
 {		
-	protected $_clase = 'branches';	
+	protected $_clase = 'clientsint';	
 	public $validateNumbers;
 	public $validateAlpha;
 	
@@ -55,10 +55,12 @@ class leasing_BranchesController extends My_Controller_Action
 
     public function indexAction(){
     	try{
-	    	$this->view->mOption = 'branches';			
-			$cClassObject      = new My_Model_Sucursales();
-			
-			$this->view->datatTable = $cClassObject->getDataTable($this->_dataUser['ID_EMPRESA']);
+    		$aResult = Array();
+	    	$this->view->mOption = 'branches';
+	    	
+	    	$cClassObject			= new My_Model_Clientesint();
+	    	$aResult				= $cClassObject->getDataTables($this->_dataUser['ID_EMPRESA']);
+	    	$this->view->datatTable = $aResult;
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -68,58 +70,39 @@ class leasing_BranchesController extends My_Controller_Action
     public function getinfoAction(){
     	try{
 			$aDataInfo 	 = Array();
-			$sEstatus    = 1;
-			$classObject = new My_Model_Sucursales();
-			$cFunctions  = new My_Controller_Functions();
-			$cClientes	 = new My_Model_Clientesint();
-			$aClientes	 = $cClientes->getCbo($this->_dataUser['ID_EMPRESA']);
-			$sCliente	 = '';
-			
-			$this->_dataIn['inputEmpresa'] = $this->view->idEmpresa;			
+			$sEstatus    = 1;   
+			$cClassObject= new My_Model_Clientesint();
+			$cFunctions  = new My_Controller_Functions(); 	
+
+    		$this->_dataIn['inputEmpresa'] = $this->view->idEmpresa;			
 			if($this->_idUpdate >-1){
-				$aDataInfo  = $classObject->getData($this->_idUpdate);
+				$aDataInfo  = $cClassObject->getData($this->_idUpdate);
 				$sEstatus	= $aDataInfo['ESTATUS'];
-				$sCliente	= $aDataInfo['ID_EMP_CLIENTE'];
-			}
+			}			
 			
     	    if($this->_dataOp=='new'){
-				$insert = $classObject->insertRowLeasing($this->_dataIn);
+				$insert = $cClassObject->insertRow($this->_dataIn);
 				if($insert['status']){
 					$this->_idUpdate = $insert['id'];
 					$this->resultop  = 'okRegister';	
-					$aDataInfo       = $classObject->getData($this->_idUpdate);
-					$this->_redirect('/leasing/branches/index');
+					$aDataInfo       = $cClassObject->getData($this->_idUpdate);
+					$this->_redirect('/leasing/clients/index');
 				}else{
 					$this->errors['status'] = 'no-insert';
 				}
-    		}
-			else if($this->_dataOp=='update'){				
+    		}else if($this->_dataOp=='update'){				
 				if($this->_idUpdate>-1){
-					 $updated = $classObject->updateRowLeasing($this->_dataIn,$this->_idUpdate); //mandar el ide del transportista
+					 $updated = $cClassObject->updateRow($this->_dataIn,$this->_idUpdate); //mandar el ide del transportista
 					 if($updated['status']){
-					 	$aDataInfo    = $classObject->getData($this->_idUpdate);
+					 	$aDataInfo    = $cClassObject->getData($this->_idUpdate);
 					 	$this->_resultOp = 'okRegister';	
-					 	$this->_redirect('/leasing/branches/index');
+					 	$this->_redirect('/leasing/clients/index');
 					 }
 				}else{
 					$this->errors['status'] = 'no-info';
 				}	
-    		}else if($this->_dataOp=='delete'){
-				$this->_helper->layout->disableLayout();
-				$this->_helper->viewRenderer->setNoRender();
-				$answer = Array('answer' => 'no-data');
-				    
-				$this->_dataIn['idEmpresa'] = $this->view->idEmpresa;
-				$delete = $classObject->deleteRow($this->_dataIn);
-				if($delete['status']){
-					$answer = Array('answer' => 'deleted'); 
-				}
-	
-		        echo Zend_Json::encode($answer);
-		        die();   						
-			}
-						
-			$this->view->aClientes  = $cFunctions->selectDb($aClientes,$sCliente);
+    		}			
+
 			$this->view->status     = $cFunctions->cboStatus($sEstatus);	
 			$this->view->data 		= $aDataInfo; 
 			$this->view->error 		= $this->_aErrors;	

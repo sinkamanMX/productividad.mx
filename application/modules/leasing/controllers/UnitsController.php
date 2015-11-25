@@ -70,9 +70,12 @@ class leasing_UnitsController extends My_Controller_Action
 			$cColores	= new My_Model_Colores();
 			$cMarcas 	= new My_Model_Activosmarcas();
 			$cModelos 	= new My_Model_Activosmodelos();
+			$cClientes	 = new My_Model_Clientesint();
 			
 			$aColores	= $cColores->getCbo();
 			$aMarcas	= $cMarcas->getCbo();
+			$aClientes	= $cClientes->getCbo($this->view->dataUser['ID_EMPRESA']);
+			$sCliente	= '';			
 			$sModelo	= '';
 			$sColor		= '';
 			$sMarca		= '';
@@ -84,7 +87,7 @@ class leasing_UnitsController extends My_Controller_Action
 				$sAnio	 	 = $dataInfo['ANIO'];
 				$sModelo	 = $dataInfo['ID_MODELO'];
 				$sMarca		 = $dataInfo['ID_MARCA'];
-
+				$sCliente    = $dataInfo['ID_EMP_CLIENTE'];
 				$aModelos	= $cModelos->getCbo($sMarca);
 				$this->view->aModelos    = $functions->selectDb($aModelos,$sModelo);				
 			}
@@ -125,6 +128,7 @@ class leasing_UnitsController extends My_Controller_Action
 		        die();   			
 			}
 			
+			$this->view->aClientes  = $functions->selectDb($aClientes,$sCliente);
 			$this->view->status     = $functions->cboStatus(@$dataInfo['ACTIVO']);
 			$yearEnd= Date("Y")+2;
 			$yearIn	= Date("Y")-15;

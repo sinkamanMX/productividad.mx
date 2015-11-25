@@ -127,23 +127,6 @@
                                             </div>
                                             <div class="span6">
                                                 <div class="control-group">
-                                                    <label class="control-label">Unidad<span class="required">*</span></label>
-                                                    <div class="controls">
-                                                        <select class="m-wrap class="span4 m-wrap"" name="inputUnidad" id="inputUnidad" <?php echo $disabled;?> >
-                                                            <option value="">Seleccionar una opción</option>
-                                                            <?php echo $this->aUnidades;?>
-                                                        </select> 
-                                                        <?php if($this->idToUpdate ==-1 || $showOpts=='block'):?>
-                                                            <button id="bntSearchUnit" class="btn" ><i class="icon-search"></i></button>
-                                                        <?php endif;?>
-                                                    </div>
-                                                </div>                
-                                            </div> 
-                                        </div> 
-
-                                        <div class="row row-margin-left25">                                       
-                                            <div class="span6">
-                                                <div class="control-group">
                                                     <label class="control-label">Tipo Equipo<span class="required">*</span></label>
                                                     <div class="controls">
                                                         <select class="m-wrap" name="inputTequipo" id="inputTequipo" <?php echo $disabled;?> >
@@ -153,29 +136,48 @@
                                                     </div>
                                                 </div>                                        
                                             </div>
+                                        </div> 
+
+                                        <div class="row row-margin-left25">                                       
                                             <div class="span6">
-                                                <!--<div class="control-group">
-                                                    <label class="control-label">Lugar de Instalación<span class="required">*</span></label>
+                                                <div class="control-group">
+                                                    <label class="control-label">Cliente<span class="required">*</span></label>
                                                     <div class="controls">
-                                                        <select class="m-wrap" name="inputPlace" id="inputPlace" <?php echo $disabled;?> >
+                                                        <select class="m-wrap" name="inpuClienteEmp" id="inpuClienteEmp" <?php echo $disabled;?> onChange="searchUnits(this.value)" >
                                                             <option value="">Seleccionar una opción</option>
-                                                            <?php echo $this->aSucursales;?>
-                                                        </select> 
-                                                        <button id="btnNewDir" class="btn btn-success" data-toggle="tooltip" data-placement="left" title="Agregar Nueva Dirección">+</button>
+                                                            <?php echo $this->aClientes;?>
+                                                        </select>
                                                     </div>
-                                                </div> -->               
-                                            </div> 
+                                                </div>
+                                            </div>                                             
+                                            <div class="span6">
+                                                <div class="control-group">
+                                                    <label class="control-label">Unidad<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <div id="divUnidad" class="span8">
+                                                            <select class="m-wrap class="span4 m-wrap"" name="inputUnidad" id="inputUnidad" <?php echo $disabled;?> >
+                                                                <option value="">Seleccionar una opción</option>
+                                                                <?php echo $this->aUnidades;?>
+                                                            </select>
+                                                            <?php if($this->idToUpdate ==-1 || $showOpts=='block'):?>
+                                                                <!--<button id="bntSearchUnit" class="btn" ><i class="icon-search"></i></button>-->
+                                                            <?php endif;?>                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>                
+                                            </div>                                             
                                         </div>                                         
                                         <div class="row row-margin-left25">    
                                             <div class="span6">
                                                 <div class="control-group">
                                                     <label class="control-label">Lugar de Instalación<span class="required">*</span></label>
                                                     <div class="controls">
-                                                        <select onChange="newdireccion(this.value);" class="m-wrap" name="inputPlace" id="inputPlace" <?php echo $disabled;?> >
-                                                            <option value="">Seleccionar una opción</option>
-                                                            <?php echo $this->aSucursales;?>
-                                                            <option value="-1">Otro</option>
-                                                        </select>
+                                                        <div id="divLugares">
+                                                            <select onChange="newdireccion(this.value);" class="m-wrap" name="inputPlace" id="inputPlace" <?php echo $disabled;?> >
+                                                                <option value="">Seleccionar una opción</option>
+                                                                <?php echo $this->aSucursales;?>                                                                
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div> 
                                                 <div id="divDireNew" style="display:<?php echo ($this->catId>-1) ? 'block':'none' ;?>">

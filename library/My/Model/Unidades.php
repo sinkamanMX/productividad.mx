@@ -23,7 +23,7 @@ class My_Model_Unidades extends My_Db_Table
 		}	
         
 		return $result;			
-	}	
+	}
 	
     public function validateUnitByPlaque($sPlaque){
 		try{     	        	
@@ -89,10 +89,11 @@ class My_Model_Unidades extends My_Db_Table
 	public function getUnidades($idObject){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT * 
-				FROM $this->_name
-				WHERE ID_EMPRESA = $idObject
-				GROUP BY $this->_primary";    	
+    	$sql ="SELECT U.*, C.NOMBRE  AS N_CLIENTE
+				FROM PROD_UNIDADES U
+				INNER JOIN EMP_CLIENTES C ON U.ID_EMP_CLIENTE = C.ID_EMP_CLIENTE
+				WHERE U.ID_EMPRESA = $idObject
+				ORDER BY U.PLACAS ASC";    	
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			
@@ -192,12 +193,13 @@ class My_Model_Unidades extends My_Db_Table
         $result['status']  = false;
 
         $sql="UPDATE  $this->_name
- 				SET ECONOMICO		='".$data['inputEco']."', 
+ 				SET ID_EMP_CLIENTE	= ".$data['inputCliente'].",
+ 					ECONOMICO		='".$data['inputEco']."', 
  					ID_MODELO		= ".$data['inputModelo'].",
 			  		PLACAS			='".$data['inputPlacas']."',
 			  		IDENTIFICADOR	='".$data['inputIden']."',
 			  		ANIO			='".$data['inputAnio']."',
-			  		ID_COLOR		= ".$data['inputColor']."
+			  		ID_COLOR		= ".$data['inputColor']."			  		
 				WHERE $this->_primary =".$data['catId']." LIMIT 1";
         try{            
     		$query   = $this->query($sql,false);
@@ -218,6 +220,7 @@ class My_Model_Unidades extends My_Db_Table
         $sql="INSERT INTO $this->_name
 			  SET   ID_EMPRESA		= ".$data['idEmpresa']." ,
 			  		ID_CLIENTE		= -1 ,
+			  		ID_EMP_CLIENTE	= ".$data['inputCliente'].",
 			  		ID_MODELO		= ".$data['inputModelo'].",
 			  		ECONOMICO		='".$data['inputEco']."', 
 			  		PLACAS			='".$data['inputPlacas']."',
@@ -274,4 +277,18 @@ class My_Model_Unidades extends My_Db_Table
         
 		return $result;			
 	}      
+	
+	public function getCboByEmpCliente($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT $this->_primary AS ID, IDENTIFICADOR AS NAME 
+    			FROM $this->_name 
+    			WHERE ID_EMP_CLIENTE = $idObject ORDER BY NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}	
 }

@@ -66,7 +66,7 @@ class My_Model_Solicitudes extends My_Db_Table
         $sql=" INSERT INTO $this->_name SET 
         		ID_CLIENTE		= ".$data['inputCliente'].",
 				ID_TIPO			= ".$data['inputTipo'].",
-				ID_ESTATUS		= 1,
+				ID_ESTATUS		= 1,				
 				ID_CONTACTO_QR  =  ".$data['inputUserQr']." ,
 				ID_UNIDAD		=  ".$data['inputUnidad']." ,
 				ID_HORARIO		=  ".$data['inputHorario']." ,
@@ -193,7 +193,7 @@ class My_Model_Solicitudes extends My_Db_Table
 		$sFilter = ($iStatus==0) ?  ' = 1' : ' IN ('.$iStatus.') ';
     	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.NOMBRE AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
 				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,A.`DESCRIPCION` AS N_SUCURSAL,
-				IF(S.ID_TIPO_EQUIPO IS NULL,'--',D.NOMBRE) AS N_TEQUIPO
+				IF(S.ID_TIPO_EQUIPO IS NULL,'--',D.NOMBRE) AS N_TEQUIPO, P.NOMBRE AS N_EMP_CLIENTE
 				FROM PROD_CITAS_SOLICITUD S
 				INNER JOIN PROD_TPO_CITA  T ON S.ID_TIPO = T.ID_TPO
 				INNER JOIN EMPRESAS       C ON S.ID_EMPRESA = C.ID_EMPRESA
@@ -203,6 +203,7 @@ class My_Model_Solicitudes extends My_Db_Table
 				LEFT JOIN PROD_HORARIOS_CITA  R ON S.ID_HORARIO2    = R.ID_HORARIO_CITA	
 				INNER JOIN SUCURSALES         A ON S.ID_SUCURSAL    = A.ID_SUCURSAL
 				LEFT JOIN EQUIPOS_UDA         D ON S.ID_TIPO_EQUIPO = D.ID_EQUIPO
+				LEFT JOIN EMP_CLIENTES        P ON S.ID_EMP_CLIENTE = P.ID_EMP_CLIENTE				
 				WHERE S.ID_EMPRESA = $idCliente AND S.ID_ESTATUS $sFilter ";
 		$query   = $this->query($sql);
 		if(count($query)>0){
@@ -222,6 +223,7 @@ class My_Model_Solicitudes extends My_Db_Table
         		ID_EMPRESA		= ".$data['inputIdEmpresa'].",
 				ID_TIPO			= ".$data['inputTipo'].",
 				ID_ESTATUS		= 1,
+				ID_EMP_CLIENTE	=  ".$data['inpuClienteEmp'].",
 				ID_CONTACTO_QR  =  ".$data['inputIdUsuario'].",
 				ID_UNIDAD		=  ".$data['inputUnidad']." ,
 				ID_HORARIO		=  ".$data['inputHorario']." ,

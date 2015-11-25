@@ -186,6 +186,8 @@ class My_Model_Sucursales extends My_Db_Table
         			MUNICIPIO		= '".$aData['inputMunicipio']."',    
         			ESTADO			= '".$aData['inputEstado']."',    
         			CP				= '".$aData['inputCP']."',
+        			EMAIL_CONTACTO	= '".$aData['inputMail']."',
+        			ID_EMP_CLIENTE	=  ".$aData['inputCliente'].",        			
         			ESTATUS			=  ".$aData['inputEstatus']."
 				WHERE $this->_primary   = ".$idObject;
         try{            
@@ -218,6 +220,8 @@ class My_Model_Sucursales extends My_Db_Table
         			ESTADO			= '".$aData['inputEstado']."',    
         			CP				= '".$aData['inputCP']."',
         			ESTATUS			=  ".$aData['inputEstatus'].",
+        			EMAIL_CONTACTO	= '".$aData['inputMail']."',
+        			ID_EMP_CLIENTE	=  ".$aData['inputCliente'].",
 					FECHA_CREADO    = CURRENT_TIMESTAMP";
         try{            
     		$query   = $this->query($sql,false);
@@ -233,5 +237,35 @@ class My_Model_Sucursales extends My_Db_Table
             echo $sql;
         }
 		return $result;	       	
-    }      
+    }   
+
+    public function getDataTable($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT S.*, C.NOMBRE  AS N_CLIENTE
+				FROM SUCURSALES S
+				INNER JOIN EMP_CLIENTES C ON S.ID_EMP_CLIENTE = C.ID_EMP_CLIENTE
+				WHERE S.ID_EMPRESA = $idObject
+				ORDER BY S.DESCRIPCION";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result = $query;
+		}
+        
+		return $result;    	
+    }
+    
+	public function getCbobyClient($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false);
+    	$sql ="SELECT $this->_primary AS ID, DESCRIPCION AS NAME 
+    			FROM $this->_name 
+    			WHERE ID_EMP_CLIENTE = $idObject ORDER BY NAME ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}     
 }
