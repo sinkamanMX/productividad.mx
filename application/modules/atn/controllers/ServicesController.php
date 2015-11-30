@@ -877,7 +877,8 @@ class atn_ServicesController extends My_Controller_Action
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('R7', 'Imei');		
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('S7', 'Ip');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('T7', 'Causa del cambio');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('U7', 'Observaciones');						
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('U7', 'Observaciones');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('V7', 'Tipo Firma');
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleTable, 'A7:U7');
 									
 					$rowControl		= 8;
@@ -936,6 +937,7 @@ class atn_ServicesController extends My_Controller_Action
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(18, ($rowControl), @$dataEquipment['IP2']." ");
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(19, ($rowControl), @$dataEquipment['RAZON']);
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(20, ($rowControl), @$dataEquipment['OBSERVACIONES']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(21, ($rowControl), @$items['TIPO_FIRMA']);
 	
 							if($zebraControl++%2==1){
 								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':U'.$rowControl);			
