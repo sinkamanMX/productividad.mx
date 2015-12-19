@@ -105,8 +105,8 @@ class external_RequestController extends My_Controller_Action
 				//192.168.6.41
 				//201.131.96.40
 				//$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
-				//$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
-				$soap_client  = new SoapClient("http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL");
+				$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+				//$soap_client  = new SoapClient("http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL");
 				$aParams 	  = array('sLogin'         => 'wbs_admin@grupouda.com.mx',
 	                  				  'sPassword'       => 'w3b4dm1n',
 									  'strCustomerPass' => $this->view->dataUser['COD_CLIENTE']);		

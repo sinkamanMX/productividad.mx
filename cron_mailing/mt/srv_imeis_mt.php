@@ -99,8 +99,8 @@
 
   
   function extrae_unidades_cliente_ovision($con,$customerpass){
-    //$soap_client = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
-    $soap_client  = new SoapClient("http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL");
+    $soap_client = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+    //$soap_client  = new SoapClient("http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL");
     $param = array('sLogin'          => 'wbs_admin@grupouda.com.mx',
                    'sPassword'       => 'w3b4dm1n',
                    'strCustomerPass' => $customerpass);
