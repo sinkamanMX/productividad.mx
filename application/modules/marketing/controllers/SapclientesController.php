@@ -545,7 +545,8 @@ class marketing_SapclientesController extends My_Controller_Action
 	        	$dataInfo	= $classObject->getData($this->dataIn['strInput']);
 	        	//http://201.131.96.40
 	        	//http://192.168.6.41
-	        	$soap_client = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+	        	$soap_client  = new SoapClient("http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL");
+	        	//$soap_client = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
    				$aParams 	 = array('sLogin'         => 'wbs_admin@grupouda.com.mx',
 	                  				'sPassword'       => 'w3b4dm1n',
 	                  				'strCustomerPass' => $dataInfo['COD_CLIENTE']);
