@@ -504,6 +504,7 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/validacion.mx/application/modules/admin/views/scripts/users/infousers.phtml",
 		"/Users/itecno2/Documents/workspace/validacion.mx/application/modules/reports/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/validacion.mx/test_mail/Mailbox.php",
 		"/Users/itecno2/Documents/workspace/validacion.mx/application/modules/dashboard/views/scripts/main/index.phtml",
@@ -630,8 +631,7 @@
 		"/Users/itecno2/Documents/workspace/productividapp.mx/public/assets/js/bootbox/bootbox.js",
 		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/dbman/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/main/views/scripts/phones/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/main/views/scripts/phones/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividapp.mx/application/views/layouts/chat.phtml"
+		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/main/views/scripts/phones/getinfo.phtml"
 	],
 	"find":
 	{

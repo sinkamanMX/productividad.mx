@@ -408,7 +408,7 @@ class My_Model_Usuarios extends My_Db_Table
 				WHERE U.USUARIO  = '".$datauser['usuario']."'
                  AND  U.PASSWORD = SHA1('".$datauser['contrasena']."')
                  AND  U.ACTIVO    = 1
-                 AND  U.ID_PERFIL = 17";
+                 AND  U.ID_PERFIL IN (17,19)";
 		$query   = $this->query($sql);
 		if(count($query)>0){
 			$result	 = $query[0];
