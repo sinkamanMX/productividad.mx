@@ -411,6 +411,56 @@
 	},
 	"buffers":
 	[
+		{
+			"contents": "Searching 5096 files for \"192.168.6.41\" (regex)\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/controllers/RequestController.php:\n  103  \n  104  			if($this->operation=='updateUnits'){\n  105: 				//192.168.6.41\n  106  				//201.131.96.40\n  107: 				//$soap_client  = new SoapClient(\"http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  108: 				$soap_client  = new SoapClient(\"http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  109  				//$soap_client  = new SoapClient(\"http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  110  				$aParams 	  = array('sLogin'         => 'wbs_admin@grupouda.com.mx',\n  ...\n  367  				$dataInfo   = $cUnidades->getData($idUnidad);\n  368  				\n  369: 				//192.168.6.41\n  370  				//201.131.96.40\n  371: 				$soap_client  = new SoapClient(\"http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  372  				$aParams 	  = array('sLogin'         => 'wbs_admin@grupouda.com.mx',\n  373  	                  				  'sPassword'       => 'w3b4dm1n',\n  ...\n  439      public function getinfounitAction(){\n  440  		try{\n  441: 			//192.168.6.41\n  442  			//201.131.96.40\n  443: 			$soap_client  = new SoapClient(\"http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  444  			$aParams 	  = array('sLogin'         => 'wbs_admin@grupouda.com.mx',\n  445  	                  			  'sPassword'       => 'w3b4dm1n',\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/controllers/UnitsController.php:\n  160  \n  161  	    		  	//$soap_client  = new SoapClient(\"http://201.131.96.40/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  162: 	    		  	$soap_client  = new SoapClient(\"http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  163  	    		  	//$soap_client  = new SoapClient(\"http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  164  					$aParams 	  = array('sLogin'     => $userUda,\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/controllers/SapclientesController.php:\n  545  	        	$dataInfo	= $classObject->getData($this->dataIn['strInput']);\n  546  	        	//http://201.131.96.40\n  547: 	        	//http://192.168.6.41\n  548  	        	//$soap_client  = new SoapClient(\"http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  549: 	        	$soap_client = new SoapClient(\"http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  550     				$aParams 	 = array('sLogin'         => 'wbs_admin@grupouda.com.mx',\n  551  	                  				'sPassword'       => 'w3b4dm1n',\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/sac/controllers/MainController.php:\n  106  				\n  107      			if($this->operation=='updateUnits'){\n  108: 					//192.168.6.41\n  109  					//201.131.96.40\n  110: 					$soap_client  = new SoapClient(\"http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  111  					$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',\n  112  					                  	  'sPassword'  => 't3stud4',\n  ...\n  273  				$idUnidad 	= $this->dataIn['catId'];\n  274  				$dataInfo   = $cUnidades->getData($idUnidad);\n  275: 				//192.168.6.41\n  276  				//201.131.96.40\n  277: 				$soap_client  = new SoapClient(\"http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  278  				//$soap_client  = new SoapClient(\"http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  279  				$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',\n\n/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/mt/srv_imeis_mt.php:\n  100    \n  101    function extrae_unidades_cliente_ovision($con,$customerpass){\n  102:     $soap_client = new SoapClient(\"http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  103      //$soap_client  = new SoapClient(\"http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL\");\n  104      $param = array('sLogin'          => 'wbs_admin@grupouda.com.mx',\n\n/Users/itecno2/Documents/workspace/productividad.mx/productividad.sublime-workspace:\n  586  		\"find_history\":\n  587  		[\n  588: 			\"192.168.6.41\",\n  589  			\"Ovision\",\n  590  			\"SoapClient\",\n\n16 matches across 6 files\n",
+			"settings":
+			{
+				"buffer_size": 4147,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "cron_mailing/mt/srv_imeis_mt.php",
+			"settings":
+			{
+				"buffer_size": 6119,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/sac/controllers/MainController.php",
+			"settings":
+			{
+				"buffer_size": 13692,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/marketing/controllers/SapclientesController.php",
+			"settings":
+			{
+				"buffer_size": 27191,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/leasing/controllers/UnitsController.php",
+			"settings":
+			{
+				"buffer_size": 8731,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/external/controllers/RequestController.php",
+			"settings":
+			{
+				"buffer_size": 18542,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -585,6 +635,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"6.41",
 			"192.168.6.41",
 			"Ovision",
 			"SoapClient",
@@ -711,8 +762,7 @@
 			"equipment",
 			"getIsSupervisor",
 			"span",
-			"divSliderC",
-			"slide"
+			"divSliderC"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -781,8 +831,268 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 4147,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										233,
+										245
+									],
+									[
+										325,
+										337
+									],
+									[
+										427,
+										439
+									],
+									[
+										754,
+										766
+									],
+									[
+										844,
+										856
+									],
+									[
+										1121,
+										1133
+									],
+									[
+										1209,
+										1221
+									],
+									[
+										1693,
+										1705
+									],
+									[
+										2183,
+										2195
+									],
+									[
+										2364,
+										2376
+									],
+									[
+										2747,
+										2759
+									],
+									[
+										2839,
+										2851
+									],
+									[
+										3151,
+										3163
+									],
+									[
+										3241,
+										3253
+									],
+									[
+										3692,
+										3704
+									],
+									[
+										4060,
+										4072
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							],
+							[
+								146,
+								146
+							],
+							[
+								1467,
+								1467
+							],
+							[
+								2028,
+								2028
+							],
+							[
+								2611,
+								2611
+							],
+							[
+								3524,
+								3524
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1087.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "cron_mailing/mt/srv_imeis_mt.php",
+					"settings":
+					{
+						"buffer_size": 6119,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3104,
+								3104
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1597.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "application/modules/sac/controllers/MainController.php",
+					"settings":
+					{
+						"buffer_size": 13692,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3785,
+								3692
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 61.0,
+						"translation.y": 1497.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "application/modules/marketing/controllers/SapclientesController.php",
+					"settings":
+					{
+						"buffer_size": 27191,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								20973,
+								20973
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 8960.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "application/modules/leasing/controllers/UnitsController.php",
+					"settings":
+					{
+						"buffer_size": 8731,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5757,
+								5761
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2415.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "application/modules/external/controllers/RequestController.php",
+					"settings":
+					{
+						"buffer_size": 18542,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3704,
+								3708
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 29.0,
+						"translation.y": 1446.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
