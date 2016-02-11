@@ -26,6 +26,7 @@
                                     <th class="span3 text-center">Razón Social</th>
                                     <th class="span2 text-center">RFC</th>
                                     <th class="span2 text-center">Estatus</th>
+                                    <th>Técnicos</th>
                                     <th class="span2 text-center">Opciones</th>                                    
                                 </tr>
                             </thead>
@@ -38,6 +39,7 @@
                                     <td><?php echo $items['RAZON_SOCIAL']; ?></td>
                                     <td><?php echo $items['RFC']; ?></td>
                                     <td class="text-center"><?php echo ($items['ESTATUS'])? 'Activo':'Inactivo'; ?></td>
+                                    <td><?php echo $items['NO_TECNICOS']; ?></td>
                                     <td class="text-center">
                                         <?php if($this->dataUser['LECTURA']==1): ?>
                                             <!--<a href="/admin/brokers/getinfo?catId=<?php echo $items['ID_EMPRESA']; ?>"><button class="btn btn-info"> <i class="icon-info-sign icon-white"></i></button></a>   -->

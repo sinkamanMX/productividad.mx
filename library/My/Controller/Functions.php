@@ -319,5 +319,15 @@ class My_Controller_Functions
 			$options .= '<option '.$select.' value="'.$this->aOptionsString[$p]['id'].'" >'.$this->aOptionsString[$p]['name'].'</option>';
 		}
 		return $options;
-    } 	
+    }
+    
+	public  function cbo_number_on($started=0,$n,$option=''){
+	  $select = '';
+	  for($i=$started; $i<=$n; $i++){
+		  $h = ($i<=9)?"0".$i:$i;
+		  $current = ($h==$option) ? 'selected': '';
+		  $select .= '<option '.$current.' value="'.$h.'" >'.$h.'</option>';
+		  }
+	  return $select;  		    
+	}      
 }

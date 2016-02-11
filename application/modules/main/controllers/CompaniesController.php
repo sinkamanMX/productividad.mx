@@ -78,6 +78,8 @@ class main_CompaniesController extends My_Controller_Action
 			$sClientUda		 = 0;
 			$sCViajes 		 = 1;
 			$sTipoEmpresa	 = '';
+			$iTotalAgents	 = 0;
+			$aLimitAgents	 = $this->_dataUser['NO_TECNICOS']-($cEmpresas->getTotalAgents($this->view->idEmpresa));
 			$aDataInfo		 = Array();			
 			$optionEmp		 = ($this->_dataUser['ID_PERFIL']!=19) ? false : true;	
 			$this->_dataIn['idBroker'] = ($this->_dataUser['ID_PERFIL']!=19) ? -1    : $this->_dataUser['ID_EMPRESA'];		
@@ -88,6 +90,7 @@ class main_CompaniesController extends My_Controller_Action
 				$aDataInfo  = $cEmpresas->getData($this->_idUpdate);
 				$sEstatus	= $aDataInfo['ESTATUS'];
 				$sTipoEmpresa= $aDataInfo['ID_TIPO_EMPRESA'];
+				$iTotalAgents= $aDataInfo['NO_TECNICOS'];
 				/*$sClientUda = $aDataInfo['CLIENTE_UDA'];
 				$sCViajes 	= $aDataInfo['COBRAR_VIAJES'];*/
 			}
@@ -172,6 +175,7 @@ class main_CompaniesController extends My_Controller_Action
 	    	$this->view->aCviajes    = $cFunctions->cboOptions($sCViajes);	
 	    	$this->view->status      = $cFunctions->cboStatus($sEstatus);
 	    	$this->view->aTipos		 = $cFunctions->selectDb($aTiposEmpresa,$sTipoEmpresa);	
+	    	$this->view->aAgents	 = $cFunctions->cbo_number_on(0,$aLimitAgents,$iTotalAgents);
 	    	$this->view->data	     = $aDataInfo;   
 			$this->view->catId		 = $this->_idUpdate;
 			$this->view->idToUpdate  = $this->_idUpdate;

@@ -193,7 +193,14 @@
 												</div>																							                			
 					                		</div>
 					                		<div class="span4">
-												                			
+												<div class="control-group">
+													<label class="control-label">Técnicos Asignados :<span class="required"></span></label>
+													<div class="controls">
+														<select class="span12 m-wrap"  autocomplete="off" name="inputTecnicos">
+															<?php echo $this->aAgents; ?>
+														</select>
+													</div>
+												</div>	 	               			
 					                		</div>				                		
 				                	</div>				                	
 				                	<?php if($this->idToUpdate==-1): ?>

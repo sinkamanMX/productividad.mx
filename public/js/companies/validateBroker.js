@@ -28,7 +28,8 @@ $().ready(function() {
             inputUser           : {
                 required    : true,
                 email       : true
-            },  
+            },
+            inputTecnicos    : "required",   
             /*inputClienteUDA  : "required",
             inputUserUda     : "required",
             inputPasswordUda : "required",
@@ -68,6 +69,7 @@ $().ready(function() {
             inputUserUda     : "Campo Requerido",
             inputPasswordUda : "Campo Requerido",
 			inputCobro 		 : "Campo Requerido",*/
+            inputTecnicos    : "Campo Requerido",
             inputEstatus 	 : "Campo Requerido"
         },
         

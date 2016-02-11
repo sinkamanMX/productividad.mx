@@ -33,6 +33,11 @@ $().ready(function() {
             inputUserUda     : "required",
             inputPasswordUda : "required",
             inputCobro 		 : "required",*/
+            inputTecnicos    : {
+                required: true,
+                number  : true,
+                min     : 1
+            },
             inputEstatus 	 : "required"
         },
         messages: {
@@ -68,6 +73,11 @@ $().ready(function() {
             /*inputUserUda     : "Campo Requerido",
             inputPasswordUda : "Campo Requerido",
 			inputCobro 		 : "Campo Requerido",*/
+            inputTecnicos    : {
+                required: "Campo Requerido",
+                number  : "Este campo acepta solo números",
+                min     : "Se debe de seleccionar al menos un técnico",
+            },            
             inputEstatus 	 : "Campo Requerido"
         },
         
@@ -100,6 +110,10 @@ $().ready(function() {
 		$("#inputPasswordSec").rules("remove", "required");
 		$("#inputTelFijoUser").rules("remove", "required");
 		$("#inputTelMovilUser").rules("remove", "required");
+    }
+
+    if($("#idProfile").val()!=19){
+        $("#inputTecnicos").rules("remove", "required");
     }
 });
 

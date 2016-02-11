@@ -78,6 +78,7 @@ class main_BrokersController extends My_Controller_Action
 			$sClientUda		 = 0;
 			$sCViajes 		 = 1;
 			$sTipoEmpresa	 = '';
+			$iTotalAgents	 = 1;
 			$aDataInfo		 = Array();
 			$aTiposEmpresa   = $cEmpresas->getCboTipos();
 			
@@ -87,6 +88,7 @@ class main_BrokersController extends My_Controller_Action
 				$aDataInfo  = $cEmpresas->getData($this->_idUpdate);
 				$sEstatus	= $aDataInfo['ESTATUS'];
 				$sTipoEmpresa= $aDataInfo['ID_TIPO_EMPRESA'];
+				$iTotalAgents= $aDataInfo['NO_TECNICOS'];
 				/*$sClientUda = $aDataInfo['CLIENTE_UDA'];
 				$sCViajes 	= $aDataInfo['COBRAR_VIAJES'];*/
 			}
@@ -158,7 +160,7 @@ class main_BrokersController extends My_Controller_Action
 					 if($updated['status']){
 					 	$aDataInfo    = $cEmpresas->getData($this->_idUpdate);
 					 	$this->_resultOp = 'okRegister';	
-					 	$this->_redirect('/admin/companies/index');
+					 	$this->_redirect('/admin/brokers/index');
 					 }
 				}else{
 					$this->errors['status'] = 'no-info';
@@ -170,7 +172,8 @@ class main_BrokersController extends My_Controller_Action
 	    	$this->view->bUsuarioUda = $cFunctions->cboOptions($sClientUda);
 	    	$this->view->aCviajes    = $cFunctions->cboOptions($sCViajes);	
 	    	$this->view->status      = $cFunctions->cboStatus($sEstatus);
-	    	$this->view->aTipos		 = $cFunctions->selectDb($aTiposEmpresa,$sTipoEmpresa);	
+	    	$this->view->aTipos		 = $cFunctions->selectDb($aTiposEmpresa,$sTipoEmpresa);
+	    	$this->view->aAgents	 = $cFunctions->cbo_number_on(1,20,$iTotalAgents);	
 	    	$this->view->data	     = $aDataInfo;   
 			$this->view->catId		 = $this->_idUpdate;
 			$this->view->idToUpdate  = $this->_idUpdate;

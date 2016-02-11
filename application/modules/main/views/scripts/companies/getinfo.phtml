@@ -26,6 +26,7 @@
 					<?php endif;?>	
 		                <input type="hidden" id="optReg" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
 		                <input type="hidden" name="catId" value="<?php echo $this->catId; ?>" />
+		                <input type="hidden" id="idProfile" name="idProfile" value="<?php echo $this->_dataUser['ID_PERFIL']; ?>" />
 		                <?php if(count(@$this->errors)>0):?>
 		                    <?php if(@$this->errors['eEmpresa']==1):?>
 								<div class="alert alert-error" style="display:block;">
@@ -154,17 +155,17 @@
 				                	</div>	-->
 
 				                	<div class="span12 no-margin-left">
-				                		<!--
-				                		<div class="span4">
-											<div class="control-group">
-												<label class="control-label">Cobrar Viajes:<span class="required">*</span></label>
-												<div class="controls">												
-													<select class="span6 m-wrap"  autocomplete="off" name="inputCobro" >
-														<?php echo $this->aCviajes; ?>
-													</select>
+				                			<!--
+					                		<div class="span4">
+												<div class="control-group">
+													<label class="control-label">Cobrar Viajes:<span class="required">*</span></label>
+													<div class="controls">												
+														<select class="span6 m-wrap"  autocomplete="off" name="inputCobro" >
+															<?php echo $this->aCviajes; ?>
+														</select>
+													</div>
 												</div>
-											</div>
-				                		</div>-->
+					                		</div>-->
 					                		<div class="span4">
 												<div class="control-group">
 													<label class="control-label">Estatus:<span class="required"></span></label>
@@ -193,7 +194,19 @@
 													</div>
 												</div>													                			
 					                		</div>				                		
-				                	</div>				                	
+				                	</div>	
+				                	<div class="span12 no-margin-left" style="display:<?php echo ($this->_dataUser['ID_PERFIL']==19) ? 'none': 'block';?>">
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Técnicos Asignados :<span class="required"></span></label>
+												<div class="controls">
+													<select class="span6 m-wrap"  autocomplete="off" name="inputTecnicos">
+														<?php echo $this->aAgents; ?>
+													</select>
+												</div>
+											</div>	 		
+										</div>
+									</div>
 				                	<?php if($this->idToUpdate==-1): ?>
 					                	<div class="span12 no-margin-left">
 											<h4>Datos del Usuario</h4>

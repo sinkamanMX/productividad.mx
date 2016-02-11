@@ -27,7 +27,8 @@ class My_Model_Empresas extends My_Db_Table
         		 	RAZON_SOCIAL	= '".$data['inputRazonSocial']."',
 					ESTATUS			=  ".$data['inputEstatus'].",
 					COD_CLIENTE		= '".$data['inputSap']."',
-					ID_TIPO_EMPRESA =  ".$data['inputTipo'].", 					
+					ID_TIPO_EMPRESA =  ".$data['inputTipo'].",
+					NO_TECNICOS		=  ".$data['inputTecnicos'].",  					
         			FECHA_REGISTRO	= CURRENT_TIMESTAMP";       			  
         try{            
     		$query   = $this->query($sql,false);
@@ -114,7 +115,7 @@ class My_Model_Empresas extends My_Db_Table
         $sUserUda 	 = (isset($data['inputUserUda'])    && $data['inputUserUda']  !="")     ? $data['inputUserUda']    : '';
         $sPassUda 	 = (isset($data['inputPasswordUda']) && $data['inputPasswordUda'] !="") ? $data['inputPasswordUda']: '';
         
-        $sql="UPDATE  $this->_name
+        $sql="UPDATE $this->_name
         		SET	NOMBRE 			= '".$data['inputDescripcion']."',
         			RFC				= '".$data['inputRFC']."',
         		 	RAZON_SOCIAL	= '".$data['inputRazonSocial']."',
@@ -124,7 +125,8 @@ class My_Model_Empresas extends My_Db_Table
 					USUARIO_UDA  	= '".$sUserUda."',
 					PASSWORD_UDA	= '".$sPassUda."',
 					COBRAR_VIAJES	=  ".$data['inputCobro']."*/
-					ID_TIPO_EMPRESA =  ".$data['inputTipo']."
+					ID_TIPO_EMPRESA =  ".$data['inputTipo'].",
+					NO_TECNICOS		=  ".$data['inputTecnicos']." 
 				WHERE $this->_primary   = ".$idObject;
         try{            
     		$query   = $this->query($sql,false);
@@ -180,5 +182,21 @@ class My_Model_Empresas extends My_Db_Table
 			$result = $query;			
 		}
 		return $result;
-	}   	
+	}
+	
+    
+    public function getTotalAgents($idObject){
+		$result=1;
+		$this->query("SET NAMES utf8",false); 
+    	$sql ="SELECT SUM(NO_TECNICOS) AS TOTAL
+				FROM EMPRESAS 
+				WHERE ID_TIPO_EMPRESA NOT IN (1,4) 
+				  AND ID_BROKER = $idObject";	
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0]['TOTAL'];			
+		}	
+        
+		return $result;	    	
+    }	    
 }
