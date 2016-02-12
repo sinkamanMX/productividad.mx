@@ -378,4 +378,18 @@ class My_Model_Solicitudes extends My_Db_Table
         
 		return $result;	    	
     }
+    
+    public function validateDate($idCompany,$idDate){
+    	$iTotal = 0;
+    	$sql = "SELECT COUNT(ID_SOLICITUD) AS TOTAL
+				FROM PROD_CITAS_SOLICITUD S
+				WHERE ID_EMPRESA = $idCompany 
+				  AND ID_HORARIO = $idDate";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$iTotal	 = $query[0]['TOTAL'];
+		}
+        
+		return $iTotal;	     	
+    }
 }

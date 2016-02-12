@@ -115,150 +115,173 @@ class leasing_RequestController extends My_Controller_Action
 			$sModificaciones = '';		
 				
     		if($this->operation=='new'){
-    			$this->dataIn['inputCliente'] = -1;	
-				$aDataUnit = $cUnidades->getData($this->dataIn['inputUnidad']);
-				$this->dataIn['inputInfo'] = "<b>Ult.reporte:</b> S/N<br/><b>Placas:</b>".$aDataUnit['PLACAS']."<br/><b>Eco:</b> ".$aDataUnit['ECONOMICO']."<br/><b>Ip:</b>".$aDataUnit['IDENTIFICADOR']."<br/><b>Tipo Equipo:</b>".$aDataUnit['TIPO_EQUIPO']."<br/><b>Tipo Unidad:</b>".$aDataUnit['TIPO_VEHICULO']."<br/>";		
-				$insert = $classObject->insertRowEmp($this->dataIn);			
-		 		if($insert['status']){
-		 			$this->idToUpdate = $insert['id'];	
-					$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
-					$sTipo		= $dataInfo['ID_TIPO'];
-					$sHorario	= $dataInfo['ID_HORARIO'];	
-					$sUnidad	= $dataInfo['ID_UNIDAD'];
-					$sSucursal  = $dataInfo['ID_SUCURSAL'];
-					$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];
-					
-					if(isset($this->dataIn['chkSaveDir']) && $this->dataIn['chkSaveDir']=='on'){
-						$cSucursales = new My_Model_Sucursales();
-						$this->dataIn['inputEmpresa'] = $this->view->dataUser['ID_EMPRESA'];
-						$this->dataIn['inputEstatus'] = 1;
-						$insert = $cSucursales->insertRowLeasing($this->dataIn);
-						$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);						
+    			//se agrega la validacion de tecnicos asignados a la hora.
+    			$bDateEnable     = $classObject->validateDate($this->dataIn['inputIdEmpresa'],$this->dataIn['inputHorario']);
+    			if($bDateEnable < $this->view->dataUser['NO_TECNICOS']){
+	    			$this->dataIn['inputCliente'] = -1;	
+					$aDataUnit = $cUnidades->getData($this->dataIn['inputUnidad']);
+					$this->dataIn['inputInfo'] = "<b>Ult.reporte:</b> S/N<br/><b>Placas:</b>".$aDataUnit['PLACAS']."<br/><b>Eco:</b> ".$aDataUnit['ECONOMICO']."<br/><b>Ip:</b>".$aDataUnit['IDENTIFICADOR']."<br/><b>Tipo Equipo:</b>".$aDataUnit['TIPO_EQUIPO']."<br/><b>Tipo Unidad:</b>".$aDataUnit['TIPO_VEHICULO']."<br/>";		
+					$insert = $classObject->insertRowEmp($this->dataIn);			
+			 		if($insert['status']){
+			 			$this->idToUpdate = $insert['id'];	
+						$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
+						$sTipo		= $dataInfo['ID_TIPO'];
+						$sHorario	= $dataInfo['ID_HORARIO'];	
+						$sUnidad	= $dataInfo['ID_UNIDAD'];
+						$sSucursal  = $dataInfo['ID_SUCURSAL'];
+						$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];
+						
+						if(isset($this->dataIn['chkSaveDir']) && $this->dataIn['chkSaveDir']=='on'){
+							$cSucursales = new My_Model_Sucursales();
+							$this->dataIn['inputEmpresa'] = $this->view->dataUser['ID_EMPRESA'];
+							$this->dataIn['inputEstatus'] = 1;
+							$insert = $cSucursales->insertRowLeasing($this->dataIn);
+							$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);						
+						}
+						
+						$cHtmlMail->newSolicitud($dataInfo,$this->view->dataUser);
+	
+				 		$this->resultop = 'okRegister';
+					}else{
+						$this->errors['status'] = 'no-insert';
 					}
-					
-					$cHtmlMail->newSolicitud($dataInfo,$this->view->dataUser);
-
-			 		$this->resultop = 'okRegister';
-				}else{
-					$this->errors['status'] = 'no-insert';
-				}				
+    			}else{
+    				$this->errors['errorDate'] = 'errordate';	
+    			}    			
 			}else if($this->operation=='update'){
 				if($this->idToUpdate>-1){
-					if($this->dataIn['bOperation']=='accept'){
-						$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
-						$sHorarioLog  = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<b>Horario 2</b:'.$dataInfo['N_HORARIO2'].'<br/>': '';
-						
-						$updated = $classObject->updateRowEmp($this->dataIn);
-						if($updated['status']){
-							$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
-							$sTipo		= $dataInfo['ID_TIPO'];
-							$sHorario	= $dataInfo['ID_HORARIO'];	
-							$sUnidad	= $dataInfo['ID_UNIDAD'];
-							$sSucursal  = $dataInfo['ID_SUCURSAL'];
-							$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];
+					$bValidate = true;
+					if($dataInfo['ID_HORARIO']!=$this->dataIn['inputHorario']){
+						//se agrega la validacion de tecnicos asignados a la hora.
+	    				$bDateEnable     = $classObject->validateDate($this->dataIn['inputIdEmpresa'],$this->dataIn['inputHorario']); 
+	    				if($bDateEnable < $this->view->dataUser['NO_TECNICOS']){
+							$bValidate =true;	    					
+	    				}else{
+	    					$bValidate =false;
+	    				}						
+					}else{
+						$bValidate =false;
+					}
+	
+					if($bValidate){
+						if($this->dataIn['bOperation']=='accept'){
+							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
+							$sHorarioLog  = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<b>Horario 2</b:'.$dataInfo['N_HORARIO2'].'<br/>': '';
 							
-							$cHtmlMail->acceptuserSolicitud($dataInfo,$this->view->dataUser);
-											
-							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
-											'sAction' 		=> 'Solicitud Aceptada',
-											'sDescripcion' 	=> 'La solicitud ha sido aceptada por el usuario',
-											'sOrigen'		=> 'USUARIO');
-							$cLog->insertRow($aLog);							
-						}
-						
-						$this->resultop = 'okRegister';
-						
-					}elseif($this->dataIn['bOperation']=='modify'){
-						$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
-						$sHorarioLog  = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<b>Horario 2</b:'.$dataInfo['N_HORARIO2'].'<br/>': '';
-						
-						if($this->dataIn['inputHorario']!=$dataInfo['ID_HORARIO']){
-							$sModificaciones .= 'Se modifico el horario <br/>';							
-						}
-						
-						if($this->dataIn['inputPlace']!=$dataInfo['ID_SUCURSAL']){
-							$sModificaciones .= 'Se modifico el lugar de instalaci—n <br/>';							
-						}
-						
-						if($this->dataIn['inputFechaIn']!=$dataInfo['FECHA_CITA']){
-							$sModificaciones .= 'Se modifico la fecha de la cita <br/>';							
-						}						
-						
-						if($this->dataIn['inputComment']!=$dataInfo['COMENTARIO']){
-							$sModificaciones .= 'Comentario:'.$this->dataIn['inputComment'].'<br/>';						
-						}
-						
-						$updated = $classObject->updateRowEmp($this->dataIn);
-						if($updated['status']){
-							$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
-							$sTipo		= $dataInfo['ID_TIPO'];
-							$sHorario	= $dataInfo['ID_HORARIO'];	
-							$sUnidad	= $dataInfo['ID_UNIDAD'];
-							$sSucursal  = $dataInfo['ID_SUCURSAL'];
-							$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];							
+							$updated = $classObject->updateRowEmp($this->dataIn);
+							if($updated['status']){
+								$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
+								$sTipo		= $dataInfo['ID_TIPO'];
+								$sHorario	= $dataInfo['ID_HORARIO'];	
+								$sUnidad	= $dataInfo['ID_UNIDAD'];
+								$sSucursal  = $dataInfo['ID_SUCURSAL'];
+								$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];
+								
+								$cHtmlMail->acceptuserSolicitud($dataInfo,$this->view->dataUser);
+												
+								$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
+												'sAction' 		=> 'Solicitud Aceptada',
+												'sDescripcion' 	=> 'La solicitud ha sido aceptada por el usuario',
+												'sOrigen'		=> 'USUARIO');
+								$cLog->insertRow($aLog);							
+							}
 							
-							$aLog = Array ('idSolicitud' 	=> $this->idToUpdate,
-											'sAction' 		=> 'Cambio en la Solicitud',
-											'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones ,
-											'sOrigen'		=> 'USUARIO');
-							$cLog->insertRow($aLog);
-
-							$cHtmlMail->changeSolicitud($dataInfo,$this->view->dataUser);
-						}
-						$this->resultop = 'okRegister';
-					}else{	
-						if(isset($this->dataIn['inputUnidad'])){
-							$aDataUnit = $cUnidades->getData($this->dataIn['inputUnidad']);
-							$this->dataIn['inputInfo'] = "<b>Ult.reporte:</b> S/N<br/><b>Placas:</b>".$aDataUnit['PLACAS']."<br/><b>Eco:</b> ".$aDataUnit['ECONOMICO']."<br/><b>Ip:</b>".$aDataUnit['IDENTIFICADOR']."<br/><b>Tipo Equipo:</b>".$aDataUnit['TIPO_EQUIPO']."<br/><b>Tipo Unidad:</b>".$aDataUnit['TIPO_VEHICULO']."<br/>";								
-						}
-						
-						$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
-						$sHorarioLog  = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<b>Horario 2</b:'.$dataInfo['N_HORARIO2'].'<br/>': '';						
-						
-						if($this->dataIn['inputHorario']!=$dataInfo['ID_HORARIO']){
-							$sModificaciones .= 'Se modifico el horario <br/>';							
-						}
-						
-						if($this->dataIn['inputPlace']!=$dataInfo['ID_SUCURSAL']){
-							$sModificaciones .= 'Se modifico el lugar de instalaci—n <br/>';							
-						}						
-						
-						if($this->dataIn['inputFechaIn']!=$dataInfo['FECHA_CITA']){
-							$sModificaciones .= 'Se modifico la fecha de la cita <br/>';							
-						}						
-						
-						if($this->dataIn['inputComment']!=$dataInfo['COMENTARIO']){
-							$sModificaciones .= 'Comentario:'.$this->dataIn['inputComment'].'<br/>';							
-						}
-						
-						if($this->dataIn['inputUnidad']!=$dataInfo['ID_UNIDAD']){
-							$sModificaciones .= 'Se modifico la unidad<br/>';							
-						}	
-
-						$updated = $classObject->updateRowEmp($this->dataIn);
-						if($updated['status']){
-							$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
-							$sTipo		= $dataInfo['ID_TIPO'];
-							$sHorario	= $dataInfo['ID_HORARIO'];	
-							$sUnidad	= $dataInfo['ID_UNIDAD'];
-							$sSucursal  = $dataInfo['ID_SUCURSAL'];
-							$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];					
-
-							if($sModificaciones!=''){
-								$cHtmlMail->changeSolicitud($dataInfo,$this->view->dataUser);
+							$this->resultop = 'okRegister';
+							
+						}elseif($this->dataIn['bOperation']=='modify'){
+							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
+							$sHorarioLog  = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<b>Horario 2</b:'.$dataInfo['N_HORARIO2'].'<br/>': '';
+							
+							if($this->dataIn['inputHorario']!=$dataInfo['ID_HORARIO']){
+								$sModificaciones .= 'Se modifico el horario <br/>';							
+							}
+							
+							if($this->dataIn['inputPlace']!=$dataInfo['ID_SUCURSAL']){
+								$sModificaciones .= 'Se modifico el lugar de instalaci—n <br/>';							
+							}
+							
+							if($this->dataIn['inputFechaIn']!=$dataInfo['FECHA_CITA']){
+								$sModificaciones .= 'Se modifico la fecha de la cita <br/>';							
+							}						
+							
+							if($this->dataIn['inputComment']!=$dataInfo['COMENTARIO']){
+								$sModificaciones .= 'Comentario:'.$this->dataIn['inputComment'].'<br/>';						
+							}
+							
+							$updated = $classObject->updateRowEmp($this->dataIn);
+							if($updated['status']){
+								$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
+								$sTipo		= $dataInfo['ID_TIPO'];
+								$sHorario	= $dataInfo['ID_HORARIO'];	
+								$sUnidad	= $dataInfo['ID_UNIDAD'];
+								$sSucursal  = $dataInfo['ID_SUCURSAL'];
+								$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];							
+								
 								$aLog = Array ('idSolicitud' 	=> $this->idToUpdate,
 												'sAction' 		=> 'Cambio en la Solicitud',
 												'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones ,
 												'sOrigen'		=> 'USUARIO');
-								$cLog->insertRow($aLog);								
+								$cLog->insertRow($aLog);
+	
+								$cHtmlMail->changeSolicitud($dataInfo,$this->view->dataUser);
 							}
-						}
-						
-						$this->resultop = 'okRegister';		
-					}
+							$this->resultop = 'okRegister';
+						}else{	
+							if(isset($this->dataIn['inputUnidad'])){
+								$aDataUnit = $cUnidades->getData($this->dataIn['inputUnidad']);
+								$this->dataIn['inputInfo'] = "<b>Ult.reporte:</b> S/N<br/><b>Placas:</b>".$aDataUnit['PLACAS']."<br/><b>Eco:</b> ".$aDataUnit['ECONOMICO']."<br/><b>Ip:</b>".$aDataUnit['IDENTIFICADOR']."<br/><b>Tipo Equipo:</b>".$aDataUnit['TIPO_EQUIPO']."<br/><b>Tipo Unidad:</b>".$aDataUnit['TIPO_VEHICULO']."<br/>";								
+							}
+							
+							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
+							$sHorarioLog  = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<b>Horario 2</b:'.$dataInfo['N_HORARIO2'].'<br/>': '';						
+							
+							if($this->dataIn['inputHorario']!=$dataInfo['ID_HORARIO']){
+								$sModificaciones .= 'Se modifico el horario <br/>';							
+							}
+							
+							if($this->dataIn['inputPlace']!=$dataInfo['ID_SUCURSAL']){
+								$sModificaciones .= 'Se modifico el lugar de instalaci—n <br/>';							
+							}						
+							
+							if($this->dataIn['inputFechaIn']!=$dataInfo['FECHA_CITA']){
+								$sModificaciones .= 'Se modifico la fecha de la cita <br/>';							
+							}						
+							
+							if($this->dataIn['inputComment']!=$dataInfo['COMENTARIO']){
+								$sModificaciones .= 'Comentario:'.$this->dataIn['inputComment'].'<br/>';							
+							}
+							
+							if($this->dataIn['inputUnidad']!=$dataInfo['ID_UNIDAD']){
+								$sModificaciones .= 'Se modifico la unidad<br/>';							
+							}	
+	
+							$updated = $classObject->updateRowEmp($this->dataIn);
+							if($updated['status']){
+								$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
+								$sTipo		= $dataInfo['ID_TIPO'];
+								$sHorario	= $dataInfo['ID_HORARIO'];	
+								$sUnidad	= $dataInfo['ID_UNIDAD'];
+								$sSucursal  = $dataInfo['ID_SUCURSAL'];
+								$sTequipo	= $dataInfo['ID_TIPO_EQUIPO'];					
+	
+								if($sModificaciones!=''){
+									$cHtmlMail->changeSolicitud($dataInfo,$this->view->dataUser);
+									$aLog = Array ('idSolicitud' 	=> $this->idToUpdate,
+													'sAction' 		=> 'Cambio en la Solicitud',
+													'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones ,
+													'sOrigen'		=> 'USUARIO');
+									$cLog->insertRow($aLog);								
+								}
+							}
+							
+							$this->resultop = 'okRegister';		
+						}						
+					}else{
+						$this->errors['errorDate'] = 'errordate';
+					}					
 				}else{
 					$this->errors['status'] = 'no-info';
-				}	
+				}				
 			}
 			
     	    if($this->resultop=='okRegister'){
@@ -280,7 +303,10 @@ class leasing_RequestController extends My_Controller_Action
     			$dataInfo['ESTADO']			= $this->dataIn['inputEstado'];
     			$dataInfo['CP']				= $this->dataIn['inputCP'];
     			$sSucursal  				= $this->dataIn['inputPlace'];
-    			$sCliente					= $this->dataIn['inputCliente'];
+    			$sCliente					= $this->dataIn['inpuClienteEmp'];
+				$sHorario					= $this->dataIn['inputHorario'];	
+				$sUnidad					= $this->dataIn['inputUnidad'];
+				$sTequipo					= $this->dataIn['inputTequipo'];    			
 			}			
 			
 			$this->view->aClientes  = $cFunctions->selectDb($aClientes,$sCliente);
