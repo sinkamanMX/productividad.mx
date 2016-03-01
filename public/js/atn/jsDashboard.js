@@ -1,6 +1,7 @@
 var adataSource = [];
 
 $( document ).ready(function() {
+
     $(".gantt").gantt({
         source: adataSource,
         navigate: "scroll",
@@ -16,9 +17,9 @@ $( document ).ready(function() {
             /*alert("Empty space clicked - add an item!");*/
         },
         onRender: function() {
-            /*if (window.console && typeof console.log === "function") {
-                console.log("chart rendered");
-            }*/
+            //if (window.console && typeof console.log === "function") {
+            //    console.log("chart rendered");
+            //}
         }
     });
 

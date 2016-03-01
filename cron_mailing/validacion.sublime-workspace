@@ -475,6 +475,23 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/register/views/scripts/main/index.phtml",
+			"settings":
+			{
+				"buffer_size": 23324,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#*/1 * * * * root php /var/www/vhosts/taccsi.com/htdocs/public/wbs_pet/cron/aws_push/push_service_android.php > /dev/null 2>&1\n#*/1 * * * * root php /var/www/vhosts/taccsi.com/htdocs/public/wbs_pet/cron/aws_push/msg_checkMessage.php > /dev/null 2>&1\n#*/1 * * * * root php /var/www/vhosts/taccsi.com/htdocs/public/wbs_pet/cron/aws_push/msg_sendPush.php > /dev/null 2>&1",
+			"settings":
+			{
+				"buffer_size": 368,
+				"line_ending": "Unix",
+				"name": "#*/1 * * * * root php /var/www/vhosts/taccsi.com/h"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -858,8 +875,64 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/register/views/scripts/main/index.phtml",
+					"settings":
+					{
+						"buffer_size": 23324,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								286,
+								286
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"settings":
+					{
+						"buffer_size": 368,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								368,
+								368
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#*/1 * * * * root php /var/www/vhosts/taccsi.com/h",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

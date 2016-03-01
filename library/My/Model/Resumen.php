@@ -43,7 +43,9 @@ class My_Model_Resumen extends My_Db_Table
 	    			WHERE C.ID_ESTATUS NOT IN (1)
 	    			  AND C.FECHA_CITA BETWEEN CAST(DATE_SUB(NOW(), INTERVAL 10 DAY) AS DATE) AND  CAST(DATE_SUB(NOW(), INTERVAL -10 DAY) AS DATE)
 	    			/*GROUP BY T.ID_TPO, C.FECHA_CITA*/
-	    			ORDER BY C.FECHA_CITA ASC";
+	    			ORDER BY C.FECHA_CITA ASC
+	    			LIMIT 100";
+    	//Zend_Debug::dump($sql);
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			
