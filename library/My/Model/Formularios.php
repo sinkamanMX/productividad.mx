@@ -318,5 +318,31 @@ class My_Model_Formularios extends My_Db_Table
 		}	
         
 		return $result;			
-	}    
+	} 
+
+	/**
+	 * 
+	 * Actualiza un nuevo registro en la tabla de formularios
+	 * @param Array $aDataIn
+	 * @return Boolean Estatus de la operacion
+	 */
+    public function registerupdate($idObject,$idUser){
+        $result     = Array();
+        $result['status']  = false;
+        
+        $sql="UPDATE $this->_name			 
+				SET ID_USUARIO_MODIFICO	= ".$idUser.",
+					FECHA_MODIFICACION	= CURRENT_TIMESTAMP					
+				WHERE $this->_primary =".$idObject." LIMIT 1";
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;
+    }  	
 }

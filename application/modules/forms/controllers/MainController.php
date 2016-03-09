@@ -186,6 +186,7 @@ class forms_MainController extends My_Controller_Action
 					}
 					
 					if($iControlE==count($aValuesForm)){
+						$iUpdate	= $cFormularios->registerupdate($this->idToUpdate,$this->_dataUser['ID_USUARIO']);
 						$this->_resultOp = 'okRegister';						
 						$aElementos	  = $cFormularios->getElementos($this->idToUpdate,$this->_dataUser['ID_EMPRESA']);
 						$this->view->eventAction = true;
@@ -194,7 +195,7 @@ class forms_MainController extends My_Controller_Action
 				}
 			}	
 			
-			$this->view->aElements	= $this->processFields($aElementos);
+			$this->view->aElements	= $this->processFields($aElementos,$aDataInfo['TIPO_FORMULARIO']);
 			$this->view->aDataInfo 	= $aDataInfo;
 			$this->view->aTipoForm  = $cFunctions->cbo_from_array($this->arrayTipo,$sTipoForm);
 			$this->view->aEstatus	= $cFunctions->cboStatusString($aEstatus);
@@ -217,11 +218,12 @@ class forms_MainController extends My_Controller_Action
         }  	
 	} 
 	
-	public function processFields($aElements){
+	public function processFields($aElements,$tiFormulario){
 		$cFunctions 	= new My_Controller_Functions();
 		$cFormularios 	= new My_Model_Formularios();
 		$cTipos			= new My_Model_TipoFormularios();
-		$aTipos			= $cTipos->getCbo();
+		$sFiltro 		= ($tiFormulario=='S') ? 0 : 1;
+		$aTipos			= $cTipos->getCbo($sFiltro);
 		$aResult = Array();
 		
 		foreach($aElements as $key => $items){

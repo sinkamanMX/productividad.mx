@@ -14,7 +14,7 @@ class My_Model_TipoFormularios extends My_Db_Table
 	public function getCbo($iFilter=0){
 		$result= Array();
 		$this->query("SET NAMES utf8",false);
-		$iFilter = ($iFilter=0) ? ' WHERE MOSTRAR_SIAMES = 1 ' : ' WHERE MOSTRAR_MT = 1 ' ; 		
+		$iFilter = ($iFilter==0) ? ' WHERE MOSTRAR_SIAMES = 1 ' : ' WHERE MOSTRAR_MT = 1 ' ; 		
     	$sql ="SELECT $this->_primary AS ID, DESCRIPCION AS NAME 
     			FROM $this->_name 
     			$iFilter
