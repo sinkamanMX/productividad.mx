@@ -85,9 +85,7 @@ class atn_ServicesController extends My_Controller_Action
 			$this->view->showUsers			= $bShowUsers;
 			$this->view->aResume 			= $dataResume;
 			$this->view->iStatus			= $bStatus;
-			
 			unset($this->view->dataResume['TOTAL']);
-				
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                

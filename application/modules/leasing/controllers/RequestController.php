@@ -61,7 +61,7 @@ class leasing_RequestController extends My_Controller_Action
 			$idCliente		= $this->view->dataUser['ID_EMPRESA'];
 			$this->view->dataTable    = $cSolicitudes->getDataTablebyEmp($idCliente,'1,4');
 			$this->view->dataTableRev = $cSolicitudes->getDataTablebyEmp($idCliente,5);
-			$this->view->dataTableOk  = $cSolicitudes->getDataTablebyEmp($idCliente,2);
+			$this->view->dataTableOk  = $cSolicitudes->getDataTablebyEmp($idCliente,'2,6,7');
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                

@@ -63,7 +63,8 @@ $().ready(function() {
             inputComment    :      "required",
             inputHorario    :      "required",
             infoUnit        :      "required",
-            inputRevision   :      "required"
+            inputRevision   :      "required",
+            inputFolio      :      "required",
         },
         messages: {                          
             inputFechaIn    :      "Campo Requerido",        
@@ -71,7 +72,9 @@ $().ready(function() {
             inputComment    :      "Campo Requerido",
             inputHorario    :      "Campo Requerido",
             infoUnit        :      "Selecciona una unidad",
-            inputRevision   :      "Campo Requerido"
+            inputRevision   :      "Campo Requerido",
+            inputFolio      :      "Campo Requerido"
+
         },
         submitHandler: function(form) {
             form.submit();
@@ -129,4 +132,11 @@ function modifyFields(){
 
 function cancelModify(){
     location.reload();   
+}
+
+function closeSol(){
+    $("#optReg").val('close');
+    $("#closetxt").show('slow');
+    $(".closeBtun").hide('slow');
+    $("#btnCloseok").show('slow');
 }

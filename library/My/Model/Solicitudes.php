@@ -392,4 +392,54 @@ class My_Model_Solicitudes extends My_Db_Table
         
 		return $iTotal;	     	
     }
+    
+	public function getResumeByDay($dFechaIn,$dFechaFin,$idEmpresa=-1,$iEstatus=-1){
+		$result= Array();
+		$this->query("SET NAMES utf8",false);
+		$sCompany = ($idEmpresa==-1) ? '':' AND S.ID_EMPRESA  = '.$idEmpresa ;
+		$sEstatus = ($iEstatus==-1)  ? '':' AND S.ID_ESTATUS  = '.$iEstatus;
+		
+    	$sql ="SELECT S.*, T.DESCRIPCION AS N_TIPO, C.RAZON_SOCIAL AS N_CLIENTE, E.DESCRIPCION AS N_ESTATUS, CONCAT(H.HORA_INICIO,'-',H.HORA_FIN) AS N_HORARIO,
+				CONCAT(R.HORA_INICIO,'-',R.HORA_FIN) AS N_HORARIO2 , U.IDENTIFICADOR AS N_UNIDAD,
+				S.ID_ORIGEN, P.NOMBRE,S.FOLIO_SAP,
+				IF(C.RAZON_SOCIAL IS NULL,P.NOMBRE,C.RAZON_SOCIAL) AS  N_COMPANY,
+				CONCAT(S.CALLE,',',S.COLONIA,',',S.MUNICIPIO,',',S.ESTADO,',',S.CP) AS DIRECCION
+				FROM PROD_CITAS_SOLICITUD S
+				INNER JOIN PROD_TPO_CITA  T ON S.ID_TIPO = T.ID_TPO
+				LEFT JOIN PROD_CLIENTES  C ON S.ID_CLIENTE = C.ID_CLIENTE
+				INNER JOIN PROD_ESTATUS_SOLICITUD E ON S.ID_ESTATUS = E.ID_ESTATUS
+				INNER JOIN PROD_HORARIOS_CITA H ON S.ID_HORARIO     = H.ID_HORARIO_CITA
+				INNER JOIN PROD_UNIDADES      U ON S.ID_UNIDAD		= U.ID_UNIDAD
+				LEFT JOIN PROD_HORARIOS_CITA  R ON S.ID_HORARIO2    = R.ID_HORARIO_CITA						
+				LEFT JOIN EMPRESAS P ON S.ID_EMPRESA = P.ID_EMPRESA
+				WHERE CAST(FECHA_CITA  AS DATE) BETWEEN '$dFechaIn' AND '$dFechaFin'
+					$sCompany
+					$sEstatus";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;	
+	}  
+
+    public function updateClose($aData,$iEstatus){
+       	$result     = Array();
+        $result['status']  = false;
+                
+        $sql="UPDATE $this->_name SET
+        		ID_ESTATUS  =  ".$iEstatus.",
+        		FOLIO_SAP   = '".$aData['inputFolio']."'
+        		WHERE $this->_primary =".$aData['catId']." LIMIT 1";
+        try{            
+    		$query   = $this->query($sql,false);
+			if($query){
+				$result['status']  = true;					
+			}	
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+		return $result;
+    } 	
 }

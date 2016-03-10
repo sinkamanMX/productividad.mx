@@ -91,3 +91,13 @@ function getReportAll(){
   var url = "/leasing/services/exportall?optReg="+strOpt+"&inputFechaIn="+inputFecIn+"&inputFechaFin="+inputFecFin;
   window.open(url, '_blank');
 }
+/*
+function getReportAllAdmin(){
+  var inputFecIn  = $("#inputFechaIn").val();
+  var inputFecFin = $("#inputFechaFin").val(); 
+  var strOpt      = $("#optReg").val();
+  var strType     = $("#cboTypeSearch").val();
+
+  var url = "/atn/request/exportall?optReg="+strOpt+"&inputFechaIn="+inputFecIn+"&inputFechaFin="+inputFecFin+"&cboTypeSearch="+strType;
+  window.open(url, '_blank');
+}*/

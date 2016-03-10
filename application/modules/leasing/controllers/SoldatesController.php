@@ -57,6 +57,7 @@ class leasing_SoldatesController extends My_Controller_Action
 			
 			$this->view->dataTableEmp    = $cSolicitudes->getDataTable($this->view->dataUser['ID_EMPRESA'],'1,4');
 			$this->view->dataTableEmpOk  = $cSolicitudes->getDataTable($this->view->dataUser['ID_EMPRESA'],'2');
+			$this->view->dataTableEmpOk  = $cSolicitudes->getDataTable($this->view->dataUser['ID_EMPRESA'],'6,7');
         }catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
