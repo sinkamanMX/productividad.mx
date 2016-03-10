@@ -144,8 +144,7 @@ class main_MainController extends My_Controller_Action
     	
     }
     
-    public function validatemonitorAction()
-    {
+    public function validatemonitorAction(){    	
 		try{
 			$this->_helper->layout->disableLayout();
 			$this->_helper->viewRenderer->setNoRender();
@@ -162,7 +161,13 @@ class main_MainController extends My_Controller_Action
 	            		$answer = Array('answer' => 'pendings',
 	            						'notifs' => $aDataNotif);
 	            	}
-	        	}	
+	        	}else if($dataUser['ID_PERFIL']==19){
+	        		$aDataNotif= $cMailing->getNotificationsBroker($dataUser['ID_EMPRESA']);
+	            	if(count($aDataNotif)>0){
+	            		$answer = Array('answer' => 'pendings',
+	            						'notifs' => $aDataNotif);
+	            	}
+	        	}
 			}
 			
 	        echo Zend_Json::encode($answer);   			
@@ -181,12 +186,29 @@ class main_MainController extends My_Controller_Action
 			$aDataIn = $this->_request->getParams();			
 			$cMailing = new My_Model_Mailing();			
 			
-			if(isset($aDataIn['strInput']) && $aDataIn['strInput']!=""){
-				$sRead = $cMailing->readNotification($aDataIn);
+					
+			$sessions = new My_Controller_Auth();
+	        if($sessions->validateSession()){
+	        	$dataUser = $sessions->getContentSession();
+	        	$cMailing = new My_Model_Mailing();
+	        	$sRead = $cMailing->readNotification($aDataIn);	        	
 				if($sRead['status']){
-					$this->redirect('/atn/request/getinfo?catId='.$aDataIn['catId']);
-				}	
-			}		
+					if($dataUser['ID_PERFIL']==1 || $dataUser['ID_PERFIL']==2 || $dataUser['ID_PERFIL']==5 || $dataUser['ID_PERFIL']==3){
+						$cSolicitud = new My_Model_Soleasing();
+						$aDataInfo  = $cSolicitud->getDataEmp($aDataIn['catId']);
+						if($aDataInfo['ID_ORIGEN']==3){
+							$this->redirect('/atn/request/getinfoemp?catId='.$aDataIn['catId']);
+						}else{
+							$this->redirect('/atn/request/getinfo?catId='.$aDataIn['catId']);	
+						}							
+		        	}else if($dataUser['ID_PERFIL']==19){
+						$this->redirect('/leasing/soldates/getinfoemp?catId='.$aDataIn['catId']);
+		        	}			
+				}	        	
+
+			}			
+			
+		
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                

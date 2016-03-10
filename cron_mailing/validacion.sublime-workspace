@@ -479,7 +479,7 @@
 			"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/register/views/scripts/main/index.phtml",
 			"settings":
 			{
-				"buffer_size": 23324,
+				"buffer_size": 1877,
 				"line_ending": "Unix"
 			}
 		},
@@ -875,7 +875,6 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
 				{
@@ -883,15 +882,15 @@
 					"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/register/views/scripts/main/index.phtml",
 					"settings":
 					{
-						"buffer_size": 23324,
+						"buffer_size": 1877,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								286,
-								286
+								0,
+								0
 							]
 						],
 						"settings":

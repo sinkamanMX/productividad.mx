@@ -46,10 +46,11 @@ class My_Model_Mailing extends My_Db_Table
 		$this->query("SET NAMES utf8",false); 		
     	$sql ="SELECT C.COD_CLIENTE, M.ID_SOLICITUD AS ID,M.TITULO_MSG, M.FECHA_CREADO, M.ID_MAILING
 				FROM SYS_MAILING M
-				INNER JOIN PROD_CITAS_SOLICITUD S ON M.ID_SOLICITUD = S.ID_SOLICITUD
-				INNER JOIN PROD_CLIENTES        C ON S.ID_CLIENTE   = C.ID_CLIENTE
+				LEFT JOIN PROD_CITAS_SOLICITUD S ON M.ID_SOLICITUD = S.ID_SOLICITUD
+				LEFT JOIN PROD_CLIENTES        C ON S.ID_CLIENTE   = C.ID_CLIENTE
 				WHERE LIVE_NOTIFICATION = 1
-				  AND LEIDO      = 0
+				  AND LEIDO      		= 0
+				  AND S.ID_ESTATUS 		= 6
 				  ORDER BY M.FECHA_CREADO DESC";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -58,6 +59,30 @@ class My_Model_Mailing extends My_Db_Table
         
 		return $result;			
 	}
+	
+	public function getNotificationsBroker($idBroker){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT E.NOMBRE AS COD_CLIENTE, M.ID_SOLICITUD AS ID,M.TITULO_MSG, M.FECHA_CREADO, M.ID_MAILING    			
+				FROM SYS_MAILING M
+				LEFT JOIN PROD_CITAS_SOLICITUD S ON M.ID_SOLICITUD = S.ID_SOLICITUD
+				INNER JOIN EMPRESAS  E ON S.ID_EMPRESA = E.ID_EMPRESA
+				WHERE S.ID_EMPRESA IN								
+					(
+					SELECT ID_EMPRESA 
+					FROM EMPRESAS 
+					WHERE ID_BROKER = ".$idBroker.") 
+				  AND M.LIVE_NOTIFICATION 	= 1
+				  AND M.LEIDO      			= 0
+				  AND S.ID_ESTATUS 			IN (1,4)
+				  ORDER BY M.FECHA_CREADO DESC";    	
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}
+        
+		return $result;			
+	}	
 	
     public function readNotification($data){
        $result     = Array();

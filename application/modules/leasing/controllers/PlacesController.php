@@ -1,7 +1,7 @@
 <?php
-class leasing_BranchesController extends My_Controller_Action
+class leasing_PlacesController extends My_Controller_Action
 {		
-	protected $_clase = 'mbranches';	
+	protected $_clase = 'mplaces';	
 	public $validateNumbers;
 	public $validateAlpha;
 	
@@ -56,7 +56,7 @@ class leasing_BranchesController extends My_Controller_Action
     public function indexAction(){
     	try{
 	    	$this->view->mOption = 'branches';			
-			$cClassObject      = new My_Model_Sucursales();
+			$cClassObject      = new My_Model_Lugares();
 			
 			$this->view->datatTable = $cClassObject->getDataTable($this->_dataUser['ID_EMPRESA']);
 		} catch (Zend_Exception $e) {
@@ -69,7 +69,7 @@ class leasing_BranchesController extends My_Controller_Action
     	try{
 			$aDataInfo 	 = Array();
 			$sEstatus    = 1;
-			$classObject = new My_Model_Sucursales();
+			$classObject = new My_Model_Lugares();
 			$cFunctions  = new My_Controller_Functions();
 			$cClientes	 = new My_Model_Clientesint();
 			$aClientes	 = $cClientes->getCbo($this->_dataUser['ID_EMPRESA']);
@@ -88,7 +88,7 @@ class leasing_BranchesController extends My_Controller_Action
 					$this->_idUpdate = $insert['id'];
 					$this->resultop  = 'okRegister';	
 					$aDataInfo       = $classObject->getData($this->_idUpdate);
-					$this->_redirect('/leasing/branches/index');
+					$this->_redirect('/leasing/places/index');
 				}else{
 					$this->errors['status'] = 'no-insert';
 				}
@@ -99,7 +99,7 @@ class leasing_BranchesController extends My_Controller_Action
 					 if($updated['status']){
 					 	$aDataInfo    = $classObject->getData($this->_idUpdate);
 					 	$this->_resultOp = 'okRegister';	
-					 	$this->_redirect('/leasing/branches/index');
+					 	$this->_redirect('/leasing/places/index');
 					 }
 				}else{
 					$this->errors['status'] = 'no-info';

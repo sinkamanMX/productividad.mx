@@ -1,7 +1,7 @@
 <?php $this->headScript()->appendFile('/js/modules/branches/validatebranches.js') ?>   
 <?php $disabled = ($this->dataUser['EDITAR']==0 && $this->dataUser['LECTURA']==1) ? 'disabled':'';?>
 <div class="row panel-data">
-    <input id="hRefLinkMain" type="hidden" value="/leasing/branches/index" />
+    <input id="hRefLinkMain" type="hidden" value="/leasing/places/index" />
 	<div class="span12">
 		<!-- block -->
         <div class="block">
@@ -22,7 +22,7 @@
 					<?php else:?>	
 					<!-- BEGIN FORM-->
 					<?php if($disabled!='disabled'):?>
-					<form method="POST" action="/leasing/branches/getinfo" id="FormData" class="form-horizontal ">
+					<form method="POST" action="/leasing/places/getinfo" id="FormData" class="form-horizontal ">
 					<?php endif;?>	
 		                <input type="hidden" id="optReg" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
 		                <input type="hidden" name="catId" value="<?php echo $this->catId; ?>" />
@@ -35,7 +35,6 @@
 		                	<fieldset>
                 				<div class="span12 no-margin-left">
 			                		<div class="span6">
-			                			<!--
 										<div class="control-group">
 											<label class="control-label">Cliente<span class="required">*</span></label>
 											<div class="controls">
@@ -43,7 +42,7 @@
 													<?php echo $this->aClientes; ?>
 												</select>
 											</div>
-										</div>	-->
+										</div>	
 			                		</div>
 									<div class="span6">
 										<div class="control-group">
@@ -169,7 +168,7 @@
 									</div>
 
 									<div class="form-actions text-right">
-										<a href="/leasing/branches/index">
+										<a href="/leasing/places/index">
 											<button type="button" class="btn">Cancelar</button>
 										</a>
 										<button type="submit" class="btn btn-primary">Guardar</button>

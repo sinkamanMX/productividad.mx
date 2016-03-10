@@ -42,7 +42,14 @@ $().ready(function() {
             inputEstado     :      "required",
             inputCP         :      "required",
             inputDescripcion:      "required",
-            inpuClienteEmp  :      "required"
+            inpuClienteEmp  :      "required",
+
+            inputPlacas : "required",
+            inputIden   : "required",
+            inputColor  : "required",
+            inputAnio   : "required",
+            inputMarca  : "required",
+            inputModelo : "required"            
         },
         messages: {                          
             inputFechaIn    :      "Campo Requerido",        
@@ -58,7 +65,15 @@ $().ready(function() {
             inputEstado     :      "Campo Requerido",
             inputCP         :      "Campo Requerido",
             inputDescripcion:      "Campo Requerido",
-            inpuClienteEmp  :      "Campo Requerido"
+            inpuClienteEmp  :      "Campo Requerido",
+
+            inputMarca  : "Campo Requerido",
+            inputModelo : "Campo Requerido",
+            inputPlacas : "Campo Requerido",
+            inputIden   : "Campo Requerido",
+            inputColor  : "Campo Requerido",
+            inputAnio   : "Campo Requerido"        
+
         },
         submitHandler: function(form) {
             form.submit();
@@ -98,6 +113,12 @@ $().ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();  
 
+    $("#inputMarca").rules("remove", "required");   
+    $("#inputModelo").rules("remove", "required");   
+    $("#inputPlacas").rules("remove", "required");   
+    $("#inputIden").rules("remove", "required");   
+    $("#inputColor").rules("remove", "required");   
+    $("#inputAnio").rules("remove", "required");   
 });
 
 function backToMain(){
@@ -157,6 +178,38 @@ function newdireccion(inputValue){
             getInfoDir(inputValue);
         }
     }
+}
+
+function newCar(inputValue){    
+    if(inputValue=="-1"){
+        $("#inputMarca").val("");        
+        $("#inputModelo").val("");
+        $("#inputPlacas").val("");
+        $("#inputIden").val("");
+        $("#inputColor").val("");
+        $("#inputAnio").val("");
+        $("#divCarNew").show('slow'); 
+        $("#inputMarca").rules("add",  {required:true});  
+        $("#inputModelo").rules("add",  {required:true});  
+        $("#inputPlacas").rules("add",  {required:true});  
+        $("#inputIden").rules("add",  {required:true});  
+        $("#inputColor").rules("add",  {required:true});  
+        $("#inputAnio").rules("add",  {required:true});  
+    }else{
+        $("#inputMarca").rules("remove", "required");   
+        $("#inputModelo").rules("remove", "required");   
+        $("#inputPlacas").rules("remove", "required");   
+        $("#inputIden").rules("remove", "required");   
+        $("#inputColor").rules("remove", "required");   
+        $("#inputAnio").rules("remove", "required");           
+        $("#divCarNew").hide('slow'); 
+        $("#inputMarca").val("");        
+        $("#inputModelo").val("");
+        $("#inputPlacas").val("");
+        $("#inputIden").val("");
+        $("#inputColor").val("");
+        $("#inputAnio").val("");       
+    }    
 }
 
 function getInfoDir(inputIdValue){
@@ -226,16 +279,23 @@ function searchUnits(idClient){
                 oprDb : 'searchUnits' },
         success: function(data) { 
             $("#divUnidad").html("");
-            var dataCbo = '<select class=" m-wrap " id="inputUnidad" name="inputUnidad">';
+            var dataCbo = '<select class=" m-wrap " id="inputUnidad" name="inputUnidad" onChange="newCar(this.value);" >';
             if(data!="no-info"){
-                dataCbo += '<option value="">Seleccionar una opción</option>'+data+'</select>';
+                dataCbo += '<option value="">Seleccionar una opción</option>'+data+'<option value="-1">Otro</option> </select></select>';
             }else{
-                dataCbo += '<option value="">Sin Información</option>';
+                dataCbo += '<option value="">Sin Información</option><option value="-1">Otro</option>';
             }
             dataCbo += '</select>';
 
             $("#divUnidad").html(dataCbo);            
-            $(".chosen-select").chosen({disable_search_threshold: 10});
+            $(".chosen-select").chosen({disable_search_threshold: 10});            
+            $("#divCarNew").hide('slow'); 
+            $("#inputMarca").val("");        
+            $("#inputModelo").val("");
+            $("#inputPlacas").val("");
+            $("#inputIden").val("");
+            $("#inputColor").val("");
+            $("#inputAnio").val("");
             searchPlaces(idClient);
         }
     }); 
@@ -261,7 +321,8 @@ function searchPlaces(idClient){
 
             $("#divLugares").html(dataCbo);            
             $(".chosen-select").chosen({disable_search_threshold: 10});
-            
+            $("#divSaveDir").hide('slow');   
+            $("#divDireNew").hide('slow'); 
         }
     });     
 }

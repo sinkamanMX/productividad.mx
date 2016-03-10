@@ -64,11 +64,11 @@
                                   <div>Ocurrio un error con su clave de cliente,favor de contactar al administrador del sistema</div>
                                 </div>  
                             <?php endif;?>      
-                            <?php if(@$this->errors['no-units']):?>
+                            <?php if(count($this->aClientes)==0):?>
                                 <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
                                   <button type="button" class="close" data-dismiss="alert">×</button>
                                   <h4>Error</h4>
-                                  <div>No cuenta con unidades registradas,favor de contactar al administrador del sistema</div>
+                                  <div>No se han registrado Clientes,agregue uno primero para solicitar una cita.</div>
                                 </div>  
                             <?php endif;?> 
                             <?php if(@$this->errors['errorDate']):?>
@@ -158,29 +158,16 @@
                                                 </div>
                                             </div>                                             
                                             <div class="span6">
-                                                <div class="control-group">
-                                                    <label class="control-label">Unidad<span class="required">*</span></label>
-                                                    <div class="controls">
-                                                        <div id="divUnidad" class="span8">
-                                                            <select class="m-wrap class="span4 m-wrap"" name="inputUnidad" id="inputUnidad" <?php echo $disabled;?> >
-                                                                <option value="">Seleccionar una opción</option>
-                                                                <?php echo $this->aUnidades;?>
-                                                            </select>
-                                                            <?php if($this->idToUpdate ==-1 || $showOpts=='block'):?>
-                                                                <!--<button id="bntSearchUnit" class="btn" ><i class="icon-search"></i></button>-->
-                                                            <?php endif;?>                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>                
+                                                                                                                  
                                             </div>                                             
                                         </div>                                         
                                         <div class="row row-margin-left25">    
                                             <div class="span6">
                                                 <div class="control-group">
-                                                    <label class="control-label">Lugar de Instalación<span class="required">*</span></label>
+                                                    <label class="control-label">Lugar<span class="required">*</span></label>
                                                     <div class="controls">
                                                         <div id="divLugares">
-                                                            <select onChange="newdireccion(this.value);" class="m-wrap" name="inputPlace" id="inputPlace" <?php echo $disabled;?> >
+                                                            <select onChange="newdireccion(this.value);" class="m-wrap" name="inputPlace" id="inputPlace" <?php echo $disabled;?>  >
                                                                 <option value="">Seleccionar una opción</option>
                                                                 <?php echo $this->aSucursales;?>                                                                
                                                             </select>
@@ -189,7 +176,7 @@
                                                 </div> 
                                                 <div id="divDireNew" style="display:<?php echo ($this->catId>-1) ? 'block':'none' ;?>">
                                                     <div id="infoUnit"></div>
-                                                    <div class="span12">
+                                                    <div class="span12 no-margin-left">
                                                         <div class="control-group">
                                                             <label class="control-label">Calle<span class="required">*</span></label>
                                                             <div class="controls">
@@ -268,22 +255,90 @@
                                                             </div>
                                                         </div>  
                                                     </div>
-
-
                                                 </div>
                                             </div>
+                                            <div class="span6">
+                                                <div class="control-group">
+                                                    <label class="control-label">Unidad<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <?php if($this->idToUpdate==-1):?>
+                                                            <div id="divUnidad" class="span8">
+                                                                <select class="m-wrap class="span4 m-wrap"" name="inputUnidad" id="inputUnidad" <?php echo $disabled;?> onChange="newCar(this.value);" >
+                                                                    <option value="">Seleccionar una opción</option>
+                                                                    <?php echo $this->aUnidades;?>
+                                                                </select>
+                                                                <?php if($this->idToUpdate ==-1 || $showOpts=='block'):?>
+                                                                    <!--<button id="bntSearchUnit" class="btn" ><i class="icon-search"></i></button>-->
+                                                                <?php endif;?>                                                            
+                                                            </div>
+                                                        <?php else:?>
+                                                            <div id="infoUnit" name="infoUnit"><?php echo @$this->data['INFORMACION_UNIDAD']; ?></div>
+                                                            <textarea name="inputInfo" id="inputInfo" rows="5" class="hide"><?php echo @$this->data['INFORMACION_UNIDAD']; ?></textarea>                                                     
+                                                        <?php endif;?>
+                                                    </div>
+                                                </div>
+                                                 <div id="divCarNew" style="display:none;?>">
+                                                    <div id="infoUnit"></div>
+                                                    <div class="span12 no-margin-left">
+                                                        <div class="control-group">
+                                                            <label class="control-label">Marca<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <select class="span8 m-wrap" name="inputMarca" id="inputMarca" <?php echo $disabled;?>  onChange="getoptionsCbo('Modelo','modeloa',this.value,'','');">
+                                                                    <option value="">Seleccionar una opción</option>
+                                                                    <?php echo $this->aMarcas;?>
+                                                                </select>
+                                                            </div>
+                                                        </div>  
+                                                        <div class="control-group">
+                                                            <label class="control-label">Modelo<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <div id="divModelo">
+                                                                    <select class="span8 m-wrap" name="inputModelo" id="inputModelo" <?php echo $disabled;?> >
+                                                                        <option value="">Seleccionar una opción</option>
+                                                                        <?php echo $this->aModelos;?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>                              
+                                                        <div class="control-group">
+                                                            <label class="control-label">Color<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <select class="span8 m-wrap" id="inputColor" name="inputColor" <?php echo $disabled;?> >
+                                                                    <?php echo $this->sColores; ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>  
+                                                        <div class="control-group">
+                                                            <label class="control-label">Año<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <select class="span8 m-wrap" id="inputAnio" name="inputAnio" <?php echo $disabled;?> >
+                                                                    <?php echo $this->sAnios; ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>                              
+                                                        <div class="control-group">
+                                                            <label class="control-label">Placas<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input name="inputPlacas" id="inputPlacas" type="text" class="span8 m-wrap upperClass" value="<?php echo @$this->data['PLACAS']; ?>" <?php echo $disabled;?> >
+                                                            </div>
+                                                        </div>
+                                                        <div class="control-group">
+                                                            <label class="control-label">No. serie<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input name="inputIden" id="inputIden" type="text" class="span8 m-wrap upperClass" value="<?php echo @$this->data['IDENTIFICADOR']; ?>" <?php echo $disabled;?> >
+                                                            </div>
+                                                        </div>                                                        
+                                                    </div>
+                                                </div> 
+                                        </div>
+                                        <div class="row row-margin-left25">    
                                             <div class="span6">
                                                 <div class="control-group">
                                                     <label class="control-label">Comentarios<span class="required">*</span></label>
                                                     <div class="controls">
                                                         <textarea name="inputComment" id="inputComment" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['COMENTARIO']; ?></textarea>
                                                     </div>
-                                                </div>                                          
-                                            </div> 
-
-                                        </div>
-                                        <div class="row row-margin-left25">    
-                                            <div class="span6">
+                                                </div>                                                      
                                                 <!--
                                                 <div class="control-group">
                                                     <label class="control-label">Lugar de Instalación<span class="required">*</span></label>

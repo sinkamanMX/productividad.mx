@@ -5,11 +5,11 @@
  * @author epena
  * @package library.My.Models
  */
-class My_Model_Sucursales extends My_Db_Table
+class My_Model_Lugares extends My_Db_Table
 {
     protected $_schema 	= 'gtp_bd';
-	protected $_name 	= 'SUCURSALES';
-	protected $_primary = 'ID_SUCURSAL';
+	protected $_name 	= 'PROD_LUGARES';
+	protected $_primary = 'ID_LUGAR';
 	
 	public function getCbobyEmp($idObject){
 		$result= Array();
@@ -40,6 +40,7 @@ class My_Model_Sucursales extends My_Db_Table
 		return $result;
 	}   	
 	
+	/*
 	public function getFilterSucursales($description,$idEmpresa){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 
@@ -47,8 +48,8 @@ class My_Model_Sucursales extends My_Db_Table
 				FROM GTP_CLIENTES
 				WHERE ID_SUCURSAL 
 				IN (
-					SELECT ID_SUCURSAL
-					FROM SUCURSALES 
+					SELECT ID_LUGAR
+					FROM PROD_LUGARES 
 					WHERE DESCRIPCION LIKE '%".$description."%' AND ID_EMPRESA = ".$idEmpresa."
 				)";    
 		$query   = $this->query($sql);
@@ -57,7 +58,7 @@ class My_Model_Sucursales extends My_Db_Table
 		}
         
 		return $result;   		
-	}	
+	}	*/
 	
     public function insertRowRegister($data){
         $result     = Array();
@@ -186,7 +187,8 @@ class My_Model_Sucursales extends My_Db_Table
         			MUNICIPIO		= '".$aData['inputMunicipio']."',    
         			ESTADO			= '".$aData['inputEstado']."',    
         			CP				= '".$aData['inputCP']."',
-        			EMAIL_CONTACTO	= '".$aData['inputMail']."',        			
+        			EMAIL_CONTACTO	= '".$aData['inputMail']."',
+        			ID_EMP_CLIENTE	=  ".$aData['inputCliente'].",        			
         			ESTATUS			=  ".$aData['inputEstatus']."
 				WHERE $this->_primary   = ".$idObject;
         try{            
@@ -220,6 +222,7 @@ class My_Model_Sucursales extends My_Db_Table
         			CP				= '".$aData['inputCP']."',
         			ESTATUS			=  ".$aData['inputEstatus'].",
         			EMAIL_CONTACTO	= '".$aData['inputMail']."',
+        			ID_EMP_CLIENTE	=  ".$aData['inputCliente'].",
 					FECHA_CREADO    = CURRENT_TIMESTAMP";
         try{            
     		$query   = $this->query($sql,false);
@@ -240,8 +243,9 @@ class My_Model_Sucursales extends My_Db_Table
     public function getDataTable($idObject){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT S.*
-				FROM SUCURSALES S
+    	$sql ="SELECT S.*, C.NOMBRE AS N_CLIENTE
+				FROM PROD_LUGARES S
+				INNER JOIN EMP_CLIENTES C ON S.ID_EMP_CLIENTE = C.ID_EMP_CLIENTE
 				WHERE S.ID_EMPRESA = $idObject
 				ORDER BY S.DESCRIPCION";
 		$query   = $this->query($sql);

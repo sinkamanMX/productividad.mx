@@ -80,6 +80,7 @@ class leasing_UsersController extends My_Controller_Action
     	    if($this->idToUpdate >-1){
     	    	$dataInfo	= $classObject->getData($this->idToUpdate);
     	    	$sEstatus	= $dataInfo['ACTIVO'];
+				$sSucursales=$dataInfo['ID_SUCURSAL'];    	    	
 			}
 			
 			if($this->operation=='update'){	  		
@@ -95,7 +96,9 @@ class leasing_UsersController extends My_Controller_Action
 						$updated = $classObject->updateRow($this->dataIn);
 						 if($updated['status']){	
 					 		$dataInfo    	= $classObject->getData($this->idToUpdate);			    	    	
-			    	    	$sEstatus		= $dataInfo['ACTIVO'];											 	
+			    	    	$sEstatus		= $dataInfo['ACTIVO'];	
+							$sSucursales=$dataInfo['ID_SUCURSAL'];
+			    	    	
 					 		$this->resultop = 'okRegister';
 						 }
 					 }else{
@@ -118,7 +121,8 @@ class leasing_UsersController extends My_Controller_Action
 			 		if($insert['status']){
 			 			$this->idToUpdate = $insert['id'];
 				 		$dataInfo    	= $classObject->getData($this->idToUpdate);
-		    	    	$sEstatus		= $dataInfo['ACTIVO'];			 		
+		    	    	$sEstatus		= $dataInfo['ACTIVO'];
+						$sSucursales    = $dataInfo['ID_SUCURSAL'];		    	    				 		
 				 		$this->resultop = 'okRegister';
 					}else{
 						$this->errors['status'] = 'no-insert';
@@ -159,7 +163,7 @@ class leasing_UsersController extends My_Controller_Action
 			$this->view->resultOp   = $this->resultop;
 			$this->view->catId		= $this->idToUpdate;
 			$this->view->idToUpdate = $this->idToUpdate;
-				    		
+			$this->view->aSucursales = $cFunctions->selectDb($aSucursales,$sSucursales);				    		
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                

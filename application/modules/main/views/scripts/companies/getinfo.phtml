@@ -187,15 +187,19 @@
 												</div>												                			
 					                		</div>
 					                		<div class="span4">
-												<div class="control-group">
-												<label class="control-label"># Cliente SAP:<span class="required"></span></label>
+					                			<div class="control-group">
+												<?php if($this->dataUser['ID_PERFIL']!=19): ?>
+													<label class="control-label"># Cliente SAP:<span class="required"></span></label>
 													<div class="controls">
 													  <input id="inputSap" name="inputSap" type="text" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['COD_CLIENTE']; ?>">
 													</div>
+                                        		<?php else:?>
+                                        			<input id="inputSap" name="inputSap" type="hidden" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->dataUser['COD_CLIENTE']; ?>">
+                                    			<?php endif;?>  					                														
 												</div>													                			
-					                		</div>				                		
+					                		</div>
 				                	</div>	
-				                	<div class="span12 no-margin-left" style="display:<?php echo ($this->_dataUser['ID_PERFIL']==19) ? 'none': 'block';?>">
+				                	<div class="span12 no-margin-left" style="display:<?php echo ($this->dataUser['ID_PERFIL']==19) ? 'none': 'block';?>">
 				                		<div class="span4">
 											<div class="control-group">
 												<label class="control-label">Técnicos Asignados :<span class="required"></span></label>

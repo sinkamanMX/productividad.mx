@@ -198,5 +198,21 @@ class My_Model_Empresas extends My_Db_Table
 		}	
         
 		return $result;	    	
+    }
+
+    public function getDataByCode($idObject){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 
+    	$sql ="SELECT GROUP_CONCAT(U.`USUARIO` SEPARATOR ',')  AS N_MAILS
+				FROM USUARIOS U
+				INNER JOIN USR_EMPRESA R ON U.`ID_USUARIO` = R.`ID_USUARIO`
+				INNER JOIN SUCURSALES  S ON R.`ID_SUCURSAL`= S.`ID_SUCURSAL`
+				WHERE S.ID_EMPRESA = $idObject";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query[0]['N_MAILS'];			
+		}	
+        
+		return $result;	    	
     }	    
 }

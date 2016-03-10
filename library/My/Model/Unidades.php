@@ -222,9 +222,9 @@ class My_Model_Unidades extends My_Db_Table
 			  		ID_CLIENTE		= -1 ,
 			  		ID_EMP_CLIENTE	= ".$data['inputCliente'].",
 			  		ID_MODELO		= ".$data['inputModelo'].",
-			  		ECONOMICO		='".$data['inputEco']."', 
+			  		ECONOMICO		='".@$data['inputEco']."', 
 			  		PLACAS			='".$data['inputPlacas']."',
-			  		IDENTIFICADOR	='".$data['inputIden']."',
+			  		IDENTIFICADOR	='".@$data['inputIden']."',
 			  		ANIO			='".$data['inputAnio']."',
 			  		ID_COLOR		= ".$data['inputColor'].",
 			  		REGISTRADO		= CURRENT_TIMESTAMP";
@@ -281,7 +281,7 @@ class My_Model_Unidades extends My_Db_Table
 	public function getCboByEmpCliente($idObject){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT $this->_primary AS ID, IDENTIFICADOR AS NAME 
+    	$sql ="SELECT $this->_primary AS ID, PLACAS AS NAME 
     			FROM $this->_name 
     			WHERE ID_EMP_CLIENTE = $idObject ORDER BY NAME ASC";
 		$query   = $this->query($sql);

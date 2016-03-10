@@ -140,7 +140,7 @@ class atn_RequestController extends My_Controller_Action
 											'sAction' 		=> 'Solicitud Aceptada',
 											'sDescripcion' 	=> 'La solicitud ha sido aceptada por CCUDA',
 											'sOrigen'		=> 'CCUDA');
-							$cLog->insertRow($aLog);											
+							$cLog->insertRow($aLog);
 						}else{
 							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
 							$cHtmlMail->changeSolicitudExt($dataInfo,$this->view->dataUser);
