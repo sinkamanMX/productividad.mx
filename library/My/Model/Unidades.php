@@ -86,13 +86,16 @@ class My_Model_Unidades extends My_Db_Table
 		return $result;	    	
     }  
 
-	public function getUnidades($idObject){
+	public function getUnidades($idObject,$idSucursal){
 		$result= Array();
-		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT U.*, C.NOMBRE  AS N_CLIENTE
+		$this->query("SET NAMES utf8",false);
+		$sFilter = ($idSucursal!=-1) ? ' AND U.ID_SUCURSAL = '.$idSucursal: '';		 		
+    	$sql ="SELECT U.*, C.NOMBRE  AS N_CLIENTE,S.DESCRIPCION AS N_SUCURSAL
 				FROM PROD_UNIDADES U
+				INNER JOIN SUCURSALES 	S ON S.ID_SUCURSAL    = U.ID_SUCURSAL
 				INNER JOIN EMP_CLIENTES C ON U.ID_EMP_CLIENTE = C.ID_EMP_CLIENTE
 				WHERE U.ID_EMPRESA = $idObject
+				$sFilter
 				ORDER BY U.PLACAS ASC";    	
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -227,6 +230,7 @@ class My_Model_Unidades extends My_Db_Table
 			  		IDENTIFICADOR	='".@$data['inputIden']."',
 			  		ANIO			='".$data['inputAnio']."',
 			  		ID_COLOR		= ".$data['inputColor'].",
+			  		ID_SUCURSAL		= ".$data['inputSucursal'].",
 			  		REGISTRADO		= CURRENT_TIMESTAMP";
         try{            
     		$query   = $this->query($sql,false);

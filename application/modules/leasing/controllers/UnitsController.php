@@ -10,6 +10,7 @@ class leasing_UnitsController extends My_Controller_Action
 	public $errors = Array();
 	public $operation='init';
 	public $resultop=null;	
+	public $_dataUser;	
 		
     public function init()
     {
@@ -21,6 +22,7 @@ class leasing_UnitsController extends My_Controller_Action
             $this->_redirect('/');		
 		}
 		$this->view->dataUser   = $sessions->getContentSession();
+		$this->_dataUser        = $sessions->getContentSession();
 		$this->view->modules    = $perfiles->getModules($this->view->dataUser['ID_PERFIL']);
 		$this->view->moduleInfo = $perfiles->getDataModule($this->_clase);
 		
@@ -54,7 +56,8 @@ class leasing_UnitsController extends My_Controller_Action
     	try{
 	    	$this->view->mOption = 'units';
 			$classObject = new My_Model_Unidades(); 
-			$this->view->datatTable = $classObject->getUnidades($this->view->dataUser['ID_EMPRESA']);
+			$iSucursal				= ($this->_dataUser['ID_PERFIL']==20) ?  $this->_dataUser['ID_SUCURSAL'] : '-1';
+			$this->view->datatTable = $classObject->getUnidades($this->view->dataUser['ID_EMPRESA'],$iSucursal);
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -69,12 +72,14 @@ class leasing_UnitsController extends My_Controller_Action
 			$functions	= new My_Controller_Functions();
 			$cColores	= new My_Model_Colores();
 			$cMarcas 	= new My_Model_Activosmarcas();
-			$cModelos 	= new My_Model_Activosmodelos();
+			$cModelos 	= new My_Model_Activosmodelos();			
 			$cClientes	 = new My_Model_Clientesint();
 			
 			$aColores	= $cColores->getCbo();
 			$aMarcas	= $cMarcas->getCbo();
-			$aClientes	= $cClientes->getCbo($this->view->dataUser['ID_EMPRESA']);
+			$iSucursal	 = ($this->_dataUser['ID_PERFIL']==20) ?  $this->_dataUser['ID_SUCURSAL'] : '-1';
+			$this->dataIn['inputSucursal'] = $iSucursal;
+			$aClientes	= $cClientes->getCbo($this->view->dataUser['ID_EMPRESA'],$iSucursal);		
 			$sCliente	= '';			
 			$sModelo	= '';
 			$sColor		= '';
