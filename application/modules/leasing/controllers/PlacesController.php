@@ -57,8 +57,8 @@ class leasing_PlacesController extends My_Controller_Action
     	try{
 	    	$this->view->mOption = 'branches';			
 			$cClassObject      = new My_Model_Lugares();
-			
-			$this->view->datatTable = $cClassObject->getDataTable($this->_dataUser['ID_EMPRESA']);
+			$iSucursal				= ($this->_dataUser['ID_PERFIL']==20) ?  $this->_dataUser['ID_SUCURSAL'] : '-1';
+			$this->view->datatTable = $cClassObject->getDataTable($this->_dataUser['ID_EMPRESA'],$iSucursal);
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -72,7 +72,9 @@ class leasing_PlacesController extends My_Controller_Action
 			$classObject = new My_Model_Lugares();
 			$cFunctions  = new My_Controller_Functions();
 			$cClientes	 = new My_Model_Clientesint();
-			$aClientes	 = $cClientes->getCbo($this->_dataUser['ID_EMPRESA']);
+			$iSucursal	 = ($this->_dataUser['ID_PERFIL']==20) ?  $this->_dataUser['ID_SUCURSAL'] : '-1';
+			$this->_dataIn['inputSucursal'] = $iSucursal; 
+			$aClientes	 = $cClientes->getCbo($this->_dataUser['ID_EMPRESA'],$iSucursal);
 			$sCliente	 = '';
 			
 			$this->_dataIn['inputEmpresa'] = $this->view->idEmpresa;			

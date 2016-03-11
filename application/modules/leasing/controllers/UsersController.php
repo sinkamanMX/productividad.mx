@@ -112,8 +112,7 @@ class leasing_UsersController extends My_Controller_Action
 				$this->dataIn['inputOperaciones'] 	= 0;
 				$this->dataIn['inputIdAlm'] 		= ""; 
 				$this->dataIn['inputIdSap'] 		= "";
-				$this->dataIn['inputSucursal']		= $this->view->dataUser['ID_SUCURSAL'];
-				$this->dataIn['inputPerfil']		= $this->view->dataUser['ID_PERFIL'];				
+				$this->dataIn['inputPerfil']		= 20;				
 				$validateUser = $classObject->validateData($this->dataIn['inputUsuario'],-1,'user');
 				 if($validateUser){
 				 	$insert = $classObject->insertRow($this->dataIn);

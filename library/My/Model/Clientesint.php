@@ -11,12 +11,15 @@ class My_Model_Clientesint extends My_Db_Table
 	protected $_name 	= 'EMP_CLIENTES';
 	protected $_primary = 'ID_EMP_CLIENTE';
 	
-	public function getDataTables($idCliente){
+	public function getDataTables($idCliente,$iSucursal=-1){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT *
+		$sFilter = ($iSucursal>-1) ? ' AND C.ID_SUCURSAL = '.$iSucursal: '';
+    	$sql ="SELECT C.*, S.DESCRIPCION AS N_SUCURSAL
 				FROM EMP_CLIENTES C
+				INNER JOIN SUCURSALES S ON C.ID_SUCURSAL = S.ID_SUCURSAL
 				WHERE C.ID_EMPRESA = ".$idCliente."
+				$sFilter
 				ORDER BY C.NOMBRE ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
@@ -50,6 +53,7 @@ class My_Model_Clientesint extends My_Db_Table
         			RFC				= '".$data['inputRFC']."',
         		 	RAZON_SOCIAL	= '".$data['inputRazonSocial']."',
 				  	ESTATUS			=  ".$data['inputEstatus'].",
+				  	ID_SUCURSAL		=  ".$data['inputSucursal'].",
 				  	FECHA_REGISTRO	= CURRENT_TIMESTAMP";
         try{            
     		$query   = $this->query($sql,false);
@@ -89,12 +93,14 @@ class My_Model_Clientesint extends My_Db_Table
 		return $result;	      	
     } 
     
-	public function getCbo($idEmpresa){
+	public function getCbo($idEmpresa,$iSucursal=-1){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
+		$sFilter = ($iSucursal>-1) ? ' AND ID_SUCURSAL = '.$iSucursal : '';		
     	$sql ="SELECT ID_EMP_CLIENTE AS ID, NOMBRE AS NAME
 				FROM $this->_name
 				WHERE ID_EMPRESA = ".$idEmpresa."
+				$sFilter
 				ORDER BY NOMBRE ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){

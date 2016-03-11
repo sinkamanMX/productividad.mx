@@ -59,7 +59,8 @@ class leasing_ClientsController extends My_Controller_Action
 	    	$this->view->mOption = 'branches';
 	    	
 	    	$cClassObject			= new My_Model_Clientesint();
-	    	$aResult				= $cClassObject->getDataTables($this->_dataUser['ID_EMPRESA']);
+	    	$iSucursal				= ($this->_dataUser['ID_PERFIL']==20) ?  $this->_dataUser['ID_SUCURSAL'] : '-1';
+	    	$aResult				= $cClassObject->getDataTables($this->_dataUser['ID_EMPRESA'],$iSucursal);
 	    	$this->view->datatTable = $aResult;
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
@@ -81,6 +82,7 @@ class leasing_ClientsController extends My_Controller_Action
 			}			
 			
     	    if($this->_dataOp=='new'){
+    	    	$this->_dataIn['inputSucursal'] = $this->_dataUser['ID_SUCURSAL'];
 				$insert = $cClassObject->insertRow($this->_dataIn);
 				if($insert['status']){
 					$this->_idUpdate = $insert['id'];
@@ -92,6 +94,7 @@ class leasing_ClientsController extends My_Controller_Action
 				}
     		}else if($this->_dataOp=='update'){				
 				if($this->_idUpdate>-1){
+					$this->_dataIn['inputSucursal'] = $this->_dataUser['ID_SUCURSAL'];
 					 $updated = $cClassObject->updateRow($this->_dataIn,$this->_idUpdate); //mandar el ide del transportista
 					 if($updated['status']){
 					 	$aDataInfo    = $cClassObject->getData($this->_idUpdate);

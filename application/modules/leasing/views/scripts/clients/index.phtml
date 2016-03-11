@@ -20,6 +20,7 @@
                         <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
                             <thead>
                                 <tr>
+                                    <th>Sucursal</th>
                                     <th>Nombre</th>
                                     <th>Razón Social</th>
                                     <th>RFC</th>
@@ -30,6 +31,7 @@
                             <tbody>                                
                                 <?php foreach(@$this->datatTable as $key => $items): ?>  
                                 <tr class="odd gradeX">
+                                    <td><?php echo $items['N_SUCURSAL']; ?></td>
                                     <td><?php echo $items['NOMBRE']; ?></td>
                                     <td><?php echo $items['RAZON_SOCIAL']; ?></td>
                                     <td><?php echo $items['RFC']; ?></td>
