@@ -218,7 +218,7 @@ class My_Model_Soleasing extends My_Db_Table
 		$sFilter .= (isset($data['inputHorario2']) && $data['inputHorario2']!="") ? 'ID_HORARIO2 	=  '.$data['inputHorario2'].',' : '';
 		        
         if(isset($data['bOperation']) && $data['bOperation']=='accept'){
-        	$data['inputEstatus'] = 2;
+        	$data['inputEstatus'] = 1;
         	$sFilter .= "ID_ESTATUS		=  ".$data['inputEstatus']." ";	
         }else if(isset($data['bOperation']) && $data['bOperation']=='modify'){
         	$data['inputEstatus'] = 4;
