@@ -486,7 +486,7 @@ class My_Model_Citas extends My_Db_Table
 		$result= Array();
 		$this->query("SET NAMES utf8",false);
 		$sFilter 	 = ($idTecnico!="") ? ' C.ID_USUARIO = '.$idTecnico: ' E.ID_SUCURSAL IN ('.$idSucursal.')';
-		$sFilterDate = ($typeSearch==1)  ? "AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'" : "AND CAST(C.FECHA_INICIO  AS DATE) BETWEEN'$dFechaIn' AND '$dFechaFin'";
+		$sFilterDate = ($typeSearch==1)  ? "AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'" : "AND CAST(C.FECHA_INICIO  AS DATE) BETWEEN '$dFechaIn' AND '$dFechaFin'";
 				 		
     	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR,				
 				P.RAZON_SOCIAL AS NOMBRE_CLIENTE,C.FOLIO,
@@ -610,7 +610,8 @@ class My_Model_Citas extends My_Db_Table
 				  INNER JOIN PROD_ELEMENTOS E ON E.ID_ELEMENTO = C.ID_ELEMENTO
 				  INNER JOIN PROD_TPO_ELEMENTO L ON E.ID_TIPO = L.ID_TIPO		
 				WHERE A.ID_FORMULARIO = $idForm AND			
-				      D.ID_CITA 	  = $idOject			
+				      D.ID_CITA 	  = $idOject	
+				GROUP BY B.ID_ELEMENTO		
 				ORDER BY C.ORDEN ASC";
 		$query   = $this->query($sql);
 		if(count($query)>0){
@@ -714,6 +715,7 @@ class My_Model_Citas extends My_Db_Table
 				WHERE C.ID_CLIENTE = $idCliente
 				AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'
 				ORDER BY S.ID_ESTATUS";
+    	Zend_Debug::dump($sql);
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			

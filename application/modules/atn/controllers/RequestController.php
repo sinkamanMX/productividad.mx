@@ -66,11 +66,12 @@ class atn_RequestController extends My_Controller_Action
 			$dFechaFin		= '';
 			$bShowUsers		= false;
 			$aTypeSearch	= Array(		
-								array("id"=>"1",'name'=>'Pendiente' ),
-								array("id"=>"2",'name'=>'Aceptado'  ),
-								array("id"=>"6",'name'=>'Por Atender'),
-								array("id"=>"7",'name'=>'Atendida') );
-			$bType 			= 6;
+								array("id"=>"-1",'name'=>'Todos' ),
+								array("id"=>"1" ,'name'=>'Pendiente' ),
+								array("id"=>"2" ,'name'=>'Aceptado'  ),
+								array("id"=>"6" ,'name'=>'Por Atender'),
+								array("id"=>"7" ,'name'=>'Atendida') );
+			$bType 			= -1;
 			$bStatus		= -1;	
 
 			if(isset($this->dataIn['optReg']) && $this->dataIn['optReg']){
