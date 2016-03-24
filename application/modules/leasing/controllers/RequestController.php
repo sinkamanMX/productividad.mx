@@ -139,7 +139,7 @@ class leasing_RequestController extends My_Controller_Action
     				    $bInsertUnit = $classObject->insertNewRowLeasing($this->dataIn);    				
     					if($bInsertUnit['status']){
 							$this->dataIn['inputUnidad']= $bInsertUnit['id'];
-							$this->dataIn['inputInfo'] = "<b>Ult.reporte:</b> S/N<br/><b>Placas:</b>".$this->dataIn['inputPlacas']."<br/><b>A–o:</b>".$this->dataIn['inputAnio']."<br/><b>No. Series :</b>".$this->dataIn['inputIden']."<br/>";    						
+							$this->dataIn['inputInfo'] = "<b>Ult.reporte:</b> S/N<br/><b>Placas:</b>".$this->dataIn['inputPlacas']."<br/><b>Anio:</b>".$this->dataIn['inputAnio']."<br/><b>No. Series :</b>".$this->dataIn['inputIden']."<br/>";    						
     					}else{
 							$this->errors['status'] = 'no-insert';	    					    						
     					}
