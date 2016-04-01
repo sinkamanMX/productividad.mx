@@ -176,12 +176,13 @@ class My_Model_Soleasing extends My_Db_Table
 		return $result;	
     } 
 
-    public function validateDate($idCompany,$idDate,$idSolicitud=-1){
+    public function validateDate($idCompany,$idDate,$idSolicitud=-1,$sDate){
     	$iTotal = 0;
     	$sql = "SELECT COUNT(ID_SOLICITUD) AS TOTAL
 				FROM PROD_CITAS_SOLICITUD S
 				WHERE ID_EMPRESA = $idCompany 
 				  AND ID_HORARIO = $idDate
+				  AND FECHA_CITA = '$sDate'
     		      AND ID_SOLICITUD NOT IN (".$idSolicitud.")";
 		$query   = $this->query($sql);
 		if(count($query)>0){

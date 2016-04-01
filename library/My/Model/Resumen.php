@@ -44,8 +44,7 @@ class My_Model_Resumen extends My_Db_Table
 	    			  AND C.FECHA_CITA BETWEEN CAST(DATE_SUB(NOW(), INTERVAL 1 DAY) AS DATE) AND  CAST(DATE_SUB(NOW(), INTERVAL -1 DAY) AS DATE)
 	    			/*GROUP BY T.ID_TPO, C.FECHA_CITA*/
 	    			ORDER BY C.FECHA_CITA ASC
-	    			LIMIT 100";
-    	//Zend_Debug::dump($sql);
+	    			LIMIT 50";    	    	
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			

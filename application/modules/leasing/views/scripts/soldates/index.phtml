@@ -13,7 +13,6 @@
                     <ul id="tabs" class="nav nav-tabs bg-white" data-tabs="tabs">
                         <li class="active"><a href="#tab" data-toggle="tab">Solicitudes Pendientes</a></li>
                         <li><a href="#tab2" data-toggle="tab">Solicitudes Confirmadas</a></li>
-                        <li><a href="#tab3" data-toggle="tab">Solicitudes en Revision (UDA)</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content bg-white">
                         <div class="tab-pane active" id="tab">
@@ -83,41 +82,7 @@
                                     <?php endforeach;?>
                                 </tbody>                                
                             </table>
-                        </div>  
-                        <div class="tab-pane" id="tab3">
-                           <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable">
-                                <thead>
-                                    <tr>
-                                        <th>Arrendadora</th>
-                                        <th>Tipo</th>
-                                        <th>Fecha</th>
-                                        <th>Horario</th>
-                                        <th>Tipo Equipo</th>
-                                        <th>Unidad</th>
-                                        <th>Lugar</th>                                        
-                                        <th>Estatus</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>                                
-                                    <?php foreach($this->dataTableEmpOk as $key => $items): ?>  
-                                    <tr class="odd gradeX">
-                                        <td><?php echo $items['N_CLIENTE']; ?></td>
-                                        <td><?php echo $items['N_TIPO']; ?></td>
-                                        <td><?php echo $items['FECHA_CITA']; ?></td>
-                                        <td><?php echo $items['N_HORARIO']; ?></td>
-                                        <td><?php echo $items['N_TEQUIPO']; ?></td>
-                                        <td><?php echo $items['N_UNIDAD']; ?></td>
-                                        <td><?php echo $items['N_DIR'];?></td>
-                                        <td><?php echo $items['N_ESTATUS']; ?></td>
-                                        <td class="text-center">
-                                            <a href="/leasing/soldates/getinfoemp?catId=<?php echo $items['ID_SOLICITUD']; ?>"><button class="btn btn-primary"> <i class="icon-eye-open icon-white"></i></button></a>   
-                                        </td>
-                                    </tr>    
-                                    <?php endforeach;?>
-                                </tbody>                                
-                            </table>
-                        </div>                                                                     
+                        </div>                                               
                     </div>                    
                 </div>
             </div>

@@ -86,7 +86,7 @@ class My_Model_Unidades extends My_Db_Table
 		return $result;	    	
     }  
 
-	public function getUnidades($idObject,$idSucursal){
+	public function getUnidades($idObject,$idSucursal=-1){
 		$result= Array();
 		$this->query("SET NAMES utf8",false);
 		$sFilter = ($idSucursal!=-1) ? ' AND U.ID_SUCURSAL = '.$idSucursal: '';		 		

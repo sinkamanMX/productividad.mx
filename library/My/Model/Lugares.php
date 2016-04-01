@@ -223,7 +223,6 @@ class My_Model_Lugares extends My_Db_Table
         			ESTATUS			=  ".$aData['inputEstatus'].",
         			EMAIL_CONTACTO	= '".$aData['inputMail']."',
         			ID_EMP_CLIENTE	=  ".$aData['inputCliente'].",
-        			ID_SUCURSAL		=  ".$aData['inputSucursal'].",
 					FECHA_CREADO    = CURRENT_TIMESTAMP";
         try{            
     		$query   = $this->query($sql,false);
@@ -241,16 +240,13 @@ class My_Model_Lugares extends My_Db_Table
 		return $result;	       	
     }   
 
-    public function getDataTable($idObject,$idSucursal){
+    public function getDataTable($idObject){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-		$sFilter = ($idSucursal!=-1) ? ' AND C.ID_SUCURSAL = '.$idSucursal: '';
-    	$sql ="SELECT S.*, C.NOMBRE AS N_CLIENTE,U.DESCRIPCION AS N_SUCURSAL
+    	$sql ="SELECT S.*, C.NOMBRE AS N_CLIENTE
 				FROM PROD_LUGARES S
-				INNER JOIN SUCURSALES 	U ON S.ID_SUCURSAL    = U.ID_SUCURSAL
 				INNER JOIN EMP_CLIENTES C ON S.ID_EMP_CLIENTE = C.ID_EMP_CLIENTE
 				WHERE S.ID_EMPRESA = $idObject
-				$sFilter
 				ORDER BY S.DESCRIPCION";
 		$query   = $this->query($sql);
 		if(count($query)>0){
