@@ -22,8 +22,7 @@
                                 <tr>
                                     <th>Sucursal</th>
                                     <th>Cliente</th>
-                                    <th>VIN</th>
-                                    <th>Placas</th>
+                                    <th># Contrato / Placas</th>
                                     <th>Modelo</th>
                                     <th>No. Serie</th>
                                     <th>Opciones</th>
@@ -32,10 +31,12 @@
                             <tbody>                                
                                 <?php foreach($this->datatTable as $key => $items): ?>  
                                 <tr class="odd gradeX">
-                                    <td><?php echo $items['N_SUCURSAL']; ?></td>
+                                    <td><?php echo (isset($items['N_SUCURSAL'])!="") ? $items['N_SUCURSAL'] : ' - '; ?></td>
                                     <td><?php echo $items['N_CLIENTE']; ?></td>
-                                    <td><?php echo $items['ECONOMICO']; ?></td>
-                                    <td><?php echo $items['PLACAS']; ?></td>
+
+                                    <?php $ident2 = (isset($items['IDENTIFICADOR_2'])!="") ? $items['IDENTIFICADOR_2'] : ' - ';?>
+                                    
+                                    <td><?php echo $ident2; ?> / <?php echo $items['PLACAS']; ?></td>
                                     <td><?php echo $items['ANIO']; ?></td>
                                     <td><?php echo $items['IDENTIFICADOR']; ?></td>
                                     <td class="text-center">

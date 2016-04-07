@@ -4,6 +4,7 @@ $().ready(function() {
             inputEco	: "required",
             inputPlacas	: "required",
             inputIden	: "required",
+            inputIden2  : "required",
             inputStatus	: "required",
             inputColor  : "required",
             inputAnio   : "required",
@@ -18,6 +19,7 @@ $().ready(function() {
             inputEco	: "Campo Requerido",
             inputPlacas	: "Campo Requerido",
             inputIden	: "Campo Requerido",
+            inputIden2  : "Campo Requerido",
             inputStatus	: "Debe de seleccionar una opción",
             inputColor  : "Campo Requerido",
             inputAnio   : "Campo Requerido"        

@@ -475,23 +475,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/register/views/scripts/main/index.phtml",
-			"settings":
-			{
-				"buffer_size": 1877,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "#*/1 * * * * root php /var/www/vhosts/taccsi.com/htdocs/public/wbs_pet/cron/aws_push/push_service_android.php > /dev/null 2>&1\n#*/1 * * * * root php /var/www/vhosts/taccsi.com/htdocs/public/wbs_pet/cron/aws_push/msg_checkMessage.php > /dev/null 2>&1\n#*/1 * * * * root php /var/www/vhosts/taccsi.com/htdocs/public/wbs_pet/cron/aws_push/msg_sendPush.php > /dev/null 2>&1",
-			"settings":
-			{
-				"buffer_size": 368,
-				"line_ending": "Unix",
-				"name": "#*/1 * * * * root php /var/www/vhosts/taccsi.com/h"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -521,6 +504,7 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/validacion.mx/application/modules/register/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/validacion.mx/application/modules/admin/views/scripts/users/infousers.phtml",
 		"/Users/itecno2/Documents/workspace/validacion.mx/application/modules/reports/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/validacion.mx/test_mail/Mailbox.php",
@@ -647,8 +631,7 @@
 		"/Users/itecno2/Documents/workspace/productividapp.mx/s_backup_files/assets/scripts/core/datatable.js",
 		"/Users/itecno2/Documents/workspace/productividapp.mx/public/assets/js/bootbox/bootbox.js",
 		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/dbman/controllers/MainController.php",
-		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/main/views/scripts/phones/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/main/views/scripts/phones/getinfo.phtml"
+		"/Users/itecno2/Documents/workspace/productividapp.mx/application/modules/main/views/scripts/phones/index.phtml"
 	],
 	"find":
 	{
@@ -877,61 +860,6 @@
 		{
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/Users/itecno2/Documents/workspace/validacion.mx/application/modules/register/views/scripts/main/index.phtml",
-					"settings":
-					{
-						"buffer_size": 1877,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"settings":
-					{
-						"buffer_size": 368,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								368,
-								368
-							]
-						],
-						"settings":
-						{
-							"auto_name": "#*/1 * * * * root php /var/www/vhosts/taccsi.com/h",
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"word_wrap": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

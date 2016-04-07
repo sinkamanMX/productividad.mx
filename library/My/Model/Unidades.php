@@ -74,10 +74,13 @@ class My_Model_Unidades extends My_Db_Table
     public function getData($idObject){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 
-    	$sql ="SELECT U.*,C.*
-                FROM $this->_name U
-                 LEFT JOIN PROD_CLIENTES C ON U.ID_CLIENTE = C.ID_CLIENTE 
-                WHERE U.$this->_primary = $idObject LIMIT 1";	
+    	$sql ="SELECT U.*,C.*, M.DESCRIPCION AS N_MODELO, E.DESCRIPCION AS N_MARCA, L.DESCRIPCION AS N_COLOR
+                FROM PROD_UNIDADES U
+                 LEFT JOIN AVL_COLORES           L ON U.ID_COLOR   = L.ID_COLOR                
+                 LEFT JOIN PROD_CLIENTES 		 C ON U.ID_CLIENTE = C.ID_CLIENTE 
+                 LEFT JOIN AVL_MODELO_ACTIVO     M ON U.ID_MODELO  = M.ID_MODELO
+                 LEFT JOIN AVL_MARCA_ACTIVO 	 E ON M.ID_MARCA   = E.ID_MARCA
+                WHERE U.ID_UNIDAD = $idObject LIMIT 1";	
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query[0];			
@@ -92,7 +95,7 @@ class My_Model_Unidades extends My_Db_Table
 		$sFilter = ($idSucursal!=-1) ? ' AND U.ID_SUCURSAL = '.$idSucursal: '';		 		
     	$sql ="SELECT U.*, C.NOMBRE  AS N_CLIENTE,S.DESCRIPCION AS N_SUCURSAL
 				FROM PROD_UNIDADES U
-				INNER JOIN SUCURSALES 	S ON S.ID_SUCURSAL    = U.ID_SUCURSAL
+				LEFT JOIN SUCURSALES 	S ON S.ID_SUCURSAL    = U.ID_SUCURSAL
 				INNER JOIN EMP_CLIENTES C ON U.ID_EMP_CLIENTE = C.ID_EMP_CLIENTE
 				WHERE U.ID_EMPRESA = $idObject
 				$sFilter
@@ -201,6 +204,7 @@ class My_Model_Unidades extends My_Db_Table
  					ID_MODELO		= ".$data['inputModelo'].",
 			  		PLACAS			='".$data['inputPlacas']."',
 			  		IDENTIFICADOR	='".$data['inputIden']."',
+			  		IDENTIFICADOR_2	='".$data['inputIden2']."',
 			  		ANIO			='".$data['inputAnio']."',
 			  		ID_COLOR		= ".$data['inputColor']."			  		
 				WHERE $this->_primary =".$data['catId']." LIMIT 1";
@@ -228,6 +232,7 @@ class My_Model_Unidades extends My_Db_Table
 			  		ECONOMICO		='".@$data['inputEco']."', 
 			  		PLACAS			='".$data['inputPlacas']."',
 			  		IDENTIFICADOR	='".@$data['inputIden']."',
+			  		IDENTIFICADOR_2	='".$data['inputIden2']."',
 			  		ANIO			='".$data['inputAnio']."',
 			  		ID_COLOR		= ".$data['inputColor'].",
 			  		ID_SUCURSAL		= ".$data['inputSucursal'].",
@@ -285,7 +290,7 @@ class My_Model_Unidades extends My_Db_Table
 	public function getCboByEmpCliente($idObject){
 		$result= Array();
 		$this->query("SET NAMES utf8",false); 		
-    	$sql ="SELECT $this->_primary AS ID, PLACAS AS NAME 
+    	$sql ="SELECT $this->_primary AS ID, CONCAT(IDENTIFICADOR_2,' (',PLACAS,')') AS NAME 
     			FROM $this->_name 
     			WHERE ID_EMP_CLIENTE = $idObject ORDER BY NAME ASC";
 		$query   = $this->query($sql);

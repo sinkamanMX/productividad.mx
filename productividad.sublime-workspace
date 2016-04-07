@@ -415,14 +415,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "public/js/modules/leasing/validateSolicitudes.js",
-			"settings":
-			{
-				"buffer_size": 11908,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -448,6 +440,8 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/sendMails.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/companies/getinfo.phtml",
@@ -469,12 +463,10 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/branches/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/branches/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/places/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/units/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateUnits.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/nueva_sol_Leasing.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/soldates/getinfoemp.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/companies/index.phtml",
@@ -795,37 +787,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "public/js/modules/leasing/validateSolicitudes.js",
-					"settings":
-					{
-						"buffer_size": 11908,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								403,
-								403
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 4.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

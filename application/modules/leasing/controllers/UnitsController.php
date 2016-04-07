@@ -56,7 +56,7 @@ class leasing_UnitsController extends My_Controller_Action
     	try{
 	    	$this->view->mOption = 'units';
 			$classObject = new My_Model_Unidades(); 
-			$iSucursal				= ($this->_dataUser['ID_PERFIL']==20) ?  $this->_dataUser['ID_SUCURSAL'] : '-1';
+			$iSucursal				= ($this->_dataUser['ID_PERFIL']==20) ? $this->_dataUser['ID_SUCURSAL'] : '-1';
 			$this->view->datatTable = $classObject->getUnidades($this->view->dataUser['ID_EMPRESA'],$iSucursal);
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";

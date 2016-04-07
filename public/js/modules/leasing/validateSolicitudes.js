@@ -56,7 +56,8 @@ $().ready(function() {
             inputColor  : "required",
             inputAnio   : "required",
             inputMarca  : "required",
-            inputModelo : "required"            
+            inputModelo : "required",
+            inputIden2  : "required",
         },
         messages: {                          
             inputFechaIn    :      "Campo Requerido",        
@@ -79,8 +80,8 @@ $().ready(function() {
             inputPlacas : "Campo Requerido",
             inputIden   : "Campo Requerido",
             inputColor  : "Campo Requerido",
-            inputAnio   : "Campo Requerido"        
-
+            inputAnio   : "Campo Requerido",
+            inputIden2  : "Campo Requerido"
         },
         submitHandler: function(form) {
             form.submit();
@@ -176,10 +177,12 @@ function newdireccion(inputValue){
         $("#divDireNew").show('slow');   
         $("#divSaveDir").show('slow');   
         $(".inputDir").prop('readonly', false);
+        $(".inputDir").prop( "disabled", false );
     }else{
         $("#divSaveDir").hide('slow');   
         $("#divDireNew").hide('slow'); 
         $(".inputDir").prop('readonly', true);
+        $(".inputDir").prop( "disabled", false );
         var iValue = parseInt(inputValue);
         if(inputValue>0){
             getInfoDir(inputValue);
@@ -202,6 +205,9 @@ function newCar(inputValue){
         $("#inputIden").rules("add",  {required:true});  
         $("#inputColor").rules("add",  {required:true});  
         $("#inputAnio").rules("add",  {required:true});  
+        $("#inputIden2").rules("add",  {required:true});  
+        $(".inputCar").prop('readonly', false);
+        $(".inputCar").prop( "disabled", false );
     }else{
         $("#inputMarca").rules("remove", "required");   
         $("#inputModelo").rules("remove", "required");   
@@ -209,13 +215,16 @@ function newCar(inputValue){
         $("#inputIden").rules("remove", "required");   
         $("#inputColor").rules("remove", "required");   
         $("#inputAnio").rules("remove", "required");           
+        $("#inputIden2").rules("remove", "required"); 
         $("#divCarNew").hide('slow'); 
         $("#inputMarca").val("");        
         $("#inputModelo").val("");
         $("#inputPlacas").val("");
         $("#inputIden").val("");
         $("#inputColor").val("");
-        $("#inputAnio").val("");       
+        $("#inputAnio").val("");   
+        $(".inputCar").prop('readonly', true);    
+        $(".inputCar").prop( "disabled", true );
     }    
 }
 
@@ -332,4 +341,40 @@ function searchPlaces(idClient){
             $("#divDireNew").hide('slow'); 
         }
     });     
+}
+
+function confirmCancelSol(idtableRow){ 
+    $("#inputCancelSol").val(idtableRow);  
+    $("#modalConfirmDelete").modal('show');
+    $('#modalConfirmDelete').on('hidden.bs.modal', function () {
+        location.reload();
+    });         
+}
+
+function cancelSolicitud(){   
+    var sComentario  = $("#inCancelComent").val();
+    var idItem       = $("#inputCancelSol").val();
+    if(sComentario!=""){
+        $.ajax({
+            url: "/leasing/request/cancel",
+            type: "GET",
+            dataType : 'json',
+            data: { catId  : idItem, 
+                    sComent: sComentario,
+                    optReg : 'cancel'},
+            success: function(data) {
+                var result = data.answer; 
+
+                if(result == 'canceled'){
+                    $("#modalConfirmDelete").modal('hide'); 
+                }else if(result == 'problem'){
+                    alert("Ocurrio un Problema al cancelar la solicitud");          
+                }else{
+                    alert("Ocurrio un Problema al cancelar la solicitud");
+                }
+            }
+        }); 
+    }else{
+        alert("Favor de ingresar un comentario.");
+    }
 }

@@ -1,6 +1,7 @@
 <?php $this->headScript()->appendFile('/js/modules/leasing/validateSolicitudes.js') ?>  
-<?php $disabled = (@$this->data['ID_ESTATUS']==2 || @$this->data['ID_ESTATUS']==5 || @$this->data['ID_ESTATUS']==4) ? 'disabled':'';?>
-<?php $showOpts = (@$this->data['ID_ESTATUS']==2 || @$this->data['ID_ESTATUS']==5 || @$this->data['ID_ESTATUS']==4) ? 'none'    :'block';?>
+<?php $disabled   = ((@$this->data['ID_ESTATUS']==1 || @$this->data['ID_ESTATUS']==4 ) || @$this->idToUpdate==-1) ? '' : 'disabled';?>
+<?php $eDireccion = (@$this->idToUpdate==-1) ? 'readonly="readonly" ': '';?>
+<?php $eCombos    = (@$this->idToUpdate==-1) ? 'disabled': '';?>
 <div class="row panel-data">
     <input id="hRefLinkMain" type="hidden" value="/leasing/request/index" />
     <div class="span12">
@@ -35,35 +36,7 @@
                     </ul>
 
                     <div id="my-tab-content" class="tab-content bg-white">
-                        <div class="tab-pane active" id="tab">
-                            <?php if(@$this->errors['eIMEI']):?>
-                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
-                                  <button type="button" class="close" data-dismiss="alert">×</button>
-                                  <h4>Error</h4>
-                                  <div>El IMEI no se encuentra disponible</div>
-                                </div>  
-                            <?php endif;?> 
-                            <?php if(@$this->errors['no-service']):?>
-                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
-                                  <button type="button" class="close" data-dismiss="alert">×</button>
-                                  <h4>Error</h4>
-                                  <div>Ocurrio un error con el proveedors Ovision,favor de contactar al administrador del sistema</div>
-                                </div>  
-                            <?php endif;?>   
-                            <?php if(@$this->errors['no-service'] || @$this->errors['no-info'] || @$this->errors['client-problem']):?>
-                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
-                                  <button type="button" class="close" data-dismiss="alert">×</button>
-                                  <h4>Error</h4>
-                                  <div>Ocurrio un error con el proveedors Ovision,favor de contactar al administrador del sistema</div>
-                                </div>  
-                            <?php endif;?>  
-                            <?php if(@$this->errors['login']):?>
-                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
-                                  <button type="button" class="close" data-dismiss="alert">×</button>
-                                  <h4>Error</h4>
-                                  <div>Ocurrio un error con su clave de cliente,favor de contactar al administrador del sistema</div>
-                                </div>  
-                            <?php endif;?>      
+                        <div class="tab-pane active" id="tab">                            
                             <?php if(count($this->aClientes)==0):?>
                                 <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
                                   <button type="button" class="close" data-dismiss="alert">×</button>
@@ -77,8 +50,22 @@
                                   <h4>Error</h4>
                                   <div>No se puede solicitar una cita en este horario, no hay tecnicos disponibles</div>
                                 </div>                              
-                            <?php endif;?>
-                            <?php //Zend_Debug::dump(@$this->errors);?>                           
+                            <?php endif;?>                        
+                            <?php if(@$this->errors['errorDateInvalid']):?>
+                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+                                  <button type="button" class="close" data-dismiss="alert">×</button>
+                                  <h4>Error</h4>
+                                  <div>Solo se pueden solicitar y/o modificar solicitudes con 12 hrs. de anticipación.</div>
+                                </div>
+                            <?php endif;?>  
+                            <?php if(@$this->errors['errorUpdate']):?>
+                                <div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+                                  <button type="button" class="close" data-dismiss="alert">×</button>
+                                  <h4>Error</h4>
+                                  <div>Ocurrio un problema al actualizar la información.</div>
+                                </div>
+                            <?php endif;?>  
+
                                                                                                             
                            <!-- BEGIN FORM-->
                             <form method="POST" action="/leasing/request/getinfo?catId=<?php echo $this->catId; ?>" id="FormData" class="form-horizontal ">
@@ -150,7 +137,7 @@
                                                 <div class="control-group">
                                                     <label class="control-label">Cliente<span class="required">*</span></label>
                                                     <div class="controls">
-                                                        <select class="m-wrap" name="inpuClienteEmp" id="inpuClienteEmp" <?php echo $disabled;?> onChange="searchUnits(this.value)" >
+                                                        <select class="m-wrap" name="inpuClienteEmp" id="inpuClienteEmp" <?php echo $disabled;?> <?php echo (@$this->idToUpdate==-1) ? 'onChange="searchUnits(this.value)"': '';?> >
                                                             <option value="">Seleccionar una opción</option>
                                                             <?php echo $this->aClientes;?>
                                                         </select>
@@ -162,7 +149,8 @@
                                             </div>                                             
                                         </div>                                         
                                         <div class="row row-margin-left25">    
-                                            <div class="span6">
+                                            <div class="span6  <?php echo ($this->idToUpdate==-1)? '': 'text-center';?>">
+                                                <?php if($this->idToUpdate==-1):?>
                                                 <div class="control-group">
                                                     <label class="control-label">Lugar<span class="required">*</span></label>
                                                     <div class="controls">
@@ -174,74 +162,69 @@
                                                         </div>
                                                     </div>
                                                 </div> 
+                                                <?php else:?>
+                                                    <h4>Dirección Solicitud</h4>
+                                                <?php endif;?>
                                                 <div id="divDireNew" style="display:<?php echo ($this->catId>-1) ? 'block':'none' ;?>">
                                                     <div id="infoUnit"></div>
                                                     <div class="span12 no-margin-left">
                                                         <div class="control-group">
                                                             <label class="control-label">Calle<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input type="text" id="inputCalle" name="inputCalle" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CALLE']; ?>"  readonly="readonly"  >
+                                                                <input type="text" id="inputCalle" name="inputCalle" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CALLE']; ?>"  <?php echo $eDireccion;?> >
                                                             </div>
                                                         </div> 
                                                         <div class="control-group">
                                                             <label class="control-label">Entre Calle<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input type="text" id="inputEntreCalles" name="inputEntreCalles" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['ENTRE_CALLES']; ?>"  readonly="readonly"  >
+                                                                <input type="text" id="inputEntreCalles" name="inputEntreCalles" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['ENTRE_CALLES']; ?>" <?php echo $eDireccion;?>  >
                                                             </div>
                                                         </div>
                                                         <div class="control-group">
                                                             <label class="control-label">Referencias<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input type="text" id="inputRefs" name="inputRefs" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['REFERENCIAS']; ?>"  readonly="readonly"  >
+                                                                <input type="text" id="inputRefs" name="inputRefs" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['REFERENCIAS']; ?>" <?php echo $eDireccion;?> >
                                                             </div>
                                                         </div>                                                        
                                                         <div class="control-group">
                                                             <label class="control-label">Colonia<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input type="text" id="inputColonia" name="inputColonia" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['COLONIA']; ?>" readonly="readonly"  >
+                                                                <input type="text" id="inputColonia" name="inputColonia" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['COLONIA']; ?>"  <?php echo $eDireccion;?> >
                                                             </div>
                                                         </div>  
                                                         <div class="control-group">
                                                             <label class="control-label">Municipio<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input type="text" id="inputMunicipio" name="inputMunicipio" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['MUNICIPIO']; ?>" readonly="readonly"  >
+                                                                <input type="text" id="inputMunicipio" name="inputMunicipio" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['MUNICIPIO']; ?>"  <?php echo $eDireccion;?> >
                                                             </div>
                                                         </div>  
                                                         <div class="control-group">
                                                             <label class="control-label">Estado<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input type="text" id="inputEstado" name="inputEstado" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['ESTADO']; ?>" readonly="readonly"  >
+                                                                <input type="text" id="inputEstado" name="inputEstado" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['ESTADO']; ?>" <?php echo $eDireccion;?> >
                                                             </div>
                                                         </div>
                                                         <div class="control-group">
                                                             <label class="control-label">CP<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input type="text" id="inputCP" name="inputCP" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CP']; ?>" readonly="readonly" >
+                                                                <input type="text" id="inputCP" name="inputCP" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CP']; ?>"  <?php echo $eDireccion;?> >
                                                             </div>
                                                         </div>  
                                                        <div class="control-group">
                                                             <label class="control-label">Contacto</label>
                                                             <div class="controls">
-                                                                <input type="text" id="inputContacto" name="inputContacto" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CONTACTO']; ?>" readonly="readonly" >
+                                                                <input type="text" id="inputContacto" name="inputContacto" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CONTACTO']; ?>"  <?php echo $eDireccion;?> >
                                                             </div>
                                                         </div>   
 
                                                         <div class="control-group">
                                                             <label class="control-label">Tel. Contacto</label>
                                                             <div class="controls">
-                                                                <input type="text" id="inputTelCont" name="inputTelCont" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CONTACTO_TEL']; ?>" readonly="readonly" >
+                                                                <input type="text" id="inputTelCont" name="inputTelCont" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CONTACTO_TEL']; ?>"  <?php echo $eDireccion;?> >
                                                             </div>
                                                         </div>                                                         
                                                     </div>
                                                     <div class="span12 no-margin-left">
-                                                        <!--<div class="span6">
-                                                            <div class="control-group">
-                                                                <label class="control-label">CP<span class="required">*</span></label>
-                                                                <div class="controls">
-                                                                    <input type="text" id="inputCP" name="inputCP" autocomplete="off" class="span12 m-wrap upperClass inputDir" value="<?php echo @$this->data['CP']; ?>" readonly="readonly"  >
-                                                                </div>
-                                                            </div>  
-                                                        </div>-->
                                                         <div class="span6" id="divSaveDir" style="display:none">                                                            
                                                             <input id="chkSaveDir" name="chkSaveDir" type="checkbox" onChange="addNameDir();"/>
                                                             Deseo guardar esta direccion en mis Luages
@@ -257,33 +240,30 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="span6">
-                                                <div class="control-group">
+                                            <div class="span6 <?php echo ($this->idToUpdate==-1)? '': 'text-center';?>">
+                                                <input type="hidden" id="txtIdCarSelected" name="txtIdCarSelected" value="<?php echo ($this->idToUpdate==-1) ? -1 : $this->data['ID_UNIDAD'];?>">                                                
+                                                <?php if($this->idToUpdate==-1):?>
+                                                <div class="control-group">                                                    
                                                     <label class="control-label">Unidad<span class="required">*</span></label>
-                                                    <div class="controls">
-                                                        <?php if($this->idToUpdate==-1):?>
+                                                    <div class="controls">                                                        
                                                             <div id="divUnidad" class="span8">
                                                                 <select class="m-wrap class="span4 m-wrap"" name="inputUnidad" id="inputUnidad" <?php echo $disabled;?> onChange="newCar(this.value);" >
                                                                     <option value="">Seleccionar una opción</option>
                                                                     <?php echo $this->aUnidades;?>
-                                                                </select>
-                                                                <?php if($this->idToUpdate ==-1 || $showOpts=='block'):?>
-                                                                    <!--<button id="bntSearchUnit" class="btn" ><i class="icon-search"></i></button>-->
-                                                                <?php endif;?>                                                            
+                                                                </select>                                                        
                                                             </div>
-                                                        <?php else:?>
-                                                            <div id="infoUnit" name="infoUnit"><?php echo @$this->data['INFORMACION_UNIDAD']; ?></div>
-                                                            <textarea name="inputInfo" id="inputInfo" rows="5" class="hide"><?php echo @$this->data['INFORMACION_UNIDAD']; ?></textarea>                                                     
-                                                        <?php endif;?>
-                                                    </div>
+                                                    </div>                                           
                                                 </div>
-                                                 <div id="divCarNew" style="display:none;?>">
-                                                    <div id="infoUnit"></div>
+                                                <?php else:?>
+                                                    <h4>Vehículo</h4>
+                                                <?php endif;?>
+                                                 <div id="divCarNew" style="display:<?php echo ($this->idToUpdate==-1) ? 'none':'block';?>">
+                                                    <!--<div id="infoUnit"></div>-->
                                                     <div class="span12 no-margin-left">
                                                         <div class="control-group">
                                                             <label class="control-label">Marca<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <select class="span8 m-wrap" name="inputMarca" id="inputMarca" <?php echo $disabled;?>  onChange="getoptionsCbo('Modelo','modeloa',this.value,'','');">
+                                                                <select class="span8 m-wrap inputCar" name="inputMarca" id="inputMarca"  <?php echo $eCombos;?>  onChange="getoptionsCbo('Modelo','modeloa',this.value,'','');">
                                                                     <option value="">Seleccionar una opción</option>
                                                                     <?php echo $this->aMarcas;?>
                                                                 </select>
@@ -293,7 +273,7 @@
                                                             <label class="control-label">Modelo<span class="required">*</span></label>
                                                             <div class="controls">
                                                                 <div id="divModelo">
-                                                                    <select class="span8 m-wrap" name="inputModelo" id="inputModelo" <?php echo $disabled;?> >
+                                                                    <select class="span8 m-wrap inputCar" name="inputModelo" id="inputModelo"  <?php echo $eCombos;?>  >
                                                                         <option value="">Seleccionar una opción</option>
                                                                         <?php echo $this->aModelos;?>
                                                                     </select>
@@ -303,7 +283,7 @@
                                                         <div class="control-group">
                                                             <label class="control-label">Color<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <select class="span8 m-wrap" id="inputColor" name="inputColor" <?php echo $disabled;?> >
+                                                                <select class="span8 m-wrap inputCar" id="inputColor" name="inputColor"  <?php echo $eCombos;?> >
                                                                     <?php echo $this->sColores; ?>
                                                                 </select>
                                                             </div>
@@ -311,7 +291,7 @@
                                                         <div class="control-group">
                                                             <label class="control-label">Año<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <select class="span8 m-wrap" id="inputAnio" name="inputAnio" <?php echo $disabled;?> >
+                                                                <select class="span8 m-wrap inputCar" id="inputAnio" name="inputAnio"  <?php echo $eCombos;?>  >
                                                                     <?php echo $this->sAnios; ?>
                                                                 </select>
                                                             </div>
@@ -319,15 +299,21 @@
                                                         <div class="control-group">
                                                             <label class="control-label">Placas<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input name="inputPlacas" id="inputPlacas" type="text" class="span8 m-wrap upperClass" value="<?php echo @$this->data['PLACAS']; ?>" <?php echo $disabled;?> >
+                                                                <input name="inputPlacas" id="inputPlacas" type="text" class="span8 m-wrap upperClass inputCar" value="<?php echo @$this->aInfoUnit['PLACAS']; ?>"  <?php echo $eDireccion;?>  >
                                                             </div>
                                                         </div>
                                                         <div class="control-group">
                                                             <label class="control-label">No. serie<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input name="inputIden" id="inputIden" type="text" class="span8 m-wrap upperClass" value="<?php echo @$this->data['IDENTIFICADOR']; ?>" <?php echo $disabled;?> >
+                                                                <input name="inputIden" id="inputIden" type="text" class="span8 m-wrap upperClass inputCar" value="<?php echo @$this->aInfoUnit['IDENTIFICADOR']; ?>"  <?php echo $eDireccion;?>  >
                                                             </div>
-                                                        </div>                                                        
+                                                        </div>     
+                                                        <div class="control-group">
+                                                            <label class="control-label">No. Contrato<span class="required">*</span></label>
+                                                            <div class="controls">
+                                                                <input name="inputIden2" id="inputIden2" type="text" class="span8 m-wrap upperClass inputCar" value="<?php echo @$this->aInfoUnit['IDENTIFICADOR_2']; ?>"  <?php echo $eDireccion;?>  >
+                                                            </div>
+                                                        </div>  
                                                     </div>
                                                 </div> 
                                         </div>
@@ -338,77 +324,20 @@
                                                     <div class="controls">
                                                         <textarea name="inputComment" id="inputComment" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['COMENTARIO']; ?></textarea>
                                                     </div>
-                                                </div>                                                      
-                                                <!--
-                                                <div class="control-group">
-                                                    <label class="control-label">Lugar de Instalación<span class="required">*</span></label>
-                                                    <div class="controls">
-                                                        <select class="m-wrap" name="inputPlace" id="inputPlace" <?php echo $disabled;?> >
-                                                            <option value="">Seleccionar una opción</option>
-                                                            <?php echo $this->aSucursales;?>
-                                                        </select> 
-                                                    </div>
-                                                </div>  -->                                              
+                                                </div>                                                                                              
                                             </div>
                                             <div class="span6">
-                                                <!--
-                                                <div class="control-group">
-                                                    <label class="control-label">Comentarios<span class="required">*</span></label>
-                                                    <div class="controls">
-                                                        <textarea name="inputComment" id="inputComment" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['COMENTARIO']; ?></textarea>
-                                                    </div>
-                                                </div> 
-                                                -->
-
-                                                <!--
-                                                <label class="control-label"> </label>
-                                                <div class="controls">
-                                                    <span>Utilizar esta opción cuando no se tengan unidades ó falte alguna.</span><br/>
-                                                    <a href="javascript:updateUnits();" class="btn btn-warning"><i class="icon-refresh"></i> Actualizar Unidades</a> <br/>  
-                                                </div>                                                
-                                                -->
                                             </div>                                    
                                         </div>
 
-                                        <div class="row row-margin-left25">    
+                                        <div class="row row-margin-left25">
                                             <div class="span6">
-                                                <!--<div class="control-group">
-                                                    <label class="control-label">Información Unidad</label>
-                                                    <div class="controls">
-                                                        <div id="infoUnit" name="infoUnit"><?php echo @$this->data['INFORMACION_UNIDAD']; ?></div>
-                                                        <textarea name="inputInfo" id="inputInfo" rows="5" class="hide"><?php echo @$this->data['INFORMACION_UNIDAD']; ?></textarea>
-                                                    </div>
-                                                </div>   -->                                             
+                                          
                                             </div>
-                                            <div class="span6">                                
-                                                <!--<div class="control-group">
-                                                    <label class="control-label">Comentarios<span class="required">*</span></label>
-                                                    <div class="controls">
-                                                        <textarea name="inputComment" id="inputComment" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['COMENTARIO']; ?></textarea>
-                                                    </div>
-                                                </div>  -->                                        
-                                            </div>                                    
-                                        </div>         
+                                            <div class="span6">
 
-                                        <?php if(@$this->data['ID_ESTATUS']=='5'): ?>
-                                            <div class="row row-margin-left25">    
-                                                <div class="span6">
-                                                    <div class="control-group">
-                                                        <label class="control-label">Comentarios CCUDA</label>
-                                                        <div class="controls">
-                                                            <textarea name="inputRevision" id="inputRevision" rows="5" disabled ><?php echo @$this->data['REVISION']; ?></textarea>
-                                                        </div>
-                                                    </div>                                                
-                                                </div>   
-                                                <div class="span6">                                
-                                                    <button id="btnSaveOk"  type="submit" class="btn btn-primary">Aceptar Solicitud</button>
-                                                    <button id="btnModify"  type="button" class="btn" onClick="javascript:modifyFields()">Modificar Información</button>
-                                                    <button id="btnSave"    style="display:none;" type="submit" class="btn btn-primary">Guardar</button>
-                                                    <button id="btnSaveCancel"   style="display:none;" onClick="javascript:cancelModify()" class="btn">Cancelar</button>                                                                               
-                                                </div>                                    
-                                            </div>  
-                                        <?php endif;?>
-                                    
+                                            </div>                                    
+                                        </div>
                                         <div class="form-actions">
                                             <div class="pull-right">
                                                 <?php if($disabled!='disabled'):?>
@@ -448,20 +377,6 @@
         </div>
     </div>
 </div>
-<!--
-<div class="modal fade hide modal-lg" id="MyModalSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-  <div class="modal-dialog ">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" >Nueva Dirección</h4>
-      </div>
-      <div class="modal-form i-body">             
-        <iframe class="hmodal550" id="iFrameSearch" src="" style="zoom:0" frameborder="0"></iframe>
-      </div>
-    </div>
-  </div>
-</div>   -->
 
 <div class="modal fade hide modal-lg" id="MyModalSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
   <div class="modal-dialog ">
