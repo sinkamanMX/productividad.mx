@@ -98,7 +98,7 @@
                                     <td class="text-center">
                                         <a href="javascript:showDetail(<?php echo $items['ID_SOLICITUD']; ?>)"><button class="btn btn-primary btn-mini"> <i class="icon-eye-open icon-white"></i></button></a>   
                                         <?php if($items['EDITABLE']==1 && $items['ON_TIME']==1): ?>
-                                            <?php if($items['ID_ESTATUS']=='1' || $items['ID_ESTATUS']=='4'):?>
+                                            <?php if($items['ID_ESTATUS']=='1' || $items['ID_ESTATUS']=='4' || $items['ID_ESTATUS']=='9'):?>
                                                 <a href="/leasing/request/getinfo?catId=<?php echo $items['ID_SOLICITUD']; ?>"><button class="btn btn-info btn-mini"> <i class="icon-edit icon-white"></i></button></a>   
                                                 <a href="javascript:confirmCancelSol('<?php echo $items['ID_SOLICITUD']; ?>')"><button class="btn btn-danger btn-mini"> <i class="icon-remove-sign icon-white"></i></button></a>
                                             <?php endif;?>

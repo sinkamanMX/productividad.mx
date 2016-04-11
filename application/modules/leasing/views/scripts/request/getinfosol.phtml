@@ -101,7 +101,7 @@
                                 <div class="control-group">
                                     <label class="control-label"></label>
                                     <div class="controls">
-                                        <?php if(@$this->aDataInfo['ID_ESTATUS']=="5"):?>
+                                        <?php if(@$this->aDataInfo['ID_ESTATUS']=="5" || @$this->aDataInfo['ID_ESTATUS']=="9"):?>
                                             <button id="btnSaveOk"  type="button" class="btn btn-primary" onClick="javascript:parent.acceptSol(<?php echo $this->aDataInfo['ID_SOLICITUD']; ?>)">Aceptar Solicitud</button>
                                             <button id="btnModify"  type="button" class="btn" onClick="javascript:parent.goToEdit(<?php echo $this->aDataInfo['ID_SOLICITUD']; ?>)">Modificar Información</button>
                                         <?php endif;?>

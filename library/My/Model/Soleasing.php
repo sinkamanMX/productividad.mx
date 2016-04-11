@@ -292,7 +292,7 @@ class My_Model_Soleasing extends My_Db_Table
         	$sFilter = '';	
         }else{
         	$sFilter .= (isset($data['inputHorario2']) && $data['inputHorario2']!="") ? 'ID_HORARIO2 	=  '.$data['inputHorario2'].',' : '';
-        	$data['inputEstatus'] = 5;	
+        	$data['inputEstatus'] = 9;	
         	$sFilter .= "ID_TIPO		= ".$data['inputTipo'].",        				
 						ID_HORARIO		=  ".$data['inputHorario']." ,
         				FECHA_CITA		= '".$data['inputFechaIn']."',";
@@ -320,7 +320,7 @@ class My_Model_Soleasing extends My_Db_Table
         $result['status']  = false;
         
         $sql="UPDATE $this->_name SET
-        		ID_ESTATUS		=  9 ,
+        		ID_ESTATUS		=  10 ,
         		COMENTARIO		= '".$data['sComent']."'
         		WHERE $this->_primary =".$data['catId']." LIMIT 1";
         try{            
