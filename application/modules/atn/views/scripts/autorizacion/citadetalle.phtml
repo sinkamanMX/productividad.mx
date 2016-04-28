@@ -63,7 +63,7 @@
             			<td><?php echo $this->data['REF_CITA'];?></td>		
             		</tr>             		
             	</table>
-            	<h4>Datos del Cliente</h4>
+                <span class="span12"><h4>Datos del Cliente</h4></span>            	
             	<table  class="table-striped table-bordered span12" >
                     <tr>
                         <td width="150px"><b>Nombre</b></td>
@@ -92,7 +92,8 @@
 				    	<div class="offset4">
 							<div class="">
 								<?php if(!isset($this->data['FOLIO_AUTORIZACION'])):?>
-                                    <button type="submit" class="btn btn-primary btn-large">Autorizar</button>
+                                    <!--<button type="submit" class="btn btn-primary btn-large">Pruebas de Validación</button>-->
+                                    <a class="btn btn-primary btn-large" href="/atn/autorizacion/formvalidation?strInput=<?php echo $this->data['ID_CITA'];?>">Pruebas de Validación</a>
                                 <?php else:?>
                                     <button type="button" onClick="parent.closeDetail();" class="btn btn-default btn-large">Cerrar</button>
                                 <?php endif;?>

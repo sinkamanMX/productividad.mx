@@ -485,8 +485,8 @@ class My_Model_Citas extends My_Db_Table
 	public function getResumeByDay($idSucursal,$dFechaIn,$dFechaFin,$idTecnico,$typeSearch=1){
 		$result= Array();
 		$this->query("SET NAMES utf8",false);
-		$sFilter 	 = ($idTecnico!="") ? ' C.ID_USUARIO = '.$idTecnico: ' E.ID_SUCURSAL IN ('.$idSucursal.')';
-		$sFilterDate = ($typeSearch==1)  ? "AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'" : "AND CAST(C.FECHA_INICIO  AS DATE) BETWEEN'$dFechaIn' AND '$dFechaFin'";
+		$sFilter 	 = ($idTecnico!="")  ? ' C.ID_USUARIO = '.$idTecnico: ' E.ID_SUCURSAL IN ('.$idSucursal.')';
+		$sFilterDate = ($typeSearch==1)  ? "AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'" : "AND CAST(C.FECHA_INICIO  AS DATE) BETWEEN'$dFechaIn' AND '$dFechaFin'";		
 				 		
     	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR,				
 				P.RAZON_SOCIAL AS NOMBRE_CLIENTE,C.FOLIO,
@@ -786,5 +786,79 @@ class My_Model_Citas extends My_Db_Table
         
 		return $result;			
 	}	
+	
+	public function getResumetiempo($idSucursal,$dFechaIn,$dFechaFin,$idTecnico,$typeSearch=1,$finish=0){
+		$result= Array();
+		$this->query("SET NAMES utf8",false);
+		$sFilter 	 = ($idTecnico!="")  ? ' C.ID_USUARIO = '.$idTecnico: ' E.ID_SUCURSAL IN ('.$idSucursal.')';
+		$sFilterDate = ($typeSearch==1)  ? "AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'" : "AND CAST(C.FECHA_INICIO  AS DATE) BETWEEN'$dFechaIn' AND '$dFechaFin'";
+		$sEstatus	 = ($finish==0)      ? '': 'AND C.ID_ESTATUS = 4';
+				 		
+    	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR,				
+				P.RAZON_SOCIAL AS NOMBRE_CLIENTE,C.FOLIO,
+				C.FECHA_CITA AS F_PROGRAMADA,
+				C.HORA_CITA  AS H_PROGRAMADA,
+				IF(C.FECHA_INICIO  IS NULL ,'--',C.FECHA_INICIO) AS FECHA_INICIO,
+				IF(C.FECHA_TERMINO IS NULL ,'--',C.FECHA_TERMINO) AS FECHA_TERMINO,
+				SEC_TO_TIME(TIMESTAMPDIFF(SECOND , C.FECHA_INICIO, C.FECHA_TERMINO )) AS DIF_FIN,	
+				IF(C.FECHA_ARRIBO IS NULL,'N/A', (SEC_TO_TIME(TIMESTAMPDIFF(SECOND , CONCAT(C.FECHA_CITA,' ',C.HORA_CITA), C.FECHA_ARRIBO )))) AS DIF_ARRIBO,
+				SEC_TO_TIME(TIMESTAMPDIFF(SECOND , CONCAT(C.FECHA_CITA,' ',C.HORA_CITA), C.FECHA_INICIO )) AS DIF_INICIO,							
+				IF(U.ID_USUARIO    IS NULL ,'Sin Asignar', CONCAT(U.NOMBRE,' ',U.APELLIDOS)) AS NOMBRE_TECNICO,
+				IF(C.FECHA_CITA<'2015-01-19 00:00:00','A','N') AS NEW_FORM,
+				T.DESCRIPCION AS N_TIPO,
+				IF(D.ID_CITA  IS NULL,'Sin Direccion',CONCAT(D.CALLE,' ',D.COLONIA,' ',D.NO_EXT,' ',D.NO_INT,' ',D.MUNICIPIO,' ',D.ESTADO,',CP:',D.CP)) AS DIRECCION,
+				IF(U.ID_USUARIO IS NULL,'0','1') AS TEC_ASIGNADO,
+				A.ID_USUARIO AS ID_USER,
+				IF(D.MUNICIPIO  IS NULL,'Sin Direccion',D.MUNICIPIO) AS DIR_MUN,
+				IF(D.CP  IS NULL,'Sin Direccion',D.CP) AS DIR_CP,
+				IF(D.ESTADO  IS NULL,'Sin Direccion',D.ESTADO) AS DIR_ESTADO,
+				C.TIPO_FIRMA
+				FROM PROD_CITAS C
+				LEFT JOIN PROD_CITA_DOMICILIO D ON C.ID_CITA 	 = D.ID_CITA
+				INNER JOIN PROD_ESTATUS_CITA   S ON C.ID_ESTATUS = S.ID_ESTATUS
+				INNER JOIN PROD_CLIENTES       P ON C.ID_CLIENTE = P.ID_CLIENTE
+				 LEFT JOIN PROD_CITA_USR       A ON C.ID_CITA	 = A.ID_CITA
+				 LEFT JOIN USUARIOS			   U ON A.ID_USUARIO = U.ID_USUARIO 
+				INNER JOIN PROD_TPO_CITA       T ON C.ID_TPO     = T.ID_TPO
+				WHERE C.ID_CITA IN (
+					SELECT C.ID_CITA
+					FROM PROD_CITA_USR C 
+					INNER JOIN USR_EMPRESA E ON C.ID_USUARIO = E.ID_USUARIO 
+					WHERE $sFilter
+					)
+				$sEstatus	
+				$sFilterDate
+				ORDER BY S.ID_ESTATUS";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;	
+	}	
+	
+	public function getResumenTiempos($idCita){
+		$result= Array();
+		$this->query("SET NAMES utf8",false);
+				 		
+    	$sql ="SELECT M.DESCRIPCION_PARAMETRO,
+					   M.CAMPO_BD, 
+					   R.FECHA_CAPTURA_EQUIPO AS FECHA_INICIAL, 
+					   R.FECHA_FIN_CAPTURA AS FECHA_FIN,
+					   IF(R.FECHA_FIN_CAPTURA IS NULL,'N/A', (SEC_TO_TIME(TIMESTAMPDIFF(SECOND , R.FECHA_CAPTURA_EQUIPO, R.FECHA_FIN_CAPTURA )))) AS DIF_CAPTURA	   
+				FROM PROD_FORM_RESULTADO R
+				INNER JOIN FORMULARIOS_PARAMETROS F ON R.ID_FORMULARIO = F.ID_FORMULARIO
+				INNER JOIN PARAMETROS_MEDICION    M ON F.`ID_PARAMETRO` = M.ID_PARAMETRO
+				WHERE R.ID_RESULTADO IN (
+					SELECT ID_RESULTADO
+					  FROM PROD_CITA_FORMULARIO 
+					WHERE ID_CITA = $idCita)";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;		
+	}
 	
 }

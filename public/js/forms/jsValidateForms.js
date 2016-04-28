@@ -130,6 +130,7 @@ function addFieldForm(){
     var cboStatus  = $("#divSelectStatus").html();
     var cboOptions = $("#divSelectOptions").html();
     var cboTipo    = $("#divSelectTypes").html();
+    var cboShowon  = $("#divShowon").html();
 
     $('#FormData3 tr:last').before('<tr><td>--</td>'+
                                         '<td>'+
@@ -152,12 +153,12 @@ function addFieldForm(){
                                         '</td>'+
                                         '<td>'+ 
                                             '<select class="span12"  id="inputReq'+countElement+'" name="aElements['+countElement+'][requerido]">'+
-                                                cboStatus+
+                                                cboOptions+
                                             '</select>'+
                                         '</td>'+
                                         '<td>'+ 
                                             '<select class="span12"  id="inputVal'+countElement+'" name="aElements['+countElement+'][validacion]">'+
-                                                cboStatus+
+                                                cboOptions+
                                             '</select>'+
                                         '</td>'+  
                                         '<td>'+
@@ -173,12 +174,22 @@ function addFieldForm(){
                                     '<tr id="trOptions'+countElement+'" style="background-color:#f5f5f5;display:none;">'+                                                
                                         '<td colspan="6">'+                                            
                                             '<div id="divOptions'+countElement+'" style="display:block;">'+
-                                                '<textarea id="inputOps'+countElement+'" name="aElements['+countElement+'][options]" rows="4" class="span12 no-padding"></textarea>'+
+                                                '<textarea id="inputOps'+countElement+'" name="aElements['+countElement+'][options]" rows="6" class="span12 no-padding"></textarea>'+
                                                 'Opciones (Delimitados por comas <i>ej:uno,dos,tres</i>):'+
                                             '</div>'+
                                         '</td>'+
                                         '<td colspan="3">'+
                                             '<table>'+
+                                               '<tr>'+
+                                                    '<td class="text-right" style="">'+
+                                                        'Mostrar en '+
+                                                    '</td>'+
+                                                    '<td>'+                                                        
+                                                        '<select class="span12"  id="inputShowon'+countElement+'" name="aElements['+countElement+'][showon]">'+
+                                                            cboShowon+
+                                                        '</select>'+
+                                                    '</td>'+                                                            
+                                                '</tr>'+                                            
                                                 '<tr>'+
                                                     '<td class="text-right" style="">'+
                                                         'Depende de (# elemento)'+

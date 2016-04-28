@@ -277,12 +277,22 @@
                                                 <td colspan="6">
                                                     <?php $bVisOpts = ($items['VALORES_CONFIG']!="") ? '': 'display:none;';?>
                                                     <div id="divOptions<?php echo $control;?>" style="">
-                                                        <textarea id="inputOps<?php echo $control?>" name="aElements[<?php echo $control?>][options]" rows="4" class="span12 no-padding"><?php echo $items['VALORES_CONFIG'];?></textarea>
+                                                        <textarea id="inputOps<?php echo $control?>" name="aElements[<?php echo $control?>][options]" rows="6" class="span12 no-padding"><?php echo $items['VALORES_CONFIG'];?></textarea>
                                                         Opciones (Delimitados por comas <i>ej:uno,dos,tres</i>):
                                                     </div>
                                                 </td>
                                                 <td colspan="3">
                                                     <table>
+                                                        <tr>
+                                                            <td class="text-right" style="">
+                                                                Mostrar en 
+                                                            </td>
+                                                            <td>
+                                                                <select class="span12"  id="inputShowon<?php echo $control?>" name="aElements[<?php echo $control?>][showon]">
+                                                                    <?php echo $items['cboShowon'];?>
+                                                                </select>
+                                                            </td>                                                            
+                                                        </tr>                                                        
                                                         <tr>
                                                             <td class="text-right" style="">
                                                                 Depende de (# elemento)
@@ -342,6 +352,9 @@
     <?php echo $this->selectTypes;?>
 </div>
 
+<div id="divShowon" class="hide">
+    <?php echo $this->aShowon;?>
+</div>
 
 
 <div class="modal fade hide modal-lg" id="MyModalSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >

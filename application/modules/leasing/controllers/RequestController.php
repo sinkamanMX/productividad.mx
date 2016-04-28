@@ -175,19 +175,31 @@ class leasing_RequestController extends My_Controller_Action
 													 "<b>No. Serie   :</b>".$aDataUnit['IDENTIFICADOR']."</br>".
 													 "<b>No. Contrato:</b>".$aDataUnit['IDENTIFICADOR_2'];
     				}else{
-    				    $bInsertUnit = $classObject->insertNewRowLeasing($this->dataIn);    				
-    					if($bInsertUnit['status']){	    						
-							$this->dataIn['inputUnidad']= $bInsertUnit['id'];
-							
-							$aDataUnit = $cUnidades->getData($bInsertUnit['id']);
+    					$iValidateUnit = $classObject->validateUnit($this->dataIn['inputPlacas'],$this->dataIn['inputIden'],$this->dataIn['inputIden2']);
+    					if($iValidateUnit==0){
+    						echo "llega aqui 1";
+    						$bInsertUnit = $classObject->insertNewRowLeasing($this->dataIn);    				
+	    					if($bInsertUnit['status']){	    						
+								$this->dataIn['inputUnidad']= $bInsertUnit['id'];
+								
+								$aDataUnit = $cUnidades->getData($bInsertUnit['id']);
+								$this->dataIn['inputInfo'] = "<b>Marca/Modelo:</b>".$aDataUnit['N_MARCA']."/".$aDataUnit['N_MODELO']."</br>".
+															 "<b>Color       :</b>".$aDataUnit['N_COLOR']."</br>".
+															 "<b>Placas      :</b>".$aDataUnit['PLACAS']."</br>".
+															 "<b>No. Serie   :</b>".$aDataUnit['IDENTIFICADOR']."</br>".
+															 "<b>No. Contrato:</b>".$aDataUnit['IDENTIFICADOR_2'];    						
+	    					}else{
+								$this->errors['status'] = 'no-insert';	    					    						
+	    					}    							
+    					}else{
+    						echo "llega aqui 2";
+							$aDataUnit = $cUnidades->getData($iValidateUnit);						
 							$this->dataIn['inputInfo'] = "<b>Marca/Modelo:</b>".$aDataUnit['N_MARCA']."/".$aDataUnit['N_MODELO']."</br>".
 														 "<b>Color       :</b>".$aDataUnit['N_COLOR']."</br>".
 														 "<b>Placas      :</b>".$aDataUnit['PLACAS']."</br>".
 														 "<b>No. Serie   :</b>".$aDataUnit['IDENTIFICADOR']."</br>".
 														 "<b>No. Contrato:</b>".$aDataUnit['IDENTIFICADOR_2'];    						
-    					}else{
-							$this->errors['status'] = 'no-insert';	    					    						
-    					}
+    					}    					
     				}
     				    		
     				if($this->dataIn['inputInfo']!=""){

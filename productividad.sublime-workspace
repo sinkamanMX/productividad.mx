@@ -415,6 +415,80 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "application/modules/leasing/views/scripts/request/getinfo.phtml",
+			"settings":
+			{
+				"buffer_size": 34259,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 5110 files for \"Razzon\" (regex)\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/controllers/RequestController.php:\n  779  						$aLog = Array ('idSolicitud' 	=> $this->dataIn['catId'],\n  780  										'sAction' 		=> 'Solicitud Cancelada',\n  781: 										'sDescripcion' 	=> 'Razzon de canelacion : <br>'.$this->dataIn['sComent'] ,\n  782  										'sOrigen'		=> 'USUARIO');\n  783  						$cLog->insertRow($aLog);\n\n1 match in 1 file\n",
+			"settings":
+			{
+				"buffer_size": 476,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "public/js/modules/leasing/validateSolicitudes.js",
+			"settings":
+			{
+				"buffer_size": 13545,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/leasing/views/scripts/request/getinfosol.phtml",
+			"settings":
+			{
+				"buffer_size": 8922,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/leasing/views/scripts/request/index.phtml",
+			"settings":
+			{
+				"buffer_size": 9394,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/modules/leasing/jsTableSolicitudes.js",
+			"settings":
+			{
+				"buffer_size": 4989,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/leasing/views/scripts/soldates/getinfoemp.phtml",
+			"settings":
+			{
+				"buffer_size": 33060,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/leasing/views/scripts/soldates/index.phtml",
+			"settings":
+			{
+				"buffer_size": 6352,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/modules/atn/views/scripts/request/getinfoemp.phtml",
+			"settings":
+			{
+				"buffer_size": 34600,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -440,15 +514,28 @@
 	},
 	"file_history":
 	[
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateSolicitudes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/tableSolicitudes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/leasing/jsValidateServices.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/jsTableSolicitudes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/getinfosol.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/gralTables.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/dashboard/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateSolicitudes.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/getinfoemp.phtml",
+		"/Users/itecno2/Dropbox/Tecnologizame/Clientes/JLM/Accesos.txt",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/units/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/units/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateUnits.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/views/layouts/header.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/sendMails.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/companies/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/sCalculaFirma.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/main/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/units/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/places/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/clients/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/users/getinfo.phtml",
@@ -456,19 +543,13 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/soldates/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfoemp.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/validateSolicitudes.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/leasing/jsValidateServices.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/services/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/branches/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/branches/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/places/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/units/getinfo.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateUnits.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/nueva_sol_Leasing.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/soldates/getinfoemp.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/functionGral.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/companies/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/info/controllers/MainController.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/controllers/CompaniesController.php",
@@ -482,7 +563,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/info/jsValidateServices.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/users/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/dashboard/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/reporte_siames/registerSap.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/contacts/views/scripts/main/activation.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/mt/srv_imeis_mt.php",
@@ -528,7 +608,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/marketing/listClientesSap.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/marketing/listUnits.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/gralTables.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/processunits.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/processuntis.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/public/validateSolicitudes.js",
@@ -562,12 +641,7 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/forms/views/scripts/main/searchicons.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/phones/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/validatePhones.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/forms/jsValidateForms.js'",
-		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Model/Unidades.php",
-		"/Users/itecno2/Downloads/Orden_Servicio_6342-1.pdf",
-		"/Users/itecno2/Downloads/Orden_Servicio_6342-6.pdf",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/PHPExcel/Classes/dompdf/include/image_cache.cls.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/productividad.sublime-workspace"
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/forms/jsValidateForms.js'"
 	],
 	"find":
 	{
@@ -575,7 +649,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"/Users/itecno2/Documents/workspace/productividad.mx",
@@ -589,6 +663,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Razzon",
+			"disabled",
+			"showOpts",
 			">",
 			"/leasing/branches/",
 			"spanTravelsPen",
@@ -713,10 +790,7 @@
 			"grupouda.com.mx",
 			"mail",
 			"external",
-			"/main/activos",
-			"/atn/",
-			"padding-top",
-			"loading.gif"
+			"/main/activos"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -787,8 +861,282 @@
 	"groups":
 	[
 		{
+			"selected": 5,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "application/modules/leasing/views/scripts/request/getinfo.phtml",
+					"settings":
+					{
+						"buffer_size": 34259,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								445,
+								445
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"settings":
+					{
+						"buffer_size": 476,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										320,
+										326
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/js/modules/leasing/validateSolicitudes.js",
+					"settings":
+					{
+						"buffer_size": 13545,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8212,
+								8212
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3263.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "application/modules/leasing/views/scripts/request/getinfosol.phtml",
+					"settings":
+					{
+						"buffer_size": 8922,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6644,
+								6644
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 265.0,
+						"translation.y": 1384.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "application/modules/leasing/views/scripts/request/index.phtml",
+					"settings":
+					{
+						"buffer_size": 9394,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7145,
+								7145
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "public/js/modules/leasing/jsTableSolicitudes.js",
+					"settings":
+					{
+						"buffer_size": 4989,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3613,
+								3613
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1360.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "application/modules/leasing/views/scripts/soldates/getinfoemp.phtml",
+					"settings":
+					{
+						"buffer_size": 33060,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								16346,
+								16346
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "application/modules/leasing/views/scripts/soldates/index.phtml",
+					"settings":
+					{
+						"buffer_size": 6352,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1468,
+								1468
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "application/modules/atn/views/scripts/request/getinfoemp.phtml",
+					"settings":
+					{
+						"buffer_size": 34600,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								14668,
+								14668
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

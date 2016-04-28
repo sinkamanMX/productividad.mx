@@ -160,7 +160,7 @@ class My_Model_Formularios extends My_Db_Table
     	$result     = Array();    	
     	try{ 
     		$sql = "SELECT R.ID_ELEMENTO, R.ORDEN, E.DESCIPCION AS N_ELEMENTO, E.ACTIVO,E.VALORES_CONFIG, E.REQUERIDO, T.`DESCRIPCION` AS TIPO, E.`DEPENDE`, E.`ESPERA`, E.`VALIDAR_LOCAL`,
-    				E.ID_TIPO
+    				E.ID_TIPO, E.ON_DEVICE
 					FROM PROD_FORMULARIO_ELEMENTOS R
 					INNER JOIN PROD_ELEMENTOS 	   E ON R.ID_ELEMENTO = E.ID_ELEMENTO
 					INNER JOIN PROD_TPO_ELEMENTO   T ON E.`ID_TIPO`   = T.ID_TIPO
@@ -197,7 +197,8 @@ class My_Model_Formularios extends My_Db_Table
 					REQUERIDO		='".@$aDataElement['requerido']."',
 					VALIDAR_LOCAL	='".@$aDataElement['validacion']."',
 					DEPENDE			= ".(($aDataElement['depend']=="") ? 'NULL': $aDataElement['depend']).",
-					ESPERA 			='".$aDataElement['when']."'";
+					ESPERA 			='".$aDataElement['when']."',
+					ON_DEVICE		='".@$aDataElement['showon']."'";
         try{            
     		$query   = $this->query($sql,false);
     		$sql_id ="SELECT LAST_INSERT_ID() AS ID_LAST;";
@@ -267,7 +268,8 @@ class My_Model_Formularios extends My_Db_Table
 					REQUERIDO		='".@$aDataElement['requerido']."',
 					VALIDAR_LOCAL	='".@$aDataElement['validacion']."',
 					DEPENDE			= ".(($aDataElement['depend']=="") ? 'NULL': $aDataElement['depend']).",
-					ESPERA 			='".$aDataElement['when']."'
+					ESPERA 			='".$aDataElement['when']."',
+					ON_DEVICE		='".@$aDataElement['showon']."'
 			WHERE ID_ELEMENTO = ".$aDataElement['id']." LIMIT 1";				        
 		try{            
     		$query   = $this->query($sql,false);
@@ -344,5 +346,35 @@ class My_Model_Formularios extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;
-    }  	
+    }  
+
+	/**
+	 * 
+	 * Obtiene los elementos de un formulario
+	 * @param int $idObject
+	 * @param int $idEmpresa
+	 */
+    public function getElementosResult($idObject){
+    	$result     = Array();    	
+    	try{ 
+    		$sql = "SELECT R.ID_ELEMENTO, R.ORDEN, E.DESCIPCION AS N_ELEMENTO, E.ACTIVO,E.VALORES_CONFIG, E.REQUERIDO, T.`DESCRIPCION` AS TIPO, E.`DEPENDE`, E.`ESPERA`, E.`VALIDAR_LOCAL`,
+    				E.ID_TIPO, E.ON_DEVICE
+					FROM PROD_FORMULARIO_ELEMENTOS R
+					INNER JOIN PROD_ELEMENTOS 	   E ON R.ID_ELEMENTO = E.ID_ELEMENTO
+					INNER JOIN PROD_TPO_ELEMENTO   T ON E.`ID_TIPO`   = T.ID_TIPO
+					WHERE ID_FORMULARIO = $idObject
+					  AND E.ON_DEVICE IN (0,2)		
+					  AND ACTIVO = 'S'			
+					ORDER BY R.ORDEN ASC";    		
+			$query   = $this->query($sql);
+			if(count($query)>0){		  
+				$result = $query;			
+			}	
+	        
+			return $result;			
+    	}catch(Exception $e) {
+            echo $e->getMessage();
+            echo $e->getErrorMessage();
+        }
+    }    
 }

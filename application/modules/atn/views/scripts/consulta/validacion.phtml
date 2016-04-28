@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">    	
+		<div class="">
+			<?php if(count($this->aDataInfo)>0):?>
+				<table  class="table-striped table-bordered " >     
+					<tr>
+						<th class="span6">Pregunta</th>
+						<th class="span6">Respuesta</th>
+					</tr>
+	            <?php foreach($this->aDataInfo as $key => $items):?>
+	            	<tr>
+	            		<td ><?php echo $items['DESCRIPCION'];?></td>
+	            		<td ><?php echo $items['CONTESTACION'];?></td>
+	            	</tr>
+	        	<?php endforeach;?>
+				</table>
+			<?php else:?>
+				<h4>No se ha capturado la infomación</h4>
+			<?php endif;?> 
+		</div>
+	</div>
+</div>	

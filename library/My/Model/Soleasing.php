@@ -436,7 +436,25 @@ class My_Model_Soleasing extends My_Db_Table
             echo $e->getErrorMessage();
         }
 		return $result;	      	
-    }      
+    }
+    
+    public function validateUnit($plaque,$identtificador,$identificador2){
+    	$iTotal = 0;
+    	$sql = "SELECT COUNT(ID_UNIDAD) AS TOTAL, ID_UNIDAD
+				FROM PROD_UNIDADES S
+				WHERE PLACAS 			= $plaque 
+				  AND IDENTIFICADOR 	= $identtificador
+				  AND IDENTIFICADOR_2 	= $identificador2";
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$iTotal	 = $query[0]['TOTAL'];
+			if($iTotal>0){
+				$iTotal = $query[0]['ID_UNIDAD'];
+			}
+		}
+        
+		return $iTotal;	     	
+    }
 }
 
 ?>

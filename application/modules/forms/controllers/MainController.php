@@ -87,6 +87,9 @@ class forms_MainController extends My_Controller_Action
 			$sClienteSap  = '';
 			$aTipos		  = Array();   
 			$aClientesSap = $cSapClientes->getCbo();
+			$aShowon	  = Array(array('id'=>'1','name'=>'Dispositivo'),
+								  array('id'=>'0','name'=>'Web'),
+								  array('id'=>'2','name'=>'Ambos'));
 
 			if($this->idToUpdate>0){
 				$aDataInfo 	  = $cFormularios->getData($this->idToUpdate);				
@@ -212,6 +215,7 @@ class forms_MainController extends My_Controller_Action
     		$this->view->selectOptions = $cFunctions->cboStatusYesNo();
     		$this->view->selectTypes   = $cFunctions->selectDb($aTipos,'');
     		$this->view->aClientesSap  = $cFunctions->selectDb($aClientesSap,$sClienteSap);
+    		$this->view->aShowon	   = $cFunctions->cbo_from_array($aShowon,1);
 		} catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
@@ -224,13 +228,18 @@ class forms_MainController extends My_Controller_Action
 		$cTipos			= new My_Model_TipoFormularios();
 		$sFiltro 		= ($tiFormulario=='S') ? 0 : 1;
 		$aTipos			= $cTipos->getCbo($sFiltro);
+		$aShowon	  = Array(array('id'=>'1','name'=>'Dispositivo'),
+							  array('id'=>'0','name'=>'Web'),
+							  array('id'=>'2','name'=>'Ambos'));		
 		$aResult = Array();
+		
 		
 		foreach($aElements as $key => $items){
 			$items['cboStatus'] = $cFunctions->cboStatusString($items['ACTIVO']);
 			$items['cboReq']	= $cFunctions->cboStatusYesNo($items['REQUERIDO']);
 			$items['cboVal']	= $cFunctions->cboStatusYesNo($items['VALIDAR_LOCAL']);
 			$items['cboTipo']	= $cFunctions->selectDb($aTipos,$items['ID_TIPO']);
+			$items['cboShowon']	= $cFunctions->cbo_from_array($aShowon,$items['ON_DEVICE']);
 			$aResult[] = $items;
 		}
 		
