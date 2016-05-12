@@ -300,7 +300,7 @@ class external_RequestController extends My_Controller_Action
 			}	
 			
 			if($this->resultop=='okRegister'){
-				/*$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+				$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
 				$aDataAdmin = $config->getOption('admin');					
 				$cMailing   = new My_Model_Mailing();
 				$aMailer    = Array(
@@ -315,9 +315,7 @@ class external_RequestController extends My_Controller_Action
 				);	
 
 				$cMailing->insertRow($aMailer);		
-				*/						
-				//$cFunctions->sendMailAdmins($sSubject,$sBody);
-					
+				//$cFunctions->sendMailAdmins($sSubject,$sBody);					
 				$this->_redirect('/external/request/index');				
 			}
 
