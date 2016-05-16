@@ -123,6 +123,7 @@ class atn_RequestController extends My_Controller_Action
 			$cLog			= new My_Model_LogSolicitudes();
 			$aLogs			= Array();
 			$cHtmlMail		= new My_Controller_Htmlmailing();	
+			$cNotifications = new My_Model_Notificaciones();
 			
 			$sTipo			= '';
 			$sHorario		= '';
@@ -179,6 +180,7 @@ class atn_RequestController extends My_Controller_Action
 											'sDescripcion' 	=> 'La solicitud ha sido aceptada por CCUDA',
 											'sOrigen'		=> 'CCUDA');
 							$cLog->insertRow($aLog);
+							$cNotifications->insertRow($this->idToUpdate,'Solicitud Aceptada');
 						}else{
 							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
 							$cHtmlMail->changeSolicitudExt($dataInfo,$this->view->dataUser);
@@ -187,7 +189,8 @@ class atn_RequestController extends My_Controller_Action
 											'sAction' 		=> 'Cambio en la Solicitud',
 											'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones,
 											'sOrigen'		=> 'CCUDA');
-							$cLog->insertRow($aLog);																		
+							$cLog->insertRow($aLog);
+							$cNotifications->insertRow($this->idToUpdate,'Cambio en la Solicitud');
 						}
 						
 						$this->resultop = 'okRegister';
@@ -241,7 +244,8 @@ class atn_RequestController extends My_Controller_Action
 			$aUnidades		= $cUnidades->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
 			$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);
 			$cHtmlMail		= new My_Controller_Htmlmailing();	
-			$aTipoEquipo	= $cTipoEquipo->getCbo();	
+			$aTipoEquipo	= $cTipoEquipo->getCbo();
+			$cNotifications = new My_Model_Notificaciones();	
 			
 			$sTipo			= '';
 			$sHorario		= '';
@@ -324,7 +328,8 @@ class atn_RequestController extends My_Controller_Action
 											'sAction' 		=> 'Solicitud Aceptada',
 											'sDescripcion' 	=> 'La solicitud ha sido aceptada por CCUDA',
 											'sOrigen'		=> 'CCUDA');
-							$cLog->insertRow($aLog);			
+							$cLog->insertRow($aLog);	
+							$cNotifications->insertRow($this->idToUpdate,'Solicitud Aceptada');		
 						}else{
 							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
 							$cHtmlMail->changeSolicitudArrenda($dataInfo,$this->view->dataUser);
@@ -349,7 +354,8 @@ class atn_RequestController extends My_Controller_Action
 											'sAction' 		=> 'Cambio en la Solicitud',
 											'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones,
 											'sOrigen'		=> 'CCUDA');
-							$cLog->insertRow($aLog);																		
+							$cLog->insertRow($aLog);					
+							$cNotifications->insertRow($this->idToUpdate,'Cambio en la Solicitud');														
 						}
 						/*
 						$aMailer    = Array(

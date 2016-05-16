@@ -430,6 +430,24 @@
 				"buffer_size": 4307,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "application/modules/leasing/views/scripts/request/index.phtml",
+			"settings":
+			{
+				"buffer_size": 9394,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 5118 files for \"tempIntNuevo\" (regex)\n\n/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Htmlmailing.php:\n   38  		\n   39  		ob_start();\n   40: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n   41  		$lBodyUda = ob_get_clean();	\n   42  		\n   ..\n   90  		$cMailing   = new My_Model_Mailing();		\n   91  		ob_start();\n   92: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n   93  		$lBodyUda = ob_get_clean();	\n   94  		\n   ..\n  158  		\n  159  		ob_start();\n  160: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n  161  		$lBodyUda = ob_get_clean();	\n  162  		\n  ...\n  236  		\n  237  		ob_start();\n  238: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n  239  		$lBodyUda = ob_get_clean();	\n  240  		\n\n/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Maileasing.php:\n  117  		\n  118  		ob_start();\n  119: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n  120  		$lBodyUda = ob_get_clean();	\n  121  		\n  ...\n  153  		$cMailing   = new My_Model_Mailing();		\n  154  		ob_start();\n  155: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n  156  		$lBodyUda = ob_get_clean();	\n  157  		\n  ...\n  218  \n  219  		ob_start();\n  220: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n  221  		$lBodyUda = ob_get_clean();	\n  222  		\n  ...\n  335  		\n  336  		ob_start();\n  337: 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');\n  338  		$lBodyUda = ob_get_clean();	\n  339  		\n\n/Users/itecno2/Documents/workspace/productividad.mx/productividad.sublime-workspace:\n  578  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_gracias.html\",\n  579  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_nueva.html\",\n  580: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tempIntNuevo.html\",\n  581: 		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tempIntNuevo_ext.html\",\n  582  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitd_aceptada ext.html\",\n  583  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/js/main/jsValidateTequipos.js\",\n\n10 matches across 3 files\n\n\nSearching 5118 files for \"Htmlmailing\" (regex)\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/AutorizacionController.php:\n   72  						$response = $cHttpService->request();\n   73  \n   74: 						$cHtmlMail		= new My_Controller_Htmlmailing();							\n   75  						$cHtmlMail->notif_autorizacion($dataDate,$this->view->dataUser);\n   76  						\n   ..\n  181  									$response = $cHttpService->request();\n  182  			\n  183: 									$cHtmlMail		= new My_Controller_Htmlmailing();							\n  184  									$cHtmlMail->notif_autorizacion($dataDate,$this->view->dataUser);\n  185  									\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/RequestController.php:\n  123  			$cLog			= new My_Model_LogSolicitudes();\n  124  			$aLogs			= Array();\n  125: 			$cHtmlMail		= new My_Controller_Htmlmailing();	\n  126  			\n  127  			$sTipo			= '';\n  ...\n  241  			$aUnidades		= $cUnidades->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);\n  242  			$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);\n  243: 			$cHtmlMail		= new My_Controller_Htmlmailing();	\n  244  			$aTipoEquipo	= $cTipoEquipo->getCbo();	\n  245  			\n  ...\n  303  						if($this->dataIn['bOperation']=='accept'){\n  304  							\n  305: 							/*$cHtmlMail		= new My_Controller_Htmlmailing();	\n  306  							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';\n  307  							$sBody     .= 'La solicitud ha sido aceptada con la siguiente informaci&oacute;n:<br/>'.\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/RevisionController.php:\n   85  			$cLog			= new My_Model_LogSolicitudes();\n   86  			$aLogs			= Array();\n   87: 			$cHtmlMail		= new My_Controller_Htmlmailing();	\n   88  			\n   89  			$sTipo			= '';\n   ..\n  203  			$aUnidades		= $cUnidades->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);\n  204  			$aSucursales	= $cSucursales->getCbobyEmp($this->view->dataUser['ID_EMPRESA']);\n  205: 			$cHtmlMail		= new My_Controller_Htmlmailing();	\n  206  			$aTipoEquipo	= $cTipoEquipo->getCbo();	\n  207  			\n  ...\n  265  						if($this->dataIn['bOperation']=='accept'){\n  266  							\n  267: 							/*$cHtmlMail		= new My_Controller_Htmlmailing();	\n  268  							$sBody  	= 'Se ha revisado la solicitud de cita (con el #'.$this->idToUpdate.') en el sistema de Siames<br/>';\n  269  							$sBody     .= 'La solicitud ha sido aceptada con la siguiente informaci&oacute;n:<br/>'.\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/controllers/ReceiveController.php:\n   13      		\n   14      		$cSolicitudes	= new My_Model_Solicitudes();    		\n   15:     		$cHtmlMail		= new My_Controller_Htmlmailing();\n   16      		$cLog			= new My_Model_LogSolicitudes();\n   17      		$dataInfo		= Array();\n\n/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/controllers/RequestController.php:\n   84  			$sUnidad		= '';\n   85  			$aLogs			= Array();\n   86: 			$cHtmlMail		= new My_Controller_Htmlmailing();		\n   87  			\n   88  			$this->dataIn['inputCliente'] = $this->view->dataUser['ID_CLIENTE'];			\n\n/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Htmlmailing.php:\n    1  <?php\n    2: class My_Controller_Htmlmailing\n    3  {\n    4  	public $realPath='/var/www/vhosts/sima/htdocs/public';\n\n/Users/itecno2/Documents/workspace/productividad.mx/productividad.sublime-workspace:\n  540  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/tSolicitud_gracias.html\",\n  541  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/endProcess.php\",\n  542: 		\"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Htmlmailing.php\",\n  543  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tNotification_aut.html\",\n  544  		\"/Users/itecno2/Documents/workspace/productividad.mx/public/libs/fullcalendar/fullcalendar.js\",\n  ...\n  674  			\"no-mar\",\n  675  			\"Unidad\",\n  676: 			\"Htmlmailing\",\n  677  			\"/atn/revision\",\n  678  			\"revision\",\n\n13 matches across 7 files\n",
+			"settings":
+			{
+				"buffer_size": 6449,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
 		}
 	],
 	"build_system": "",
@@ -456,6 +474,7 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Htmlmailing.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/Reptiempos.php",
@@ -539,7 +558,6 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/sendMails.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/tSolicitud_gracias.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/cron_mailing/endProcess.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Htmlmailing.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tNotification_aut.html",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/libs/fullcalendar/fullcalendar.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/mainAtn.js",
@@ -591,7 +609,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"/Users/itecno2/Documents/workspace/productividad.mx",
@@ -605,6 +623,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Htmlmailing",
+			"tempIntNuevo",
 			"OFFSET",
 			"text",
 			"right",
@@ -730,9 +750,7 @@
 			"margin-l",
 			"no-margin",
 			"offset",
-			"prop",
-			"sendMailAdmins",
-			"sendMailSmtp"
+			"prop"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -803,7 +821,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -858,7 +876,167 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1464.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "application/modules/leasing/views/scripts/request/index.phtml",
+					"settings":
+					{
+						"buffer_size": 9394,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6531,
+								6531
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1821.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"settings":
+					{
+						"buffer_size": 6449,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										219,
+										231
+									],
+									[
+										412,
+										424
+									],
+									[
+										566,
+										578
+									],
+									[
+										720,
+										732
+									],
+									[
+										959,
+										971
+									],
+									[
+										1152,
+										1164
+									],
+									[
+										1304,
+										1316
+									],
+									[
+										1458,
+										1470
+									],
+									[
+										1909,
+										1921
+									],
+									[
+										2011,
+										2023
+									],
+									[
+										2545,
+										2556
+									],
+									[
+										2778,
+										2789
+									],
+									[
+										3133,
+										3144
+									],
+									[
+										3408,
+										3419
+									],
+									[
+										3610,
+										3621
+									],
+									[
+										4090,
+										4101
+									],
+									[
+										4365,
+										4376
+									],
+									[
+										4567,
+										4578
+									],
+									[
+										5050,
+										5061
+									],
+									[
+										5369,
+										5380
+									],
+									[
+										5611,
+										5622
+									],
+									[
+										6072,
+										6083
+									],
+									[
+										6359,
+										6370
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								3496,
+								3496
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1559.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
