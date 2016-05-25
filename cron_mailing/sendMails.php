@@ -20,7 +20,7 @@
 	
   	$sql = "SELECT *
     		FROM SYS_MAILING
-        	WHERE ESTATUS = 0 LIMIT 30"; 
+        	WHERE ESTATUS = 0  LIMIT 30"; 
   	$query = mysqli_query($conexion, $sql);
   	$count = 0;
 	while($result = mysqli_fetch_array($query)){
@@ -29,15 +29,26 @@
 
 		$aDestinos = explode(",",$result['DESTINATARIOS']);
 		$aNDestino = explode(",",$result['NOMBRES_DESTINATARIOS']);
+		
+		var_dump($aDestinos);
+		var_dump($aNDestino);		
 
 		for($i=0;$i<count($aDestinos);$i++){
 			if($count==0){
-				$mail->AddAddress($aDestinos[$i], $aNDestino[$i]);
+				if (filter_var($aDestinos[$i], FILTER_VALIDATE_EMAIL) && validate_email($aDestinos[$i])) {
+					$mail->AddAddress($aDestinos[$i], $aNDestino[$i]);    
+				}else{
+					setMarkRow($result['ID_MAILING']);
+				}
 			}else{
-				$mail->addBCC($aDestinos[$i], $aNDestino[$i]);
+				if (filter_var($aDestinos[$i], FILTER_VALIDATE_EMAIL) && validate_email($aDestinos[$i])) {
+					$mail->addBCC($aDestinos[$i], $aNDestino[$i]);
+				}else{
+					setMarkRow($result['ID_MAILING']);
+				}
 			}
 			$count++;
-		}		
+		}
 					
 		//Definimos el tema del email
 		$mail->Subject = $result['TITULO_MSG'];
@@ -48,10 +59,14 @@
 
 		//Enviamos el correo
 		if(!$mail->Send()) {
-		  echo "Error: " . $mail->ErrorInfo;
+		  	echo 'Message could not be sent.';
+        	echo 'Mailer Error: ' . $mail->ErrorInfo;
+        	setMarkRowError($result['ID_MAILING']);
 		} else {
 		  setMarkRow($result['ID_MAILING']);
-		}			
+		}
+
+		$mail->ClearAllRecipients();
 	}
 
   	function setMarkRow($idOject){
@@ -68,3 +83,22 @@
 	    }
 	    return $result;   
   	}
+
+  	function setMarkRowError($idOject){
+	    global $conexion;
+	    $result = false;
+	      $sql ="UPDATE SYS_MAILING 
+	            SET ESTATUS 		= -3,
+	      			FECHA_ENVIADO   = CURRENT_TIMESTAMP
+	            WHERE 	ID_MAILING 	= $idOject	            		
+	            LIMIT 1";
+	    $query  = mysqli_query($conexion, $sql);
+	    if($query){
+	      $result= true;
+	    }
+	    return $result;   
+  	}  	
+
+	function validate_email($e){
+	    return (bool)preg_match("`^[a-z0-9!#$%&'*+\/=?^_\`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$`i", trim($e));
+	}  	

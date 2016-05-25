@@ -50,7 +50,8 @@ class My_Model_Mailing extends My_Db_Table
 				LEFT JOIN PROD_CLIENTES        C ON S.ID_CLIENTE   = C.ID_CLIENTE
 				WHERE LIVE_NOTIFICATION = 1
 				  AND LEIDO      		= 0
-				  AND S.ID_ESTATUS 		= 6
+				  AND M.TITULO_MSG     != ''
+				  AND S.ID_ESTATUS     IN (1,4,8)
 				  ORDER BY M.FECHA_CREADO DESC";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
