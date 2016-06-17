@@ -1,3 +1,8 @@
+var map = null;
+var infoWindow;
+var markers = [];
+var bounds;
+
 $().ready(function() {
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
@@ -139,4 +144,45 @@ function closeSol(){
     $("#closetxt").show('slow');
     $(".closeBtun").hide('slow');
     $("#btnCloseok").show('slow');
+}
+
+function reDrawMap(){
+    if(map ==null){
+        initMapToDraw();    
+    }else{
+        setTimeout('resize()', 500);
+    }
+}
+
+function resize(){
+    google.maps.event.trigger(map,'resize');
+    map.setCenter(map.getCenter()); 
+    map.setZoom( map.getZoom() );
+}
+
+function initMapToDraw(){
+    infoWindow = new google.maps.InfoWindow;
+    var mapOptions = {
+      zoom: 5,
+      center: new google.maps.LatLng(24.52713, -104.41406),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('Map'),mapOptions);
+    bounds = new google.maps.LatLngBounds();
+    printPoints();
+}
+
+function printPoints(){
+    var Latitud  = parseFloat($("#inputLatitud").val())
+    var Longitud = parseFloat($("#inputLontigud").val());
+
+    markerTable = new google.maps.Marker({
+      map: map,
+      position: new google.maps.LatLng(Latitud,Longitud),
+      title:  'ubicacion',
+      icon:   '/images/marker.png'
+    });
+
+    map.setZoom(13);
+    map.panTo(markerTable.getPosition());  
 }
