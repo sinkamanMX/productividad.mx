@@ -52,20 +52,52 @@ class external_RequestController extends My_Controller_Action
 
     public function indexAction()
     {
-		try{    		 
+		try{
 			$cFunciones		= new My_Controller_Functions();			
 			$cSolicitudes	= new My_Model_Solicitudes();
+			$dataResume     = array();
+
+			$dFechaIn		= '';
+			$dFechaFin		= '';
+			$bShowUsers		= false;
+			$aTypeSearch	= Array(
+								array("id"=>"-1",'name'=>'Todos' ),
+								array("id"=>"1" ,'name'=>'Pendiente' ),
+								array("id"=>"2" ,'name'=>'Aceptado'  ),
+								array("id"=>"7" ,'name'=>'Atendida') );
+			$bType 			= -1;	
+			$idCliente		= $this->view->dataUser['ID_CLIENTE'];						
 			
-			$idCliente		= $this->view->dataUser['ID_CLIENTE'];
-			$this->view->dataTable    = $cSolicitudes->getDataTablebyClient($idCliente,'1,4');
-			$this->view->dataTableRev = $cSolicitudes->getDataTablebyClient($idCliente,5);
-			$this->view->dataTableOk  = $cSolicitudes->getDataTablebyClient($idCliente,2);
+			if(isset($this->dataIn['optReg']) && $this->dataIn['optReg']){
+				$dFechaIn	= $this->dataIn['inputFechaIn'];
+				$dFechaFin	= $this->dataIn['inputFechaFin'];				
+				$bType		= $this->dataIn['cboTypeSearch'];				
+				$bShowUsers=true;
+			}else{
+				$fecha = date('Y-m-d');
+				
+				$dFechaIn = strtotime ( '-5 day' , strtotime ( $fecha ) ) ;
+				$dFechaIn = date ( 'Y-m-d' , $dFechaIn );				
+				
+				$dFechaFin = strtotime ( '+10 day' , strtotime ( $fecha ) ) ;
+				$dFechaFin = date ( 'Y-m-d' , $dFechaFin );
+
+				$this->dataIn['inputFechaIn']  = $dFechaIn;
+				$this->dataIn['inputFechaFin'] = $dFechaFin;				
+				$bShowUsers=true;
+			}			
+			
+			$dataResume     = $cSolicitudes->fnGetSolByClient($dFechaIn,$dFechaFin,$idCliente,$bType);	
+			$this->view->aTypeSearchs	= $cFunciones->cbo_from_array($aTypeSearch,$bType);	
+			$this->view->dataResume	 	= $dataResume;
+			$this->view->data 			= $this->dataIn;			
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
         	echo "Message: " . $e->getMessage() . "\n";                
         }
     }
-
+	    
+   
     public function getinfoAction(){    
     	try{    		 
 			$dataInfo = Array();
@@ -341,7 +373,7 @@ class external_RequestController extends My_Controller_Action
         	echo "Message: " . $e->getMessage() . "\n";                
         }
     }
-
+	
     public function getinfodataAction(){
 		try{
 			$answer = Array('answer' => 'no-data');
@@ -449,4 +481,5 @@ class external_RequestController extends My_Controller_Action
         	echo "Message: " . $e->getMessage() . "\n";                
         }		
     }
+
 }

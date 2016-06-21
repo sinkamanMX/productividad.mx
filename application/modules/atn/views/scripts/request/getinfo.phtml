@@ -1,3 +1,4 @@
+<?php $this->headScript()->appendFile('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false') ?>
 <?php $this->headScript()->appendFile('/js/atn/validateSolicitudes.js') ?>  
 <?php $disabled = (@$this->data['ID_ESTATUS']!=1) ? 'disabled':'';?>
 <div class="row panel-data">
@@ -15,7 +16,10 @@
 
                     <ul id="tabs" class="nav nav-tabs bg-white" data-tabs="tabs">
                         <li class="active"><a href="#tab" data-toggle="tab">Información General</a></li>
-                        <li><a href="#tab2" data-toggle="tab">Log de Acciones</a></li>
+                        <?php if(@$this->data['LATITUD']!="" && @$this->data['LONGITUD']!="" ):?>
+                        <li><a href="#tab2" onClick="reDrawMap()" data-toggle="tab">Mapa Ubicación</a></li>
+                        <?php endif;?>
+                        <li><a href="#tab3" data-toggle="tab">Log de Acciones</a></li>
                     </ul>
 
                     <div id="my-tab-content" class="tab-content bg-white">
@@ -89,29 +93,26 @@
                                             </div>                                    
                                         </div> 
 
-                                        <!--
+                                        <?php if(@$this->data['LATITUD']!="" && @$this->data['LONGITUD']!="" ):?>
                                         <div class="row row-margin-left25">    
                                             <div class="span6">
                                                 <div class="control-group">
-                                                    <label class="control-label">Unidad<span class="required">*</span></label>
+                                                    <label class="control-label">Lugar:</label>
                                                     <div class="controls">
-                                                        <select class="m-wrap" name="inputUnidad" id="inputUnidad" disabled onClick="getInfoUnit(this.value);" >
-                                                            <option value="">Seleccionar una opción</option>
-                                                            <?php echo $this->aUnidades;?>
-                                                        </select>
+                                                        <div ><?php echo @$this->data['DIRECCION_COMPLETA']; ?></div>
                                                     </div>
                                                 </div>                                                
                                             </div>
                                             <div class="span6">                                                
                                                 <div class="control-group">
-                                                    <label class="control-label">Comentarios<span class="required">*</span></label>
+                                                    <label class="control-label">Latitud/Longitud</label>
                                                     <div class="controls">
-                                                        <textarea name="inputComment" id="inputComment" rows="5"  <?php echo $disabled;?> ><?php echo @$this->data['COMENTARIO']; ?></textarea>
+                                                        <div ><?php echo @$this->data['LATITUD']." , ".@$this->data['LONGITUD']; ?></div>
                                                     </div>
                                                 </div>                                           
                                             </div>                                    
                                         </div>
-                                        -->    
+                                        <?php endif;?>
 
                                         <div class="row row-margin-left25">    
                                             <div class="span6">
@@ -178,7 +179,36 @@
                             <?php endif;?>
                             <!-- END FORM-->      
                         </div>
+                        
+                        <?php if(@$this->data['LATITUD']!="" && @$this->data['LONGITUD']!="" ):?>
                         <div class="tab-pane" id="tab2">
+                            <input type="hidden" id="inputLatitud"  name="inputLatitud"  value="<?php echo @$this->data['LATITUD'];?>"  />
+                            <input type="hidden" id="inputLontigud" name="inputLontigud" value="<?php echo @$this->data['LONGITUD'];?>" />
+                            
+                            <div class="row row-margin-left25">    
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label"><b>Lugar:</b></label>
+                                        <div class="controls">
+                                            <div ><?php echo @$this->data['DIRECCION_COMPLETA']; ?></div>
+                                        </div>
+                                    </div>                                                
+                                </div>
+                                <div class="span6">                                                
+                                    <div class="control-group">
+                                        <label class="control-label"><b>Latitud/Longitud</b></label>
+                                        <div class="controls">
+                                            <div ><?php echo @$this->data['LATITUD']." , ".@$this->data['LONGITUD']; ?></div>
+                                        </div>
+                                    </div>                                           
+                                </div>                                    
+                            </div>                            
+                            <div id="Map" style="width:100%;height:350px;">
+
+                            </div> 
+                        </div>                        
+                        <?php endif;?> 
+                        <div class="tab-pane" id="tab3">
                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable" >
                                 <thead>
                                     <tr>

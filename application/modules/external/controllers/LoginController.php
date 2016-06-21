@@ -45,13 +45,12 @@ class external_LoginController extends My_Controller_Action
 	        if(isset($data['usuario']) && isset($data['contrasena'])){
 	        	$validate = $usuarios->validateUser($data); 
 	        	$bAnswer  = false;
-	        	
 	        	if(isset($validate['ID_CONTACTO_QR'])){
 					 $dataUser = $usuarios->getDataUser($validate['ID_CONTACTO_QR']);
 				     $sessions = new My_Controller_AuthContact();
 	                 $sessions->setContentSession($dataUser);
 	                 $sessions->startSession();
-	                 $usuarios->setLastAccess($dataUser);
+	                 //$usuarios->setLastAccess($dataUser);
 				     $answer = Array('answer' => 'logged','source'=>'contact');
 				     
 				     $bAnswer= true;				     

@@ -90,10 +90,16 @@ class atn_RequestController extends My_Controller_Action
 				$bType		= $this->dataIn['cboTypeSearch'];				
 				$bShowUsers=true;
 			}else{
+				$fecha = date('Y-m-d');
+				$nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
+				$nuevafecha = date ( 'Y-m-d' , $nuevafecha );				
+				
 				$dFechaIn	= Date('Y-m-d');
-				$dFechaFin	= Date('Y-m-d');
+				$dFechaFin	= $nuevafecha;	
+
+				$this->dataIn['inputFechaIn']  = $dFechaIn;
+				$this->dataIn['inputFechaFin'] = $dFechaFin;				
 				$bShowUsers=true;
-				$idSucursal		= "";	
 			}			
 			
 			$dataResume     = $cSolicitudes->getResumeByDay($dFechaIn,$dFechaFin,-1,$bType);	
