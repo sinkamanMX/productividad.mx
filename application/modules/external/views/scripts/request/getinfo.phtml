@@ -3,8 +3,6 @@
 <?php $disabled = (@$this->data['ID_ESTATUS']==2 || @$this->data['ID_ESTATUS']==5 || @$this->data['ID_ESTATUS']==4) ? 'disabled':'';?>
 <div class="row panel-data">
     <input id="hRefLinkMain" type="hidden" value="/external/request/index" />
-    <input type="hidden" id="inputLatitud"  name="inputLatitud"  value="<?php echo @$this->data['LATITUD'];?>"  />
-    <input type="hidden" id="inputLontigud" name="inputLontigud" value="<?php echo @$this->data['LONGITUD'];?>" />
     <div class="span12">
         <!-- block -->
         <div class="block">
@@ -71,6 +69,8 @@
                                 <input type="hidden" id="optReg" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
                                 <input type="hidden" id="catId"  name="catId" value="<?php echo $this->catId; ?>" />
                                 <input type="hidden" id="bOperation" name="bOperation" value="<?php echo (@$this->data['ID_ESTATUS']==5) ? 'accept': '';?>" />
+                                <input type="hidden" id="inputLatitud"  name="inputLatitud"  value="<?php echo @$this->data['LATITUD'];?>"  />
+                                <input type="hidden" id="inputLontigud" name="inputLontigud" value="<?php echo @$this->data['LONGITUD'];?>" />
                                 
                                 <?php if($this->resultOp=='okRegister'): ?>
                                     <div class="alert alert-success">
