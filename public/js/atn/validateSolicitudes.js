@@ -176,13 +176,15 @@ function printPoints(){
     var Latitud  = parseFloat($("#inputLatitud").val())
     var Longitud = parseFloat($("#inputLontigud").val());
 
-    markerTable = new google.maps.Marker({
-      map: map,
-      position: new google.maps.LatLng(Latitud,Longitud),
-      title:  'ubicacion',
-      icon:   '/images/marker.png'
-    });
+    if(Latitud!="" && Longitud!=""){
+        markerTable = new google.maps.Marker({
+          map: map,
+          position: new google.maps.LatLng(Latitud,Longitud),
+          title:  'ubicacion',
+          icon:   '/images/marker.png'
+        });
 
-    map.setZoom(13);
-    map.panTo(markerTable.getPosition());  
+        map.setZoom(13);
+        map.panTo(markerTable.getPosition());  
+    }
 }
