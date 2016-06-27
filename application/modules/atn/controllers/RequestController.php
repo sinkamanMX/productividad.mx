@@ -180,23 +180,23 @@ class atn_RequestController extends My_Controller_Action
 						
 						if($this->dataIn['bOperation']=='accept'){
 							$cHtmlMail->acceptAdminSolicitud($dataInfo,$this->view->dataUser);		
-											
+							$sMessagen = 'La solicitud de servicio para la unidad '.$dataInfo['N_UNIDAD'].' ha sido aprobada. Para el '.$dataInfo['FECHA_CITA'].' de '.$dataInfo['N_HORARIO'];				
 							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Solicitud Aceptada',
 											'sDescripcion' 	=> 'La solicitud ha sido aceptada por CCUDA',
 											'sOrigen'		=> 'CCUDA');
 							$cLog->insertRow($aLog);
-							$cNotifications->insertRow($this->idToUpdate,'Solicitud Aceptada');
+							$cNotifications->insertRow($this->idToUpdate,$sMessagen);
 						}else{
 							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
 							$cHtmlMail->changeSolicitudExt($dataInfo,$this->view->dataUser);
-										
+							$sMessagen = 'La solicitud de servicio para la unidad '.$dataInfo['N_UNIDAD'].' ha sido modificada. Favor de revisar';			
 							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Cambio en la Solicitud',
 											'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones,
 											'sOrigen'		=> 'CCUDA');
 							$cLog->insertRow($aLog);
-							$cNotifications->insertRow($this->idToUpdate,'Cambio en la Solicitud');
+							$cNotifications->insertRow($this->idToUpdate,$sMessagen);
 						}
 						
 						$this->resultop = 'okRegister';
@@ -330,12 +330,14 @@ class atn_RequestController extends My_Controller_Action
 											*/
 							$cHtmlMail->acceptAdminSolicitudArrenda($dataInfo,$this->view->dataUser);
 							
+							$sMessagen = 'La solicitud de servicio para la unidad '.$dataInfo['N_UNIDAD'].' ha sido aprobada. Para el '.$dataInfo['FECHA_CITA'].' de '.$dataInfo['N_HORARIO'];
+														
 							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Solicitud Aceptada',
 											'sDescripcion' 	=> 'La solicitud ha sido aceptada por CCUDA',
 											'sOrigen'		=> 'CCUDA');
-							$cLog->insertRow($aLog);	
-							$cNotifications->insertRow($this->idToUpdate,'Solicitud Aceptada');		
+							$cLog->insertRow($aLog);								
+							$cNotifications->insertRow($this->idToUpdate,$sMessagen);		
 						}else{
 							$sHorario2    = (isset($dataInfo['ID_HORARIO2']) && $dataInfo['ID_HORARIO2']!="") ? '<tr><td><b>Horario 2</b></td><td>'.$dataInfo['N_HORARIO2'].'</td></tr>': '';
 							$cHtmlMail->changeSolicitudArrenda($dataInfo,$this->view->dataUser);
@@ -355,13 +357,14 @@ class atn_RequestController extends My_Controller_Action
 										  'o bien copia y pega en tu navegador el siguiente enlace<br>'.
 										  '<b> http://siames.grupouda.com.mx</b>';
 											*/
+							$sMessagen = 'La solicitud de servicio para la unidad '.$dataInfo['N_UNIDAD'].' ha sido modificada. Favor de revisar';
 																		
 							$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 											'sAction' 		=> 'Cambio en la Solicitud',
 											'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones,
 											'sOrigen'		=> 'CCUDA');
 							$cLog->insertRow($aLog);					
-							$cNotifications->insertRow($this->idToUpdate,'Cambio en la Solicitud');														
+							$cNotifications->insertRow($this->idToUpdate,$sMessagen);														
 						}
 						/*
 						$aMailer    = Array(
