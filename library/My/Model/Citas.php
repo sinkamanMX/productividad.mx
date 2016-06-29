@@ -482,10 +482,14 @@ class My_Model_Citas extends My_Db_Table
 		return $result;			
 	}
 
-	public function getResumeByDay($idSucursal,$dFechaIn,$dFechaFin,$idTecnico,$typeSearch=1){
+	public function getResumeByDay($idSucursal,$dFechaIn,$dFechaFin,$idTecnico,$typeSearch=1,$sCliente=-1){
 		$result= Array();
 		$this->query("SET NAMES utf8",false);
-		$sFilter 	 = ($idTecnico!="")  ? ' C.ID_USUARIO = '.$idTecnico: ' E.ID_SUCURSAL IN ('.$idSucursal.')';
+		$sFilter 	 = ($idTecnico!="")  ? ' C.ID_USUARIO = '.$idTecnico : ' E.ID_SUCURSAL IN ('.$idSucursal.')';
+		
+		$sFiltersec   = ($sFilter  !="" && $sCliente !=-1)  ? ' AND ' : '';
+		$sFiltersec  .= ($sCliente !=-1)  ? ' P.ID_CLIENTE = '.$sCliente  : '';
+		
 		$sFilterDate = ($typeSearch==1)  ? "AND C.FECHA_CITA BETWEEN '$dFechaIn' AND '$dFechaFin'" : "AND CAST(C.FECHA_INICIO  AS DATE) BETWEEN'$dFechaIn' AND '$dFechaFin'";		
 				 		
     	$sql ="SELECT C.ID_CITA AS ID, C.ID_ESTATUS AS IDE, S.DESCRIPCION, S.COLOR,				
@@ -515,11 +519,11 @@ class My_Model_Citas extends My_Db_Table
 					SELECT C.ID_CITA
 					FROM PROD_CITA_USR C 
 					INNER JOIN USR_EMPRESA E ON C.ID_USUARIO = E.ID_USUARIO 
-					WHERE $sFilter
+					WHERE $sFilter					      
 					)
+				$sFiltersec	
 				$sFilterDate
-				ORDER BY S.ID_ESTATUS";
-
+				ORDER BY C.FECHA_CITA DESC, C.HORA_CITA DESC, S.ID_ESTATUS";
 		$query   = $this->query($sql);
 		if(count($query)>0){		  
 			$result = $query;			

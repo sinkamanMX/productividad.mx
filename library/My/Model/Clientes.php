@@ -87,4 +87,35 @@ class My_Model_Clientes extends My_Db_Table
         
 		return $result;			
 	}
+	
+	function getDataTable($idObject){
+	    $this->query("SET NAMES utf8",false); 
+        
+		$result= Array();
+    	$sql ="SELECT C.*,C.ID_CLIENTE AS ID, IF(T.ID_MENSAJE IS NULL,'0','1') AS selected
+				FROM PROD_CLIENTES C
+				LEFT JOIN MENSAJE_DISPOSITIVOS T ON C.ID_CLIENTE  = T.ID_CLIENTE AND T.ID_MENSAJE = ".$idObject."
+				WHERE C.COD_CLIENTE != '' && C.COD_CLIENTE LIKE 'CL%'
+				ORDER BY C.COD_CLIENTE ASC";		         	
+		$query   = $this->query($sql);
+		if(count($query)>0){
+			$result	 = $query;			
+		}
+        
+		return $result;	        
+    }
+    
+	public function getCbo(){
+		$result= Array();
+		$this->query("SET NAMES utf8",false); 		
+    	$sql ="SELECT $this->_primary AS ID, RAZON_SOCIAL AS NAME 
+    			FROM $this->_name     			
+    			ORDER BY RAZON_SOCIAL  ASC";
+		$query   = $this->query($sql);
+		if(count($query)>0){		  
+			$result = $query;			
+		}	
+        
+		return $result;			
+	}    
 }

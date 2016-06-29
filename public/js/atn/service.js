@@ -112,8 +112,9 @@ function getReportAll(){
   var strOpt      = $("#optReg").val();
   var iStatus     = $("#inputStatus").val();
   var bType       = $("#cboTypeSearch").val();
+  var iCliente    = $("#inputCliente").val();
 
-  var url = "/atn/services/exportall?optReg="+strOpt+"&cboInstalacion="+idSucursal+"&inputTecnicos="+idTecnico+"&inputFechaIn="+inputFecIn+"&inputFechaFin="+inputFecFin+"&inputStatus="+iStatus+"&cboTypeSearch="+bType;
+  var url = "/atn/services/exportall?optReg="+strOpt+"&cboInstalacion="+idSucursal+"&inputTecnicos="+idTecnico+"&inputFechaIn="+inputFecIn+"&inputFechaFin="+inputFecFin+"&inputStatus="+iStatus+"&cboTypeSearch="+bType+"&inputCliente="+iCliente;
   window.open(url, '_blank');
 } 
 

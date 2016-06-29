@@ -35,6 +35,7 @@ class atn_ServicesController extends My_Controller_Action
 			$cFunciones		= new My_Controller_Functions();
 			$cTecnicos		= new My_Model_Tecnicos();			
 			$cCitas			= new My_Model_Citas();
+			$cClientes		= new My_Model_Clientes();
 			
 			$aSucursales 	= "";
 			$idSucursal		= -1;
@@ -47,10 +48,12 @@ class atn_ServicesController extends My_Controller_Action
 								array("id"=>"2",'name'=>'Fecha inicio real ' )    );
 			$bType 			= 1;
 			$bStatus		= -1;
+			$sCliente 		= -1;
 			
 			$dataCenter		= $cInstalaciones->getCbo($this->view->dataUser['ID_EMPRESA']);			
 			$aTecnicos      = $cTecnicos->getAll($this->view->dataUser['ID_EMPRESA'],1);
-			$aSucursales	= $cInstalaciones->getList($this->view->dataUser['ID_EMPRESA']);			
+			$aSucursales	= $cInstalaciones->getList($this->view->dataUser['ID_EMPRESA']);		
+			$aClientes		= $cClientes->getCbo();	
 			
 			if(isset($this->dataIn['optReg']) && $this->dataIn['optReg']){
 				$dFechaIn	= $this->dataIn['inputFechaIn'];
@@ -63,17 +66,18 @@ class atn_ServicesController extends My_Controller_Action
 				
 				$idTecnico	= $this->dataIn['inputTecnicos'];
 				$bType		= $this->dataIn['cboTypeSearch'];
-				$bStatus	= $this->dataIn['inputStatus'];				
+				$bStatus	= $this->dataIn['inputStatus'];		
+				$sCliente   = $this->dataIn['inputCliente'];		
 				$bShowUsers=true;
 			}else{
 				$dFechaIn	= Date('Y-m-d');
 				$dFechaFin	= Date('Y-m-d');
 				$bShowUsers=true;
 				$idSucursal		= "";	
-			}			
+			}
 			
 			$aTecnicos 		= $cTecnicos->getTecnicosBySucursal($aSucursales);
-			$dataResume     = $cCitas->getResumeByDay($aSucursales,$dFechaIn,$dFechaFin,$idTecnico,$bType);
+			$dataResume     = $cCitas->getResumeByDay($aSucursales,$dFechaIn,$dFechaFin,$idTecnico,$bType,$sCliente);
 			$dataProcess	= $cFunciones->setResume($dataResume);
 						
 			$this->view->cInstalaciones 	= $cFunciones->selectDb($dataCenter,$idSucursal);
@@ -85,6 +89,7 @@ class atn_ServicesController extends My_Controller_Action
 			$this->view->showUsers			= $bShowUsers;
 			$this->view->aResume 			= $dataResume;
 			$this->view->iStatus			= $bStatus;
+			$this->view->aClientes			= $cFunciones->selectDb($aClientes,$sCliente);
 			unset($this->view->dataResume['TOTAL']);
         } catch (Zend_Exception $e) {
             echo "Caught exception: " . get_class($e) . "\n";
@@ -706,7 +711,7 @@ class atn_ServicesController extends My_Controller_Action
 								array("id"=>"2",'name'=>'Fecha inicio real ' )    );
 			$bType 			= 1;
 			$bStatus		= -1;	
-							
+			$sCliente		= -1;				
 			
 			$dataCenter		= $cInstalaciones->getCbo($this->view->dataUser['ID_EMPRESA']);			
 			$aTecnicos      = $cTecnicos->getAll($this->view->dataUser['ID_EMPRESA'],1);
@@ -722,9 +727,10 @@ class atn_ServicesController extends My_Controller_Action
 			$aSucursalesIn= (isset($this->dataIn['cboInstalacion']) && $this->dataIn['cboInstalacion']!="") ? $this->dataIn['cboInstalacion'] : $aSucursales;							
 			$bType		  = (isset($this->dataIn['cboTypeSearch']) && $this->dataIn['cboTypeSearch']!="")   ? $this->dataIn['cboTypeSearch']  : "1";
 			$idTecnico	  = (isset($this->dataIn['inputTecnicos']) && $this->dataIn['inputTecnicos']!="")   ? $this->dataIn['inputTecnicos']  : "";
-
+			$sCliente	  = (isset($this->dataIn['inputCliente']) && $this->dataIn['inputCliente']!="")   ? $this->dataIn['inputCliente']  : "-1";
+			
 			$aTecnicos 		= $cTecnicos->getTecnicosBySucursal($aSucursalesIn);
-			$dataResume     = $cCitas->getResumeByDay($aSucursalesIn,$dFechaIn,$dFechaFin,$idTecnico,$bType);
+			$dataResume     = $cCitas->getResumeByDay($aSucursalesIn,$dFechaIn,$dFechaFin,$idTecnico,$bType,$sCliente);
 			//$dataProcess	= $cFunciones->setResume($dataResume);
 
 						
@@ -877,7 +883,7 @@ class atn_ServicesController extends My_Controller_Action
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('T7', 'Causa del cambio');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('U7', 'Observaciones');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('V7', 'Tipo Firma');
-					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleTable, 'A7:U7');
+					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleTable, 'A7:V7');
 									
 					$rowControl		= 8;
 					$zebraControl  	= 0;
@@ -938,7 +944,7 @@ class atn_ServicesController extends My_Controller_Action
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(21, ($rowControl), @$items['TIPO_FIRMA']);
 	
 							if($zebraControl++%2==1){
-								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':U'.$rowControl);			
+								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':V'.$rowControl);			
 							}
 							
 							$rowControl++;							
@@ -965,7 +971,8 @@ class atn_ServicesController extends My_Controller_Action
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('R')->setAutoSize(true);	
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('S')->setAutoSize(true);	
 					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('T')->setAutoSize(true);	
-					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('U')->setAutoSize(true);			
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('U')->setAutoSize(true);
+					$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('V')->setAutoSize(true);			
 						
 					$filename  = "Reporte_Citas_".date("YmdHi").".xlsx";	
 	
