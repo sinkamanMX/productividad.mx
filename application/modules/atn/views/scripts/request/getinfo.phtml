@@ -93,6 +93,22 @@
                                             </div>                                    
                                         </div> 
 
+                                        <?php if(@$this->data['CAUSA']!=""):?>
+                                        <div class="row row-margin-left25">                                       
+                                            <div class="span6">
+                                                <div class="control-group">
+                                                    <label class="control-label">Causa:</label>
+                                                    <div class="controls">
+                                                        <div ><?php echo @$this->data['CAUSA']; ?></div>
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                            <div class="span6">
+                                                                 
+                                            </div>                                    
+                                        </div> 
+                                        <?php endif;?>
+
                                         <?php if(@$this->data['LATITUD']!="" && @$this->data['LONGITUD']!="" ):?>
                                         <div class="row row-margin-left25">    
                                             <div class="span6">
