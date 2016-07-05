@@ -4,7 +4,7 @@ class My_Controller_Maileasing
 	public $realPath='/var/www/vhosts/sima/htdocs/public';
 	//public $realPath='/Users/itecno2/Documents/workspace/productividad.mx/public';
 	
-	public function newSolicitud($dataSol, $dataUser,$mailsBrokers){
+	public function newSolicitud($dataSol, $dataUser,$mailsBrokers,$uBroker=1){
 		$cMailing   = new My_Model_Mailing();
 
 		ob_start();
@@ -36,9 +36,7 @@ class My_Controller_Maileasing
 		);
 							
 		$cMailing->insertRow($aMailerUda);
-					
-		
-		
+								
 		ob_start();
 		include($this->realPath.'/layouts/mail/nueva_sol_Leasing.html');
 		$lBodyUda = ob_get_clean();	
@@ -56,21 +54,37 @@ class My_Controller_Maileasing
 		$lBodyUda = str_ireplace('@_observaciones_@', $dataSol['COMENTARIO'] , $lBodyUda);
 		$lBodyUda = str_ireplace('@_mensaje_@',     $sMensaje ,                $lBodyUda);
 		
-		$aMailer    = Array(
-			'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
-			'inputDestinatarios' => $mailsBrokers,
-			'inputEmails' 		 => $mailsBrokers,
-			'inputTittle' 		 => 'Solicitud de Servicio',
-			'inputBody' 		 => $lBodyUda,
-			'inputLiveNotif'	 => 1,
-			'inputFromName' 	 => 'contacto@grupouda.com.mx',
-			'inputFromEmail' 	 => 'Siames - Grupo UDA'
-		);
-													
+		if($uBroker==1){
+			$aMailer    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $mailsBrokers,
+				'inputEmails' 		 => $mailsBrokers,
+				'inputTittle' 		 => 'Solicitud de Servicio',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 1,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);			
+		}else{
+			$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+			$aDataAdmin = $config->getOption('admin');					
+			
+			$aMailer    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $aDataAdmin['mails'],
+				'inputEmails' 		 => $aDataAdmin['mails'],
+				'inputTittle' 		 => 'Solicitud de Servicio',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 0,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);			
+		}
+		
 		$cMailing->insertRow($aMailer);	
 	}
 	
-	public function acceptuserSolicitud($dataSol, $dataUser,$mailsBrokers){
+	public function acceptuserSolicitud($dataSol, $dataUser,$mailsBrokers,$uBroker=1){
 		$cMailing   = new My_Model_Mailing();
 		ob_start();
 		include($this->realPath.'/layouts/mail/tSolicitd_aceptada.html');
@@ -102,18 +116,20 @@ class My_Controller_Maileasing
 							
 		$cMailing->insertRow($aMailerUda);
 
-		$aMailer    = Array(
-			'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
-			'inputDestinatarios' => $mailsBrokers,
-			'inputEmails' 		 => $mailsBrokers,
-			'inputTittle' 		 => 'Solicitud de Servicio',
-			'inputBody' 		 => $lBody,
-			'inputLiveNotif'	 => 0,
-			'inputFromName' 	 => 'contacto@grupouda.com.mx',
-			'inputFromEmail' 	 => 'Siames - Grupo UDA'
-		);
-													
-		$cMailing->insertRow($aMailer);		
+		if($uBroker==1){
+			$aMailer    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $mailsBrokers,
+				'inputEmails' 		 => $mailsBrokers,
+				'inputTittle' 		 => 'Solicitud de Servicio',
+				'inputBody' 		 => $lBody,
+				'inputLiveNotif'	 => 0,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);
+														
+			$cMailing->insertRow($aMailer);		
+		}
 		
 		ob_start();
 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');
@@ -149,7 +165,7 @@ class My_Controller_Maileasing
 		$cMailing->insertRow($aMailer);	
 	}
 		
-	public function changeSolicitud($dataSol, $dataUser,$mailsBrokers){
+	public function changeSolicitud($dataSol, $dataUser,$mailsBrokers,$uBroker=1){
 		$cMailing   = new My_Model_Mailing();		
 		ob_start();
 		include($this->realPath.'/layouts/mail/tempIntNuevo.html');
@@ -170,16 +186,33 @@ class My_Controller_Maileasing
 		$lBodyUda = str_ireplace('@_observaciones_@', $dataSol['COMENTARIO'] , $lBodyUda);
 		$lBodyUda = str_ireplace('@_mensaje_@',     $sMensaje ,                $lBodyUda);							
 		
-		$aMailer    = Array(
-			'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
-			'inputDestinatarios' => $mailsBrokers,
-			'inputEmails' 		 => $mailsBrokers,
-			'inputTittle' 		 => 'Cambio en la Solicitud',
-			'inputBody' 		 => $lBodyUda,
-			'inputLiveNotif'	 => 0,
-			'inputFromName' 	 => 'contacto@grupouda.com.mx',
-			'inputFromEmail' 	 => 'Siames - Grupo UDA'
-		);
+		if($uBroker==1){
+			$aMailer    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $mailsBrokers,
+				'inputEmails' 		 => $mailsBrokers,
+				'inputTittle' 		 => 'Cambio en la Solicitud',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 1,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);
+		}else{
+			$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+			$aDataAdmin = $config->getOption('admin');					
+			
+			$aMailer    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $aDataAdmin['mails'],
+				'inputEmails' 		 => $aDataAdmin['mails'],
+				'inputTittle' 		 => 'Cambio en la Solicitud',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 1,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);			
+		}		
+
 													
 		$cMailing->insertRow($aMailer);		
 	}

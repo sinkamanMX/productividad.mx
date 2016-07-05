@@ -91,9 +91,10 @@ class main_CompaniesController extends My_Controller_Action
 				$sEstatus	= $aDataInfo['ESTATUS'];
 				$sTipoEmpresa= $aDataInfo['ID_TIPO_EMPRESA'];
 				$iTotalAgents= $aDataInfo['NO_TECNICOS'];
-				$aLimitAgents = ($aLimitAgents==0) ? $iTotalAgents : $aLimitAgents+$iTotalAgents;							
+				$aLimitAgents = ($aLimitAgents==0) ? $iTotalAgents : $aLimitAgents+$iTotalAgents;
+				/*$sClientUda = $aDataInfo['CLIENTE_UDA'];
+				$sCViajes 	= $aDataInfo['COBRAR_VIAJES'];*/
 			}
-			
 			
     		if($this->_dataOp=="new"){
 				$validateEmp  = $cEmpresas->validateExist($this->_dataIn['inputRFC']);

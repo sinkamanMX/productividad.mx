@@ -312,7 +312,7 @@ class My_Controller_Htmlmailing
 			'inputEmails' 		 => $dataSol['EMAIL'],
 			'inputTittle' 		 => 'Cambio en la solicitud',
 			'inputBody' 		 => $lBodyUda,
-			'inputLiveNotif'	 => 0,
+			'inputLiveNotif'	 => 1,
 			'inputFromName' 	 => 'contacto@grupouda.com.mx',
 			'inputFromEmail' 	 => 'Siames - Grupo UDA'
 		);
@@ -494,4 +494,88 @@ class My_Controller_Htmlmailing
 													
 		$cMailing->insertRow($aMailer);		
 	}
+	
+	public function newSolicitudExt($dataSol, $dataUser){
+		$cMailing   = new My_Model_Mailing();	
+		/*	
+		ob_start();
+		include($this->realPath.'/layouts/mail/tempIntNuevo_ext.html');
+		$lBodyUda = ob_get_clean();	
+			
+		$lBodyUda = str_ireplace('@_usuario_@', 	@$dataSol['N_CONTACTO']   , $lBodyUda);
+		$lBodyUda = str_ireplace('@_empresa_@', 	$dataSol['N_CLIENTE'] , $lBodyUda);
+		$lBodyUda = str_ireplace('@_tservicio_@', 	$dataSol['N_TIPO']     , $lBodyUda);
+		$lBodyUda = str_ireplace('@_fecha_@',	 	$dataSol['FECHA_CITA'] , $lBodyUda);
+		$lBodyUda = str_ireplace('@_horario_@', 	$dataSol['N_HORARIO']  , $lBodyUda);
+		$lBodyUda = str_ireplace('@_horario2_@', 	$dataSol['N_HORARIO2']  , $lBodyUda);
+		$lBodyUda = str_ireplace('@_infounit_@', 	$dataSol['INFORMACION_UNIDAD'], $lBodyUda);
+		$lBodyUda = str_ireplace('@_observaciones_@', $dataSol['COMENTARIO'] , $lBodyUda);
+		$lBodyUda = str_ireplace('@_coment_uda_@',  $dataSol['REVISION'] ,     $lBodyUda);		
+		$lBodyUda = str_ireplace('@_sskey_@',       $dataSol['CLAVE_SOLICITUD'],$lBodyUda);		
+
+		$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+		$aDataAdmin = $config->getOption('admin');					
+		
+		$aMailer    = Array(
+			'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+			'inputDestinatarios' => $dataSol['N_CONTACTO'],
+			'inputEmails' 		 => $dataSol['EMAIL'],
+			'inputTittle' 		 => 'Nueva solicitud',
+			'inputBody' 		 => $lBodyUda,
+			'inputLiveNotif'	 => 1,
+			'inputFromName' 	 => 'contacto@grupouda.com.mx',
+			'inputFromEmail' 	 => 'Siames - Grupo UDA'
+		);
+													
+		$cMailing->insertRow($aMailer);	
+		*/
+		ob_start();
+		include($this->realPath.'/layouts/mail/tempIntNuevo_ext.html');
+		$lBodyUda = ob_get_clean();	
+		
+		$sMensaje = 'ha realizado una solicitud de cita en el sistema de Siames';
+
+		$lBodyUda = str_ireplace('@_usuario_@', 	@$dataUser['N_USER']   , $lBodyUda);
+		$lBodyUda = str_ireplace('@_empresa_@', 	$dataUser['N_EMPRESA'] , $lBodyUda);
+		$lBodyUda = str_ireplace('@_tservicio_@', 	$dataSol['N_TIPO']     , $lBodyUda);
+		$lBodyUda = str_ireplace('@_tipequipo_@', 	$dataSol['N_EQUIPO']   , $lBodyUda);
+		$lBodyUda = str_ireplace('@_fecha_@',	 	$dataSol['FECHA_CITA'] , $lBodyUda);
+		$lBodyUda = str_ireplace('@_horario_@', 	$dataSol['N_HORARIO']  , $lBodyUda);
+		$lBodyUda = str_ireplace('@_lugarservicio_@',$sDireccion , $lBodyUda);
+		$lBodyUda = str_ireplace('@_infounit_@', 	$dataSol['INFORMACION_UNIDAD'], $lBodyUda);
+		$lBodyUda = str_ireplace('@_observaciones_@', $dataSol['COMENTARIO'] , $lBodyUda);
+		$lBodyUda = str_ireplace('@_mensaje_@',     $sMensaje ,                $lBodyUda);		
+
+		$config     = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+		$aDataAdmin = $config->getOption('admin');					
+		
+		$aMailer    = Array(
+			'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+			'inputDestinatarios' => $aDataAdmin['mails'],
+			'inputEmails' 		 => $aDataAdmin['mails'],
+			'inputTittle' 		 => 'Solicitud de Servicio',
+			'inputBody' 		 => $lBodyUda,
+			'inputLiveNotif'	 => 1,
+			'inputFromName' 	 => 'contacto@grupouda.com.mx',
+			'inputFromEmail' 	 => 'Siames - Grupo UDA'
+		);
+													
+		$cMailing->insertRow($aMailer);			
+
+		if($dataSol['ID_TIPO']==3){
+			$aDataRev = $config->getOption('mrevision');
+			$aMailerR    = Array(
+				'inputIdSolicitud'	 => $dataSol['ID_SOLICITUD'],
+				'inputDestinatarios' => $aDataRev['mails'],
+				'inputEmails' 		 => $aDataRev['mails'],
+				'inputTittle' 		 => 'Solicitud de Servicio',
+				'inputBody' 		 => $lBodyUda,
+				'inputLiveNotif'	 => 0,
+				'inputFromName' 	 => 'contacto@grupouda.com.mx',
+				'inputFromEmail' 	 => 'Siames - Grupo UDA'
+			);
+													
+			$cMailing->insertRow($aMailerR);	
+		}			
+	}		
 }

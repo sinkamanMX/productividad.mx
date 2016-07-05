@@ -89,7 +89,6 @@ class main_BrokersController extends My_Controller_Action
 				$sEstatus	= $aDataInfo['ESTATUS'];
 				$sTipoEmpresa= $aDataInfo['ID_TIPO_EMPRESA'];
 				$iTotalAgents= $aDataInfo['NO_TECNICOS'];
-				
 				/*$sClientUda = $aDataInfo['CLIENTE_UDA'];
 				$sCViajes 	= $aDataInfo['COBRAR_VIAJES'];*/
 			}

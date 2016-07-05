@@ -1,0 +1,129 @@
+<?php $this->headScript()->appendFile('/js/messages/jsMessages.js') ?> 
+<div class="row panel-data">
+    <input id="hRefLinkMain" type="hidden" value="/messages/main/index" />
+    <div class="span12">
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">
+                    <a href="javascript:backToMain()">
+                        <i class="icon-circle-arrow-left fa-1"></i></a> Información del Mensaje</div>
+            </div>
+            <div class="block-content collapse in">
+                <form method="POST" action="/messages/main/getinfo?catId=<?php echo $this->catId; ?>" id="formDbman" class="form-horizontal ">
+                    <input type="hidden" id="optReg" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
+                    <input type="hidden" name="catId" value="<?php echo $this->catId; ?>" />
+                    <input type="hidden" name="cboSendtoSo" value="0" />
+                    <input type="hidden" name="inputApp"    value="1" />
+                    
+                    <fieldset>                                          
+                        <div class="span12 no-margin-left">
+                            <div class="span4">
+                                <div class="control-group">
+                                    <label class="control-label">Fecha<span class="required">*</span></label>
+                                    <div class="controls">
+                                        <input id="txtFecha" name="txtFecha" data-required="1" readonly type="text" class="span12 m-wrap" value="<?php echo @$this->aData['FECHA_CITA']; ?>">
+                                    </div>
+                                </div>    
+                            </div>
+                            <div class="span4">
+                                <div class="control-group">
+                                    <label class="control-label">Motivo:<span class="required"></span></label>
+                                    <div class="controls">
+                                        <select id="cboTipo" name="cboTipo" class="span12 m-wrap">
+                                            <?php echo $this->aMotivos;?>
+                                        </select>                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <div class="control-group">
+                                    <label class="control-label">Enviar a:<span class="required"></span></label>
+                                    <div class="controls">                                        
+                                        <select id="cboSendto" name="cboSendto" class="span12 m-wrap" onChange="changeDevices();uncheckAll();">
+                                            <?php echo $this->aTypeSend;?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="span12 no-margin-left">
+                            <div class="span4">
+                                <div class="control-group">
+                                    <label class="control-label">Reenviar el mensaje:<span class="required"></span></label>
+                                    <div class="controls">                                        
+                                        <select id="cboReSend" name="cboReSend" class="span12 m-wrap" onChange="changerep(this.value);">
+                                            <?php echo $this->aReSend;?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span4 optResend" style="display:<?php echo (@$this->aData['REENVIAR']==1) ? 'block': 'none';?>;">
+                                <div class="control-group">
+                                    <label class="control-label">Cada:<span class="required"></span></label>
+                                    <div class="controls">                                        
+                                        <select id="cboEach" name="cboEach" class="span5 m-wrap">
+                                            <?php echo $this->aCount;?>  
+                                        </select>
+                                        <span class="col-md-1">&nbsp;&nbsp;</span> 
+                                        <select id="cboTime" name="cboTime" class="span6 m-wrap">
+                                            <?php echo $this->aUnitTime;?>
+                                        </select>        
+                                    </div>
+                                </div>                   
+                            </div>
+                            <div class="span4 optResend" style="display:<?php echo (@$this->aData['REENVIAR']==1) ? 'block': 'none';?>;">
+                                <div class="control-group">
+                                    <label class="control-label">Fecha Fin:<span class="required"></span></label>
+                                    <div class="controls">
+                                        <input data-required="1" readonly type="text" class="span12 m-wrap" value="<?php echo @$this->aData['FECHA_FIN']; ?>" id="txtFechaFin" name="txtFechaFin">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span12 no-margin-left">
+                            <div class="control-group">
+                                <label class="control-label">Mensaje a enviar (<span id="lblLenght">140</span> Caracteres)<span class="required"></span></label>
+                                <div class="controls">
+                                    <textarea id="txaMensaje" name="txaMensaje" class="span12 m-wrap" rows="3" placeholder="Mensaje"><?php echo @$this->aData['MENSAJE'];?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span12 no-margin-left">
+                            <div class="datatable" id="tableSelect" style="display:<?php echo (@$this->aData['TIPO_ENVIO']==1) ? 'block': 'none';?>;">
+                                <table class="table table-striped table-hover table-bordered" id="dataTable">
+                                    <thead> 
+                                        <tr>
+                                            <th class="col-xs-1 col-md-1"></th>
+                                            <th>Cod. Cliente</th>
+                                            <th>RFC</th>
+                                            <th>Razón Social</th>                                                        
+                                        </tr>                                
+                                    </thead>                        
+                                    <tbody>        
+                                        <?php foreach($this->aClients as $key => $items):?>
+                                            <tr>
+                                                <td class="col-xs-1 col-md-1"><input type="checkbox" name="formsValues[]"  value="<?php echo $items['ID'];?>" <?php echo ($items['selected']==1) ? 'checked': '';?>></td>                                                
+                                                <td><?php echo $items['COD_CLIENTE'];?></td>
+                                                <td><?php echo $items['RFC'];?></td>
+                                                <td><?php echo $items['RAZON_SOCIAL'];?></td>
+                                            </tr>
+                                        <?php endforeach;?>
+                                    </tbody>
+                                </table>
+                            </div> 
+                        </div>
+                    </fieldset>
+                        <div class="form-actions">
+                            <?php if(@$this->aData['ID_ESTATUS']==1 || $this->catId==-1):?>
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="button" class="btn"  onClick="location.href='/messages/main/index';">Cancelar</button>                                  
+                                </div>   
+                            <?php endif;?>                                  
+                        </div>                    
+                </form>                     
+            </div>          
+        </div>
+    </div>
+</div>

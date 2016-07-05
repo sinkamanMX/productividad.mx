@@ -77,10 +77,16 @@ class leasing_RequestController extends My_Controller_Action
 				$bType		= $this->dataIn['cboTypeSearch'];				
 				$bShowUsers=true;
 			}else{
+				$fecha = date('Y-m-d');
+				$nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
+				$nuevafecha = date ( 'Y-m-d' , $nuevafecha );				
+				
 				$dFechaIn	= Date('Y-m-d');
-				$dFechaFin	= Date('Y-m-d');
+				$dFechaFin	= $nuevafecha;					
 				$bShowUsers=true;
 				$idSucursal		= "";	
+				$this->dataIn['inputFechaIn']  = $dFechaIn;
+				$this->dataIn['inputFechaFin'] = $dFechaFin;					
 			}			
 			$idCliente		= $this->view->dataUser['ID_EMPRESA'];
 			$dataResume     = $cSolicitudes->getResumeByDay($dFechaIn,$dFechaFin,$idCliente,$bType);	
@@ -177,7 +183,6 @@ class leasing_RequestController extends My_Controller_Action
     				}else{
     					$iValidateUnit = $classObject->validateUnit($this->dataIn['inputPlacas'],$this->dataIn['inputIden'],$this->dataIn['inputIden2']);
     					if($iValidateUnit==0){
-    						echo "llega aqui 1";
     						$bInsertUnit = $classObject->insertNewRowLeasing($this->dataIn);    				
 	    					if($bInsertUnit['status']){	    						
 								$this->dataIn['inputUnidad']= $bInsertUnit['id'];
@@ -192,14 +197,14 @@ class leasing_RequestController extends My_Controller_Action
 								$this->errors['status'] = 'no-insert';	    					    						
 	    					}    							
     					}else{
-    						echo "llega aqui 2";
+    						$this->dataIn['inputUnidad']= $iValidateUnit;
 							$aDataUnit = $cUnidades->getData($iValidateUnit);						
 							$this->dataIn['inputInfo'] = "<b>Marca/Modelo:</b>".$aDataUnit['N_MARCA']."/".$aDataUnit['N_MODELO']."</br>".
 														 "<b>Color       :</b>".$aDataUnit['N_COLOR']."</br>".
 														 "<b>Placas      :</b>".$aDataUnit['PLACAS']."</br>".
 														 "<b>No. Serie   :</b>".$aDataUnit['IDENTIFICADOR']."</br>".
 														 "<b>No. Contrato:</b>".$aDataUnit['IDENTIFICADOR_2'];    						
-    					}    					
+    					}  
     				}
     				    		
     				if($this->dataIn['inputInfo']!=""){
@@ -218,9 +223,11 @@ class leasing_RequestController extends My_Controller_Action
 								}								 						
 							}
 							
-							$cHtmlMail->newSolicitud($dataInfo,$this->view->dataUser,$this->sMailsBrokers);
-							
-							$this->redirect("/leasing/request/index");
+							$iMailsSender = ($this->view->dataUser['ID_TIPO_EMPRESA']==3) ? '2': '1';
+
+							$cHtmlMail->newSolicitud($dataInfo,$this->view->dataUser,$this->sMailsBrokers,$iMailsSender);
+							$this->resultop ='okRegister';
+							//$this->redirect("/leasing/request/index");
 							//$this->redirect("/leasing/request/getinfo?catId=".$this->idToUpdate);
 						}else{
 							$this->errors['status'] = 'no-insert';
@@ -351,7 +358,8 @@ class leasing_RequestController extends My_Controller_Action
 								$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
 							
 								if($sModificaciones!=''){
-									$cHtmlMail->changeSolicitud($dataInfo,$this->view->dataUser,$this->sMailsBrokers);
+									$iMailsSender = ($this->view->dataUser['ID_TIPO_EMPRESA']==3) ? '2': '1';
+									$cHtmlMail->changeSolicitud($dataInfo,$this->view->dataUser,$this->sMailsBrokers,$iMailsSender);
 									$aLog = Array ('idSolicitud' 	=> $this->idToUpdate,
 													'sAction' 		=> 'Cambio en la Solicitud',
 													'sDescripcion' 	=> 'Modificaciones : <br>'.$sModificaciones ,
@@ -359,8 +367,8 @@ class leasing_RequestController extends My_Controller_Action
 									$cLog->insertRow($aLog);								
 								}
 							}
-							
-							$this->redirect("/leasing/request/index");									
+							$this->resultop ='okRegister';
+							//$this->redirect("/leasing/request/index");									
 						}else{
 							$this->errors['errorUpdate'] = 'error';
 						}						
@@ -368,11 +376,11 @@ class leasing_RequestController extends My_Controller_Action
 						$this->errors['errorDate'] = 'errordate';
 					}						
 				}else{
-					$this->errors['status'] = 'no-info';
+					$this->errors['status'] = 'no-info234';
 				}					
 			}
-
-    	    if($this->resultop=='okRegister'){
+			
+    	    if($this->resultop=='okRegister' && count($this->errors)==1){
     	    	if($this->view->dataUser['ID_TIPO_EMPRESA']==3 && $dataInfo['ID_TIPO']==1){
     	    		$this->_redirect('/leasing/request/newprotocol?strSol='.$this->idToUpdate);	
     	    	}else{
@@ -719,8 +727,8 @@ class leasing_RequestController extends My_Controller_Action
 				$updated = $classObject->updateRowEmp($this->dataIn);
 				if($updated['status']){
 					$dataInfo   = $classObject->getDataEmp($this->idToUpdate);
-					
-					$cHtmlMail->acceptuserSolicitud($dataInfo,$this->view->dataUser,$this->sMailsBrokers);
+					$iMailsSender = ($this->view->dataUser['ID_TIPO_EMPRESA']==3) ? '2': '1';
+					$cHtmlMail->acceptuserSolicitud($dataInfo,$this->view->dataUser,$this->sMailsBrokers,$iMailsSender);
 									
 					$aLog = Array  ('idSolicitud' 	=> $this->idToUpdate,
 									'sAction' 		=> 'Solicitud Aceptada',

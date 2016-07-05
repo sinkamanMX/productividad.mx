@@ -275,8 +275,8 @@ class sac_MainController extends My_Controller_Action
 				$dataInfo   = $cUnidades->getData($idUnidad);
 				//192.168.6.41
 				//201.131.96.40
-				//$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
-				$soap_client  = new SoapClient("http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL");
+				$soap_client  = new SoapClient("http://192.168.6.41/ws/wsUDAHistoryGetByPlate.asmx?WSDL");
+				//$soap_client  = new SoapClient("http://ws.grupouda.com.mx/wsUDAHistoryGetByPlate.asmx?WSDL");
 				$aParams 	  = array('sLogin'     => 'wbs_test@grupouda.com.mx',
 				                  	  'sPassword'  => 't3stud4',
 									  'strCustomerPass' => $dataInfo['COD_CLIENTE']);
