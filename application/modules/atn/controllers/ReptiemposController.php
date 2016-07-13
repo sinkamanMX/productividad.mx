@@ -144,7 +144,7 @@ class atn_ReptiemposController extends My_Controller_Action
 			$dataResume     = $cCitas->getResumetiempo($aSucursales,$dFechaIn,$dFechaFin,$idTecnico,$bType,1);			
 			$processData	= $this->processData($dataResume);
 			
-			
+			//Zend_Debug::dump($processData);die();
 			if(count($processData)>0){			
 				/** PHPExcel */ 
 				require_once 'PHPExcel.php';
@@ -277,7 +277,7 @@ class atn_ReptiemposController extends My_Controller_Action
 					$rowControl		= 8;
 					$zebraControl  	= 0;
 					
-					foreach($dataResume as $key => $items){
+					foreach($processData as $key => $items){
 						$dataEquipment = Array();
 						$bPrint = ($bStatus==-1) ? true : (($bStatus==$items['IDE']) ? true: false);
 						if($bPrint){											
@@ -290,9 +290,9 @@ class atn_ReptiemposController extends My_Controller_Action
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6,  ($rowControl), $items['FECHA_INICIO']);								
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7,  ($rowControl), $items['FECHA_TERMINO']);
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(8,  ($rowControl), $items['DIF_FIN']);
-							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(9, ($rowControl), @$items['FECHA_ARRIBO']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(9,  ($rowControl), @$items['FECHA_ARRIBO']);
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(10, ($rowControl), @$items['DIF_ARRIBO']);
-							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(11, ($rowControl), @$items['DIF_INICIO']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(11, ($rowControl), @$items['DIF_INICIO']);							
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(12, ($rowControl), @$items['FECHA_RECEPCION_UNIDAD']['FECHA_INICIAL']);
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(13, ($rowControl), @$items['FECHA_RECEPCION_UNIDAD']['FECHA_FIN']);
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(14, ($rowControl), @$items['FECHA_RECEPCION_UNIDAD']['DIF_CAPTURA']);							
