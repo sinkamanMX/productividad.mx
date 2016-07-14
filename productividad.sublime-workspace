@@ -440,29 +440,30 @@
 	},
 	"file_history":
 	[
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/reptiempos/index.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/cron_mailing/reporte_siames/PHPExcel/Classes/dompdf/include/php_evaluator.cls.php",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/messages/views/scripts/main/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml",
+		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/request/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/external/jsvalidateSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/validateSolicitudes.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/back_request/index.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/rastreo/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/rastreotels.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/request/\".phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/messages/views/scripts/main/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/messages/jsMessages.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/getinfo.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/messages/views/scripts/main/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/marketing/views/scripts/sapclientes/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/messages/controllers/MainController.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/reptiempos/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/jsTiempos.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/library/My/Controller/Htmlmailing.php",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/atn/service.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/services/index.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/controllers/Reptiempos.php",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/atn/views/scripts/autorizacion/citadetalle.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/main/views/scripts/equipment/getinfo.phtml",
@@ -566,8 +567,7 @@
 		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/leasing/views/scripts/request/newprotocol.phtml",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/jsValidateProtocols.js",
 		"/Users/itecno2/Documents/workspace/productividad.mx/public/js/modules/leasing/validateUsers.js",
-		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/receive/accept.phtml",
-		"/Users/itecno2/Documents/workspace/productividad.mx/public/layouts/mail/tSolicitud_cambio.html"
+		"/Users/itecno2/Documents/workspace/productividad.mx/application/modules/external/views/scripts/receive/accept.phtml"
 	],
 	"find":
 	{
@@ -575,7 +575,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"/Users/itecno2/Documents/workspace/productividad.mx",
@@ -589,6 +589,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"html_",
+			"html_entities",
 			"data",
 			"aData",
 			"txtFecha",
@@ -714,9 +716,7 @@
 			"margin-",
 			"margin",
 			"DTTT_button",
-			"<button",
-			"button",
-			"cursor"
+			"<button"
 		],
 		"highlight": true,
 		"in_selection": false,

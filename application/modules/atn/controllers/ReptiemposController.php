@@ -257,26 +257,26 @@ class atn_ReptiemposController extends My_Controller_Action
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('D7', 'Cliente');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E7', 'Fecha/Hora Programada');					
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F7', 'Tecnico Asignado');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G7', 'Fecha Inicio');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H7', 'Fecha Fin');					
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I7', 'Duracion cita (mins.) ');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G7', 'Fecha Inicio Servicio');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H7', 'Fecha Fin Servicio');					
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I7', html_entity_decode('Duraci&oacute;n Servicio (mins.) '));
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J7', 'Fecha Arribo');					
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('K7', 'Diferencia Arribo (mins.)	');
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('L7', 'Diferencia inicio cita (mins.)  ');		
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('M7', 'Recepcion Unidad (inicio)');		
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('N7', 'Recepci—n Unidad (fin)');		
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('O7', 'Recepcion Unidad Total (mins.)');		
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('P7', 'Instalacion (inicio)');		
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q7', 'Instalacion (fin)') ;		
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('R7', 'Instalacion Total (mins.)');		
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('S7', 'Pruebas y validacion (inicio)');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('T7', 'Pruebas y validacion (fin)');
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('U7', 'Pruebas y validacion Total (mins.)');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('M7', html_entity_decode('Inicio de recepci&oacute;n unidad'));		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('N7', html_entity_decode('Fin de recepci&oacute;n de la unidad'));		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('O7', html_entity_decode('Duraci&oacute;n de recepci&oacute;n  unidad'));		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('P7', html_entity_decode('Inicio de instalaci&oacute;n'));		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q7', html_entity_decode('Fin de Instalaci&oacute;n')) ;		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('R7', html_entity_decode('Duraci&oacute;n Instalaci&oacute;n'));		
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('S7', 'Inicio Pruebas');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('T7', 'Fin Pruebas');
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('U7', html_entity_decode('Duraci&oacute;n de Pruebas'));
 					$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($sTittleTable, 'A7:U7');
 									
 					$rowControl		= 8;
 					$zebraControl  	= 0;
-					
+					Zend_Debug::dump($processData); die();
 					foreach($processData as $key => $items){
 						$dataEquipment = Array();
 						$bPrint = ($bStatus==-1) ? true : (($bStatus==$items['IDE']) ? true: false);
@@ -301,7 +301,7 @@ class atn_ReptiemposController extends My_Controller_Action
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(17, ($rowControl), @$items['FECHA_INICIO_INSTALACION']['DIF_CAPTURA']);	
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(18, ($rowControl), @$items['FECHA_PRUEBAS']['FECHA_INICIAL']);
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(19, ($rowControl), @$items['FECHA_PRUEBAS']['FECHA_FIN']);
-							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(20, ($rowControl), @$items['FECHA_PRUEBAS']['FECHA_INICIAL']);
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(20, ($rowControl), @$items['FECHA_PRUEBAS']['DIF_CAPTURA']);
 							
 							if($zebraControl++%2==1){
 								$objPHPExcel->setActiveSheetIndex(0)->setSharedStyle($stylezebraTable, 'A'.$rowControl.':U'.$rowControl);			
